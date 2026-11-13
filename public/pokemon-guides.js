@@ -85,34 +85,38 @@
   }
   /* Link current raid and Max rows by exact visible boss identity only. */
   function attachBossLinks() {
-    var host=$('rotnow');if(!host)return;
-    var byName=Object.create(null);
-    guides.forEach(function(g,i){
-      var name=L.label(g,dex,forms).trim().toLocaleLowerCase();
-      if(!name)return;
-      if(!byName[name])byName[name]=[];
-      byName[name].push(i);
-    });
+    var host = $('rotnow'); if (!host) return;
+    var picker = window.GOINFOGRAPHICRAIDPICKER;
     Array.prototype.forEach.call(host.querySelectorAll('.rc[data-boss],.rw-max-pokemon'),function(row){
-      var raw='',kind='';
-      if(row.hasAttribute('data-boss')){
-        raw=row.getAttribute('data-boss')||'';
-        var share=row.querySelector('[data-raid-kind]');
-        kind=share&&share.getAttribute('data-raid-kind')||'';
-        if(/^shadow/i.test(kind)&&!/^shadow\s/i.test(raw))raw='Shadow '+raw;
+      var raw = '', mode = 'normal';
+      if (row.hasAttribute('data-boss')) {
+        raw = row.getAttribute('data-boss') || '';
+        var share = row.querySelector('[data-raid-kind]');
+        var kind = share && share.getAttribute('data-raid-kind') || '';
+        mode = /^Shadow/i.test(kind) ? 'shadow' : /^Mega/i.test(kind) ? 'mega' :
+          /^Primal/i.test(kind) ? 'primal' : 'normal';
+        if (mode === 'shadow' && !/^shadow\s/i.test(raw)) raw = 'Shadow ' + raw;
+        if (/^Primal\s/i.test(raw)) mode = 'primal';
       } else {
-        var boss=row.querySelector('.rw-max-txt b');
-        raw=boss?boss.textContent:'';
+        var boss = row.querySelector('.rw-max-txt b');
+        raw = boss ? boss.textContent : '';
+        mode = /^Gigantamax\s/i.test(raw) ? 'gigantamax' : 'dynamax';
       }
-      var key=String(raw).trim().toLocaleLowerCase(),matches=byName[key]||[];
-      var existing=row.querySelector('.boss-guide-inline');
-      if(matches.length!==1){
-        if(existing)existing.remove();
+      var matches = [];
+      guides.forEach(function (g,i) {
+        if (picker && typeof picker.matchesTarget === 'function') {
+          if (picker.matchesTarget(raw, mode, g, dex)) matches.push(i);
+        } else if (L.label(g,dex,forms).trim().toLocaleLowerCase() ===
+            raw.trim().toLocaleLowerCase()) matches.push(i);
+      });
+      var existing = row.querySelector('.boss-guide-inline');
+      if (matches.length !== 1) {
+        if (existing) existing.remove();
         return;
       }
-      var idx=matches[0];
-      if(existing){existing.setAttribute('data-boss-guide',idx);return;}
-      var button=document.createElement('button');
+      var idx = matches[0];
+      if (existing) { existing.setAttribute('data-boss-guide',idx); return; }
+      var button = document.createElement('button');
       button.type='button';button.className='rc-info boss-guide-inline';
       button.textContent='▧ Boss guide';
       button.setAttribute('data-boss-guide',idx);
