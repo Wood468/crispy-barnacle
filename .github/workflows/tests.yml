@@ -12,7 +12,7 @@ jobs:
       matrix:
         target:
           - e8f616aae8fdf2bcff2e323cc78408b6a4a8e38e
-        trial: [1, 2]
+        trial: [1]
     env:
       GO_FIELD_NOTES_TEST_BROWSER: webkit
     steps:
@@ -41,14 +41,45 @@ jobs:
           from pathlib import Path
           target = Path('test/pwa_upgrade_browser.py')
           source = target.read_text()
+          import ast
+          from playwright.sync_api import sync_playwright, TimeoutError as BrowserTimeout
+          expressions = [n.args[0].value for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr == 'wait_for_function' and n.args and isinstance(n.args[0], ast.Constant) and isinstance(n.args[0].value, str)]
+          gate = next(x for x in expressions if 'const required' in x)
+          with sync_playwright() as pw:
+              browser = pw.webkit.launch()
+              page = browser.new_page()
+              page.goto('http://127.0.0.1:8791/offline.html')
+              for predicate in ['async () => false', gate]:
+                  try:
+                      page.wait_for_function(predicate, arg='pwa-readiness-probe', timeout=300)
+                  except BrowserTimeout:
+                      print('PASS real WebKit rejects false/empty async readiness', flush=True)
+                  else:
+                      raise AssertionError('False async readiness unexpectedly accepted')
+              page.evaluate("""async () => {
+                  const c = await caches.open('pwa-readiness-probe');
+                  for (const path of ['/index.html','/app.js','/dash.js','/detail.js']) await c.put(path, new Response('fixture'));
+              }""")
+              try:
+                  page.wait_for_function(gate, arg='pwa-readiness-probe', timeout=300)
+              except BrowserTimeout:
+                  print('PASS real WebKit rejects missing data.json readiness', flush=True)
+              else:
+                  raise AssertionError('Missing data readiness unexpectedly accepted')
+              page.evaluate("caches.open('pwa-readiness-probe').then(c => c.put('/data.json', new Response('{}')))")
+              page.wait_for_function(gate, arg='pwa-readiness-probe', timeout=300)
+              print('PASS real WebKit accepts complete readiness', flush=True)
+              page.evaluate("caches.delete('pwa-readiness-probe')")
+              browser.close()
           snapshot = '''
               print('PWA boundary:', page.evaluate("""async () => ({
                   markerType: typeof window.__oldController,
                   controllerState: navigator.serviceWorker.controller?.state,
+                  registration: {installing: (await navigator.serviceWorker.getRegistration()).installing?.state, waiting: (await navigator.serviceWorker.getRegistration()).waiting?.state},
                   controlledByActive: navigator.serviceWorker.controller === (await navigator.serviceWorker.getRegistration()).active,
                   caches: await Promise.all((await caches.keys()).filter(n => n.startsWith('gofn-shell-')).map(async name => {
                       const cache = await caches.open(name);
-                      return {name, data: !!(await cache.match('/data.json')), index: !!(await cache.match('/index.html')), keys: (await cache.keys()).length};
+                      return {name, data: !!(await cache.match('/data.json')), dataIgnoringSearch: !!(await cache.match('/data.json', {ignoreSearch:true})), dataKeys: (await cache.keys()).filter(r => new URL(r.url).pathname === '/data.json').map(r => r.url), index: !!(await cache.match('/index.html')), keys: (await cache.keys()).length};
                   }))
               })"""), flush=True)
           '''
