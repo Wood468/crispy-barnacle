@@ -117,3 +117,12 @@ test('absence from the new complete verified feed clears old verified panels',()
   assert.deepEqual(updated.bonuses,['curated bonus']);
   assert.ok(old.verifiedFacets,'caller original remains unchanged');
 });
+
+test('explicit add-on access stays separate from ticket and free, invalid universal grant rejected',()=>{
+  const f=feed();
+  f.events[0].benefits.push({...claim('addon-bonus','addon')});
+  const selected=verifiedFacetPanelsForEvent(f,'wild-area:global.2026');
+  assert.deepEqual(selected.bonuses.map(x=>x.access),['free','ticket','addon']);
+  f.events[0].benefits[2].access='all';
+  assert.throws(()=>indexVerifiedFacetFeed(f),/Invalid verified facet claim/);
+});
