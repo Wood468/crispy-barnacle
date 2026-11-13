@@ -204,3 +204,18 @@ test('paid add-on featured attacks also require explicit day or timing evidence'
   assert.ok(result.held.featuredMoves[0].reasons.includes('paid-move-window-unverified'));
   assert.equal(result.eligible.featuredMoves.length,0);
 });
+
+test('invalid paid move day scope and session label alone cannot bypass publication gate',()=>{
+  const move={
+    id:'synthetic-invalid-session',pokemonLabel:'Synthetic Dragon',
+    move:'Synthetic Beam',moveKind:'charged',access:'ticket',
+    status:'source-claimed',acquisitionMethods:['raid'],
+    sourceRefs:[proof('official',official)],
+    dayScope:'every-saturday',sessionLabel:'Saturday',windowText:null
+  };
+  const invalid=assess(staged({featuredMoves:[move]}));
+  assert.equal(invalid.eligible.featuredMoves.length,0);
+  assert.ok(invalid.held.featuredMoves[0].reasons.includes('paid-move-window-unverified'));
+  const valid=assess(staged({featuredMoves:[{...move,dayScope:'ticketed-day'}]}));
+  assert.equal(valid.eligible.featuredMoves.length,1);
+});
