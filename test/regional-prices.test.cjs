@@ -269,3 +269,59 @@ test('a unique exact label remains matchable and bonus coin packs stay separate'
   assert.equal(bonus.aud,null);
   assert.equal(bonus.indonesia.amount,8000);
 });
+
+test('same-name Australian and Indonesian bundles require a verified common source SKU', () => {
+  const au = [{product:'store-raid-commander', label:'Raid Commander Box', group:'Boxes',
+    currency:'AUD',region:'AU',amount:14.99,verified:true,observed:'2026-11-09'}];
+  const regional = [id('Raid Commander Box','bundle',200000,{id:'id-raid-commander'})];
+  const separate = R.catalogue(au, regional, NOW);
+  assert.equal(separate.length,2,'name alone cannot equate two boxes with unknown contents');
+  assert.equal(R.catalogue(au,[null,{amount:0},...regional],NOW).length,2,
+    'malformed regional observations must not crash the owner Store');
+  assert.equal(separate.find(r=>r.aud===14.99).indonesia,null);
+  const unmatched=separate.find(r=>r.aud===null);
+  assert.equal(unmatched.regionalUnmatched,true);
+  assert.equal(unmatched.indonesia.amount,200000);
+  const opaqueAu=au.map(p=>({...p,product:'store-opaque-bundle',label:'Raid Commander'}));
+  const opaqueId=regional.map(p=>({...p,product:'Raid Commander'}));
+  assert.equal(R.catalogue(opaqueAu,opaqueId,NOW).length,2,
+    'explicit source bundle category still requires SKU proof without a Box suffix');
+  const verifiedAu=au.map(p=>({...p,sourceSku:'verified-raid-box'}));
+  const verifiedId=regional.map(p=>({...p,sourceSku:'VERIFIED-RAID-BOX'}));
+  const paired=R.catalogue(verifiedAu,verifiedId,NOW);
+  assert.equal(paired.length,1,'an exact common source SKU permits one confirmed match');
+  assert.equal(paired[0].indonesia.amount,200000);
+  const different=R.catalogue(verifiedAu,regional.map(p=>({...p,sourceSku:'different-box'})),NOW);
+  assert.equal(different.length,2,'explicitly different SKUs cannot be joined');
+  assert.equal(different.find(r=>r.aud===14.99).indonesia,null);
+});
+
+test('same-title regional bundles and one-time promotions preserve their exact observations', () => {
+  const distinct = [
+    id('Mystery Event Box','bundle',50000,{id:'box-small',sourceSku:'box-small-contents'}),
+    id('Mystery Event Box','bundle',150000,{id:'box-large',sourceSku:'box-large-contents'}),
+    id('110 PokéCoins','coins',8000,{id:'one-time-110',oneTime:true})
+  ];
+  const au=[{product:'store-110-pokecoins',label:'110 PokéCoins',group:'PokéCoins',
+    currency:'AUD',region:'AU',amount:1.59,verified:true,observed:'2026-11-09'}];
+  const rows=R.catalogue(au,distinct,NOW);
+  const boxes=rows.filter(r=>r.label==='Mystery Event Box');
+  assert.equal(boxes.length,2,'distinct source-SKU boxes may share a title');
+  assert.deepEqual(boxes.map(r=>r.indonesia.amount).sort((a,b)=>a-b),[50000,150000],
+    'each distinct regional offer displays its own observed price, not another box price');
+  const opaqueBoxes=R.catalogue([],[
+    id('Raid Commander','bundle',90000,{id:'unidentified-box-a'}),
+    id('Raid Commander','bundle',190000,{id:'unidentified-box-b'})
+  ],NOW);
+  assert.equal(opaqueBoxes.length,2,'bundle-typed same-title regional items keep both IDs');
+  assert.deepEqual(opaqueBoxes.map(r=>r.indonesia.amount).sort((a,b)=>a-b),[90000,190000]);
+  const skuOnly=R.catalogue([{product:'store-600-pokecoins',label:'600 PokéCoins',group:'PokéCoins',
+    currency:'AUD',region:'AU',amount:7.99,verified:true,observed:'2026-11-09'}],
+    [id('600 PokéCoins','coins',25000,{id:'regional-different-sku',sourceSku:'other-coin-bonus'})],NOW);
+  assert.equal(skuOnly.length,2,'explicit regional SKU cannot pair with unattributed AU pack');
+  assert.equal(skuOnly.find(r=>r.aud===7.99).indonesia,null);
+  const standard=rows.find(r=>r.product==='store-110-pokecoins');
+  assert.equal(standard.indonesia,null,'one-time promotion must not price a standard pack');
+  const promo=rows.find(r=>r.label==='110 PokéCoins' && r.aud===null);
+  assert.equal(promo.indonesia.amount,8000,'separate one-time offer remains visible');
+});

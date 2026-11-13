@@ -160,8 +160,25 @@
   }
   /* Every verified AU Web Store SKU plus all regional-only observations;
      do not misattribute off-site event tickets or guess missing product names. */
+  /* A shared product title does not prove two boxes contain the same items.
+     For bundle offers require an independently recorded common source SKU;
+     never join a one-time promotion to a standard listing. */
+  function sameStoreIdentity(au, regional) {
+    if (!!au.oneTime !== !!regional.oneTime) return false;
+    var auSku = typeof au.sourceSku === 'string' ? au.sourceSku.trim().toLowerCase() : '';
+    var regionalSku = typeof regional.sourceSku === 'string' ? regional.sourceSku.trim().toLowerCase() : '';
+    /* An explicitly identified source SKU must not pair with an unattributed
+       offer just because their human-readable labels happen to match. */
+    if (auSku || regionalSku) return !!(auSku && regionalSku && auSku === regionalSku);
+    if (kindOf(au.label) === 'bundle' || kindOf(regional.product) === 'bundle'
+      || regional.kind === 'bundle' || /\b(?:box|boxes|bundle|bundles)\b/i.test(String(au.group || ''))
+      || /\b(?:box|bundle|kit)\b/i.test(String(au.label || '') + ' ' + String(regional.product || '')))
+      return false;
+    return true;
+  }
   function catalogue(prices, obs, now) {
     var latest = {}, all = {}, auByLabel = {};
+    obs = Array.isArray(obs) ? obs : [];
     (prices || []).forEach(function (p) {
       if (!sourcedAuWebOffer(p)) return;
       if (!latest[p.product] || String(p.observed) > String(latest[p.product].observed)) latest[p.product] = p;
@@ -174,30 +191,40 @@
         ? 'Passes & tickets' : 'Other');
       var id = 'au:' + key;
       all[id] = { product: key, label: label, group: group,
-        sourceIdOnly: !p.label, aud: p.amount, observed: p.observed };
+        sourceIdOnly: !p.label, aud: p.amount, observed: p.observed,
+        oneTime: !!p.oneTime, sourceSku: p.sourceSku };
       (auByLabel[labelKey] || (auByLabel[labelKey] = [])).push(id);
     });
-    (obs || []).forEach(function (o) {
+    obs.forEach(function (o, index) {
       if (!usable(o) || !o.product) return;
       var key = norm(o.product), owners = auByLabel[key] || [];
-      // A label is a safe region join only when exactly one AU SKU has it.
-      // Multiple matching SKUs leave the local offer separately attributable.
-      if (owners.length === 1) return;
-      var regionalId = 'regional:' + key;
-      if (!all[regionalId]) all[regionalId] = {
+      if (owners.length === 1 && sameStoreIdentity(all[owners[0]], o)) return;
+      /* Ambiguous boxes, promotions and source-SKU observations are retained
+         as distinct regional offers, not merged solely by matching text. */
+      var distinct = kindOf(o.product) === 'bundle' || o.kind === 'bundle' || !!o.oneTime || !!o.sourceSku;
+      var regionalId = distinct
+        ? 'regional-observation:' + o.region + '|' + o.channel + '|' + String(o.id || index)
+        : 'regional:' + key;
+      if (!all[regionalId] || String(o.observed) > String(all[regionalId].observed)) all[regionalId] = {
         product: o.id || o.product, label: o.product,
         group: o.kind || kindOf(o.product), aud: null, observed: o.observed,
-        regionalUnmatched: owners.length > 1
+        regionalUnmatched: owners.length > 0, strictRegionalIndex: distinct ? index : null
       };
     });
     return Object.keys(all).map(function (key) {
       var p = all[key], kind = kindOf(p.label);
       var ambiguous = p.aud != null && (auByLabel[norm(p.label)] || []).length > 1;
+      var rowObs = p.strictRegionalIndex != null ? [obs[p.strictRegionalIndex]]
+        : p.aud != null ? obs.filter(function (o) {
+          /* Retain other product observations for honest pass estimates while
+             prohibiting unsafe same-name exact matches. */
+          return !!o && (norm(o.product) !== norm(p.label) || sameStoreIdentity(p, o));
+        }) : obs;
       return { product: p.product, label: p.label, group: p.group, kind: kind,
         sourceIdOnly: !!p.sourceIdOnly, ambiguousSku: ambiguous,
         regionalUnmatched: !!p.regionalUnmatched, aud: p.aud, observed: p.observed,
-        india: ambiguous ? null : reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now),
-        indonesia: ambiguous ? null : reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now) };
+        india: ambiguous ? null : reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, rowObs, now),
+        indonesia: ambiguous ? null : reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, rowObs, now) };
     });
   }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
