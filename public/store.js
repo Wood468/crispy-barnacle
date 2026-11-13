@@ -125,10 +125,16 @@
       var au = p.aud > 0
         ? '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.aud, 'AUD')) + '</b><small>Verified · ' + esc(when(p.observed)) + '</small></span>'
         : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">Not observed</span>';
-      var search = (p.label + ' ' + p.group + ' ' + priority(p)).toLowerCase();
+      var search = (p.label + ' ' + p.product + ' ' + p.group + ' ' + priority(p)).toLowerCase();
+      var identityNote = p.ambiguousSku
+        ? '<small class="sp-source-id-note">Distinct official SKU: ' + esc(p.product) + ' · other-region price cannot be matched safely</small>'
+        : p.regionalUnmatched
+          ? '<small class="sp-source-id-note">Regional observation · no exact AU SKU pairing established</small>'
+          : p.sourceIdOnly
+            ? '<small class="sp-source-id-note">Official AU observation · exact SKU; item name not recorded</small>' : '';
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '">'
         + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span>'
-        + (p.sourceIdOnly ? '<small class="sp-source-id-note">Official AU observation · exact SKU; item name not recorded</small>' : '') + '</header>'
+        + identityNote + '</header>'
         + '<div class="sp-market-grid">'
         + '<div class="sp-market sp-market-au"><span class="sp-market-label">Australia <small>Web</small></span>' + au + '</div>'
         + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
