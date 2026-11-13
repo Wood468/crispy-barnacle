@@ -108,8 +108,19 @@ function parseMoves(sec,url){
 function parseResearch(sec,url){
   const kind=/special\s+research/i.test(sec.heading)?'special':/timed\s+research/i.test(sec.heading)?'timed':'field';
   const parts=paragraphs(sec.body).filter(s=>s.length>12&&s.length<1000);
-  const descriptions=parts.slice(0,8);
+  const descriptions=parts.slice(0,12);
   const plain=descriptions.join(' ');
+  // These are literal publisher statements, not inferred deadlines or
+  // player-specific rewards. Preserve the distinction between claiming a
+  // research story, completing its tasks, and activating medal bonuses.
+  const claimInstructionsText=parts.find(p=>/\bclaim\b.{0,110}\bSpecial Research\b|\bSpecial Research\b.{0,110}\bclaim\b/i.test(p))||null;
+  const completionDeadlineText=parts.find(p=>/\b(?:complete|finish)\b.{0,120}\b(?:tasks?|research)\b.{0,120}\b(?:before|by)\b.{0,110}\b(?:a\.?m\.?|p\.?m\.?|\d{1,2}:\d{2})\b/i.test(p))||null;
+  const bonusActivationText=parts.find(p=>/\bbonuses?\s+begin\b.{0,120}\b(?:claim|medal)\b|\bmedal\b.{0,120}\bbonuses?\s+begin\b/i.test(p))||null;
+  const completionRewardText=parts.find(p=>/\b(?:complete|completing)\b.{0,140}\b(?:Special Research|research|story)\b.{0,150}\b(?:awards?|encounter|pose)\b/i.test(p))||null;
+  const medalEffects=parts.flatMap(p=>{
+    const m=/^(.{3,75}\bmedal)\s*:\s*(.{8,420})$/i.exec(p);
+    return m?[{medalLabel:m[1].trim(),effectText:m[2].trim()}]:[];
+  }).slice(0,8);
   const choices=[];
   const pick=/\bchoose (?:a|between)\s+([A-Z][\p{L} -]+?)\s+or\s+([A-Z][\p{L} -]+?)\s+path\b/iu.exec(plain);
   if(pick)choices.push(pick[1].trim(),pick[2].trim());
@@ -130,8 +141,11 @@ function parseResearch(sec,url){
       return {step:n,outOf:total,title:'Stage '+n+'/'+total,taskRewardEvidence:'not-extracted'};
     }).filter(s=>s.step>0&&s.step<=s.outOf&&s.outOf<=30);
   }
+  const onceOnly=/\b(?:only once|granted once)\b/i.test(plain)?true:
+    kind==='timed'&&/\b(?:Extra Day|additional day)\b.{0,120}\b(?:again|each added day)\b/i.test(plain)?false:null;
   return {id:slug(sec.heading),kind,access:accessType(sec.heading,sec.body),title:sec.heading,
-    paths:choices,steps,description:descriptions,onceOnly:/\b(?:only once|granted once)\b/i.test(plain)?true:null,
+    storyTitle:sec.storyTitle||null,paths:choices,steps,description:descriptions,onceOnly,
+    claimInstructionsText,completionDeadlineText,bonusActivationText,completionRewardText,medalEffects,
     status:/\b(?:not confirmed|speculative|based on previous)\b/i.test(plain)?'unconfirmed':'source-published',
     source:sourceRef(url,sec.heading)};
 }
@@ -197,7 +211,17 @@ export function extractEventSourceFacets(html,{sourceUrl}={}){
       }
     }
     if(/\b(?:special|timed|field)\s+research\b/i.test(s.heading)){
-      const program=parseResearch(s,sourceUrl);
+      // LeekDuck may put a separately titled research story in the very
+      // next h2 rather than under the "Special Research — Ticket Holders"
+      // heading. Only attach it when an explicit (1/N) stage exists; never
+      // consume an unrelated event section such as Field Research or Sales.
+      const next=sectionList[i+1];
+      const detachedStory=next&&next.level===s.level&&
+        !/\b(?:special|timed|field)\s+research\b|^(?:bonuses?|features?|spawns?|eggs?|raids?|max battles?|moves?|sales?|shiny|go stamp rally)$/i.test(next.heading)&&
+        /\bSpecial Research\b/i.test(text(next.body).slice(0,800))&&
+        /\(\s*1\s*\/\s*(?:[2-9]|[12]\d)\s*\)/.test(text(next.body));
+      const researchSection=detachedStory?{...s,body:s.body+next.body,storyTitle:next.heading}:s;
+      const program=parseResearch(researchSection,sourceUrl);
       const k='research|'+program.id;if(!seen.has(k)){seen.add(k);researchPrograms.push(program);}
     }
   }
