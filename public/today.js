@@ -163,7 +163,7 @@
   }
 
   /* Whole Today view. ctx supplies: now, live[], soon[], week[], regLive[], regSoon[], regWeek[], boosts{live[],upcoming[]},
-     seasons[], done (list of {key,id,start}), kindOf, monArt, fallbackArt, overseas, dayLabel. */
+     seasons[], done (list of {key,id,start}), hidden (list of {key,id,start}), kindOf, monArt, fallbackArt, overseas, dayLabel. */
   function render(ctx) {
     var live = ctx.live, soon = ctx.soon, rank = { major: 0, raid: 1, minor: 2 };
     function typeOf(ev) { return LOGIC.cardType({ kind: ev.kind, name: ev.name, featuredCount: pokemonFor(ev, 9).length, span: +ev.end - +ev.start, tags: ev.tags }); }
@@ -194,9 +194,14 @@
         + ctx.seasons.map(function (s) { return '<li><button type="button" class="t1-open" data-open="' + esc(s.id) + '"><span class="t1-season-kind">' + esc(s.label) + '</span><span class="t1-season-name">' + esc(s.name) + '</span><span class="t1-season-days">' + s.days + (s.days === 1 ? ' day' : ' days') + ' left</span></button></li>'; }).join('')
         + '</ul></section>';
     }
+    if (ctx.hidden && ctx.hidden.length) {
+      h += '<section class="t1-sec t1-done t1-hidden" aria-labelledby="t1-hidden-h"><div class="t1-sec-head"><h2 id="t1-hidden-h">Hidden by you</h2><span class="t1-count-pill">' + ctx.hidden.length + '</span></div>'
+        + '<p class="t1-sec-note t1-done-note">Hidden from Today only. Events remain in Schedule and Event Details.</p><ul class="t1-done-list">'
+        + ctx.hidden.map(function (d) { return '<li><span>' + esc(d.name) + ' <small>' + esc(d.when) + '</small></span><button type="button" class="t1-restore" data-t1-unhide="' + esc(d.key) + '" aria-label="' + esc('Restore ' + d.name + ' to Today') + '">Restore</button></li>'; }).join('') + '</ul></section>';
+    }
     if (ctx.done.length) {
       h += '<section class="t1-sec t1-done" aria-labelledby="t1-done-h"><div class="t1-sec-head"><h2 id="t1-done-h">Marked done</h2><span class="t1-count-pill">' + ctx.done.length + '</span></div>'
-        + '<p class="t1-sec-note t1-done-note">Hidden from Today only. They stay in Schedule.</p><ul class="t1-done-list">'
+        + '<p class="t1-sec-note t1-done-note">Completed for you. These events remain in Schedule.</p><ul class="t1-done-list">'
         + ctx.done.map(function (d) { return '<li><span>' + esc(d.name) + ' <small>' + esc(d.when) + '</small></span><button type="button" class="t1-restore" data-t1-undo="' + esc(d.key) + '" aria-label="' + esc('Restore ' + d.name + ' to Today') + '">Restore</button></li>'; }).join('') + '</ul></section>';
     }
     return h;
