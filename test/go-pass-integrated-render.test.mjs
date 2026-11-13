@@ -121,8 +121,8 @@ test('dense and single-rank groups avoid cross-boundary gaps and do not fabricat
 test('load order, offline references and post-render mount form a complete PWA integration', () => {
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
  const assets=[
-  '/go-pass-navigation.css?v=20261118g',
-  '/go-pass-navigation.js?v=20261118h',
+  '/go-pass-navigation.css?v=20261118h',
+  '/go-pass-navigation.js?v=20261118i',
   '/go-pass-reward-art.js?v=20261118d',
   '/event-components.js?v=20261118g',
   '/dash.js?v=20261118c'

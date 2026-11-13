@@ -43,6 +43,29 @@
   function cleanName(name) {
     return String(name || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
   }
+  function rewardTrack(tile) {
+    return tile.closest('.ue-lane-deluxe') ? 'deluxe' : tile.closest('.ue-lane-free') ? 'free' : 'unknown';
+  }
+  function rewardQuantity(tile) {
+    var container = tile && tile.querySelector('.ue-pass-name');
+    var meta = container && container.querySelector('small');
+    var text = meta && String(meta.textContent || '').trim();
+    var match = /^×([1-9][0-9]*)\s*·/.exec(text || '');
+    var quantity = match ? Number(match[1]) : 1;
+    return Number.isSafeInteger(quantity) ? quantity : 1;
+  }
+  /* Choose the ACTUAL published reward tile, not another copy of the name
+     at the same rank. Keep Free/Deluxe and source quantity independent. */
+  function exactRewardTile(row, item) {
+    if (!row || !item || typeof row.querySelectorAll !== 'function') return null;
+    return Array.from(row.querySelectorAll('.ue-pass-reward')).find(function (tile) {
+      var container = tile.querySelector('.ue-pass-name');
+      var label = container && container.querySelector('b');
+      return label && cleanName(label.textContent) === cleanName(item.name)
+        && rewardTrack(tile) === item.track
+        && rewardQuantity(tile) === (item.quantity || 1);
+    }) || null;
+  }
   /* Search only actual labelled reward tiles within published rank rows.
      A source may omit track labels; never attribute them to Free by default. */
   function indexRewardEntries(rows) {
@@ -55,14 +78,10 @@
         var textNode = container && container.querySelector('b');
         var name = textNode && String(textNode.textContent || '').trim();
         if (!name) return;
-        var track = tile.closest('.ue-lane-deluxe') ? 'deluxe' : tile.closest('.ue-lane-free') ? 'free' : 'unknown';
-        /* The rendered reward metadata is source-backed. Two identical names
-           in one rank/track can still be distinct rewards at ×3 and ×4. */
-        var meta = container.querySelector('small');
-        var quantityText = meta && String(meta.textContent || '').trim();
-        var quantityMatch = /^×([1-9][0-9]*)\s*·/.exec(quantityText || '');
-        var parsedQuantity = quantityMatch ? Number(quantityMatch[1]) : 1;
-        var quantity = Number.isSafeInteger(parsedQuantity) ? parsedQuantity : 1;
+        var track = rewardTrack(tile);
+        /* Two same-name rewards can differ by verified Free/Deluxe track
+           or ×N quantity. A navigator result must keep both dimensions. */
+        var quantity = rewardQuantity(tile);
         var key = n + '|' + track + '|' + cleanName(name) + '|' + quantity;
         if (seen.has(key)) return;
         seen.add(key);
@@ -131,7 +150,7 @@
       status.className = 'ue-pass-nav-status';
       status.setAttribute('role', 'status');
       status.setAttribute('aria-live', 'polite');
-      function openRank(n, fromRange) {
+      function openRank(n, fromRange, exactReward) {
         var result = lookup(index, n);
         if (result.status === 'invalid') { status.textContent = 'Enter a whole rank number of 1 or higher.'; return; }
         if (result.status === 'unlisted') { status.textContent = 'No published reward entry for Rank ' + result.rank + '.'; return; }
@@ -140,7 +159,8 @@
         details.open = true;
         select.value = String(result.group.start);
         status.textContent = fromRange ? 'Opened Ranks ' + result.group.start + '–' + result.group.end + '; ' + result.group.count + ' published.' : 'Opened published Rank ' + result.rank + '.';
-        focus(fromRange ? (details.querySelector('summary') || target) : target);
+        focus(fromRange ? (details.querySelector('summary') || target)
+          : (exactReward && exactRewardTile(target, exactReward)) || target);
       }
       form.addEventListener('submit', function (event) { event.preventDefault(); openRank(input.value, false); });
       select.addEventListener('change', function () {
@@ -186,7 +206,7 @@
           var quantityLabel = item.quantity > 1 ? ' · ×' + item.quantity : '';
           button.textContent = 'Rank ' + item.rank + ' · ' + item.name + quantityLabel + ' · ' + lane;
           button.addEventListener('click', function () {
-            openRank(item.rank, false);
+            openRank(item.rank, false, item);
             finderStatus.textContent = 'Opened Rank ' + item.rank + ' · ' + item.name + quantityLabel + ' (' + lane + ').';
           });
           finderResults.appendChild(button);
