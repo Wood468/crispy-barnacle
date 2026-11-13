@@ -56,3 +56,10 @@ test('mass removals require acknowledgement signed by both independent authoriti
   assert.throws(()=>authorizeFacetSnapshot(p,{...authorization(p,true),
     acknowledgeMassRemoval:false}),/mass-removal/);
 });
+
+test('canonical provider aliases and release attestations preserve exact punctuation',()=>{
+  const claims={eventId:'leekduck:wild-area.global-2026',candidateSha256:'f'.repeat(64)};
+  const message=facetReleaseAttestationMessage(claims,'review');
+  assert.match(message.toString('utf8'),/leekduck:wild-area.global-2026/);
+  assert.throws(()=>facetReleaseAttestationMessage({...claims,eventId:'..\/public'},'review'),/Exact release attestation/);
+});
