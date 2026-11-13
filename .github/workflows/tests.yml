@@ -219,21 +219,38 @@ jobs:
           done
           exit 1
       - name: Verify Collection planner and Research in WebKit
+        shell: bash
         run: |
-          python test/opportunity_planner_browser.py
-          python test/research_recovery_browser.py
-          python test/research_sources_browser.py
-          python test/premium_surfaces_browser.py
-          python test/today_detail_redesign_browser.py
-          python test/today_done_browser.py
-          python test/today_v1_coverage_browser.py
-          python test/battle_rotation_browser.py
-          python test/raids_max_polish_browser.py
-          python test/event_specials_browser.py
-          python test/event_rotations_browser.py
-          python test/schedule_gopass_browser.py
-          python test/universal_event_browser.py
-          python test/worldwide_timezone_browser.py
+          set -euo pipefail
+          scripts=(
+            test/opportunity_planner_browser.py
+            test/research_recovery_browser.py
+            test/research_sources_browser.py
+            test/premium_surfaces_browser.py
+            test/today_detail_redesign_browser.py
+            test/today_done_browser.py
+            test/today_v1_coverage_browser.py
+            test/battle_rotation_browser.py
+            test/raids_max_polish_browser.py
+            test/event_specials_browser.py
+            test/event_rotations_browser.py
+            test/schedule_gopass_browser.py
+            test/universal_event_browser.py
+            test/worldwide_timezone_browser.py
+          )
+          for script in "${scripts[@]}"; do
+            start=$(date +%s)
+            echo "::group::WebKit START ${script} at $(date -u +%FT%TZ)"
+            if python "$script"; then
+              echo "WebKit PASS ${script} duration=$(( $(date +%s) - start ))s"
+              echo "::endgroup::"
+            else
+              status=$?
+              echo "::error::WebKit FAIL ${script} exit=${status} duration=$(( $(date +%s) - start ))s"
+              echo "::endgroup::"
+              exit "$status"
+            fi
+          done
       - name: Verify combined source rendering, PWA update and preserved player data
         run: |
           python test/release_browser.py
