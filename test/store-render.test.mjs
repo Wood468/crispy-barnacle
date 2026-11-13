@@ -52,6 +52,14 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     'old legacy IDR summary must not repeat the regional price observations');
   assert.ok(el.innerHTML.includes('Not observed'), 'missing source prices should not look like zero or a calibration failure');
   assert.ok(el.innerHTML.includes('data-sp-search'), 'search appears ahead of the product cards');
+  assert.ok(el.innerHTML.includes('data-sp-coverage'), 'owner can inspect source completeness without another pricing panel');
+  assert.ok(el.innerHTML.includes('Missing Australian product names'), 'unattributed official SKUs stay actionable');
+  assert.ok(el.innerHTML.includes('Regional SKU/contents not safely paired'), 'unmatched packs are visible for review');
+  assert.ok(el.innerHTML.includes('No observed Indian source price'), 'missing India evidence is not described as verified');
+  assert.ok(el.innerHTML.includes('Exact item-art mappings'), 'neutral icon gaps can be reviewed without fake artwork');
+  assert.ok(el.innerHTML.indexOf('data-sp-coverage') < el.innerHTML.indexOf('data-sp-search'),
+    'review summary appears before the catalogue search');
+
   assert.ok(el.innerHTML.includes('sp-market-grid'), 'regional prices share one compact grid');
   assert.ok(el.innerHTML.includes('sp-market-au'), 'Australia price is visually grouped with the other regions');
   assert.ok(el.innerHTML.includes('data-sp-product'), 'each item renders once in the browseable catalogue');

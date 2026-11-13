@@ -325,3 +325,31 @@ test('same-title regional bundles and one-time promotions preserve their exact o
   const promo=rows.find(r=>r.label==='110 PokéCoins' && r.aud===null);
   assert.equal(promo.indonesia.amount,8000,'separate one-time offer remains visible');
 });
+
+test('owner catalogue coverage keeps missing and unverified regional prices distinct', () => {
+  const rows = [
+    {product:'store-legacy',label:'store-legacy',sourceIdOnly:true,aud:12.99,
+      observed:'2026-10-01',indonesia:null,india:null},
+    {product:'store-bundle',label:'Raid Commander Box',aud:14.99,
+      observed:'2026-11-11',ambiguousSku:true,
+      indonesia:{basis:'recorded',amount:200000,observed:'2026-11-09'},
+      india:{basis:'estimate',min:300,max:500,observed:'2026-11-09'}},
+    {product:'id-only',label:'New Indonesia Item',aud:null,regionalUnmatched:true,
+      indonesia:{basis:'verified',amount:50000,observed:'2026-11-12'},india:null}
+  ];
+  const result = R.coverage(rows,Date.parse('2026-11-13T00:00:00Z'));
+  assert.equal(result.total,3);
+  assert.equal(result.auVerified,2);
+  assert.equal(result.idVerified,1);
+  assert.equal(result.inVerified,0);
+  assert.deepEqual(result.unlabelled,['store-legacy']);
+  assert.deepEqual(result.unpaired,['Raid Commander Box','New Indonesia Item']);
+  assert.deepEqual(result.missingAu,['New Indonesia Item']);
+  assert.deepEqual(result.missingId,['store-legacy']);
+  assert.deepEqual(result.missingIn,['store-legacy','New Indonesia Item']);
+  assert.deepEqual(result.unverifiedId,['Raid Commander Box']);
+  assert.deepEqual(result.unverifiedIn,['Raid Commander Box']);
+  assert.deepEqual(result.reviewDue,['Australia · store-legacy']);
+  assert.equal(R.coverage(rows,Date.parse('2026-11-13T00:00:00Z'),60).reviewDue.length,0);
+  assert.equal(R.coverage([],0).total,0);
+});

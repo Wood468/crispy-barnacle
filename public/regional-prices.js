@@ -227,6 +227,39 @@
         indonesia: ambiguous ? null : reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, rowObs, now) };
     });
   }
+  /* Owner-only audit of source coverage, not a live checkout or a price
+     prediction. Keep absent, modelled and recorded prices distinguishable. */
+  function coverage(rows, now, reviewDays) {
+    var products = Array.isArray(rows) ? rows : [];
+    var threshold = Number.isSafeInteger(reviewDays) && reviewDays > 0 ? reviewDays : 30;
+    var result = { total: products.length, auVerified: 0, idVerified: 0, inVerified: 0,
+      unlabelled: [], unpaired: [], missingAu: [], missingId: [], missingIn: [],
+      unverifiedId: [], unverifiedIn: [], reviewDue: [], reviewDays: threshold };
+    function due(observed) {
+      var age = ageDays(observed, now);
+      return age !== null && age >= threshold;
+    }
+    products.forEach(function (p) {
+      if (!p) return;
+      var label = String(p.label || p.product || 'Unnamed offer');
+      if (p.sourceIdOnly) result.unlabelled.push(label);
+      if (p.ambiguousSku || p.regionalUnmatched) result.unpaired.push(label);
+      if (p.aud > 0) {
+        result.auVerified++;
+        if (due(p.observed)) result.reviewDue.push('Australia · ' + label);
+      } else result.missingAu.push(label);
+      [['indonesia', 'idVerified', 'missingId', 'unverifiedId', 'Indonesia'],
+       ['india', 'inVerified', 'missingIn', 'unverifiedIn', 'India']].forEach(function (rule) {
+        var price = p[rule[0]];
+        if (price && price.basis === 'verified') result[rule[1]]++;
+        else if (!price) result[rule[2]].push(label);
+        else result[rule[3]].push(label);
+        if (price && price.basis !== 'estimate' && due(price.observed))
+          result.reviewDue.push(rule[4] + ' · ' + label);
+      });
+    });
+    return result;
+  }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
-  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
+  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, coverage: coverage, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
 });
