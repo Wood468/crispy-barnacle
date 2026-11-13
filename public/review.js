@@ -173,7 +173,7 @@
     var picker = window.GOINFOGRAPHICRAIDPICKER;
     var data = window.GO && window.GO.D;
     return picker && data && window.GOLIB && window.GOLIB.raidBossNames
-      ? picker.options(data, pokemonCatalogue, Date.now(), window.GOLIB.raidBossNames) : [];
+      ? picker.options(data, pokemonCatalogue, Date.now(), window.GOLIB.raidBossNames, window.GOEventClock && window.GOEventClock.parseDate) : [];
   }
   function bossTargets(id) {
     var d = decs[id];
