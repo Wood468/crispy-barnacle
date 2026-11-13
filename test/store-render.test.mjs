@@ -393,7 +393,7 @@ test('Store counters separate fresh listings from visible unconfirmed and archiv
   const host = {parentNode:{insertBefore(node){Object.assign(root,node);}}};
   const doc = {readyState:'complete',getElementById:id=>id==='evsource'?host:null,
     createElement:()=>root,addEventListener(){}};
-  const win = {GORegionalPrices:R,fetch:async()=>({ok:true,json:async()=>snapshot}),
+  const win = {GORegionalPrices:R,setTimeout,fetch:async()=>({ok:true,json:async()=>snapshot}),
     GOLIB:{esc:s=>String(s),loadPrices:()=>Promise.resolve(data),
       priceView:()=>({sub:'',save:'',main:''})},document:doc,
     localStorage:{getItem:()=>null,setItem(){}},console};
