@@ -190,7 +190,7 @@
       if (Number.isFinite(deadline) && deadline < today.getTime()) return true;
     }
     var months = 'january february march april may june july august september october november december'.split(' ');
-    var match = label.toLowerCase().match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\\s+(20\d{2})\b/);
+    var match = label.toLowerCase().match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(20\d{2})\b/);
     if (!match) return false;
     var month = months.indexOf(match[1]), year = Number(match[2]);
     return year < today.getUTCFullYear() || (year === today.getUTCFullYear() && month < today.getUTCMonth());
