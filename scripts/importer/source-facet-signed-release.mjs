@@ -11,7 +11,7 @@ import {createPublicKey,createHash,verify} from 'node:crypto';
 import {fingerprintFacetReview} from './source-facet-review-fingerprint.mjs';
 
 const CATEGORIES=['benefits','featuredMoves','researchPrograms'];
-const safeId=id=>typeof id==='string'&&/^[a-z0-9][a-z0-9:_-]{0,120}$/i.test(id);
+const safeId=id=>typeof id==='string'&&/^[a-z0-9][a-z0-9:._-]{0,159}$/i.test(id);
 const canonical=value=>{
   if(Array.isArray(value))return value.map(canonical);
   if(value&&typeof value==='object')return Object.fromEntries(
