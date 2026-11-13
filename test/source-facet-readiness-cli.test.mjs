@@ -7,8 +7,8 @@ import {tmpdir} from 'node:os';
 import {fileURLToPath} from 'node:url';
 
 const cli=fileURLToPath(new URL('../scripts/importer/source-facet-readiness-cli.mjs',import.meta.url));
-const report=({linked=2,ambiguous=0,unlinked=0}={})=>({
-  runAt:'2026-11-13T04:00:00.000Z',
+const report=({linked=2,ambiguous=0,unlinked=0,runAt=new Date().toISOString()}={})=>({
+  runAt,
   sourceFacetStaging:{schemaVersion:1,publication:'audit-only',sourceId:'leekduck',
     eligiblePages:linked+ambiguous+unlinked,skippedLarge:0,errors:[],
     canonicalLinks:{publication:'staging-only',
@@ -68,3 +68,17 @@ test('current repository importer audit remains readable with no public authoriz
   assert.equal(result.coverage.eligiblePages,
     result.coverage.linkedPages+result.coverage.ambiguousPages+result.coverage.unlinkedPages);
 });
+
+test('stale, future and missing importer timestamps fail closed in strict mode',()=>sandbox(async dir=>{
+  for(const runAt of [new Date(Date.now()-25*60*60*1000).toISOString(),
+    new Date(Date.now()+6*60*1000).toISOString(),null]){
+    const file=join(dir,'audit.json');
+    await writeFile(file,JSON.stringify(report({runAt})));
+    const x=run(file,['--strict','--json']);
+    assert.equal(x.status,2,x.stderr);
+    const parsed=JSON.parse(x.stdout);
+    assert.equal(parsed.reviewStatus,'HOLD');
+    assert.ok(parsed.blockers.includes('stale-or-invalid-importer-report'));
+    assert.equal(parsed.productionPublicationAuthorized,false);
+  }
+}));
