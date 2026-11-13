@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-13T01:57:10.409Z",
+ "updated": "2026-11-13T09:43:44.439Z",
  "jobs": [
   {
    "id": "event-importer.yml",
    "name": "Event importer",
    "everyH": 1,
-   "lastSuccess": "2026-11-13T01:42:18.000Z",
+   "lastSuccess": "2026-11-13T07:08:36.000Z",
    "state": "fresh"
   },
   {
@@ -13,13 +13,13 @@
    "name": "Source feed watcher",
    "everyH": 3,
    "lastSuccess": "2026-11-13T01:50:07.000Z",
-   "state": "fresh"
+   "state": "stale"
   },
   {
    "id": "location-discovery.yml",
    "name": "Community location discovery",
    "everyH": 6,
-   "lastSuccess": "2026-11-12T23:34:01.000Z",
+   "lastSuccess": "2026-11-13T06:35:34.000Z",
    "state": "fresh"
   },
   {
@@ -33,14 +33,14 @@
    "id": "g47ix-infographics.yml",
    "name": "Infographic check",
    "everyH": 2,
-   "lastSuccess": "2026-11-12T22:00:05.000Z",
-   "state": "fresh"
+   "lastSuccess": "2026-11-13T02:29:12.000Z",
+   "state": "stale"
   },
   {
    "id": "store-watch.yml",
    "name": "Store watcher",
    "everyH": 1,
-   "lastSuccess": "2026-11-13T00:26:25.000Z",
+   "lastSuccess": "2026-11-13T08:00:36.000Z",
    "state": "fresh"
   },
   {
@@ -61,7 +61,7 @@
    "id": "discord_sync.yml",
    "name": "Discord reader",
    "everyH": 2,
-   "lastSuccess": "2026-11-13T00:58:22.000Z",
+   "lastSuccess": "2026-11-13T09:18:47.000Z",
    "state": "fresh"
   },
   {
@@ -75,9 +75,9 @@
    "id": "worker-cron",
    "name": "Worker hourly jobs",
    "everyH": 1,
-   "lastSuccess": "2026-11-13T01:30:47.052Z",
+   "lastSuccess": "2026-11-13T09:30:53.987Z",
    "state": "fresh",
-   "detail": "Discord forwarding: nothing new"
+   "detail": "Discord forwarding: sent 1"
   },
   {
    "id": "ai-heartbeat-event-check",
