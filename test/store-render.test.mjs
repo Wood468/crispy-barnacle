@@ -382,19 +382,19 @@ test('Store counters separate fresh listings from visible unconfirmed and archiv
   const source = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
   const now = new Date().toISOString();
   const prices = [
-    {product:'current-pass',label:'Current Fixture Pass',group:'Tickets',currency:'AUD',amount:8.99,region:'AU',verified:true,observed:'2026-11-13'},
-    {product:'storage-upgrade',label:'Item Bag Upgrade',group:'Storage',currency:'AUD',amount:3.99,region:'AU',verified:true,observed:'2026-11-13'},
-    {product:'old-pass',label:'Previous Fixture Pass',group:'Tickets',currency:'AUD',amount:6.99,region:'AU',verified:true,observed:'2026-10-12'}
+    {product:'store-current-pass',label:'Current Fixture Pass',group:'Tickets',currency:'AUD',amount:8.99,region:'AU',verified:true,observed:'2026-11-13'},
+    {product:'store-storage-upgrade',label:'Item Bag Upgrade',group:'Storage',currency:'AUD',amount:3.99,region:'AU',verified:true,observed:'2026-11-13'},
+    {product:'store-old-pass',label:'Previous Fixture Pass',group:'Tickets',currency:'AUD',amount:6.99,region:'AU',verified:true,observed:'2026-10-12'}
   ];
   const snapshot = {version:1,updated:now,items:[{name:'Current Fixture Pass',lastSeen:now}],
     gone:[{name:'Previous Fixture Pass',lastSeen:'2026-10-12',goneAt:now}]};
+  assert.equal(R.catalogue(prices, [], undefined, []).length, 3, 'synthetic AU Store rows must satisfy the real source-identity gate');
   const data = {owner:true,prices,regional:[],storeSnapshot:snapshot};
   const root = {innerHTML:'',addEventListener(){},querySelector:()=>null};
   const host = {parentNode:{insertBefore(node){Object.assign(root,node);}}};
   const doc = {readyState:'complete',getElementById:id=>id==='evsource'?host:null,
     createElement:()=>root,addEventListener(){}};
   const win = {GORegionalPrices:R,
-    GOStoreOfferIdentities:createRequire(import.meta.url)('../public/store-offer-identities.js'),
     GOLIB:{esc:s=>String(s),loadPrices:()=>Promise.resolve(data),
       priceView:()=>({sub:'',save:'',main:''})},document:doc,
     localStorage:{getItem:()=>null,setItem(){}},console};
