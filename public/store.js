@@ -48,9 +48,6 @@
   }
   function icon(label, sourceImage) {
     var token = kindToken(label);
-    if (window.GORegionalPrices && GORegionalPrices.sourceArt(sourceImage)) {
-      return '<img class="sp-i" src="' + esc(sourceImage) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-sp-art="official" data-sp-fallback="' + esc(token || '·') + '">';
-    }
     for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) {
       return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-sp-fallback="' + esc(token || '·') + '">';
     }
