@@ -59,3 +59,28 @@ test('manual choice order is stable and empty selection stays non-publishable',(
   assert.equal(empty.publication,'review-candidate');
   assert.ok(!Object.hasOwn(empty,'verifiedAt'));
 });
+
+test('source citations strip URL query secrets and nested research objects cannot carry private fields',()=>{
+  const citationUrl=official+'?access_token=do-not-publish';
+  const research={
+    id:'approved-research',kind:'special',title:'Synthetic Research',
+    access:'ticket',status:'source-claimed',
+    sourceRefs:[{...ref('official',citationUrl),section:'Special Research'}],
+    storyTitle:'Synthetic Story',paths:['A', 'B'],
+    sourceResearchEvidence:[{sourceId:'official',url:citationUrl,section:'Special Research'}],
+    steps:[{step:1,outOf:6,title:'Stage 1/6',
+      taskRewardEvidence:'not-extracted',internalPlayerToken:'LEAK-NESTED'}],
+    privateRewardDetails:'LEAK-REWARD'
+  };
+  const input={...stage([]),researchPrograms:[research]};
+  const manifest={eventId:'synthetic-event',approved:{
+    benefits:[],featuredMoves:[],researchPrograms:['approved-research']
+  }};
+  const result=build(input,manifest);
+  assert.equal(result.researchPrograms.length,1);
+  assert.equal(result.researchPrograms[0].sourceRefs[0].url,official);
+  assert.equal(result.researchPrograms[0].steps[0].taskRewardEvidence,'not-extracted');
+  assert.ok(!JSON.stringify(result).includes('access_token'));
+  assert.ok(!JSON.stringify(result).includes('LEAK-NESTED'));
+  assert.ok(!JSON.stringify(result).includes('LEAK-REWARD'));
+});
