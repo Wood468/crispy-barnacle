@@ -126,6 +126,15 @@ test('only explicit Raid Pass and Max Particle claims can supersede free limits'
  assert.equal(d.benefits[0].replacesFreeLimit,false);
 });
 
+test('normalized replacement rule deduplicates unsupported stacking flags',()=>{
+ const label='Additional Candy for catching Pokémon';
+ const a=benefit('ticket',label,duck,{kind:'candy',replacesFreeLimit:true});
+ const b=benefit('ticket',label,duck,{kind:'candy',replacesFreeLimit:false});
+ const out=normalizeEventSourceFacets('wag',[mk('leekduck',duck,{benefits:[a,b]})]);
+ assert.equal(out.benefits.length,1);
+ assert.equal(out.benefits[0].replacesFreeLimit,false);
+});
+
 test('source order, duplicate records and omitted optional fields do not affect stable output',()=>{
  const b=benefit('free','Increased catch XP',duck,{kind:'xp',replacesFreeLimit:false});
  const d=mk('leekduck',duck,{benefits:[b,b]});
