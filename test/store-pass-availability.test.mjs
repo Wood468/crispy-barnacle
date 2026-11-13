@@ -44,7 +44,7 @@ test('stale or future listing snapshots cannot confirm current availability', ()
 test('explicit passed purchase end plus corroborating source confirms retirement', () => {
   const result = availability.classify({
     purchaseEndAt: '2026-11-12T23:59:00Z', retirementEvidence: retired,
-    listingEvidence: listing
+    listingEvidence: { ...listing, checkedAt: '2026-11-12T22:00:00Z' }
   }, NOW);
   assert.equal(result.availability, 'confirmed-retired');
   assert.equal(result.evidence.sourceUrl, retired.sourceUrl);
