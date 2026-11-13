@@ -53,7 +53,6 @@ with sync_playwright() as pw:
     page.wait_for_function('(c)=>caches.open(c).then(x=>x.match("/index.html")).then(Boolean)', arg=OLD_CACHE, timeout=30000)
     page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
     page.evaluate('(seed)=>Object.entries(seed).forEach(([k,v])=>localStorage.setItem(k,v))', SEED)
-    page.evaluate('window.__oldController=navigator.serviceWorker.controller')
     assert page.evaluate(READ_KEYS, KEYS) == SEED
 
     # 2. Offline reload on the OLD shell still renders from the cache.
@@ -64,11 +63,19 @@ with sync_playwright() as pw:
     context.set_offline(False)
 
     # 3. A new release is published: new SW installs, activates, claims, and deletes only the old shell cache.
+    # Capture after the old-shell reload: window properties from the first page are gone.
+    old_controller = page.evaluate_handle('navigator.serviceWorker.controller')
     page.evaluate("caches.open('gofn-unrelated-cache').then(c=>c.put('/x',new Response('keep')))")
     phase['new'] = True
     page.evaluate('navigator.serviceWorker.getRegistration().then(r=>r.update())')
     page.wait_for_function('(c)=>caches.keys().then(k=>k.includes(c)&&!k.includes("gofn-shell-v1-previous"))', arg=NEW_CACHE, timeout=40000)
-    page.wait_for_function('navigator.serviceWorker.controller&&navigator.serviceWorker.controller!==window.__oldController', timeout=20000)
+    page.wait_for_function("""async (oldController) => {
+        const registration = await navigator.serviceWorker.getRegistration();
+        const controller = navigator.serviceWorker.controller;
+        return !!controller && controller !== oldController &&
+            controller === registration?.active && controller.state === 'activated';
+    }""", arg=old_controller, timeout=20000)
+    old_controller.dispose()
     page.wait_for_function('(c)=>caches.open(c).then(x=>x.match("/index.html")).then(Boolean)', arg=NEW_CACHE)
     names = page.evaluate('caches.keys()')
     assert 'gofn-unrelated-cache' in names and NEW_CACHE in names, names
