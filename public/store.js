@@ -277,10 +277,10 @@
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '">'
         + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span>'
         + identityNote + '</header>'
-        + '<div class="sp-market-grid">'
-        + '<div class="sp-market sp-market-au"><span class="sp-market-label">Australia <small>Web</small></span>' + au + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label">India <small>in-app</small></span>' + priceCell(p.india, data.audQuotes) + '</div>'
+        + '<div class="sp-market-grid sp-market-grid-compact" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;align-items:start">'
+        + '<div class="sp-market sp-market-au"><span class="sp-market-label">🇦🇺 <small>AU</small></span>' + au + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label">🇮🇩 <small>ID</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label">🇮🇳 <small>IN</small></span>' + priceCell(p.india, data.audQuotes) + '</div>'
         + '</div>' + offerContents(p) + '</article>';
     }
     var catalogue = sections.filter(function (s) { return bySection[s.id].length; }).map(function (s) {
