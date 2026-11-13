@@ -135,6 +135,9 @@ with sync_playwright() as p:
             'Reward search did not focus the actual Rank 100 Deluxe Silver Bottle Cap tile', width)
         assert not matched_rank.evaluate('(el) => document.activeElement === el'), (
             'Source-known reward finder should not focus only the surrounding rank', width)
+        assert matched_tile.evaluate(
+            '(el) => { const style = getComputedStyle(el); return style.outlineStyle !== "none" && parseFloat(style.outlineWidth) >= 2; }'), (
+            'Exact reward focus must be visually apparent on a narrow phone', width)
         assert 'Opened Rank 100' in finder.locator('.ue-pass-find-status').inner_text()
         finder_input.fill('unpublished-item-never-listed')
         assert finder.locator('.ue-pass-find-results button').count() == 0, (
