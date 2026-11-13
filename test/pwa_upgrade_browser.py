@@ -76,7 +76,14 @@ with sync_playwright() as pw:
             controller === registration?.active && controller.state === 'activated';
     }""", arg=old_controller, timeout=20000)
     old_controller.dispose()
-    page.wait_for_function('(c)=>caches.open(c).then(x=>x.match("/index.html")).then(Boolean)', arg=NEW_CACHE)
+    # The cache name/index alone can appear before all startup resources are stored.
+    # Prove the new shell can boot before the harness disconnects its network.
+    page.wait_for_function("""async (name) => {
+        const cache = await caches.open(name);
+        const required = ['/index.html', '/data.json', '/app.js', '/dash.js', '/detail.js'];
+        const responses = await Promise.all(required.map(path => cache.match(path, {ignoreSearch: true})));
+        return responses.every(response => response && response.ok);
+    }""", arg=NEW_CACHE, timeout=30000)
     names = page.evaluate('caches.keys()')
     assert 'gofn-unrelated-cache' in names and NEW_CACHE in names, names
     assert page.evaluate(READ_KEYS, KEYS) == SEED, 'Collection/Done/stamp keys changed by the upgrade'
