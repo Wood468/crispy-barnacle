@@ -2,6 +2,9 @@ name = "go-field-notes"
 main = "src/worker.js"
 compatibility_date = "2026-09-01"
 
+# Publish Workers Builds preview deployments at their assigned workers.dev URLs.
+preview_urls = true
+
 # Friendly address (michaelpuff.com is on Cloudflare). The workers.dev address keeps working too.
 routes = [{ pattern = "pogo.michaelpuff.com", custom_domain = true }]
 
