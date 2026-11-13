@@ -47,10 +47,13 @@ const publicationManifest=(snapshotSha,priorPublicSha=null)=>({
 const releaseSignature=m=>sign(null,facetPromotionManifestMessage(m),
   releaser.privateKey).toString('base64');
 async function sandbox(fn){
-  const rootDir=await mkdtemp(join(tmpdir(),'s4-full-journey-'));
-  try{await fn(rootDir)}finally{await rm(rootDir,{recursive:true,force:true})}
+  const base=await mkdtemp(join(tmpdir(),'s4-full-journey-'));
+  const rootDir=join(base,'checkout'),durableStateDir=join(base,'trusted-ledger');
+  await (await import('node:fs/promises')).mkdir(rootDir,{recursive:true});
+  await (await import('node:fs/promises')).mkdir(durableStateDir,{recursive:true});
+  try{await fn(rootDir,durableStateDir)}finally{await rm(base,{recursive:true,force:true})}
 }
-test('source-backed review through two signatures and replay-safe public feed works as one journey',async()=>sandbox(async rootDir=>{
+test('source-backed review through two signatures and replay-safe public feed works as one journey',async()=>sandbox(async (rootDir,durableStateDir)=>{
   const raw=stage([
     bonus('free','free'),
     bonus('ticket','ticket'),
@@ -64,7 +67,7 @@ test('source-backed review through two signatures and replay-safe public feed wo
   assert.equal(stored.publication,'verified');
   const promoted=publicationManifest(stored.sha256);
   const completed=await commitFacetPromotion(promoted,releaseSignature(promoted),{
-    rootDir,allowLocalWrite:true,trustedReleasePublicKey:pub(releaser),
+    rootDir,durableStateDir,allowLocalWrite:true,trustedReleasePublicKey:pub(releaser),
     environment:'production',trustedCommitSha:'a'.repeat(40),
     now:'2026-11-13T04:10:00.000Z',
     trustedCanonicalEventIds:[eventId],
@@ -84,7 +87,7 @@ test('source-backed review through two signatures and replay-safe public feed wo
   assert.equal(publicJson.includes('DO_NOT_PUBLISH'),false);
   assert.equal(publicJson.includes('held-ticket'),false);
 }));
-test('source dropout cannot remove last-good ticket detail without a new signed acknowledgement',async()=>sandbox(async rootDir=>{
+test('source dropout cannot remove last-good ticket detail without a new signed acknowledgement',async()=>sandbox(async (rootDir,durableStateDir)=>{
   const initial=buildFacetReviewPlan(stage([bonus('free'),bonus('ticket','ticket')]),
     chosen(['free','ticket']));
   const stored=await persistSignedFacetSnapshot(initial,authorization(initial),{
