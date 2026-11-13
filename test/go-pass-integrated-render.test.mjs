@@ -191,3 +191,16 @@ test('GO Pass avoids reclassifying accented or inline-quantity duplicate rewards
  assert.match(row,/×4 · Item/);
  assert.match(row,/<b>Remote Raid Pass<\/b>/);
 }));
+
+
+test('conflicting explicit GO Pass quantities remain separate pending source reconciliation', () => withSemantic(() => {
+ const html=UI.render(model([{rank:12,
+  free:[{name:'Incense ×2',quantity:3,type:'item'}],
+  rewards:[{name:'Incense',quantity:2,type:'item'}]
+ }]),{});
+ const rank=html.match(/<li class="ue-pass-rank" data-rank="12">([\s\S]*?)<\/li>/)[1];
+ assert.match(rank,/<div class="ue-lane ue-lane-free">/);
+ assert.match(rank,/<div class="ue-lane ue-lane-unspecified">/);
+ assert.equal((rank.match(/<b>Incense<\/b>|<b>Incense ×2<\/b>/g)||[]).length,2,
+   'conflicting quantities are not silently merged into a single entitlement');
+}));
