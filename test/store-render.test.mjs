@@ -142,3 +142,46 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
 
 
 });
+
+
+test('verified Australian Store offers remain visible during missing regional-feed observations', async () => {
+  const R = createRequire(import.meta.url)('../public/regional-prices.js');
+  const source = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
+  const auOffer = { product: 'store-item-bag-upgrade', label: 'Item Bag Upgrade', group: 'Storage',
+    currency: 'AUD', amount: 3.99, region: 'AU', verified: true, observed: '2026-11-13' };
+  async function render(owner, prices, regional) {
+    let requests = 0;
+    const el = { innerHTML: '', querySelector: () => null, addEventListener() {} };
+    const host = { parentNode: { insertBefore() {} } };
+    const data = { owner, prices, regional };
+    const win = {
+      GORegionalPrices: R,
+      GOStoreFX: { retrieve() { requests++; return Promise.resolve({}); } },
+      GOLIB: { esc: s => String(s), loadPrices: () => Promise.resolve(data),
+        priceView: () => ({ sub: '', save: '', main: '' }) },
+      localStorage: { getItem: () => null, setItem() {} }, console
+    };
+    const doc = { readyState: 'complete', getElementById: id => id === 'evsource' ? host : null,
+      createElement: () => el, addEventListener() {} };
+    Object.assign(win, { document: doc, window: win });
+    vm.runInNewContext(source, win);
+    await new Promise(resolve => setTimeout(resolve, 20));
+    return { html: el.innerHTML, requests };
+  }
+  for (const regional of [[], undefined, 'not-an-array']) {
+    const { html, requests } = await render(true, [auOffer], regional);
+    assert.match(html, /Regional Store prices/);
+    assert.match(html, /Item Bag Upgrade/);
+    assert.match(html, /A\$3\.99/);
+    assert.match(html, /data-sp-group="storage"/);
+    assert.equal((html.match(/sp-regional-value sp-none/g) || []).length, 2,
+      'Indonesia and India stay Not observed instead of making AU products disappear');
+    assert.doesNotMatch(html, /Advanced comparison/,
+      'no comparison panel without any verified local buying option');
+    assert.equal(requests, 0, 'no foreign FX request when no regional currency is observed');
+  }
+  assert.equal((await render(true, [], [])).html, '',
+    'do not show an empty product catalogue with no reliable source observations');
+  assert.equal((await render(false, [auOffer], [])).html, '',
+    'non-owner must not see the private regional Store section');
+});

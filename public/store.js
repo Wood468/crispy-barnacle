@@ -113,9 +113,15 @@
   /* Product-first regional comparison. One card per known item, with price provenance
      close to the number; optional purchasing maths stays behind a disclosure. */
   function regional(data) {
-    var R = window.GORegionalPrices; if (!R || !data.regional || !data.regional.length) return '';
-    var obs = data.regional, items = R.catalogue(data.prices || [], obs);
+    var R = window.GORegionalPrices; if (!R) return '';
+    /* Official verified AU Web Store offers stay available even when the
+       regional observation feed is empty, delayed or unavailable. */
+    var obs = Array.isArray(data.regional) ? data.regional : [];
+    var prices = Array.isArray(data.prices) ? data.prices : [];
+    var items = R.catalogue(prices, obs);
+    if (!items.length) return '';
     var balance = Math.max(0, parseInt(lsGet(COINS_KEY), 10) || 0);
+    var comparableOffers = cheapestHtml(obs, balance);
     var sections = [
       { id: 'passes', label: 'Passes & tickets', open: true },
       { id: 'storage', label: 'Storage upgrades', open: true },
@@ -156,10 +162,10 @@
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
-      + '<details class="sp-compare-more"><summary>Lowest verified observed options <small>Advanced comparison</small></summary>'
+      + (comparableOffers ? '<details class="sp-compare-more"><summary>Lowest verified observed options <small>Advanced comparison</small></summary>'
       + '<p class="note">Only verified, directly comparable offers qualify. Recorded and modelled prices cannot win. Your existing PokéCoins may reduce cash cost; estimates are never checkout quotes.</p>'
       + '<label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
-      + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div></details></details>';
+      + '<div data-sp-cheapest>' + comparableOffers + '</div></details>' : '') + '</details>';
   }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
@@ -173,7 +179,7 @@
       el.innerHTML = h;
       /* FX is reference-only. Hydrate each existing AUD placeholder in place,
          preserving search, disclosure and coin controls while offline. */
-      if (window.GOStoreFX && d.regional && d.regional.length) {
+      if (window.GOStoreFX && Array.isArray(d.regional) && d.regional.length) {
         var fetcher = typeof window.fetch === 'function' ? window.fetch.bind(window) : null;
         window.GOStoreFX.retrieve(fetcher, d.fx).then(function (quotes) {
           if (!el.querySelectorAll) return;
