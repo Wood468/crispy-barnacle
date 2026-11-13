@@ -246,3 +246,65 @@ test('advanced Store channel coverage never ranks same-name boxes, recorded pric
   assert.doesNotMatch(root.innerHTML,/data-sp-coins/,
     'do not display a coin-optimisation input when no validated coin-pack optimiser is being run');
 });
+
+
+test('Store product search accepts unaccented and composed/decomposed Pokémon names', async () => {
+  const R = createRequire(import.meta.url)('../public/regional-prices.js');
+  const source = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
+  const prices = [
+    { product:'store-pokemon-storage', label:'Pokémon Storage +50', group:'Storage', currency:'AUD',
+      amount:3.99, region:'AU', verified:true, observed:'2026-11-13' },
+    { product:'store-pokecoins-110', label:'110 PokéCoins', group:'PokéCoins', currency:'AUD',
+      amount:1.59, region:'AU', verified:true, observed:'2026-11-13' },
+    { product:'store-elite-fast-tm', label:'Elite Fast TM', group:'Items', currency:'AUD',
+      amount:4.99, region:'AU', verified:true, observed:'2026-11-13' }
+  ];
+  let onSearch = null, groups = [];
+  const input = {value:'', addEventListener:(name,fn) => { if (name==='input') onSearch=fn; }};
+  const counter = {textContent:''};
+  const el = {innerHTML:'',id:'',addEventListener(){},
+    querySelector: selector => selector === '[data-sp-search]' ? input :
+      selector === '[data-sp-results]' ? counter : null,
+    querySelectorAll: selector => selector === '[data-sp-group]' ? groups : []};
+  const host = {parentNode:{insertBefore(){}}};
+  const doc = {readyState:'complete',getElementById:id => id==='evsource'?host:null,
+    createElement:() => el,addEventListener(){}};
+  const win = {window:null,document:doc,GORegionalPrices:R,
+    GOLIB:{esc:s=>String(s),loadPrices:()=>Promise.resolve({owner:true,prices,regional:[]}),
+      priceView:()=>({sub:'',save:'',main:''})},console};
+  win.window=win;
+  vm.runInNewContext(source,win);
+  await new Promise(resolve=>setTimeout(resolve,25));
+  assert.equal(typeof onSearch,'function');
+  const block=/<details class="sp-group" data-sp-group="([^"]+)" data-sp-default-open="(yes|no)"[^>]*>([\s\S]*?)<\/details>/g;
+  groups=[...el.innerHTML.matchAll(block)].map(match=>{
+    const cards=[...match[3].matchAll(/<article class="sp-product" data-sp-product data-sp-name="([^"]+)"[\s\S]*?<\/article>/g)]
+      .map(card=>({name:card[1],hidden:false,getAttribute(key){return key==='data-sp-name'?this.name:null;}}));
+    return {id:match[1],initial:match[2],cards,hidden:false,open:match[2]==='yes',
+      querySelectorAll:()=>cards,getAttribute:key=>key==='data-sp-default-open'?match[2]:null};
+  });
+  assert.equal(groups.reduce((total,g)=>total+g.cards.length,0),3,
+    'the real Store HTML must contain all three verified product cards');
+  assert.ok(groups.flatMap(g=>g.cards).some(c=>c.name.includes('pokemon storage')),
+    'accent-free searchable data must be rendered from the source label');
+  assert.ok(groups.flatMap(g=>g.cards).some(c=>c.name.includes('pokecoins')),
+    'PokéCoins must not require an accented keyboard');
+  function search(term,expected) {
+    input.value=term;onSearch();
+    assert.equal(counter.textContent,expected+(expected===1?' product':' products')+' shown','query '+JSON.stringify(term));
+    assert.equal(groups.flatMap(g=>g.cards).filter(card=>!card.hidden).length,expected);
+  }
+  search('poke',2);
+  search('POKÉ',2);
+  search('Poke\u0301',2);
+  search('pokemon',1);
+  search('POKÉMON',1);
+  search('pokecoins',1);
+  search('ELITE',1);
+  search('nonsense',0);
+  search('',3);
+  assert.ok(groups.find(g=>g.id==='storage').open,
+    'clearing the query restores the original open category state');
+  assert.equal(groups.find(g=>g.id==='items').open,false,
+    'clearing search keeps secondary categories collapsed');
+});
