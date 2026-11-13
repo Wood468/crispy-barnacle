@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { collectCanonicalSourceFacetAudit } from '../scripts/importer/source-facets-canonical-audit.mjs';
+import { collectCanonicalSourceFacetAudit, worldSourceFacetCandidates } from '../scripts/importer/source-facets-canonical-audit.mjs';
 
 const global='https://leekduck.com/events/pokemon-go-wild-area-2026-global/';
 const mexico='https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/';
@@ -98,4 +98,50 @@ test('unlinked sources are never normalized or promoted to source-backed benefit
   assert.equal(result.normalizedByEvent.size,0);
   assert.equal(result.report.canonicalLinks.normalizedCounts.events,0);
   assert.equal(result.report.canonicalLinks.normalizedCounts.benefits,0);
+});
+
+test('exact LeekDuck world-event sources join in-person events absent from curated feed',()=>{
+  const london='https://leekduck.com/events/pokemon-night-out-london-2026/';
+  const world=[
+    {id:'w-mexico-city-go-wild-area-2026',sources:[
+      {id:'official',url:'https://pokemongo.com/en/gowildarea/mexico-city/'},
+      {id:'leekduck',url:mexico}
+    ]},
+    {id:'w-pokemon-night-out-london-2026',sources:[{id:'leekduck',url:london}]}
+  ];
+  const candidates=worldSourceFacetCandidates(world);
+  assert.equal(candidates.length,2);
+  const audit=collectCanonicalSourceFacetAudit([page(mexico),page(london)],[events[0],...candidates]);
+  assert.equal(audit.report.canonicalLinks.linkedPages,2);
+  assert.equal(audit.report.canonicalLinks.unlinkedPages,0);
+  assert.equal(audit.byEvent.get('w-mexico-city-go-wild-area-2026')?.[0].sourceUrl,mexico);
+  assert.equal(audit.byEvent.get('w-pokemon-night-out-london-2026')?.[0].sourceUrl,london);
+  assert.equal(audit.normalizedByEvent.get('w-mexico-city-go-wild-area-2026').publication,'staging-only');
+  assert.equal(audit.report.publication,'audit-only');
+  assert.ok(!JSON.stringify(audit.report).includes('Up to six free Raid Passes'));
+});
+
+test('world-source candidates require exact trusted event links and valid canonical IDs',()=>{
+  const records=[{id:'w-verified',sources:[
+    {id:'official',url:mexico},
+    {id:'leekduck',url:'https://leekduck.com.attacker.example/events/fake/'},
+    {id:'leekduck',url:'http://leekduck.com/events/fake/'},
+    {id:'leekduck',url:'https://user@leekduck.com/events/fake/'},
+    {id:'leekduck',url:'https://leekduck.com/blog/weekly-roundup/'},
+    {id:'leekduck',url:'https://leekduck.com/events/fake/?token=secret'},
+    {id:'leekduck',url:mexico},
+    {id:'leekduck',url:mexico}
+  ]},{id:'unsafe id',sources:[{id:'leekduck',url:mexico}]},{id:'no-source',sources:null}];
+  assert.deepEqual(worldSourceFacetCandidates(records),[{id:'w-verified',sourceUrl:mexico}]);
+  assert.throws(()=>worldSourceFacetCandidates({}),/World event records array required/);
+});
+
+test('two generated world events claiming the same source stay ambiguous',()=>{
+  const candidates=worldSourceFacetCandidates([
+    {id:'world-a',sources:[{id:'leekduck',url:mexico}]},
+    {id:'world-b',sources:[{id:'leekduck',url:mexico}]}
+  ]);
+  const audit=collectCanonicalSourceFacetAudit([page(mexico)],candidates);
+  assert.equal(audit.report.canonicalLinks.ambiguousPages,1);
+  assert.equal(audit.normalizedByEvent.size,0);
 });
