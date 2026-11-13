@@ -195,6 +195,12 @@
       res.form = mismatch ? '' : (form === 'exclamation' ? '!' : form === 'question' ? '?' : form.toUpperCase());
       res.label = mismatch ? 'Unown form' : 'Unown ' + res.form;
     }
+    /* Source feeds may lead with the form. Keep exact artwork and the
+       unavailable-art badge aligned with the Worker for both spellings. */
+    else if ((m = /^(Roaming|Chest)\s+Form\s+Gimmighoul$/i.exec(core))) {
+      res.kind = 'form'; res.base = 'Gimmighoul'; res.exact = true;
+      res.label = m[1][0].toUpperCase() + m[1].slice(1).toLowerCase() + ' Form'; res.form = res.label;
+    }
     else if ((m = /^Gigantamax\s+(.+)$/i.exec(core))) { res.kind = 'gigantamax'; res.base = m[1]; res.exact = true; res.label = 'Gigantamax'; }
     else if ((m = /^Crowned\s+(Sword|Shield)\s+(Zacian|Zamazenta)$/i.exec(core)) && ((m[1].toLowerCase()==='sword'&&m[2].toLowerCase()==='zacian')||(m[1].toLowerCase()==='shield'&&m[2].toLowerCase()==='zamazenta'))) { res.kind = 'form'; res.base = m[2]; res.exact = true; res.label = 'Crowned ' + (m[1].toLowerCase()==='sword'?'Sword':'Shield'); }
     else if ((m = /^(White|Black) Kyurem$/i.exec(core))) { res.kind = 'form'; res.base = 'Kyurem'; res.exact = true; res.label = m[1] + ' Kyurem'; }
