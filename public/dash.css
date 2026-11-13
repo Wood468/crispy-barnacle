@@ -2265,6 +2265,13 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .storep-regional .sp-market{gap:2px}
 .storep-regional .sp-market .sp-regional-value small{line-height:1.3;color:var(--color-text-muted)}
 .storep-regional .sp-i-token{flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-canvas);color:var(--color-text-body);font-size:.69rem;font-weight:850;line-height:1}
+.storep-regional .sp-i-glyph{color:var(--color-text-body);background:var(--color-canvas);border-color:var(--color-border)}
+.storep-regional .sp-i-glyph svg{width:19px;height:19px;display:block;flex:none}
+.storep-regional .sp-i-glyph[data-sp-icon-kind="ticket"]{color:#80cfff}
+.storep-regional .sp-i-glyph[data-sp-icon-kind="egg"]{color:#f5d26a}
+.storep-regional .sp-i-glyph[data-sp-icon-kind="star"]{color:#ffca75}
+.storep-regional .sp-i-glyph[data-sp-icon-kind="storage"],
+.storep-regional .sp-i-glyph[data-sp-icon-kind="bag"]{color:#9bc8f7}
 .storep-regional .sp-i{flex:none;object-fit:contain;width:28px;height:28px}
 @media(min-width:390px) and (max-width:659px){
   .storep-regional .sp-market-grid{gap:5px}
