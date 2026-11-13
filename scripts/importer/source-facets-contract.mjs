@@ -5,9 +5,16 @@
  * description as confirmation of an entitlement. Not connected to public
  * event output or UI; this module has no I/O or network dependencies.
  */
+import { createHash } from 'node:crypto';
 const trim = x => typeof x==='string'?x.trim():'';
 const norm = x => trim(x).normalize('NFKC').toLowerCase().replace(/\s+/g,' ');
-const atom = x => norm(x).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,160);
+// A truncated readable slug alone can collide for long reward descriptions.
+// Retain a deterministic identity digest so future event tiles have unique keys.
+const atom = x => {
+  const identity=norm(x);
+  const slug=identity.replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,128)||'claim';
+  return slug+'-'+createHash('sha256').update(identity).digest('hex').slice(0,12);
+};
 const unique = xs => [...new Set(xs)].sort();
 // Source identity is verified against the actual hostname, not a caller's
 // claimed sourceId; this excludes lookalike / userinfo authority spoofing.
