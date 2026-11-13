@@ -7,7 +7,9 @@ import { OBSERVATIONS } from '../src/regional-observations.js';
 // Runs the real public/store.js against a stub DOM: the owner view must render, including products with no Australian price.
 test('owner Store view renders verified Indonesian prices and regional-only rows without throwing', async () => {
   const R = createRequire(import.meta.url)('../public/regional-prices.js');
-  const el = { innerHTML: '', id: '', querySelector: () => null };
+  const eventHandlers = {};
+  const el = { innerHTML: '', id: '', querySelector: () => null,
+    addEventListener: (name, fn) => { eventHandlers[name] = fn; } };
   const host = { parentNode: { insertBefore: (n) => { Object.assign(el, n); } } };
   const prices = { prices: [
     { product: 'store-x', label: 'Lucky Egg x8', group: 'Items', currency: 'AUD', amount: 7.99, region: 'AU', verified: true, observed: '2026-10-12' },
@@ -18,13 +20,26 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     { product: 'store-raid-day-a', label: 'Raid Day Box', group: 'Boxes', currency: 'AUD',
       region: 'AU', amount: 9.99, verified: true, observed: '2026-11-09' },
     { product: 'store-raid-day-b', label: 'Raid Day Box', group: 'Boxes', currency: 'AUD',
-      region: 'AU', amount: 14.99, verified: true, observed: '2026-11-09' }
+      region: 'AU', amount: 14.99, verified: true, observed: '2026-11-09' },
+    { product: 'store-raid-pass', label: 'Raid Pass', group: 'Items', currency: 'AUD',
+      region: 'AU', amount: 1.99, verified: true, observed: '2026-11-09' },
+    { product: 'store-remote-raid-pass', label: 'Remote Raid Pass', group: 'Items', currency: 'AUD',
+      region: 'AU', amount: 2.99, verified: true, observed: '2026-11-09' },
+    { product: 'store-premium-battle-pass', label: 'Premium Battle Pass', group: 'Items', currency: 'AUD',
+      region: 'AU', amount: 1.99, verified: true, observed: '2026-11-09' },
+    { product: 'store-elite-fast-tm', label: 'Elite Fast TM', group: 'Items', currency: 'AUD',
+      region: 'AU', amount: 5.99, verified: true, observed: '2026-11-09' },
+    { product: 'store-elite-charged-tm', label: 'Elite Charged TM', group: 'Items', currency: 'AUD',
+      region: 'AU', amount: 5.99, verified: true, observed: '2026-11-09' },
+    { product: 'store-elite-charged-tm-box', label: 'Elite Charged TM Box', group: 'Boxes', currency: 'AUD',
+      region: 'AU', amount: 9.99, verified: true, observed: '2026-11-09' }
   ], regional: OBSERVATIONS.concat([{
     id: 'id-raid-day-test', product: 'Raid Day Box', kind: 'bundle', region: 'ID', channel: 'web',
     currency: 'IDR', amount: 50000, observed: '2026-11-09', source: 'fixture', status: 'verified'
   }]), owner: true };
   const win = { GORegionalPrices: R, GOLIB: { esc: s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';'), loadPrices: () => Promise.resolve(prices), priceView: () => ({ sub: '', save: '', main: '' }) }, GODASH: {} };
-  const doc = { readyState: 'complete', getElementById: id => id === 'evsource' ? host : id === 'storep-host' ? null : null, createElement: () => el, addEventListener() {} };
+  const doc = { readyState: 'complete', getElementById: id => id === 'evsource' ? host : id === 'storep-host' ? null : null,
+    createElement: tag => tag === 'span' ? { className: '', textContent: '', setAttribute() {} } : el, addEventListener() {} };
   Object.assign(win, { document: doc, localStorage: { getItem: () => null, setItem() {} }, console }); win.window = win;
   const ctx = vm.createContext(win);
   vm.runInContext(fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8'), ctx);
@@ -89,5 +104,41 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     'generic event artwork must not masquerade as a particular Store box');
   assert.match(el.innerHTML, /class="sp-i-token"[^>]*>◎<\/span>/,
     'PokéCoin rows use a distinct neutral coin token rather than XP artwork');
+
+  const itemCards = (el.innerHTML.match(/<article class="sp-product"[\s\S]*?<\/article>/g) || []);
+  const cardFor = label => itemCards.find(card => card.includes('<b>' + label + '</b>'));
+  assert.match(cardFor('Raid Pass'), /src="\/ico\/g\/raidpass\.webp"/,
+    'only ordinary Raid Passes may use verified ordinary Raid Pass art');
+  assert.match(cardFor('Elite Fast TM'), /src="\/ico\/g\/elite-fast-tm\.webp"/);
+  assert.match(cardFor('Elite Charged TM'), /src="\/ico\/g\/elite-charged-tm\.webp"/);
+  for (const label of ['Remote Raid Pass', 'Premium Battle Pass', 'Elite Charged TM Box']) {
+    const card = cardFor(label);
+    assert.ok(card, 'source-labelled product is displayed: ' + label);
+    assert.doesNotMatch(card, /<img class="sp-i"/,
+      'never borrow an unrelated exact item image for ' + label);
+  }
+  assert.match(cardFor('Remote Raid Pass'), /sp-i-token"[^>]*>PASS<\/span>/);
+  assert.match(cardFor('Premium Battle Pass'), /sp-i-token"[^>]*>PASS<\/span>/);
+  assert.equal(typeof eventHandlers.error, 'function',
+    'Store handles broken exact-item icons without a browser broken-image box');
+  let fallback = null;
+  eventHandlers.error({ target: {
+    matches: selector => selector === 'img.sp-i',
+    getAttribute: attr => attr === 'data-sp-fallback' ? 'PASS' : null,
+    replaceWith: node => { fallback = node; }
+  } });
+  assert.equal(fallback?.className, 'sp-i-token');
+  assert.equal(fallback?.textContent, 'PASS', 'a missing exact image becomes an honest type token');
+
+  const storeSource = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
+  const exactIcons = [...new Set([...storeSource.matchAll(/'(\/ico\/[A-Za-z0-9/_-]+\.webp)'/g)].map(match => match[1]))];
+  assert.ok(exactIcons.length >= 8, 'Store exact-art mapping should cover the verified asset catalogue');
+  for (const iconPath of exactIcons) {
+    const file = new URL('../public' + iconPath, import.meta.url);
+    assert.ok(fs.existsSync(file), 'no exact Store icon may point at an absent asset: ' + iconPath);
+    assert.ok(fs.statSync(file).size > 0, 'verified Store icon cannot be a zero-byte asset: ' + iconPath);
+  }
+
+
 
 });
