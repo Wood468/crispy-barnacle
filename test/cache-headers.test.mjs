@@ -90,6 +90,18 @@ test("static HTML receives narrow security headers without changing asset cache 
     assert.ok(separator > 0, "valid header syntax");
     return [line.slice(0, separator).toLowerCase(), line.slice(separator + 1).trim()];
   }));
+  assert.equal(headers.size, homepage.length, "duplicate security-header names must be rejected");
+  const expectedSecurityHeaders = new Map([
+    ["x-frame-options", "DENY"],
+    ["x-content-type-options", "nosniff"],
+    ["referrer-policy", "strict-origin-when-cross-origin"],
+    ["permissions-policy", "camera=(), microphone=(), geolocation=(), payment=()"],
+    ["strict-transport-security", "max-age=31536000"]
+  ]);
+  for (const [name, value] of expectedSecurityHeaders) {
+    assert.equal(headers.get(name), value, name);
+  }
+  assert.equal(headers.size, expectedSecurityHeaders.size + 1, "only the expected HTML security headers");
   const csp = headers.get("content-security-policy");
   assert.ok(csp, "static homepage must receive CSP");
   assert.match(csp, /script-src 'self'/);
@@ -97,9 +109,13 @@ test("static HTML receives narrow security headers without changing asset cache 
   assert.match(csp, /frame-ancestors 'none'/);
   assert.match(csp, /connect-src 'self' https:\/\/open\.er-api\.com\/v6\/latest\/AUD/);
   assert.doesNotMatch(csp, /script-src[^;]*'unsafe-inline'|https:\/\/\*/);
-  for (const name of ["x-frame-options", "x-content-type-options", "referrer-policy", "permissions-policy", "strict-transport-security"]) {
-    assert.ok(headers.has(name), name);
+  for (const directive of ["default-src 'self'", "base-uri 'self'", "form-action 'self'", "manifest-src 'self'", "worker-src 'self'"]) {
+    assert.ok(csp.split(";").map(value => value.trim()).includes(directive), directive);
   }
+  assert.doesNotMatch(csp, /'unsafe-eval'|script-src[^;]*'unsafe-inline'/);
+  assert.equal(csp.split(";").map(value => value.trim()).filter(Boolean).length,
+    new Set(csp.split(";").map(value => value.trim().split(/\\s+/)[0]).filter(Boolean)).size,
+    "CSP directives must not be duplicated");
   assert.equal(headers.has("cache-control"), false, "HTML must retain default revalidation");
   for (const path of ["/app.js", "/dash.css", "/world-events.json", "/api/events"]) {
     assert.equal([...rules.keys()].filter(pattern => matches(pattern, path)).length, 0, path);
