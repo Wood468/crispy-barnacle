@@ -64,6 +64,11 @@
       }).join('')
       + '<p class="note">Rp prices read from the Indonesian web store and converted at ' + esc(String(fx.rate)) + ' A$ per Rp (' + esc(fx.source || '') + ', ' + esc(fx.observed || '') + '). Australian prices from the Australian store. Nothing is converted from US prices.</p></details>';
   }
+  function storeSearchKey(value) {
+    /* A user typing "pokemon" must find Pokémon/PokéCoins, even when
+       the official source uses composed or decomposed accented letters. */
+    return String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
   function when(iso) { var d = new Date(iso + 'T00:00:00Z'); return isNaN(d) ? String(iso) : d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); }
   function chan(p) { var R = window.GORegionalPrices; return R.REGIONS[p.region] + ' ' + R.CHANNELS[p.channel]; }
   /* The approximate AUD reference goes ABOVE the local checkout currency. */
@@ -184,7 +189,7 @@
       var au = p.aud > 0
         ? '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.aud, 'AUD')) + '</b><small>Verified · ' + esc(when(p.observed)) + '</small></span>'
         : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">Not observed</span>';
-      var search = (p.label + ' ' + p.product + ' ' + p.group + ' ' + priority(p)).toLowerCase();
+      var search = storeSearchKey(p.label + ' ' + p.product + ' ' + p.group + ' ' + priority(p));
       var identityNote = p.ambiguousSku
         ? '<small class="sp-source-id-note">Distinct official SKU: ' + esc(p.product) + ' · other-region price cannot be matched safely</small>'
         : p.regionalUnmatched
@@ -250,7 +255,7 @@
       }
       var search = el.querySelector('[data-sp-search]');
       if (search) search.addEventListener('input', function () {
-        var q = search.value.trim().toLowerCase(), shown = 0;
+        var q = storeSearchKey(search.value.trim()), shown = 0;
         el.querySelectorAll('[data-sp-group]').forEach(function (group) {
           var count = 0;
           group.querySelectorAll('[data-sp-product]').forEach(function (card) {
