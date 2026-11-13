@@ -36,6 +36,10 @@ test('same title or dates do not grant ticket-only perks without an explicit sou
     {id:'unrelated',t:'GO Wild Area: Global',sourceUrl:'https://pokemongo.com/gowildarea/global'}
   ],new Map([[mexico,page(mexico)]]));
   assert.equal(report.unlinkedPages,1);
+  assert.deepEqual(report.unlinkedExamples,[{
+    sourceUrl:'https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city',
+    expectedAlias:'leekduck:pokemon-go-wild-area-2026-mexico-city'
+  }]);
   assert.equal(byEvent.size,0);
 });
 
@@ -46,6 +50,10 @@ test('overlapping explicit alias ownership is ambiguous and must not publish eit
   ];
   const {byEvent,report}=linkStagedFacetsToCanonicalEvents(both,new Map([[wild,page(wild)]]));
   assert.equal(report.ambiguousPages,1);
+  assert.deepEqual(report.ambiguousExamples,[{
+    sourceUrl:'https://leekduck.com/events/pokemon-go-wild-area-2026-global',
+    candidateIds:['wag','wag-venue-ticket']
+  }]);
   assert.equal(byEvent.size,0);
 });
 
@@ -66,6 +74,8 @@ test('spoof hosts, insecure URLs, wrong claimed URL and roundups are rejected',(
     [wild,page('https://leekduck.com/events/unrelated/')]
   ]));
   assert.equal(report.rejectedPages,4);
+  assert.deepEqual(report.unlinkedExamples,[]);
+  assert.deepEqual(report.ambiguousExamples,[]);
   assert.equal(byEvent.size,0);
 });
 
@@ -73,5 +83,31 @@ test('invalid input fails closed without guessing missing event identities',()=>
   assert.throws(()=>linkStagedFacetsToCanonicalEvents(null,new Map()),/events array/);
   assert.throws(()=>linkStagedFacetsToCanonicalEvents(records,[]),/facet map/);
   assert.deepEqual(linkStagedFacetsToCanonicalEvents([],new Map()).report,
-    {publication:'staging-only',eligiblePages:0,linkedPages:0,unlinkedPages:0,ambiguousPages:0,duplicatePages:0,rejectedPages:0});
+    {publication:'staging-only',eligiblePages:0,linkedPages:0,unlinkedPages:0,ambiguousPages:0,duplicatePages:0,rejectedPages:0,
+     unlinkedExamples:[],ambiguousExamples:[]});
+});
+
+test('unresolved diagnostics are source-order independent and capped without source prose',()=>{
+  const urls=Array.from({length:18},(_,i)=>
+    'https://leekduck.com/events/synthetic-unmatched-'+String(i).padStart(2,'0')+'/');
+  const a=linkStagedFacetsToCanonicalEvents([],new Map(urls.map(url=>[url,page(url)]))).report;
+  const b=linkStagedFacetsToCanonicalEvents([],new Map(urls.slice().reverse().map(url=>[url,page(url)]))).report;
+  assert.deepEqual(a,b);
+  assert.equal(a.unlinkedPages,18);
+  assert.equal(a.unlinkedExamples.length,12);
+  assert.equal(a.unlinkedExamples[0].sourceUrl,'https://leekduck.com/events/synthetic-unmatched-00');
+  assert.equal(a.unlinkedExamples[11].sourceUrl,'https://leekduck.com/events/synthetic-unmatched-11');
+  assert.ok(!JSON.stringify(a).includes('Synthetic bonus'));
+});
+
+test('ambiguous diagnostics remain deterministic under reversed event order',()=>{
+  const items=[
+    {id:'wag-west',detailIds:['leekduck:pokemon-go-wild-area-2026-global']},
+    {id:'wag',detailIds:['leekduck:pokemon-go-wild-area-2026-global']}
+  ];
+  const a=linkStagedFacetsToCanonicalEvents(items,new Map([[wild,page(wild)]]));
+  const b=linkStagedFacetsToCanonicalEvents(items.slice().reverse(),new Map([[wild,page(wild)]]));
+  assert.deepEqual(a.report,b.report);
+  assert.deepEqual(a.report.ambiguousExamples[0].candidateIds,['wag','wag-west']);
+  assert.equal(a.byEvent.size,0);
 });
