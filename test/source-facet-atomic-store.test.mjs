@@ -73,7 +73,7 @@ test('optimistic concurrency and exclusive lock reject overlapping writers',asyn
 }));
 test('invalid event IDs and invalid roots cannot escape private snapshot directory',async()=>sandbox(async rootDir=>{
   const plan=buildFacetReviewPlan(stage([benefit]),manifest(['a']));
-  for(const eventId of ['../public','x/y','x.y']){
+  for(const eventId of ['../public','x/y','.hidden','..']){
     await assert.rejects(persistSignedFacetSnapshot({...plan,eventId},authorization(plan),{rootDir,trustedKeys}),/safe event ID/);
   }
   await assert.rejects(persistSignedFacetSnapshot(plan,authorization(plan),{rootDir:'',trustedKeys}),/Trusted root/);
