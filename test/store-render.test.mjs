@@ -234,7 +234,7 @@ test('advanced Store channel coverage never ranks same-name boxes, recorded pric
     'recorded-only prices do not enter the verified purchasing review');
   assert.equal((review.match(/data-sp-compared="yes"/g)||[]).length,1,
     'only a verified exact SKU across distinct checkout channels can be cash-ranked');
-  assert.match(review,/Lowest verified cash price across 2 exact-SKU channels:.*In-app · Rp 28,000/,
+  assert.match(review,/Lowest verified cash price across 2 exact-SKU channels:.*in-app shop · Rp 28,000/,
     'same-SKU same-currency checkout comparison can choose the verified cheaper channel');
   assert.match(review,/Different currencies: no reliable lowest-price comparison/,
     'a fake INR-versus-IDR numerical cheapest claim must never appear');
