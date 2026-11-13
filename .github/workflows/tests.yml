@@ -11,8 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         target:
-          - e8f616aae8fdf2bcff2e323cc78408b6a4a8e38e
-        trial: [1]
+          - 3625a03502c67e08bee7f74db835ac3bf0cb6e02
+        trial: [1, 2]
     env:
       GO_FIELD_NOTES_TEST_BROWSER: webkit
     steps:
@@ -43,17 +43,27 @@ jobs:
           source = target.read_text()
           import ast
           from playwright.sync_api import sync_playwright, TimeoutError as BrowserTimeout
-          expressions = [n.args[0].value for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr == 'wait_for_function' and n.args and isinstance(n.args[0], ast.Constant) and isinstance(n.args[0].value, str)]
+          tree = ast.parse(source)
+          expressions = [n.args[1].value for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == 'wait_for_async' and len(n.args) > 1 and isinstance(n.args[1], ast.Constant)]
           gate = next(x for x in expressions if 'const required' in x)
+          helper = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'wait_for_async')
+          import time
+          namespace = {'time': time}
+          exec(compile(ast.Module(body=[helper], type_ignores=[]), '<actual async helper>', 'exec'), namespace)
+          wait = namespace['wait_for_async']
           with sync_playwright() as pw:
               browser = pw.webkit.launch()
               page = browser.new_page()
               page.goto('http://127.0.0.1:8791/offline.html')
+              result = page.wait_for_function('async () => false', timeout=300)
+              assert result.json_value() is False
+              print('NEGATIVE CONTROL: old wait_for_function returned false without waiting', flush=True)
               for predicate in ['async () => false', gate]:
                   try:
-                      page.wait_for_function(predicate, arg='pwa-readiness-probe', timeout=300)
-                  except BrowserTimeout:
-                      print('PASS real WebKit rejects false/empty async readiness', flush=True)
+                      wait(page, predicate, arg='pwa-readiness-probe', timeout=300)
+                  except AssertionError as error:
+                      assert 'Timed out' in str(error)
+                      print('PASS actual helper blocks false/empty async readiness', flush=True)
                   else:
                       raise AssertionError('False async readiness unexpectedly accepted')
               page.evaluate("""async () => {
@@ -61,14 +71,15 @@ jobs:
                   for (const path of ['/index.html','/app.js','/dash.js','/detail.js']) await c.put(path, new Response('fixture'));
               }""")
               try:
-                  page.wait_for_function(gate, arg='pwa-readiness-probe', timeout=300)
-              except BrowserTimeout:
-                  print('PASS real WebKit rejects missing data.json readiness', flush=True)
+                  wait(page, gate, arg='pwa-readiness-probe', timeout=300)
+              except AssertionError as error:
+                  assert 'Timed out' in str(error)
+                  print('PASS actual helper blocks missing data.json readiness', flush=True)
               else:
                   raise AssertionError('Missing data readiness unexpectedly accepted')
               page.evaluate("caches.open('pwa-readiness-probe').then(c => c.put('/data.json', new Response('{}')))")
-              page.wait_for_function(gate, arg='pwa-readiness-probe', timeout=300)
-              print('PASS real WebKit accepts complete readiness', flush=True)
+              wait(page, gate, arg='pwa-readiness-probe', timeout=300)
+              print('PASS actual helper accepts complete readiness', flush=True)
               page.evaluate("caches.delete('pwa-readiness-probe')")
               browser.close()
           snapshot = '''
