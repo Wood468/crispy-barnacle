@@ -112,3 +112,15 @@ test('Primal modes use the catalogued primal form ID, not the broader mega famil
   assert.equal(accepts(gmax,'gigantamax'),true);
   assert.equal(accepts(gmax,'mega'),false);
 });
+
+test('approved boss guide labels match the real Raid/Max row names without form crossovers',()=>{
+ const dex=[[6,'Charizard'],[382,'Kyogre']];
+ const forms=[[6,'mega-x','Mega X','mega'],[6,'mega-y','Mega Y','mega'],[6,'gmax','Gigantamax','gmax'],[382,'primal','Primal','mega']];
+ assert.equal(L.label(target('mega','006','mega-x'),dex,forms),'Mega Charizard X');
+ assert.equal(L.label(target('mega','006','mega-y'),dex,forms),'Mega Charizard Y');
+ assert.equal(L.label(target('primal','382','primal'),dex,forms),'Primal Kyogre');
+ assert.equal(L.label(target('gigantamax','006','gmax'),dex,forms),'Gigantamax Charizard');
+ assert.equal(L.label(target('dynamax','006'),dex,forms),'Dynamax Charizard');
+ assert.equal(L.label(target('shadow','006'),dex,forms),'Shadow Charizard');
+ assert.notEqual(L.identity(target('mega','006','mega-x')),L.identity(target('mega','006','mega-y')));
+});
