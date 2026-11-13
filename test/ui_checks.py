@@ -2797,10 +2797,10 @@ with sync_playwright() as p:
         # shifts (the footer jumping a screen when the agenda arrives, the freshness line and deadlines row growing, the date and tab bar filling in) happen at any speed, so
         # this is deterministic in CI. Batch 4 measured 0.62 (390px) and 1.09 (1280px) before the fix; Google's "good" threshold is 0.1. Throttled 20-run numbers are in docs/ROADMAP.md.
         CLS_OBSERVER = """window.__cls=0;window.__clsShifts=[];
-        const watched=['#today-v1','#today-legacy','#today-top','#day-brief','.today-layout'];
+        const watched=['#today-v1','#today-legacy','#today-top','#day-brief','.today-layout','#home-now','#action-centre','#seasonbar','#foryou-sec','#weekly-sec'];
         const geometry=()=>Object.fromEntries(watched.map(sel=>{
             const el=document.querySelector(sel),r=el?.getBoundingClientRect(),cs=el?getComputedStyle(el):null;
-            return [sel,el?{y:Math.round(r.y),height:Math.round(r.height),display:cs.display,hidden:el.hidden,children:sel==='#today-top'?Array.from(el.children).map(c=>({tag:c.tagName,id:c.id,cls:typeof c.className==='string'?c.className:'',y:Math.round(c.getBoundingClientRect().y),height:Math.round(c.getBoundingClientRect().height),display:getComputedStyle(c).display})):undefined}:null];
+            return [sel,el?{y:Math.round(r.y),height:Math.round(r.height),display:cs.display,hidden:el.hidden,renderKey:el.getAttribute('data-render-key'),state:el.getAttribute('data-state'),children:sel==='#today-top'?Array.from(el.children).map(c=>({tag:c.tagName,id:c.id,cls:typeof c.className==='string'?c.className:'',y:Math.round(c.getBoundingClientRect().y),height:Math.round(c.getBoundingClientRect().height),display:getComputedStyle(c).display})):undefined}:null];
         }));
         window.__clsGeometry=[];
         const capture=(reason)=>{if(window.__clsGeometry.length<100)window.__clsGeometry.push({at:Math.round(performance.now()),reason,geometry:geometry()});};
