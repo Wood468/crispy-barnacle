@@ -32,12 +32,15 @@ test('FX provider outage retains only a fresh owner-sourced IDR quote', async ()
 
 test('owner Store shows one AUD placeholder before each local price without waiting for FX', async () => {
   let resolveFx;
-  const audAttrs={'data-sp-aud-currency':'IDR','data-sp-aud-min':'76000'};
-  const audNode={textContent:'',notes:[],getAttribute:key=>audAttrs[key]??null,
-    setAttribute:(key,value)=>{audAttrs[key]=value;},
-    appendChild(node){this.notes.push(node);}};
+  function fxNode(currency, amount) {
+    const attrs={'data-sp-aud-currency':currency,'data-sp-aud-min':String(amount)};
+    return {textContent:'',notes:[],attrs,getAttribute:key=>attrs[key]??null,
+      setAttribute:(key,value)=>{attrs[key]=value;},
+      appendChild(node){this.notes.push(node);}};
+  }
+  const idAud=fxNode('IDR',76000), inAud=fxNode('INR',439);
   const el={innerHTML:'',querySelector:()=>null,
-    querySelectorAll:key=>key==='[data-sp-aud-currency]'?[audNode]:[],addEventListener(){}};
+    querySelectorAll:key=>key==='[data-sp-aud-currency]'?[idAud,inAud]:[],addEventListener(){}};
   const host = {parentNode:{insertBefore:()=>{}}};
   // An Australian-only verified item guarantees an honest unobserved ID/IN cell.
   const prices = {owner:true,prices:[{product:'store-test-au-only',label:'AU-only fixture',
@@ -80,8 +83,13 @@ test('owner Store shows one AUD placeholder before each local price without wait
   resolveFx({ok:true,json:async()=>({result:'success',base_code:'AUD',
     time_last_update_unix:Date.parse('2026-11-12')/1000,rates:{IDR:11000,INR:60}})});
   await new Promise(resolve=>setTimeout(resolve,20));
-  assert.match(audNode.textContent,/≈ A\$6\.91/,'fresh IDR FX fills the AUD reference');
-  assert.equal(audNode.notes.length,1,'one dated source note');
-  assert.equal(audNode.notes[0].textContent,'FX · 12 Nov 2026');
-  assert.match(el.innerHTML,/Rp 76,000/,'original price is preserved after conversion');
+  assert.match(idAud.textContent,/≈ A\$6\.91/,'fresh IDR FX fills the AUD reference');
+  assert.match(inAud.textContent,/≈ A\$7\.32/,'fresh INR FX fills the AUD reference');
+  for (const node of [idAud,inAud]) {
+    assert.equal(node.notes.length,1,'one dated FX source note per regional price');
+    assert.equal(node.notes[0].textContent,'FX · 12 Nov 2026');
+    assert.match(node.attrs.title,/Approximate AUD reference/);
+  }
+  assert.match(el.innerHTML,/Rp 76,000/,'original IDR price remains visible');
+  assert.match(el.innerHTML,/₹/,'original INR price remains visible');
 });
