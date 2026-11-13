@@ -5535,6 +5535,27 @@
        "status": "official"
       },
       {
+       "text": "Power up Pokémon 10 times — 100 GO Points",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers with GO Pass Deluxe get an additional Daily Task:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Daily Tasks reset each day and may change throughout the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
        "sources": [
         "leekduck"
@@ -5665,8 +5686,8 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "e4cac0a8fc40c50207caac2f822206c156545825dd38d70d6f704701f40bd2a8",
-    "revision": 8,
+    "contentHash": "f9e41f9e281716f7fbb8b4cbfb0fc4e0b6c797e51a23fb9412bc3b3d42f872f2",
+    "revision": 9,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -5816,6 +5837,27 @@
       "official"
      ],
      "status": "official"
+    },
+    {
+     "text": "Power up Pokémon 10 times — 100 GO Points",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Trainers with GO Pass Deluxe get an additional Daily Task:",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Daily Tasks reset each day and may change throughout the event.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
     },
     {
      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
@@ -7426,7 +7468,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 160,
+    "revision": 162,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -28400,7 +28442,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 175,
+    "revision": 177,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -60085,7 +60127,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 152,
+    "revision": 154,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -60888,6 +60930,27 @@
        "status": "official"
       },
       {
+       "text": "Power up Pokémon 10 times — 100 GO Points",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers with GO Pass Deluxe get an additional Daily Task:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Daily Tasks reset each day and may change throughout the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
        "sources": [
         "leekduck"
@@ -61018,8 +61081,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "446877fca6e546012724f37746e5b3a8ea5be281d09d0047a3249f0aaa3e7c63",
-    "revision": 9,
+    "contentHash": "45ea43fc4253bbeec987a5a93086c84e5c053d3431838bd6639f869fa2534cd4",
+    "revision": 10,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -61167,6 +61230,27 @@
       "official"
      ],
      "status": "official"
+    },
+    {
+     "text": "Power up Pokémon 10 times — 100 GO Points",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Trainers with GO Pass Deluxe get an additional Daily Task:",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Daily Tasks reset each day and may change throughout the event.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
     },
     {
      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
@@ -62780,7 +62864,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 160,
+    "revision": 162,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -70153,7 +70237,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 152,
+    "revision": 154,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -71619,7 +71703,14 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "text": "Event raids begin at 5:00 a.m. local time each day, five hours before the rest of the event starts at 10:00 a.m.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
        "sources": [
         "leekduck"
        ],
@@ -71766,7 +71857,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
        "sources": [
         "leekduck"
        ],
@@ -71855,7 +71946,14 @@
        "status": "official"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter mighty Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
        "sources": [
         "leekduck"
        ],
@@ -71973,6 +72071,13 @@
       },
       {
        "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter mighty Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
        "sources": [
         "leekduck"
        ],
@@ -75641,7 +75746,14 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "text": "Event raids begin at 5:00 a.m. local time each day, five hours before the rest of the event starts at 10:00 a.m.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
        "sources": [
         "leekduck"
        ],
@@ -75788,7 +75900,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
        "sources": [
         "leekduck"
        ],
@@ -75877,7 +75989,14 @@
        "status": "official"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter mighty Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
        "sources": [
         "leekduck"
        ],
@@ -75995,6 +76114,13 @@
       },
       {
        "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter mighty Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
        "sources": [
         "leekduck"
        ],
