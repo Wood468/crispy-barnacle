@@ -264,3 +264,47 @@ test('quantity discovery ignores unrelated text and unsafe numeric metadata', ()
   assert.equal(Object.hasOwn(tm,'quantity'),false);
   assert.equal(Object.hasOwn(remote,'quantity'),false);
 });
+
+
+test('finding an exact reward focuses its quantity and source track, not a different tile at the same rank', () => {
+  const f=fixture(),doc=f.article.ownerDocument,row=f.rows[45];
+  const free=row.querySelector('.ue-lane-free');
+  const deluxe=doc.createElement('div');deluxe.className='ue-lane ue-lane-deluxe';row.appendChild(deluxe);
+  function add(lane,qty) {
+    const tile=doc.createElement('div');tile.className='ue-pass-reward';
+    const name=doc.createElement('span');name.className='ue-pass-name';
+    const title=doc.createElement('b');title.textContent='Rare Candy XL';
+    const meta=doc.createElement('small');meta.textContent='×'+qty+' · Item';
+    name.append(title,meta);tile.appendChild(name);lane.appendChild(tile);return tile;
+  }
+  const free3=add(free,3),free4=add(free,4),deluxe4=add(deluxe,4);
+  assert.equal(N.mount(f.root),1);
+  const finder=f.article.querySelector('.ue-pass-finder');
+  const input=finder.querySelector('input'), results=finder.querySelector('.ue-pass-find-results');
+  input.value='rare candy';input.dispatch('input');
+  assert.equal(results.children.length,3);
+  const chosen=results.children.find(btn => /Rare Candy XL · ×4 · Deluxe/.test(btn.textContent));
+  assert.ok(chosen,'the Deluxe reward is independently searchable');
+  chosen.dispatch('click');
+  assert.equal(f.groups[26].details.open,true);
+  assert.equal(deluxe4.focused,true,'focus moves to the exact Deluxe ×4 reward');
+  assert.equal(deluxe4.scrolled,true,'the selected reward is scrolled into view');
+  assert.equal(free3.focused,false);
+  assert.equal(free4.focused,false);
+  assert.equal(row.focused,false,'the rank row does not steal focus from a known exact reward');
+  assert.match(finder.querySelector('.ue-pass-find-status').textContent,/Rare Candy XL · ×4 \(Deluxe\)/);
+});
+
+test('finder gracefully focuses its published rank when the selected tile was removed after indexing', () => {
+  const f=fixture();
+  assert.equal(N.mount(f.root),1);
+  const finder=f.article.querySelector('.ue-pass-finder');
+  const input=finder.querySelector('input'),results=finder.querySelector('.ue-pass-find-results');
+  input.value='bottle';input.dispatch('input');
+  assert.equal(results.children.length,1);
+  const lane=f.rows[100].querySelector('.ue-lane-deluxe');
+  lane.children=[]; // A later UI rerender removed the reward after finder indexing.
+  results.children[0].dispatch('click');
+  assert.equal(f.groups[76].details.open,true);
+  assert.equal(f.rows[100].focused,true,'fallback is the real published rank, not a fabricated tile');
+});
