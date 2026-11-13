@@ -5,7 +5,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { SOURCES, sourceFor } from "./sources.mjs";
 import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent, researchOptions } from "./extract.mjs";
-import { collectSourceFacetStaging } from "./source-facets-stage.mjs";
+import { collectCanonicalSourceFacetAudit } from "./source-facets-canonical-audit.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
 import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries, sharedArticleKey } from "./world.mjs";
@@ -326,7 +326,7 @@ async function main() {
   for(const page of pages)page.fields=extractFields(page.html,rewardOptions);
   // Staging only: count additional verified-source claims for importer QA.
   // Do not merge these preliminary facets into published event-details data.
-  const sourceFacetStaging = collectSourceFacetStaging(pages).report;
+  const sourceFacetStaging = collectCanonicalSourceFacetAudit(pages,events).report;
   const byEvent = new Map(), unmatched = [];
   for (const p of pages) {
     const hit = pickEvent(p, events);
