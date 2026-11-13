@@ -48,7 +48,10 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.ok(el.innerHTML.includes('no exact AU SKU pairing established'),
     'the same-name Indonesian offer must not be attributed to either AU box');
   assert.equal((el.innerHTML.match(/Distinct official SKU: store-raid-day-/g)||[]).length,2);
-  assert.equal((el.innerHTML.match(/Rp 50,000/g)||[]).length,1,
+  const raidCards = (el.innerHTML.match(/<article class="sp-product"[\\s\\S]*?<\\/article>/g)||[])
+    .filter(card => card.includes('Raid Day Box'));
+  assert.equal(raidCards.length,3,'two AU SKUs plus one unpaired local observation');
+  assert.equal(raidCards.filter(card=>card.includes('Rp 50,000')).length,1,
     'one regional observation cannot become two independently verified SKU prices');
   assert.doesNotMatch(el.innerHTML, /class="sp-product-group"/,
     'internal event-pass/sku classifier strings must not be exposed as product labels');
