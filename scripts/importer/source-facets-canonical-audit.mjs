@@ -13,8 +13,33 @@ import { normalizeEventSourceFacets } from './source-facets-contract.mjs';
  * after the curated/API event list. These are audit candidates only.
  * A source without an exact trusted LeekDuck event URL is never attributed.
  */
-export function worldSourceFacetCandidates(world){
+function worldLeekDuckKey(value){
+  try{
+    const u=new URL(value);
+    if(u.protocol!=='https:'||u.username||u.password||u.hash||
+       !['leekduck.com','www.leekduck.com'].includes(u.hostname.toLowerCase())||
+       !/^\\/events\\/[^/]+\\/?$/.test(u.pathname))return null;
+    return 'leekduck.com'+u.pathname.replace(/\\/$/,'');
+  }catch{return null;}
+}
+export function worldSourceFacetCandidates(world,knownEvents=[]){
   if(!Array.isArray(world))throw new TypeError('World event records array required');
+  if(!Array.isArray(knownEvents))throw new TypeError('Known canonical events array required');
+  // The curated/API list already contains source-generated alias events and
+  // owner-reviewed exact source links. Do not create a SECOND world owner
+  // for those pages: it made previously linked sources ambiguous.
+  const knownIds=new Set();
+  const knownPages=new Set();
+  for(const item of knownEvents){
+    if(typeof item?.id==='string')knownIds.add(item.id);
+    if(Array.isArray(item?.detailIds))for(const id of item.detailIds){
+      if(typeof id==='string')knownIds.add(id);
+    }
+    for(const value of [item?.link,item?.sourceUrl]){
+      const key=worldLeekDuckKey(value);
+      if(key)knownPages.add(key);
+    }
+  }
   const out=[],seen=new Set();
   for(const event of world){
     if(!event||typeof event.id!=='string'||!/^[a-z0-9][a-z0-9:._-]{0,159}$/i.test(event.id)||
@@ -26,7 +51,12 @@ export function worldSourceFacetCandidates(world){
         if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||
            !['leekduck.com','www.leekduck.com'].includes(u.hostname.toLowerCase())||
            !/^\/events\/[^/]+\/?$/.test(u.pathname))continue;
-        const key=event.id+'|'+u.hostname.toLowerCase()+u.pathname.replace(/\/$/,'');
+        const pageKey=worldLeekDuckKey(source.url);
+        const alias='leekduck:'+u.pathname.replace(/^\/events\//,'').replace(/\/$/,'');
+        // An exact existing canonical owner beats this secondary world copy;
+        // never suppress on a similar title, region or date.
+        if(!pageKey||knownIds.has(alias)||knownPages.has(pageKey))continue;
+        const key=event.id+'|'+pageKey;
         if(seen.has(key))continue;
         seen.add(key);
         out.push({id:event.id,sourceUrl:source.url});
