@@ -97,9 +97,9 @@ test('invalid calendar dates do not fabricate a raid window',()=>{
  const bad={rotation:[{s:'2026-02-30T10:00',e:'2026-03-10T10:00',five:'Bulbasaur'}]};
  assert.deepEqual(picker.options(bad,dex,at('2026-03-01T12:00'),lib.raidBossNames),[]);
 });
-test('UI always uses schedule allowlist for datalist AND save-time mode validation',()=>{
+test('UI uses exact scheduled choices and revalidates the saved identity',()=>{
  const s=readFileSync(new URL('../public/review.js',import.meta.url),'utf8');
- assert.match(s,/function currentBossChoices\(\)/);
+ assert.match(s,/var eligibleBosses = exactScheduledChoices\(\)/);
  assert.match(s,/exactScheduledChoices\(\)\.filter\(function \(row\)/);
  assert.match(s,/var target = matches\[0\]\.target/);
  assert.match(s,/data-ig-boss-choice/);
