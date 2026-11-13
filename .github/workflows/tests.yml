@@ -1,318 +1,59 @@
-name: Tests
-
+name: PWA offline comparison (diagnostic branch only)
+on:
+  workflow_dispatch:
 permissions:
   contents: read
-
-# Changes that only touch data files (the importer, AI checks and bots commit these all day) skip the tests: no code changed.
-# JavaScript, Python and the browser checks all run on every other push (the repo is public, so minutes are free).
-on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - "data/**"
-      - "public/*.json"
-      - "infographics.json"
-      - "**/*.md"
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - "data/**"
-      - "public/*.json"
-      - "infographics.json"
-      - "**/*.md"
-  workflow_dispatch:
-
-concurrency:
-  group: tests-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  javascript:
+  compare:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version: 22
-      - name: Verify changed asset cache-bust versions
-        env:
-          GOFN_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-        run: node scripts/check-asset-versions.mjs
-      - name: Run JavaScript regression tests
-        run: node --test test/*.test.mjs test/*.test.cjs
-      - name: Report raid schedule coverage gaps (informational)
-        run: node scripts/audit-raid-coverage.mjs
-      - name: Check the artwork manifest and owner gallery are current
-        run: |
-          node scripts/artwork-manifest.mjs --check
-          node scripts/artwork-gallery.mjs --check
-
-  python:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
-        with:
-          python-version: "3.12"
-      - name: Validate Python browser test syntax before expensive Playwright shards
-        run: python -m compileall -q test
-      - name: Run Discord scraper regression tests
-        run: python -m unittest discover -s test -p 'test_*.py'
-
-  browser:
-    # Five parallel shards: the existing UI_SHARD a/b/c plus d/e for the longer browser suites.
-    runs-on: ubuntu-latest
-    timeout-minutes: 15   # hard stop for a runaway shard; individual browser waits are bounded below
+    timeout-minutes: 12
     strategy:
       fail-fast: false
       matrix:
-        shard: [a, b, c, d, e]
+        target:
+          - 41bc38a633e57f6e14b09e6b98d2b0c374fefd7f
+          - cbd99d70351525a0f430ecfe7f51b431cdc3527c
+        trial: [1, 2]
     env:
-      UI_SHARD: ${{ matrix.shard }}
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
-        with:
-          python-version: "3.12"
-      - name: Cache Playwright browser
-        id: pw
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ runner.os }}-v2
-      - name: Install Playwright
-        run: |
-          pip install playwright
-          if [ "${{ steps.pw.outputs.cache-hit }}" = "true" ]; then python -m playwright install-deps chromium; python -m playwright install chromium; else python -m playwright install --with-deps chromium; fi
-      - name: Start static app server
-        run: |
-          python -m http.server 8791 --directory public > /tmp/go-field-notes-http.log 2>&1 &
-          for i in $(seq 1 20); do
-            if curl --silent --fail http://127.0.0.1:8791/ > /dev/null; then exit 0; fi
-            sleep 1
-          done
-          cat /tmp/go-field-notes-http.log
-          exit 1
-      - name: Run browser regression tests
-        if: contains(fromJSON('["a","b","c"]'), matrix.shard)
-        shell: bash
-        run: |
-          set +e
-          python test/ui_checks.py 2>&1 | tee /tmp/ui-checks.log
-          rc=${PIPESTATUS[0]}
-          # Annotate failures only; a successful summary should not create false error annotations.
-          if [ "$rc" -ne 0 ]; then
-            grep -E '^FAIL' /tmp/ui-checks.log | cut -c1-300 | head -20 | while read -r l; do echo "::error::$l"; done
-            tail -n 20 /tmp/ui-checks.log | cut -c1-300 | while read -r l; do echo "::error::tail: $l"; done
-          else
-            grep -E '^FAILED:' /tmp/ui-checks.log | tail -1
-          fi
-          exit "$rc"
-      - name: Verify the In person and world events view
-        if: matrix.shard == 'a'
-        run: python test/world_view_browser.py
-      - name: Verify Places dialog keyboard focus containment
-        if: matrix.shard == 'a'
-        run: python test/places_dialog_browser.py
-      - name: Verify narrow Schedule layout at 320/375/390px
-        if: matrix.shard == 'b'
-        run: python test/schedule_layout_browser.py
-
-      - name: Verify final polish (hit targets, long names, focus, load error, offline tabs)
-        if: matrix.shard == 'c'
-        run: python test/final_polish_browser.py
-
-      - name: Verify Collection opportunity planner
-        if: matrix.shard == 'b'
-        run: python test/opportunity_planner_browser.py
-
-      - name: Verify Research freshness and recovery
-        if: matrix.shard == 'b'
-        run: |
-          python test/research_recovery_browser.py
-          python test/research_sources_browser.py
-
-      - name: Verify universal event catalogue and future announcements
-        if: matrix.shard == 'b'
-        run: |
-          python test/universal_event_browser.py
-          python test/worldwide_timezone_browser.py
-
-      - name: Verify premium Today, Schedule and event detail surfaces
-        if: matrix.shard == 'd'
-        run: |
-          python test/premium_surfaces_browser.py
-          python test/today_detail_redesign_browser.py
-          python test/today_done_browser.py
-          python test/today_v1_coverage_browser.py
-          python test/battle_rotation_browser.py
-          python test/wild_area_battle_browser.py
-          python test/raids_max_polish_browser.py
-          python test/event_consistency_browser.py
-          python test/event_specials_browser.py
-          python test/event_rotations_browser.py
-          python test/schedule_gopass_browser.py
-          python test/visual_refinements_browser.py
-          python test/accuracy_fixes_browser.py
-
-      - name: Verify combined source rendering and offline upgrade
-        if: matrix.shard == 'e'
-        run: |
-          python test/release_browser.py
-          python test/pwa_upgrade_browser.py
-          python test/storage_failure_browser.py
-
-      - name: Verify variant artwork (costumes, Shiny, Shadow, Dynamax, Gigantamax, fallbacks)
-        if: matrix.shard == 'e'
-        run: python test/variant_art_browser.py
-
-      - name: Verify Today slow-feed fallback and late recovery
-        if: matrix.shard == 'c'
-        env:
-          GO_FIELD_NOTES_SLOW_FEED_URL: http://127.0.0.1:8791
-        run: python test/slow_feed_browser.py
-
-
-  webkit:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    permissions:
-      contents: read
-      checks: read
-    env:
-      GO_FIELD_NOTES_SCREENSHOTS: /tmp/gofn-screenshots
       GO_FIELD_NOTES_TEST_BROWSER: webkit
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          python-version: "3.12"
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+          ref: ${{ matrix.target }}
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
-          node-version: 22
-      - name: Install Playwright Python package
-        run: pip install playwright
-      - name: Resolve Playwright browser revision
-        id: playwright-version
-        run: echo "version=$(python -c 'import importlib.metadata; print(importlib.metadata.version("playwright"))')" >> "$GITHUB_OUTPUT"
-      - name: Cache Playwright WebKit browser
-        id: webkit-cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+          python-version: '3.12'
+      - run: pip install playwright==1.62.0
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-webkit-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
-      - name: Install Playwright WebKit system dependencies
-        run: python -m playwright install-deps webkit
-      - name: Install Playwright WebKit browser
-        if: steps.webkit-cache.outputs.cache-hit != 'true'
-        run: python -m playwright install webkit
-      - name: Start static app server
+          key: playwright-webkit-${{ runner.os }}-1.62.0
+      - run: python -m playwright install --with-deps webkit
+      - name: Run original PWA test with read-only diagnostics
+        shell: bash
         run: |
-          python -m http.server 8791 --directory public > /tmp/go-field-notes-http.log 2>&1 &
+          python -m http.server 8791 --directory public > /tmp/pwa-http.log 2>&1 &
           for i in $(seq 1 20); do
-            if curl --silent --fail http://127.0.0.1:8791/ > /dev/null; then exit 0; fi
+            if curl --silent --fail http://127.0.0.1:8791/ > /dev/null; then break; fi
             sleep 1
           done
-          exit 1
-      - name: Verify Collection planner and Research in WebKit
-        run: |
-          python test/opportunity_planner_browser.py
-          python test/research_recovery_browser.py
-          python test/research_sources_browser.py
-          python test/premium_surfaces_browser.py
-          python test/today_detail_redesign_browser.py
-          python test/today_done_browser.py
-          python test/today_v1_coverage_browser.py
-          python test/battle_rotation_browser.py
-          python test/raids_max_polish_browser.py
-          python test/event_specials_browser.py
-          python test/event_rotations_browser.py
-          python test/schedule_gopass_browser.py
-          python test/universal_event_browser.py
-          python test/worldwide_timezone_browser.py
-      - name: Verify combined source rendering, PWA update and preserved player data
-        run: |
-          python test/release_browser.py
-          python test/pwa_upgrade_browser.py
-          python test/storage_failure_browser.py
-      - name: Verify final polish in WebKit
-        run: python test/final_polish_browser.py
-
-      - name: Verify variant artwork in WebKit
-        run: python test/variant_art_browser.py
-      - name: Retain mobile WebKit screenshots
-        if: always()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: webkit-mobile-surfaces
-          path: /tmp/gofn-screenshots
-          if-no-files-found: ignore
-      - name: Wait for the approved production build
-        if: github.event_name == 'push'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/wait-for-workers-build.mjs
-      - name: Verify actual production assets and application in WebKit
-        if: github.event_name == 'push'
-        env:
-          GO_FIELD_NOTES_RELEASE_URL: https://pogo.michaelpuff.com
-        run: python test/release_browser.py
-
-  production-image-audit:
-    # Informational, read-only sample of the live public site; never blocks code checks.
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
-        with:
-          python-version: "3.12"
-      - name: Install Playwright
-        run: |
-          pip install playwright
-          python -m playwright install --with-deps chromium
-      - name: Measure production image waterfall (read-only)
-        env:
-          GO_FIELD_NOTES_AUDIT_URL: https://pogo.michaelpuff.com/
-        run: python test/production_image_audit.py
-
-
-  production-gopass-visibility:
-    # Dedicated, read-only production check. Run separately from long image audit
-    # so a slow image waterfall cannot mask or postpone feature visibility proof.
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-    runs-on: ubuntu-latest
-    timeout-minutes: 8
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
-        with:
-          python-version: "3.12"
-      - name: Install Playwright Chromium
-        run: |
-          pip install playwright
-          python -m playwright install --with-deps chromium
-      - name: Wait for matching production Cloudflare build after merge
-        if: github.event_name == 'push'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/wait-for-workers-build.mjs
-      - name: Probe actual live GO Pass controls (no local fixtures)
-        env:
-          GO_FIELD_NOTES_LIVE_GO_PASS_URL: https://pogo.michaelpuff.com
-          GOFN_EXPECT_NAV_FIRST: ${{ github.event_name == 'push' && '1' || '0' }}
-        run: python test/production_gopass_visibility.py
-      - name: Retain live GO Pass screenshots
-        if: always()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: production-gopass-visibility
-          path: /tmp/gopass-live-check
-          if-no-files-found: ignore
+          python - <<'PY'
+          from pathlib import Path
+          target = Path('test/pwa_upgrade_browser.py')
+          source = target.read_text()
+          snapshot = '''
+              print('PWA boundary:', page.evaluate("""async () => ({
+                  markerType: typeof window.__oldController,
+                  controllerState: navigator.serviceWorker.controller?.state,
+                  controlledByActive: navigator.serviceWorker.controller === (await navigator.serviceWorker.getRegistration()).active,
+                  caches: await Promise.all((await caches.keys()).filter(n => n.startsWith('gofn-shell-')).map(async name => {
+                      const cache = await caches.open(name);
+                      return {name, data: !!(await cache.match('/data.json')), index: !!(await cache.match('/index.html')), keys: (await cache.keys()).length};
+                  }))
+              })"""), flush=True)
+          '''
+          source = source.replace('    context.set_offline(True)', snapshot + '\n    context.set_offline(True)')
+          # Execute the original script in place so its source-root calculation is unchanged.
+          exec(compile(source, str(target.resolve()), 'exec'), {'__file__': str(target.resolve()), '__name__': '__main__'})
+          PY
