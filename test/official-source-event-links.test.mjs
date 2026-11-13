@@ -96,3 +96,21 @@ test('invalid caller data is rejected rather than converted into inferred events
   ambiguousPages:0,rejectedPages:0,duplicatePages:0,unlinkedExamples:[],ambiguousExamples:[]
  });
 });
+
+test('nonstandard HTTPS ports never establish official identity',()=>{
+ const url='https://pokemongo.com:8443/gowildarea/global';
+ const {report,byEvent}=link([{id:'wag',sourceUrl:official}],new Map([[url,facets(url)]]));
+ assert.equal(report.rejectedPages,1);
+ assert.equal(byEvent.size,0);
+});
+test('conflicting duplicate official claims remain ambiguous independent of order',()=>{
+ const alternate='https://www.pokemongo.com/gowildarea/global/';
+ const conflicting={...facets(alternate),benefits:[{label:'Different ticket claim',access:'ticket'}]};
+ const entries=[[official,facets(official)],[alternate,conflicting]];
+ for(const input of [entries,entries.slice().reverse()]){
+  const {report,byEvent}=link([{id:'wag',sourceUrl:official}],new Map(input));
+  assert.equal(report.ambiguousPages,1);
+  assert.equal(report.linkedPages,0);
+  assert.equal(byEvent.size,0);
+ }
+});
