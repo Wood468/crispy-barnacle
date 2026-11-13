@@ -133,7 +133,11 @@ with sync_playwright() as pw:
     page.keyboard.press('Escape')
     page.locator('nav.tabs button[data-tab="events"]').click()
     page.wait_for_selector('#tab-events:not([hidden])')
-    page.wait_for_selector('#tab-events .evc', timeout=15000)
+    # App may remember Calendar/Research/In person as the prior Schedule view.
+    # Offline acceptance must explicitly select Timeline before checking its cards.
+    page.locator('#subnav-events button[data-sub="timeline"]').click()
+    page.wait_for_selector('#sub-timeline:not([hidden])')
+    page.wait_for_selector('#sub-timeline .evc', timeout=15000)
     assert page.locator('#tab-events .evc').count() > 0
     assert page.evaluate(READ_KEYS, KEYS) == SEED, 'keys changed after offline navigation on the new shell'
     assert page.evaluate('GO.dex().m.own[25]') == 1
