@@ -322,10 +322,12 @@
       if (!d || !d.owner) return; /* Owner-only regional prices stay private. */
       // Public current-SKU membership contains NO private prices.
       // Fail closed if it is missing or stale; never resurrect retired passes.
-      try {
-        var response = await fetch('/store-current.json', {cache:'no-store'});
-        d.currentStore = response.ok ? await response.json() : {version:0,items:[]};
-      } catch (_) { d.currentStore = {version:0,items:[]}; }
+      if (typeof window.fetch === 'function') {
+        try {
+          var response = await window.fetch('/store-current.json', {cache:'no-store'});
+          d.currentStore = response.ok ? await response.json() : {version:0,items:[]};
+        } catch (_) { d.currentStore = {version:0,items:[]}; }
+      }
       /* Render local observed prices immediately; an external FX request must
          never delay the Store, including when a provider hangs. */
       var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
