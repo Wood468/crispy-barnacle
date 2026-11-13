@@ -73,6 +73,12 @@ def test_real_today_renderer_geometry():
                 page.add_style_tag(content=CSS)
                 page.add_script_tag(content=(ROOT / "public" / "today-logic.js").read_text())
                 page.add_script_tag(content=(ROOT / "public" / "today.js").read_text())
+                # Wait for the renderer-inserted data-URI image to decode before measuring.
+                # Keep the actual image-visibility assertion below.
+                page.wait_for_function("""() => {
+                  const img = document.querySelector('[data-id="fixture-compact"] .t1-minor-art img');
+                  return !!img && img.complete && img.naturalWidth > 0;
+                }""", timeout=10000)
                 result = page.evaluate("""(png) => {
                   const now = Date.UTC(2026,10,14,10), hour = 3600000;
                   const minor = {id:'fixture-compact',name:'GO Wild Area: Global — long compact artwork containment fixture',
