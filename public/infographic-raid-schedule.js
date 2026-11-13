@@ -195,6 +195,24 @@
           a.name.localeCompare(b.name) || a.battleMode.localeCompare(b.battleMode);
       });
   }
-  return { options: options, speciesName: speciesName, targetChoices: targetChoices, descriptor: descriptor };
+  /* Persistent guides can outlive the source rotation. Match visible Battle
+     rows to approved Pokémon/form/mode identity, not similar-looking names. */
+  function matchesTarget(raw, mode, target, dex) {
+    if (!target || typeof target.pokemonId !== 'string' || !Array.isArray(dex) ||
+        mode !== target.battleMode) return false;
+    var mon = dex.filter(function (row) {
+      return row && String(row[0]).padStart(3, '0') === target.pokemonId;
+    })[0];
+    if (!mon || typeof raw !== 'string' ||
+        speciesName(raw).toLocaleLowerCase() !== String(mon[1]).toLocaleLowerCase()) return false;
+    var modifier = descriptor(raw, mon[1]);
+    var form = String(target.formId || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (mode === 'mega') form = form === 'mega' ? '' : form.replace(/^mega/, '');
+    if (mode === 'primal' && form === 'primal') form = '';
+    if (mode === 'gigantamax' && form === 'gmax') form = '';
+    return modifier === form;
+  }
+  return { options: options, speciesName: speciesName, targetChoices: targetChoices,
+    descriptor: descriptor, matchesTarget: matchesTarget };
 
 });
