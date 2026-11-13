@@ -204,3 +204,30 @@ test('conflicting explicit GO Pass quantities remain separate pending source rec
  assert.equal((rank.match(/<b>Incense<\/b>|<b>Incense ×2<\/b>/g)||[]).length,2,
    'conflicting quantities are not silently merged into a single entitlement');
 }));
+
+test('fallback without optional item-art mapper never borrows remote or premium pass artwork', () => {
+ const previous = globalThis.GOGoPassRewardArt;
+ try {
+  delete globalThis.GOGoPassRewardArt;
+  const html = UI.render(model([{rank:1,free:[
+   {type:'item',name:'Remote Raid Pass'},
+   {type:'item',name:'Premium Battle Pass'},
+   {type:'item',name:'Raid Pass'},
+   {type:'encounter',name:'Dynamax Meltan'},
+   {type:'item',name:'Golden Razz Bonus'}
+  ]}]),{});
+  const row=html.match(/<li class="ue-pass-rank" data-rank="1">([\s\S]*?)<\/li>/);
+  assert.ok(row,'actual GO Pass reward row renders');
+  assert.equal((row[1].match(/src="\/ico\/g\/raidpass\.webp"/g)||[]).length,1,
+    'only the ordinary Raid Pass uses its exact verified image');
+  assert.doesNotMatch(row[1],/<b>Remote Raid Pass<\/b>[\s\S]*?<img src="\/ico\/g\/raidpass\.webp"/,
+    'remote pass must not masquerade as an ordinary Raid Pass');
+  assert.match(row[1],/ue-reward-icon">PKM<\/span>/,
+    'encounters with no sourced asset should show an honest category indicator, not a broken-image question mark');
+  assert.doesNotMatch(row[1],/\/ico\/i\/golden-razz\.webp/,
+    'a Golden Razz Bonus is not proof of a Golden Razz Berry reward');
+ } finally {
+  if(previous === undefined) delete globalThis.GOGoPassRewardArt;
+  else globalThis.GOGoPassRewardArt = previous;
+ }
+});
