@@ -44,7 +44,7 @@ test('stale or future listing snapshots cannot confirm current availability', ()
 test('explicit passed purchase end plus corroborating source confirms retirement', () => {
   const result = availability.classify({
     purchaseEndAt: '2026-11-12T23:59:00Z', retirementEvidence: retired,
-    listingEvidence: listing
+    listingEvidence: { ...listing, checkedAt: '2026-11-12T22:00:00Z' }
   }, NOW);
   assert.equal(result.availability, 'confirmed-retired');
   assert.equal(result.evidence.sourceUrl, retired.sourceUrl);
@@ -79,4 +79,38 @@ test('malformed dates, URLs, locales and timestamps fail closed', () => {
   assert.equal(availability.classify({ purchaseEndAt: '2026-02-31', retirementEvidence: retired }, NOW).availability, 'unknown');
   assert.throws(() => availability.classify({}, 'not-a-date'), /evaluation time/);
   assert.throws(() => availability.classify({}, NOW, -1), /maxAgeDays/);
+});
+
+test('market and purchase channel must match the evidence', () => {
+  assert.equal(availability.classify({ locale: 'id-ID', channel: 'web', listingEvidence: listing }, NOW).availability, 'unknown');
+  assert.equal(availability.classify({ locale: 'en', channel: 'in-app', listingEvidence: listing }, NOW).availability, 'unknown');
+  assert.equal(availability.classify({ locale: 'en', channel: 'web', listingEvidence: listing }, NOW).availability, 'confirmed-listed');
+  assert.equal(availability.classify({ locale: 'id-ID', channel: 'web',
+    purchaseEndAt: '2026-11-12T00:00:00Z', retirementEvidence: retired }, NOW).availability, 'unknown');
+});
+
+test('retirement evidence must be recent and valid, not future or malformed', () => {
+  for (const checkedAt of ['2026-11-14T00:00:00Z', '2026-01-01T00:00:00Z',
+    '2026-02-30', 'not-a-date']) {
+    assert.equal(availability.classify({ purchaseEndAt: '2026-11-12T23:00:00Z',
+      retirementEvidence: { ...retired, checkedAt } }, NOW).availability, 'unknown');
+  }
+});
+
+test('calendar overflow cannot silently retire a pass', () => {
+  for (const purchaseEndAt of ['2026-13-99', '2026-02-30', '2025-02-29',
+    '2026-04-31', '2026-11-13T25:00:00Z']) {
+    assert.equal(availability.classify({ purchaseEndAt, retirementEvidence: retired }, NOW).availability, 'unknown');
+  }
+  assert.equal(availability.classify({ purchaseEndAt: '2024-02-29',
+    retirementEvidence: retired }, NOW).availability, 'confirmed-retired');
+});
+
+test('conflicting fresh listing observed after purchase expiry fails closed', () => {
+  const offer = { locale: 'en', channel: 'web', purchaseEndAt: '2026-11-12T23:00:00Z',
+    retirementEvidence: retired, listingEvidence: listing };
+  assert.equal(availability.classify(offer, NOW).availability, 'unknown');
+  assert.equal(availability.classify({
+    ...offer, listingEvidence: { ...listing, checkedAt: '2026-11-12T22:00:00Z' }
+  }, NOW).availability, 'confirmed-retired');
 });
