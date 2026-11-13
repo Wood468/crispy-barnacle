@@ -12,11 +12,16 @@
     [/^max revives?(?:\s*[×x]\s*\d+)?$/i, '/ico/i/max-revive.webp'],
     [/^golden razz berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i, '/ico/i/golden-razz.webp'],
     [/^silver pinap berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i, '/ico/i/silver-pinap.webp'],
-    [/^incense$/i, '/ico/incense.webp']
+    [/^incense$/i, '/ico/incense.webp'],
+    [/^elite fast tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-fast-tm.webp'],
+    [/^elite charged tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-charged-tm.webp'],
+    [/^raid pass(?:es)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/raidpass.webp']
   ];
   function kindToken(label) {
     if (/pok[eé]coins?/i.test(label)) return '◎';
     if (/storage|item bag|bag upgrade|capacity/i.test(label)) return '↑';
+    if (/^(?:remote )?raid pass(?:es)?(?:\s*[×x]\s*\d+)?$|^premium battle pass(?:es)?(?:\s*[×x]\s*\d+)?$/i.test(label)) return 'PASS';
+    if (/^elite (?:fast|charged) tm(?:s)?(?:\s*[×x]\s*\d+)?$/i.test(label)) return 'TM';
     if (/^go[- ]pass|monthly.*pass|(?:event|admission).*ticket/i.test(label)) return 'PASS';
     if (/lucky eggs?/i.test(label)) return 'LE';
     if (/star pieces?/i.test(label)) return 'SP';
