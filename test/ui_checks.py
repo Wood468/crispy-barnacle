@@ -2811,18 +2811,18 @@ with sync_playwright() as p:
                     })});
             }
         }).observe({type:'layout-shift',buffered:true})"""
+        # Three independent cold navigations per width expose intermittent shifts.
+        # Each sample must pass the existing strict CLS <0.1 guard.
         for cls_w in (390, 1280):
-            cpg = page(width=cls_w, mobile=cls_w < 500, pre=lambda p: p.add_init_script(CLS_OBSERVER))
-            settle(cpg, "!!(window.GOFRESH&&window.GOFRESH.state().done&&window.GOINFOGRAPHIC&&window.GOEXTRA)")  # the late scripts and the freshness line are part of the load
-            cpg.wait_for_timeout(1500)
-            cls_val = cpg.evaluate("window.__cls")
-            if cls_val >= 0.1:
-                # Preserve the strict performance gate; report the actual elements
-                # contributing the largest shift rather than guessing from timing.
+            for cls_sample in range(1, 4):
+                cpg = page(width=cls_w, mobile=cls_w < 500, pre=lambda p: p.add_init_script(CLS_OBSERVER))
+                settle(cpg, "!!(window.GOFRESH&&window.GOFRESH.state().done&&window.GOINFOGRAPHIC&&window.GOEXTRA)")
+                cpg.wait_for_timeout(1500)
+                cls_val = cpg.evaluate("window.__cls")
                 shifts = cpg.evaluate("window.__clsShifts.slice().sort((a,b)=>b.value-a.value).slice(0,12)")
-                print('CLS_DIAGNOSTICS %dpx %s' % (cls_w, json.dumps(shifts, separators=(',', ':'))), flush=True)
-            check('Today cold load at %dpx has a cumulative layout shift under 0.1' % cls_w, cls_val < 0.1, 'measured %.4f' % cls_val)
-            cpg.context.close()
+                print('CLS_SAMPLE %dpx #%d measured %.5f top_shifts %s' % (cls_w, cls_sample, cls_val, json.dumps(shifts, separators=(',', ':'))), flush=True)
+                check('Today cold load at %dpx sample %d has a cumulative layout shift under 0.1' % (cls_w, cls_sample), cls_val < 0.1, 'measured %.4f' % cls_val)
+                cpg.context.close()
 
     if on('b'):
         # ---- Batch 2 regression guards: layout width, console cleanliness, touch targets (deterministic: fixed clock, mocked API/images/fonts) ----
