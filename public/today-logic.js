@@ -81,6 +81,52 @@
     return Object.keys(map).map(function (k) { return { key: k, id: k.slice(0, k.lastIndexOf('@')), start: k.slice(k.lastIndexOf('@') + 1), at: map[k] && map[k].at }; });
   }
 
+
+  /* Today-only Hide is separate from Done and uses the same exact occurrence key. */
+  var HIDE_KEY = 'gofn-today-hidden-v1';
+  function readHideState(storage) {
+    var raw;
+    try { raw = storage.getItem(HIDE_KEY); } catch (e) { return { map: {}, unreadable: true }; }
+    if (raw == null || raw === '') return { map: {}, corrupt: false };
+    try {
+      var map = JSON.parse(raw);
+      if (map && typeof map === 'object' && !Array.isArray(map)) return { map: map, corrupt: false };
+    } catch (e) { /* keep the original on corruption */ }
+    return { map: {}, corrupt: true, raw: raw };
+  }
+  function readHidden(storage) { return readHideState(storage).map; }
+  function isHiddenToday(map, id, start) { var k = doneKey(id, start); return !!k && !!(map && map[k]); }
+  function writeHidden(storage, map) {
+    try { var raw = JSON.stringify(map); storage.setItem(HIDE_KEY, raw); return storage.getItem(HIDE_KEY) === raw; }
+    catch (e) { return false; }
+  }
+  function tryHideToday(storage, id, start, end, nowMs) {
+    var key = doneKey(id, start);
+    if (!key) return { ok: false, error: 'invalid' };
+    var state = readHideState(storage);
+    if (state.unreadable) return { ok: false, error: 'storage' };
+    if (state.corrupt) {
+      try {
+        var backup = HIDE_KEY + '-corrupt';
+        if (storage.getItem(backup) !== state.raw) {
+          if (storage.getItem(backup) != null) backup += '-' + Date.now();
+          storage.setItem(backup, state.raw);
+          if (storage.getItem(backup) !== state.raw) return { ok: false, error: 'storage' };
+        }
+      } catch (e) { return { ok: false, error: 'storage' }; }
+    }
+    var map = pruneDone(state.map, nowMs || Date.now());
+    map[key] = { at: nowMs || Date.now(), end: Number.isFinite(+end) ? +end : null };
+    return writeHidden(storage, map) ? { ok: true, key: key } : { ok: false, error: 'storage' };
+  }
+  function tryRestoreHidden(storage, key) {
+    var state = readHideState(storage);
+    if (state.unreadable || state.corrupt) return { ok: false, error: 'storage' };
+    if (!key || !state.map[key]) return { ok: true, restored: false };
+    var map = {}; Object.keys(state.map).forEach(function (k) { if (k !== key) map[k] = state.map[k]; });
+    return writeHidden(storage, map) ? { ok: true, restored: true } : { ok: false, error: 'storage' };
+  }
+
   /* ---------- Shiny: a boost needs an explicit confirmation; ordinary availability never implies one ---------- */
   var BOOST_LABEL = /\b(boost(?:ed)?|increased|higher|better)\b[^.]{0,30}\bshiny\b|\bshiny\b[^.]{0,30}\b(boost(?:ed)?|odds? (?:are )?(?:boosted|increased)|chance (?:is )?(?:boosted|increased))/i;
   /* Returns 'boosted' | 'debut' | 'available' | 'none'. Inputs are only fields that state the fact:
@@ -285,6 +331,7 @@
 
   return {
     DONE_KEY: DONE_KEY, doneKey: doneKey, readDone: readDone, readDoneState: readDoneState, tryMarkDone: tryMarkDone, tryUndoDone: tryUndoDone, isDone: isDone, markDone: markDone, undoDone: undoDone, pruneDone: pruneDone, doneList: doneList,
+    HIDE_KEY: HIDE_KEY, readHideState: readHideState, readHidden: readHidden, isHiddenToday: isHiddenToday, tryHideToday: tryHideToday, tryRestoreHidden: tryRestoreHidden,
     shinyKind: shinyKind, splitNames: splitNames, classifyArt: classifyArt, artFallback: artFallback,
     researchRewardLabel: researchRewardLabel, venueZone: venueZone, matchVenueTimes: matchVenueTimes, venueTimeUnconfirmed: venueTimeUnconfirmed, dualTime: dualTime, venueDays: venueDays, zoneAbbr: zoneAbbr, countdownText: countdownText, cardType: cardType
   };

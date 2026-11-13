@@ -2111,9 +2111,12 @@ function renderHomeBrief(t) {
   var T1 = window.GOTODAY, TL = window.GOTODAYLOGIC;
   function t1Storage() { try { return window.localStorage; } catch (e) { return null; } }
   function t1Done() { var s = t1Storage(); return s ? TL.readDone(s) : {}; }
+  function t1Hidden() { var s = t1Storage(); return s ? TL.readHidden(s) : {}; }
   function t1IsDone(map, id, start) { return TL.isDone(map, id, start); }
+  function t1IsHidden(map, id, start) { return TL.isHiddenToday(map, id, start); }
   /* Explicit boosts only: a boosted-shiny highlight, a label that says the odds are boosted, or boostedShiny === true. Ordinary shiny availability is never promoted. */
   function t1BoostRecords(t) {
+    var hide = t1Hidden();
     var live = [], upcoming = [], seen = Object.create(null), horizon = addDays(startOfDay(t), 7);
     function add(list, ev, name, artItem, kindKey) {
       name = String(name || '').replace(/\s+/g, ' ').trim();
@@ -2125,7 +2128,7 @@ function renderHomeBrief(t) {
     }
     EV.forEach(function (ev) {
       var ph = phase(ev, t);
-      if (ph === 'ended' || ev.long || kindHidden(ev.kind) || isHidden(ev.id) || !announced(ev)) return;
+      if (ph === 'ended' || ev.long || kindHidden(ev.kind) || isHidden(ev.id) || t1IsHidden(hide, ev.id, ev.start) || !announced(ev)) return;
       if (ph === 'soon' && ev.start >= horizon) return;
       var target = ph === 'live' ? live : upcoming, kindKey = ph === 'live' ? 'l' : 'u';
       (ev.highlights || []).forEach(function (h) {
@@ -2144,15 +2147,16 @@ function renderHomeBrief(t) {
   function t1Overseas(place) { return !!place && !/australia|melbourne|victoria|sydney|brisbane|perth|adelaide/i.test(place); }
   function t1PlaceKey(place) { return String(place || '').toLowerCase().split(/[,(]/)[0].trim(); }
   function t1Ctx(t) {
-    var done = t1Done(), tn = +t, soonEnd = tn + 864e5, weekEnd = tn + 7 * 864e5;
+    var done = t1Done(), hide = t1Hidden(), tn = +t, soonEnd = tn + 864e5, weekEnd = tn + 7 * 864e5;
     function visible(ev) { return announced(ev) && !ev.long && !isHidden(ev.id) && !kindHidden(ev.kind); }
-    var live = [], soon = [], week = [], hiddenDone = [];
+    var live = [], soon = [], week = [], hiddenDone = [], hiddenByYou = [];
     EV.forEach(function (ev) {
       if (!visible(ev)) return;
       var ph = phase(ev, t);
       if (ph === 'ended') return;
       var isDoneNow = t1IsDone(done, ev.id, ev.start);
       if (isDoneNow) { if (ph === 'live' || +ev.start - tn < 7 * 864e5) hiddenDone.push({ key: TL.doneKey(ev.id, ev.start), name: ev.name, when: ph === 'live' ? 'Live now' : fmtD(ev.start) }); return; }
+      if (t1IsHidden(hide, ev.id, ev.start)) { if (ph === 'live' || +ev.start - tn < 7 * 864e5) hiddenByYou.push({ key: TL.doneKey(ev.id, ev.start), name: ev.name, when: ph === 'live' ? 'Live now' : fmtD(ev.start) }); return; }
       if (ph === 'live') live.push(ev); else if (ev.start <= soonEnd) soon.push(ev); else if (ev.start <= weekEnd) week.push(ev);
     });
     soon.sort(function (a, b) { return a.start - b.start; }); week.sort(function (a, b) { return a.start - b.start; });
@@ -2177,6 +2181,7 @@ function renderHomeBrief(t) {
       try { var model = window.GOEventRegistry && GOEventRegistry.find(r.catalogueId || r.id); if (model) item.openId = model.eventId; } catch (e) { }
       if (!item.openId && !item.url) return;
       if (t1IsDone(done, r.id, r.start)) { hiddenDone.push({ key: TL.doneKey(r.id, r.start), name: r.name, when: 'In person' }); return; }
+      if (t1IsHidden(hide, r.id, r.start)) { hiddenByYou.push({ key: TL.doneKey(r.id, r.start), name: r.name, when: 'In person' }); return; }
       if (r.start <= t && r.end > t) regLive.push(item); else if (r.start > t && +r.start <= soonEnd) regSoon.push(item); else if (+r.start > soonEnd && +r.start <= weekEnd) regWeek.push(item);
     });
     var seasons = [];
@@ -2194,7 +2199,7 @@ function renderHomeBrief(t) {
       });
       ending.sort(function (a, b) { return a.end - b.end; });
     } catch (e) { }
-    return { now: t, ending: ending, live: live, soon: soon, week: week, regLive: regLive, regSoon: regSoon, regWeek: regWeek, boosts: t1BoostRecords(t), seasons: seasons, done: hiddenDone,
+    return { now: t, ending: ending, live: live, soon: soon, week: week, regLive: regLive, regSoon: regSoon, regWeek: regWeek, boosts: t1BoostRecords(t), seasons: seasons, done: hiddenDone, hidden: hiddenByYou,
       kindOf: kindOf, monArt: monArt, fallbackArt: placeholderArt, overseas: function (ev) { return t1Overseas(ev.region); }, dayLabel: function (d) { return fmtD(d); } };
   }
   var t1Signature = '';
@@ -2206,16 +2211,16 @@ function renderHomeBrief(t) {
     var ctx = t1Ctx(t);
     var sig = JSON.stringify([dayKey(t), ctx.live.map(sigEv), ctx.soon.map(sigEv), ctx.week.map(sigEv),
       ctx.regLive.map(function (e) { return e.id + '|' + e.openId + '|' + (+e.start) + '|' + (+e.end); }), ctx.ending.map(function (e) { return [e.id, e.name, +e.end || 0, e.title || '', e.url || ''].join('|'); }), ctx.regSoon.map(function (e) { return e.id + '|' + e.openId + '|' + (+e.start) + '|' + (+e.end); }), ctx.regWeek.map(function (e) { return e.id + '|' + e.openId + '|' + (+e.start) + '|' + (+e.end); }),
-      ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; })]);
+      ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; }), ctx.hidden.map(function (d) { return d.key; })]);
     if (!force && sig === t1Signature && host.firstChild) { T1.patchCountdowns(host, +t); return; }
     var open = host.querySelector('.t1-menu'); if (open && !force) { T1.patchCountdowns(host, +t); return; }
     var focusKey = null, a = document.activeElement;
-    if (a && host.contains(a)) focusKey = a.getAttribute('data-t1-menu') ? 'menu:' + a.getAttribute('data-t1-menu') : a.getAttribute('data-t1-undo') ? 'undo:' + a.getAttribute('data-t1-undo') : a.getAttribute('data-open') ? 'open:' + a.getAttribute('data-open') : null;
+    if (a && host.contains(a)) focusKey = a.getAttribute('data-t1-menu') ? 'menu:' + a.getAttribute('data-t1-menu') : a.getAttribute('data-t1-unhide') ? 'unhide:' + a.getAttribute('data-t1-unhide') : a.getAttribute('data-t1-undo') ? 'undo:' + a.getAttribute('data-t1-undo') : a.getAttribute('data-open') ? 'open:' + a.getAttribute('data-open') : null;
     var expanded = {}; host.querySelectorAll('[data-t1-toggle][aria-expanded="true"]').forEach(function (b) { expanded[b.getAttribute('data-t1-toggle')] = 1; });
     t1Signature = sig; host.innerHTML = T1.render(ctx); host.removeAttribute('aria-busy');
     Object.keys(expanded).forEach(function (id) { t1Toggle(host, id, true); });
     if (focusKey) {
-      var sel = focusKey.indexOf('menu:') === 0 ? '[data-t1-menu="' + focusKey.slice(5) + '"]' : focusKey.indexOf('undo:') === 0 ? '[data-t1-undo="' + focusKey.slice(5) + '"]' : '[data-open="' + focusKey.slice(5) + '"]';
+      var sel = focusKey.indexOf('menu:') === 0 ? '[data-t1-menu="' + focusKey.slice(5) + '"]' : focusKey.indexOf('unhide:') === 0 ? '[data-t1-unhide="' + focusKey.slice(7) + '"]' : focusKey.indexOf('undo:') === 0 ? '[data-t1-undo="' + focusKey.slice(5) + '"]' : '[data-open="' + focusKey.slice(5) + '"]';
       var again = null; try { again = host.querySelector(sel.replace(/\\/g, '\\\\')); } catch (e) { }
       if (again) again.focus({ preventScroll: true });
     }
@@ -2234,12 +2239,12 @@ function renderHomeBrief(t) {
     if (owner) { owner.setAttribute('aria-expanded', 'false'); if (restoreFocus) owner.focus(); }
   }
   var T1_SAVE_ERROR = 'Couldn\u2019t save \u2014 storage is full or unavailable', t1Retry = null;
-  function t1Toast(message, undoKey, retry) {
+  function t1Toast(message, undoKey, retry, hidden) {
     var t = $('t1-toast');
     if (!t) { t = document.createElement('div'); t.id = 't1-toast'; t.className = 't1-toast'; t.setAttribute('role', 'status'); t.setAttribute('aria-live', 'polite'); document.body.appendChild(t); }
     t.innerHTML = ''; var span = document.createElement('span'); span.textContent = message; t.appendChild(span);
     t.classList.toggle('t1-toast-error', !!retry);
-    if (undoKey) { var b = document.createElement('button'); b.type = 'button'; b.className = 't1-toast-undo'; b.setAttribute('data-t1-undo', undoKey); b.textContent = 'Undo'; t.appendChild(b); }
+    if (undoKey) { var b = document.createElement('button'); b.type = 'button'; b.className = 't1-toast-undo'; b.setAttribute(hidden ? 'data-t1-unhide' : 'data-t1-undo', undoKey); b.textContent = 'Undo'; t.appendChild(b); }
     if (retry) { t1Retry = retry; var r = document.createElement('button'); r.type = 'button'; r.className = 't1-toast-undo t1-toast-retry'; r.setAttribute('data-t1-retry', '1'); r.textContent = 'Try again'; t.appendChild(r); }
     var al = document.getElementById('gofn-storage-alert'); if (al && retry) al.hidden = true; // never stack two save errors
     t.hidden = false; clearTimeout(t._h); t._h = setTimeout(function () { t.hidden = true; }, retry ? 10000 : 7000);
@@ -2249,6 +2254,16 @@ function renderHomeBrief(t) {
     var store = t1Storage(), res = store ? TL.tryMarkDone(store, p.id, p.startIso, p.end, Date.now()) : { ok: false };
     if (!res.ok) { t1Toast(T1_SAVE_ERROR, null, function () { t1Mark(p); }); return false; }
     t1Retry = null; renderTodayV1(now(), true); t1Toast(p.name + ' marked done', res.key); return true;
+  }
+  function t1Hide(p) {
+    var s = t1Storage(), res = s ? TL.tryHideToday(s,p.id,p.startIso,p.end,Date.now()) : {ok:false};
+    if(!res.ok){t1Toast(T1_SAVE_ERROR,null,function(){t1Hide(p);});return false;}
+    t1Retry=null;renderTodayV1(now(),true);t1Toast(p.name+' hidden from Today',res.key,null,true);return true;
+  }
+  function t1Restore(key) {
+    var s=t1Storage(), res=s?TL.tryRestoreHidden(s,key):{ok:false};
+    if(!res.ok){t1Toast(T1_SAVE_ERROR,null,function(){t1Restore(key);});return false;}
+    t1Retry=null;var t=$('t1-toast');if(t)t.hidden=true;renderTodayV1(now(),true);return true;
   }
   function t1Unmark(key) {
     var store = t1Storage(), res = store ? TL.tryUndoDone(store, key) : { ok: false };
@@ -2264,13 +2279,14 @@ function renderHomeBrief(t) {
       if (wasOpen) return;
       var cardEl = menuBtn.closest('[data-id]'); if (!cardEl) return;
       var menu = document.createElement('div'); menu.className = 't1-menu'; menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', 'Actions');
-      menu.innerHTML = '<button type="button" role="menuitem" class="t1-menuitem" data-t1-done="1">Mark done <small>Hide this one from Today</small></button>'
+      menu.innerHTML = '<button type="button" role="menuitem" class="t1-menuitem" data-t1-hide="1">Hide from Today <small>Only this occurrence</small></button>'
+        + '<button type="button" role="menuitem" class="t1-menuitem" data-t1-done="1">Mark done <small>Mark this occurrence complete</small></button>'
         + (cardEl.querySelector('[data-open]') ? '<button type="button" role="menuitem" class="t1-menuitem" data-t1-details="' + esc(cardEl.getAttribute('data-id')) + '">Open details</button>' : '');
       menuBtn.parentNode.appendChild(menu); menuBtn.setAttribute('aria-expanded', 'true'); t1MenuOpener = menuBtn;
       var first = menu.querySelector('[role=menuitem]'); if (first) first.focus();
       return;
     }
-    var doneBtn = target.closest('[data-t1-done]');
+    var doneBtn = target.closest('[data-t1-done],[data-t1-hide]');
     if (doneBtn) {
       var c = doneBtn.closest('[data-id]'), id = c && c.getAttribute('data-id'), s = c && c.getAttribute('data-start'), en = c && c.getAttribute('data-end');
       t1CloseMenu(false);
@@ -2278,11 +2294,13 @@ function renderHomeBrief(t) {
       var store = t1Storage(), startIso = s || (c.getAttribute('data-id') && ''), name = (c.querySelector('.t1-title') || {}).textContent || 'Event';
       if (!s) { var r = null; /* regional rows carry no start attribute: key them by their listed start */ regList().forEach(function (x) { if (x.id === id) r = x; }); if (r) { startIso = new Date(+r.start).toISOString(); en = new Date(+r.end).toISOString(); } }
       if (!store || !startIso) { t1Toast(T1_SAVE_ERROR); return; }
-      t1Mark({ id: id, startIso: startIso, end: Date.parse(en), name: name });
+      var payload={id:id,startIso:startIso,end:Date.parse(en),name:name};
+      if(doneBtn.hasAttribute('data-t1-hide'))t1Hide(payload);else t1Mark(payload);
       return;
     }
     var det = target.closest('[data-t1-details]');
     if (det) { var id2 = det.getAttribute('data-t1-details'), op = document.querySelector('#today-v1 [data-id="' + id2.replace(/"/g, '') + '"] [data-open]'); t1CloseMenu(false); if (op) op.click(); return; }
+    var unhide=target.closest('[data-t1-unhide]');if(unhide){t1Restore(unhide.getAttribute('data-t1-unhide'));return;}
     var undo = target.closest('[data-t1-undo]');
     if (undo) {
       t1Unmark(undo.getAttribute('data-t1-undo')); return;
@@ -2304,7 +2322,7 @@ function renderHomeBrief(t) {
   });
   document.addEventListener('gofn-season-ready', function () { renderTodayV1(now(), false); });
   document.addEventListener('gofn-today-done', function () { renderTodayV1(now(), true); });
-  window.addEventListener('storage', function (e) { if (e.key === TL.DONE_KEY) renderTodayV1(now(), true); });
+  window.addEventListener('storage', function (e) { if (e.key === TL.DONE_KEY || e.key === TL.HIDE_KEY) renderTodayV1(now(), true); });
   function renderActionCentre() {
     var wrap = $('action-centre'), items = $('action-centre-items'); if (!wrap || !items) return;
     var next24 = EV.filter(function (e) { return !isHidden(e.id) && !kindHidden(e.kind) && startsSoon(e); }).length;
