@@ -12,6 +12,7 @@
 @media(max-width:380px){.ue-pass-jump{grid-template-columns:minmax(0,1fr) auto}.ue-pass-jump label{grid-column:1/-1}.ue-pass-jump input{grid-column:1}}
 /* Unattributed source rewards must not inherit Free (green) or Deluxe (gold) track colours. */
 .ue-pass .ue-lane-unspecified{--ue-lane:var(--color-border)}
+.ue-pass .ue-key-unspecified{--ue-lane:var(--color-border)}
 
 /* Optional published-reward finder: closed by default to protect first-screen density. */
 .ue-pass-finder{min-width:0;border-top:1px solid var(--color-border);padding-top:5px}
