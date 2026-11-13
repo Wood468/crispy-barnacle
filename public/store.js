@@ -100,14 +100,64 @@
       + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>'
       + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
   }
+  /* A source-verified channel ledger for EVERY known regional product.
+     Only claim a cheapest option when two or more channels sell that exact
+     named product in the same currency; one recorded channel is not a win. */
   function cheapestHtml(obs, balance) {
-    var R = window.GORegionalPrices, packs = obs.filter(function (o) { return o.kind === 'coins' && o.coins && o.status === 'verified'; }).map(function (o) { return { coins: o.coins, amount: o.amount, currency: o.currency, oneTime: !!o.oneTime }; });
-    var products = obs.filter(function (o) { return o.region === 'ID' && o.status === 'verified' && /pass|ultra/i.test(o.product); });
-    return products.map(function (o) {
-      var r = R.cheapest({ region: 'ID', product: o.product }, obs, { coinBalance: balance, packs: packs });
-      var b = r.best; if (!b) return '';
-      return '<div class="sp-r sp-regional-row"><span class="sp-n">' + esc(o.product) + '</span><span class="sp-regional-value"><b>' + esc(R.fmt(b.cash, b.currency)) + '</b> <small>'
-        + esc('Lowest verified observed: ' + b.channelLabel + ', checked ' + when(b.price.observed) + (b.coinsUsed ? ', using ' + b.coinsUsed + ' coins' : '') + (b.leftoverCoins > 0 ? '; ' + b.leftoverCoins + ' coins left unused' : '') + '. Not a live checkout quote.') + '</small></span></div>';
+    var R = window.GORegionalPrices, rows = Array.isArray(obs) ? obs : [];
+    var observed = rows.filter(function (o) {
+      return o && o.status === 'verified' && o.product && o.region && o.channel
+        && o.currency && Number.isFinite(o.amount) && o.amount > 0
+        && Number.isFinite(Date.parse(o.observed));
+    });
+    if (!observed.length) return '';
+    var packs = observed.filter(function (o) {
+      return o.kind === 'coins' && o.coins > 0;
+    }).map(function (o) {
+      return { coins: o.coins, amount: o.amount, currency: o.currency, oneTime: !!o.oneTime };
+    });
+    /* Regional and exact product are inseparable. Similar boxes, one-time
+       coin bonuses and rank upgrades never share a comparison group. */
+    var groups = new Map();
+    observed.forEach(function (o) {
+      var key = o.region + '|' + String(o.product).trim().toLowerCase().replace(/\s+/g, ' ');
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(o);
+    });
+    return Array.from(groups.values()).map(function (group) {
+      var item = group[0], product = item.product, region = item.region;
+      var candidates = new Map();
+      group.forEach(function (o) {
+        var key = o.channel + '|' + o.currency;
+        var old = candidates.get(key);
+        if (!old || String(o.observed) > String(old.observed)) candidates.set(key, o);
+      });
+      var offers = Array.from(candidates.values());
+      var sameCurrency = offers.every(function (o) { return o.currency === offers[0].currency; });
+      var result = offers.length >= 2 && sameCurrency
+        ? R.cheapest({ region: region, product: product, kind: item.kind }, rows,
+            { coinBalance: balance, packs: packs }) : null;
+      var validBest = result && result.best && result.best.basis === 'verified'
+        && result.options.filter(function (option) { return option.basis === 'verified'; }).length >= 2
+        ? result.best : null;
+      var regionName = R.REGIONS[region] || region;
+      var label = regionName + ' · ' + product;
+      var observedText = offers.map(function (o) {
+        return (R.CHANNELS[o.channel] || o.channel) + ': ' + R.fmt(o.amount, o.currency)
+          + ', checked ' + when(o.observed);
+      }).join('; ');
+      var status = validBest
+        ? 'Lowest among ' + offers.length + ' comparable verified channels: '
+          + (validBest.channelLabel || validBest.channel) + ' · '
+          + R.fmt(validBest.cash, validBest.currency)
+          + (validBest.coinsUsed ? ' using ' + validBest.coinsUsed + ' PokéCoins' : '')
+          + (validBest.leftoverCoins > 0 ? '; ' + validBest.leftoverCoins + ' coins unused' : '')
+        : offers.length > 1 && !sameCurrency
+          ? 'Different currencies: no reliable lowest-price comparison'
+          : 'Only one verified buying channel observed; no lowest-price comparison';
+      return '<div class="sp-r sp-regional-row"><span class="sp-n">' + esc(label)
+        + '</span><span class="sp-regional-value"><b>' + esc(status) + '</b><small>'
+        + esc(observedText + '. Not a live checkout quote.') + '</small></span></div>';
     }).join('');
   }
   /* Product-first regional comparison. One card per known item, with price provenance
@@ -162,8 +212,8 @@
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
-      + (comparableOffers ? '<details class="sp-compare-more"><summary>Lowest verified observed options <small>Advanced comparison</small></summary>'
-      + '<p class="note">Only verified, directly comparable offers qualify. Recorded and modelled prices cannot win. Your existing PokéCoins may reduce cash cost; estimates are never checkout quotes.</p>'
+      + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
+      + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed option is named only when multiple identical-product channels use the same currency. Estimates and recorded-only prices never win; no result is a live checkout quote.</p>'
       + '<label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
       + '<div data-sp-cheapest>' + comparableOffers + '</div></details>' : '') + '</details>';
   }
