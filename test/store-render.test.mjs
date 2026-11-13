@@ -82,7 +82,12 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     'country rows must have a visible separator without losing source-backed missing prices');
 
   assert.ok(el.innerHTML.includes('Advanced comparison'), 'cash/coin optimisation is disclosed only when requested');
-  assert.ok(el.innerHTML.includes('Lowest verified observed options'));
+  assert.ok(el.innerHTML.includes('Verified regional purchase options'));
+  const expandedComparison = el.innerHTML.split('<div data-sp-cheapest>')[1]?.split('</details>')[0] || '';
+  for (const name of ['Pokémon Storage +50', 'Raid Day Box', '110 PokéCoins', 'GO Pass Deluxe: Into the Wild'])
+    assert.ok(expandedComparison.includes(name), 'verified source observations must include ' + name + ' in the optional review');
+  assert.ok(expandedComparison.includes('Only one verified buying channel observed; no lowest-price comparison'),
+    'single verified checkout channel is not falsely declared the cheapest');
   assert.ok(el.innerHTML.includes('Not a live checkout quote.'), 'price choice must be dated and qualified');
   assert.ok(!el.innerHTML.includes('cheapest:'), 'a regional comparison is not a guaranteed checkout price');
   assert.ok(!/undefined|NaN|\[object/.test(el.innerHTML));
@@ -184,4 +189,60 @@ test('verified Australian Store offers remain visible during missing regional-fe
     'do not show an empty product catalogue with no reliable source observations');
   assert.equal((await render(false, [auOffer], [])).html, '',
     'non-owner must not see the private regional Store section');
+});
+
+
+test('advanced Store channel coverage never ranks same-name boxes, recorded prices or unlike currencies', async () => {
+  const R = createRequire(import.meta.url)('../public/regional-prices.js');
+  const now = '2026-11-13';
+  const verified = (id,product,channel,amount,extra={}) => ({
+    id,product,kind:'item',region:'ID',channel,currency:'IDR',amount,
+    source:'synthetic regression fixture',status:'verified',observed:now,...extra
+  });
+  const regional = [
+    verified('box-web','Raid Day Box','web',150000,{kind:'bundle'}),
+    verified('box-inapp','Raid Day Box','in-app',100000,{kind:'bundle'}),
+    verified('pass-web','Premium Battle Pass x3','web',30000,{sourceSku:'same-verified-pack'}),
+    verified('pass-inapp','Premium Battle Pass x3','in-app',28000,{sourceSku:'same-verified-pack'}),
+    verified('pass-promo','Premium Battle Pass x3','web',26000,{sourceSku:'same-verified-pack',oneTime:true}),
+    verified('remote-web','Remote Raid Pass x2','web',15000,{sourceSku:'same-currency-test'}),
+    verified('remote-inapp','Remote Raid Pass x2','in-app',250,{currency:'INR',sourceSku:'same-currency-test'}),
+    verified('coins-bonus','18,500 PokéCoins one-time bonus','web',505000,{kind:'coins',oneTime:true}),
+    verified('storage','Pokémon Storage +50','web',10000,{kind:'storage'}),
+    verified('recorded','Unverified Historic Bundle','web',50000,{status:'recorded'})
+  ];
+  const source=fs.readFileSync(new URL('../public/store.js', import.meta.url),'utf8');
+  const data={owner:true,prices:[],regional};
+  const root={innerHTML:'',querySelector:()=>null,addEventListener(){}};
+  const host={parentNode:{insertBefore(){}}};
+  const doc={readyState:'complete',getElementById: id=>id==='evsource'?host:null,
+    createElement:()=>root,addEventListener(){}};
+  const win={GORegionalPrices:R,GOLIB:{
+    esc:s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),
+    loadPrices:()=>Promise.resolve(data),priceView:()=>({sub:'',save:'',main:''})
+  },document:doc,localStorage:{getItem:()=>null,setItem(){}},console};
+  win.window=win;
+  vm.runInNewContext(source,win);
+  await new Promise(resolve=>setTimeout(resolve,20));
+  const review=root.innerHTML.split('<div data-sp-cheapest>')[1]?.split('</details>')[0]||'';
+  assert.ok(review.includes('Raid Day Box')&&review.includes('Pokémon Storage +50'),
+    'verified bundles and storage must be represented, not just event passes');
+  assert.ok(review.includes('18,500 PokéCoins one-time bonus'),
+    'one-time bonus packs remain distinct and observable');
+  assert.equal((review.match(/Indonesia · Raid Day Box/g)||[]).length,2,
+    'same human product name with distinct source records must never collapse into an assumed SKU');
+  assert.doesNotMatch(review,/Unverified Historic Bundle/,
+    'recorded-only prices do not enter the verified purchasing review');
+  assert.equal((review.match(/data-sp-compared="yes"/g)||[]).length,1,
+    'only a verified exact SKU across distinct checkout channels can be cash-ranked');
+  assert.equal((review.match(/Indonesia · Premium Battle Pass x3/g)||[]).length,2,
+    'a one-time promotional pack stays separate even when another channel reuses its SKU');
+  assert.match(review,/Lowest verified cash price across 2 exact-SKU channels:.*in-app shop · Rp 28,000/,
+    'same-SKU same-currency checkout comparison can choose the verified cheaper channel');
+  assert.match(review,/Different currencies: no reliable lowest-price comparison/,
+    'a fake INR-versus-IDR numerical cheapest claim must never appear');
+  assert.match(review,/Only one verified buying channel observed; no lowest-price comparison/,
+    'a single verified channel cannot win a cheapest-price comparison');
+  assert.doesNotMatch(root.innerHTML,/data-sp-coins/,
+    'do not display a coin-optimisation input when no validated coin-pack optimiser is being run');
 });
