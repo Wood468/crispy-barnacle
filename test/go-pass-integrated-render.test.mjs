@@ -125,7 +125,7 @@ test('load order, offline references and post-render mount form a complete PWA i
   '/go-pass-navigation.js?v=20261118i',
   '/go-pass-reward-art.js?v=20261118d',
   '/event-components.js?v=20261118g',
-  '/dash.js?v=20261118c'
+  '/dash.js?v=20261113s3a'
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
  assert.ok(index.indexOf('/go-pass-reward-art.js?v=')<index.indexOf('/event-components.js?v='),'semantic registry must load before renderer');
