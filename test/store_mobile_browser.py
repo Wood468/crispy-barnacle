@@ -94,14 +94,15 @@ with sync_playwright() as p:
                 octoberStatus: october?.getAttribute('data-sp-listing'),
                 octoberGroup: octoberGroup?.getAttribute('data-sp-group'),
                 novemberStatus: november?.getAttribute('data-sp-listing'),
-                novemberArt: november?.querySelector('img[data-sp-art="official"]')?.getAttribute('src')
+                novemberArt: november?.querySelector('img.sp-i')?.getAttribute('src') || null,
+                novemberSafeToken: !!november?.querySelector('.sp-i-token[data-sp-art="category-token"]')
             };
         }""")
         assert listing["octoberStatus"] == "archived", f"{width}px expired October pass mixed with active offers: {listing}"
         assert listing["octoberGroup"] == "earlier", f"{width}px October pass must be in previous offers: {listing}"
         assert listing["novemberStatus"] == "listed", f"{width}px November official listing missing: {listing}"
-        assert listing["novemberArt"] and listing["novemberArt"].startswith(
-            "https://assets.pgo.webstore.nianticlabs.com/"), f"{width}px official SKU artwork absent: {listing}"
+        assert listing["novemberArt"] is None, f"{width}px unapproved publisher image must not render: {listing}"
+        assert listing["novemberSafeToken"], f"{width}px missing safe fallback for pending artwork approval: {listing}"
 
         page.evaluate("""selector => {
             const card = document.querySelector(selector);
