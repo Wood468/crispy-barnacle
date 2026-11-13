@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import {indexVerifiedFacetFeed,verifiedFacetPanelsForEvent,withVerifiedFacetPanels}
   from '../scripts/importer/source-facet-event-view-bridge.mjs';
 
@@ -70,4 +71,24 @@ test('unverified, duplicated or unsafe source facets fail closed across the full
       ...claim('bad'),sourceRefs:[{...source,url:source.url+'?token=leak'}]
     }]}]}
   ])assert.throws(()=>indexVerifiedFacetFeed(invalid),/feed|canonical|Duplicate|Unsafe/);
+});
+
+test('real curated GO Wild Area event keeps its own identity and details under verified supplement',async()=>{
+  const curated=JSON.parse(await readFile(new URL('../public/data.json',import.meta.url),'utf8'));
+  const wild=(curated.events||[]).find(x=>x.id==='wag');
+  const into=(curated.events||[]).find(x=>x.id==='into');
+  assert.ok(wild&&into,'current curated fixtures include separate Wild Area and Into the Wild entries');
+  const model={schemaVersion:1,eventId:wild.id,title:wild.t,
+    schedule:{start:wild.s,end:wild.e},
+    bonuses:(wild.bonuses||[]).slice(),notes:(wild.notes||[]).slice()};
+  const original=structuredClone(model);
+  const sample=feed();
+  sample.events[0].eventId=wild.id;
+  const joined=withVerifiedFacetPanels(model,sample);
+  assert.deepEqual(model,original);
+  assert.deepEqual(joined.schedule,original.schedule);
+  assert.deepEqual(joined.bonuses,original.bonuses);
+  assert.equal(joined.verifiedFacets.eventId,'wag');
+  const other=withVerifiedFacetPanels({...model,eventId:into.id,title:into.t},sample);
+  assert.equal(Object.hasOwn(other,'verifiedFacets'),false);
 });
