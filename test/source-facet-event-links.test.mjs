@@ -111,3 +111,58 @@ test('ambiguous diagnostics remain deterministic under reversed event order',()=
   assert.deepEqual(a.report.ambiguousExamples[0].candidateIds,['wag','wag-west']);
   assert.equal(a.byEvent.size,0);
 });
+
+test('a uniquely verified curated event owns an exact alias over a generated source copy',()=>{
+  const alias='leekduck:pokemon-go-wild-area-2026-global';
+  const items=[
+    {id:alias,t:'GO Wild Area: Global',sourceUrl:wild},
+    {id:'wag',t:'GO Wild Area: Global',curated:true,detailIds:[alias]}
+  ];
+  for(const order of [items,items.slice().reverse()]){
+    const {byEvent,report}=linkStagedFacetsToCanonicalEvents(order,new Map([[wild,page(wild)]]));
+    assert.equal(report.linkedPages,1);
+    assert.equal(report.ambiguousPages,0);
+    assert.equal(byEvent.get('wag')?.[0].sourceUrl,wild);
+    assert.ok(!byEvent.has(alias));
+  }
+});
+
+test('curated direct source URL wins over generated alias without fuzzy names',()=>{
+  const source='https://leekduck.com/events/minior-showers-geminids-2026/';
+  const alias='leekduck:minior-showers-geminids-2026';
+  const events=[
+    {id:alias,t:'Source entry',sourceUrl:source},
+    {id:'minior3',t:'Different harmless label',curated:true,sourceUrl:source}
+  ];
+  const {byEvent,report}=linkStagedFacetsToCanonicalEvents(events,new Map([[source,page(source)]]));
+  assert.equal(report.linkedPages,1);
+  assert.equal(report.ambiguousPages,0);
+  assert.equal(byEvent.get('minior3')?.length,1);
+  assert.ok(!byEvent.has(alias));
+});
+
+test('competing curated owners remain blocked even with a generated alias present',()=>{
+  const alias='leekduck:pokemon-go-wild-area-2026-global';
+  const items=[
+    {id:alias,sourceUrl:wild},
+    {id:'wag',curated:true,detailIds:[alias]},
+    {id:'venue-edition',curated:true,detailIds:[alias]}
+  ];
+  const {byEvent,report}=linkStagedFacetsToCanonicalEvents(items,new Map([[wild,page(wild)]]));
+  assert.equal(report.ambiguousPages,1);
+  assert.deepEqual(report.ambiguousExamples[0].candidateIds,[alias,'venue-edition','wag'].sort());
+  assert.equal(byEvent.size,0);
+});
+
+test('curated status alone never grants ownership without an exact URL or alias',()=>{
+  const alias='leekduck:pokemon-go-wild-area-2026-global';
+  const items=[
+    {id:alias,sourceUrl:wild},
+    {id:'similar-event',curated:true,t:'GO Wild Area: Global',start:'2026-11-14'}
+  ];
+  const {byEvent,report}=linkStagedFacetsToCanonicalEvents(items,new Map([[wild,page(wild)]]));
+  assert.equal(report.linkedPages,1);
+  assert.equal(report.ambiguousPages,0);
+  assert.ok(byEvent.has(alias));
+  assert.ok(!byEvent.has('similar-event'));
+});
