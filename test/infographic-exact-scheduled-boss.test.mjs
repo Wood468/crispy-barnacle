@@ -76,3 +76,31 @@ test('review approval uses one exact roster selector and revalidates option at s
   assert.doesNotMatch(s,/data-ig-boss-name|data-ig-boss-form|data-ig-boss-mode/);
   assert.match(s,/timedFetch\('\/event-details\.json'\)/);
 });
+
+test('Battle guide buttons match exact Pokémon, form and battle mode',()=>{
+  const dex=fixture.dex;
+  const selected=choices();
+  const kyurem=target('White Kyurem',selected);
+  assert.equal(picker.matchesTarget('White Kyurem','normal',kyurem,dex),true);
+  assert.equal(picker.matchesTarget('Black Kyurem','normal',kyurem,dex),false);
+  assert.equal(picker.matchesTarget('Kyurem','normal',kyurem,dex),false);
+  assert.equal(picker.matchesTarget('White Kyurem','shadow',kyurem,dex),false);
+  const crowned=target('Crowned Sword Zacian',selected);
+  assert.equal(picker.matchesTarget('Crowned Sword Zacian','normal',crowned,dex),true);
+  assert.equal(picker.matchesTarget('Zacian','normal',crowned,dex),false);
+  const deoxys=target('Deoxys (Attack Forme)',selected);
+  assert.equal(picker.matchesTarget('Deoxys (Attack Forme)','normal',deoxys,dex),true);
+  assert.equal(picker.matchesTarget('Deoxys (Defense Forme)','normal',deoxys,dex),false);
+  const max=target('Gigantamax Duraludon',selected);
+  assert.equal(picker.matchesTarget('Gigantamax Duraludon','gigantamax',max,dex),true);
+  assert.equal(picker.matchesTarget('Gigantamax Duraludon','dynamax',max,dex),false);
+  assert.equal(picker.matchesTarget('Duraludon','dynamax',max,dex),false);
+});
+test('Guide library uses readable exact form labels and source-matched inline buttons',()=>{
+  const labels=require('../public/pokemon-guides-logic.js');
+  assert.equal(labels.label(target('Crowned Sword Zacian'),fixture.dex,fixture.forms),'Crowned Sword Zacian');
+  assert.equal(labels.label(target('White Kyurem'),fixture.dex,fixture.forms),'White Kyurem');
+  assert.equal(labels.label(target('Deoxys (Attack Forme)'),fixture.dex,fixture.forms),'Deoxys (Attack Forme)');
+  const viewer=readFileSync(new URL('../public/pokemon-guides.js',import.meta.url),'utf8');
+  assert.match(viewer,/picker\.matchesTarget\(raw, mode, g, dex\)/);
+});
