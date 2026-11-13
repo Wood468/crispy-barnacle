@@ -7,7 +7,7 @@
 const officialKey=value=>{
   try{
     const u=new URL(value);
-    if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||
+    if(u.protocol!=='https:'||u.port||u.username||u.password||u.search||u.hash||
       !['pokemongo.com','www.pokemongo.com'].includes(u.hostname.toLowerCase()))return null;
     let path=u.pathname.replace(/^\/en(?=\/)/i,'').replace(/\/$/,'');
     if(!/^\/(?:news|post|gowildarea)\/[a-z0-9-]{3,}(?:\/[a-z0-9-]{3,})?$/i.test(path))return null;
@@ -28,7 +28,15 @@ const eventMatches=(event,key)=>{
 export function linkOfficialSourceFacetsToCanonicalEvents(events,byUrl){
   if(!Array.isArray(events))throw new TypeError('Verified event array required');
   if(!(byUrl instanceof Map))throw new TypeError('Official facet Map required');
-  const result=new Map(),seen=new Set();
+  const result=new Map(),seen=new Set(),conflicts=new Set(),fingerprints=new Map();
+  // Duplicate normalized pages with conflicting claims must never depend on Map order.
+  for(const [url,facets] of byUrl){
+    const key=officialKey(url);
+    if(!key||!facets||officialKey(facets.sourceUrl)!==key)continue;
+    const fingerprint=JSON.stringify({...facets,sourceUrl:key});
+    if(fingerprints.has(key)&&fingerprints.get(key)!==fingerprint)conflicts.add(key);
+    else fingerprints.set(key,fingerprint);
+  }
   const report={publication:'audit-only',eligiblePages:0,linkedPages:0,unlinkedPages:0,
     ambiguousPages:0,rejectedPages:0,duplicatePages:0,unlinkedExamples:[],ambiguousExamples:[]};
   for(const [url,facets] of byUrl){
@@ -36,6 +44,11 @@ export function linkOfficialSourceFacetsToCanonicalEvents(events,byUrl){
     if(!key||!facets||officialKey(facets.sourceUrl)!==key){report.rejectedPages++;continue;}
     if(seen.has(key)){report.duplicatePages++;continue;}
     seen.add(key);report.eligiblePages++;
+    if(conflicts.has(key)){
+      report.ambiguousPages++;
+      report.ambiguousExamples.push({sourceUrl:'https://'+key,candidateIds:[]});
+      continue;
+    }
     const candidates=[...new Set(events.filter(e=>eventMatches(e,key)).map(e=>e.id))].sort();
     // Only authoritative, explicit source ownership; never fuzzy event matching.
     const safeUrl='https://'+key;
