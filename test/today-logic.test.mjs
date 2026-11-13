@@ -87,6 +87,41 @@ test('form art classifier marks special forms exact and never allows a silent ba
   assert.equal(L.artFallback(L.classifyArt({ name: 'Pikachu', costume: true })).chip, 'Costume art unavailable');
 });
 
+test('all 28 Unown glyphs remain exact in UI, matching the Worker art resolver', () => {
+  const glyphs = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '!', '?'];
+  assert.equal(glyphs.length, 28);
+  for (const glyph of glyphs) {
+    const form = glyph === '!' ? 'exclamation' : glyph === '?' ? 'question' : glyph.toLowerCase();
+    const aliases = [
+      'Unown ' + glyph,
+      'Unown (' + glyph + ')',
+      'Unown ' + glyph + ' (' + form + ')',
+      'Unown (' + glyph + ' Form)'
+    ];
+    if (glyph === '!') aliases.push('Unown Exclamation', 'Unown (Exclamation Mark)');
+    if (glyph === '?') aliases.push('Unown Question', 'Unown (Question Mark)');
+    for (const name of aliases) {
+      const art = L.classifyArt(name);
+      assert.equal(art.kind, 'form', name);
+      assert.equal(art.exact, true, name);
+      assert.equal(art.base, 'Unown', name);
+      assert.equal(art.form, glyph, name);
+      assert.equal(art.label, 'Unown ' + glyph, name);
+      assert.deepEqual(L.artFallback(art), { show: 'base-with-label', chip: 'Form art unavailable' }, name);
+    }
+  }
+  assert.equal(L.classifyArt('Unown').exact, false, 'ordinary base Unown is not an invented explicit glyph');
+  for (const name of ['Unown A (B)', 'Unown D (I)', 'Unown ! (?)', 'Unown ? (!)']) {
+    const art = L.classifyArt(name);
+    assert.equal(art.kind, 'form', name);
+    assert.equal(art.exact, true, name);
+    assert.equal(art.base, 'Unown', name);
+    assert.equal(art.label, 'Unown form', name + ' must not claim either conflicting glyph');
+    assert.equal(L.artFallback(art).chip, 'Form art unavailable', name);
+  }
+  assert.equal(L.classifyArt('Pikachu').exact, false, 'ordinary species remain ordinary');
+});
+
 test('venue zones: explicit tz wins, single-zone places resolve, multi-zone and worldwide do not', () => {
   assert.equal(L.venueZone({ tz: 'Asia/Tokyo', place: 'x' }), 'Asia/Tokyo');
   assert.equal(L.venueZone({ place: 'Sendai and Tohoku, Japan' }), 'Asia/Tokyo');
