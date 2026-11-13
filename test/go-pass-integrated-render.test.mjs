@@ -124,7 +124,7 @@ test('load order, offline references and post-render mount form a complete PWA i
   '/go-pass-navigation.css?v=20261118g',
   '/go-pass-navigation.js?v=20261118f',
   '/go-pass-reward-art.js?v=20261118d',
-  '/event-components.js?v=20261118f',
+  '/event-components.js?v=20261118g',
   '/dash.js?v=20261118c'
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
