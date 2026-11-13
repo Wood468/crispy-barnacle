@@ -3404,6 +3404,16 @@ with sync_playwright() as p:
         cards = opg.eval_on_selector_all('#igreview .igr', 'els=>els.map(e=>e.getAttribute("data-id"))')
         check('review: the same picture queued twice (same image and Discord post) appears once, and the second id is not listed', cards == ['discord:b9-dup-a', 'discord:b9-solo'], cards)
         check('review: two suggestions for the same event (leekduck:id and bare id) give one Approve button', opg.locator('#igreview .igr[data-id="discord:b9-dup-a"] [data-ig-ok]').count() == 1)
+        check('review: source-backed Pokémon selector is primary, event suggestions are collapsed by default',
+              opg.locator('#igreview .igr[data-id="discord:b9-dup-a"]').evaluate("""el => {
+                  const boss = el.querySelector('select[data-ig-boss-choice]');
+                  const suggestions = el.querySelector('details.igr-event-suggestions');
+                  const event = el.querySelector('select[aria-label="Choose another event"]');
+                  return !!boss && !!suggestions && !!event && !suggestions.open &&
+                      !!(boss.compareDocumentPosition(suggestions) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                      !!(suggestions.compareDocumentPosition(event) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                      suggestions.querySelectorAll('[data-ig-ok]').length === 1;
+              }"""))
         link_txt = opg.locator('#igreview .igr[data-id="discord:b9-solo"] a[href*="discord.com/channels"]').inner_text()
         check('review (owner only): the Discord post link stays, clearly labelled', link_txt == 'Open in Discord (owner only)', link_txt)
         check('review: Discard and Approve buttons say which picture they are for', opg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').get_attribute('aria-label') == 'Discard: Solo picture')
