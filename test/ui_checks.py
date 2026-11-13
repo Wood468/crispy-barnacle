@@ -1,6 +1,6 @@
 """Browser checks for the Phase 2 dashboard (needs: pip install playwright; a static server: cd public && python3 -m http.server 8791; UI_PORT overrides the port).
 Run: python3 test/ui_checks.py. Mocks every /api/* call, fixes the clock to Fri 10 Oct 2026 22:45 Melbourne time."""
-import json,sys,re,base64
+import json,sys,re,base64,time
 PNG1=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
 
 # Stable fixture: two sourced Brisbane City Safari locations, with no raid hotspots.
@@ -2842,6 +2842,36 @@ with sync_playwright() as p:
                 print('CLS_SAMPLE %dpx #%d measured %.5f top_shifts %s' % (cls_w, cls_sample, cls_val, json.dumps(shifts, separators=(',', ':'))), flush=True)
                 check('Today cold load at %dpx sample %d has a cumulative layout shift under 0.1' % (cls_w, cls_sample), cls_val < 0.1, 'measured %.4f' % cls_val)
                 cpg.context.close()
+
+        # Regression for #787: the fetched overseas venue list must be included
+        # in the FIRST Today agenda paint, rather than shifting panels after it.
+        synthetic_world = json.dumps({'events': [{
+            'id': 'synthetic-overseas-exhibition-2026',
+            'name': 'Synthetic Overseas Exhibition',
+            'place': 'Tokyo, Japan', 'area': 'Asia', 'scope': 'regional',
+            'mode': 'in-person', 'start': '2026-10-01T00:00:00Z',
+            'end': '2026-10-31T23:59:59Z',
+            'sources': [{'url': 'https://pokemongolive.com/', 'kind': 'official'}]
+        }]})
+        def delayed_world_source(pg):
+            pg.add_init_script(CLS_OBSERVER)
+            def respond_world(route):
+                time.sleep(0.8)
+                route.fulfill(status=200, body=synthetic_world, content_type='application/json')
+            pg.route('**/world-events.json', respond_world)
+        for cls_w in (390, 1280):
+            for cls_sample in range(1, 4 if cls_w == 390 else 2):
+                wpg = page(width=cls_w, mobile=cls_w < 500, pre=delayed_world_source)
+                overseas_visible = settle(wpg, "document.getElementById('home-now')?.textContent.includes('Synthetic Overseas Exhibition')")
+                wpg.wait_for_timeout(350)
+                late_cls = wpg.evaluate("window.__cls")
+                print('CLS_DELAYED_WORLD %dpx #%d measured %.5f overseas=%s' %
+                      (cls_w, cls_sample, late_cls, overseas_visible), flush=True)
+                check('delayed overseas feed remains on Today at %dpx sample %d' % (cls_w, cls_sample),
+                      overseas_visible and 'Tokyo, Japan' in wpg.locator('#home-now').inner_text())
+                check('delayed overseas feed cold load at %dpx sample %d CLS under 0.1' % (cls_w, cls_sample),
+                      late_cls < 0.1, 'measured %.4f' % late_cls)
+                wpg.context.close()
 
     if on('b'):
         # ---- Batch 2 regression guards: layout width, console cleanliness, touch targets (deterministic: fixed clock, mocked API/images/fonts) ----
