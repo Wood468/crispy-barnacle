@@ -112,8 +112,9 @@
         + '<small class="sp-basis">' + esc('Based on ' + p.basisText + ' · ' + chan(p)) + '</small></span>';
     }
     var state = p.basis === 'verified' ? 'Verified' : 'Recorded · not re-checked';
-    var source = state + ' · ' + chan(p) + ' · ' + when(p.observed);
-    return '<span class="sp-regional-value sp-ver" aria-label="' + esc(R.fmt(p.amount, p.currency) + '. ' + source) + '">'
+    /* VoiceOver must read the AUD reference before the original local price.
+       A local-only parent aria-label would mask both the AUD and FX provenance. */
+    return '<span class="sp-regional-value sp-ver">'
       + audPlaceholder(p, quotes)
       + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>'
       + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
