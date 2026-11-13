@@ -166,7 +166,7 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: sprint4-research-mobile-screenshots
-          path: /tmp/gofn-s4-research-screenshots/accuracy-research-count-*.png
+          path: /tmp/gofn-s4-research-screenshots/accuracy-research-*.png
           if-no-files-found: warn
 
       - name: Verify combined source rendering and offline upgrade
