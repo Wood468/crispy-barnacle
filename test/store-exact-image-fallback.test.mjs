@@ -23,7 +23,7 @@ async function render(labels) {
     },
     addEventListener(){}};
   const win={document:doc,GORegionalPrices:R,
-    GOLIB:{esc:value=>String(value).replace(/[&<>"'\\]/g,c=>'&#'+c.charCodeAt(0)+';'),
+    GOLIB:{esc:value=>String(value),
       loadPrices:()=>Promise.resolve({owner:true,prices,regional:[]}),
       priceView:()=>({main:'',sub:'',save:''})},console};
   win.window=win;

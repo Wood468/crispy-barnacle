@@ -182,7 +182,20 @@
     var paren = (/\(([^)]+)\)\s*$/.exec(raw) || [])[1] || '';
     var core = raw.replace(/\s*\([^)]*\)\s*$/, '').trim(), m;
     var res = { name: raw, base: core, kind: 'base', exact: false, form: paren || '', label: '' };
-    if ((m = /^Gigantamax\s+(.+)$/i.exec(core))) { res.kind = 'gigantamax'; res.base = m[1]; res.exact = true; res.label = 'Gigantamax'; }
+    /* The art Worker treats every explicit Unown glyph as exact, including
+       bare "Unown D" and "Unown !" names without a parenthesised form.
+       Keep the UI fallback contract aligned so unavailable exact artwork
+       displays a labelled base sprite instead of silently disappearing. */
+    var unown = /^Unown\s*(?:\(\s*([A-Z!?]|exclamation(?:\s+mark)?|question(?:\s+mark)?)(?:\s+form)?\s*\)|([A-Z!?])(?:\s*\(\s*([A-Z!?]|exclamation|question)\s*\))?|\s*(exclamation(?:\s+mark)?|question(?:\s+mark)?))$/i.exec(raw);
+    if (unown) {
+      var glyph = function (s) { s = s.toLowerCase().replace(/\s+mark$/, ''); return s === '!' ? 'exclamation' : s === '?' ? 'question' : s; };
+      var form = glyph(unown[1] || unown[2] || unown[4]);
+      var mismatch = !!unown[3] && glyph(unown[3]) !== form;
+      res.kind = 'form'; res.base = 'Unown'; res.exact = true;
+      res.form = mismatch ? '' : (form === 'exclamation' ? '!' : form === 'question' ? '?' : form.toUpperCase());
+      res.label = mismatch ? 'Unown form' : 'Unown ' + res.form;
+    }
+    else if ((m = /^Gigantamax\s+(.+)$/i.exec(core))) { res.kind = 'gigantamax'; res.base = m[1]; res.exact = true; res.label = 'Gigantamax'; }
     else if ((m = /^Crowned\s+(Sword|Shield)\s+(Zacian|Zamazenta)$/i.exec(core)) && ((m[1].toLowerCase()==='sword'&&m[2].toLowerCase()==='zacian')||(m[1].toLowerCase()==='shield'&&m[2].toLowerCase()==='zamazenta'))) { res.kind = 'form'; res.base = m[2]; res.exact = true; res.label = 'Crowned ' + (m[1].toLowerCase()==='sword'?'Sword':'Shield'); }
     else if ((m = /^(White|Black) Kyurem$/i.exec(core))) { res.kind = 'form'; res.base = 'Kyurem'; res.exact = true; res.label = m[1] + ' Kyurem'; }
     else if ((m = /^Dynamax\s+(.+)$/i.exec(core))) { res.kind = 'dynamax'; res.base = m[1]; res.exact = false; res.label = 'Dynamax'; }
