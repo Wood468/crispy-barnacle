@@ -35,6 +35,9 @@ def main() -> int:
                     csp = response.headers.get("content-security-policy", "")
                     connect = next((part.strip() for part in csp.split(";")
                                     if part.strip().startswith("connect-src ")), "")
+                    report["http_status"] = response.status
+                    report["observed_connect_src"] = connect or "(absent)"
+                    report["csp_present"] = bool(csp)
                     assert connect == "connect-src 'self' " + PROVIDER, (
                         "Production CSP does not allow exactly the configured FX reference URL"
                     )
