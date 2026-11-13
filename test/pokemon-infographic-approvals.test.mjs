@@ -90,3 +90,25 @@ test('form labels remain distinct and source links are never leaked',()=>{
  sanitizePublicInfographicSources(info);
  assert.equal(info.pokemonGuides[0].infographics[0].sourceUrl,undefined);
 });
+
+test('Primal modes use the catalogued primal form ID, not the broader mega family', async () => {
+  const {readFileSync} = await import('node:fs');
+  const source = readFileSync(new URL('../public/review.js', import.meta.url), 'utf8');
+  const match = source.match(/function bossFormCompatible\(row, mode\) \{([\s\S]*?)\n  \}/);
+  assert.ok(match, 'actual owner form picker helper is present');
+  const accepts = new Function('row','mode', match[1]);
+  const forms = JSON.parse(readFileSync(new URL('../public/forms.json', import.meta.url), 'utf8')).f;
+  for (const dex of [382,383]) {
+    const primal = forms.find(f => f[0] === dex && f[1] === 'primal');
+    assert.ok(primal, 'Primal Kyogre/Groudon exists in canonical forms');
+    assert.equal(primal[3], 'mega', 'catalogue places Primal in broader mega family');
+    assert.equal(accepts(primal, 'primal'), true);
+    assert.equal(accepts(primal, 'mega'), false);
+  }
+  const megaX = forms.find(f=>f[0]===6 && f[1]==='mega-x');
+  const gmax = forms.find(f=>f[0]===6 && f[1]==='gmax');
+  assert.equal(accepts(megaX,'mega'),true);
+  assert.equal(accepts(megaX,'primal'),false);
+  assert.equal(accepts(gmax,'gigantamax'),true);
+  assert.equal(accepts(gmax,'mega'),false);
+});
