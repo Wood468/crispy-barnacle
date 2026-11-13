@@ -5928,7 +5928,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 154,
+    "revision": 156,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -26902,7 +26902,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 169,
+    "revision": 171,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -58587,7 +58587,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 146,
+    "revision": 148,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -59784,7 +59784,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 154,
+    "revision": 156,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -67157,7 +67157,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 146,
+    "revision": 148,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -74076,6 +74076,131 @@
    "pokemon": [],
    "encounters": [],
    "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "world:https://pokemongo.com/news/european-space-agency-event",
+   "aliases": [],
+   "family": "other",
+   "title": "Pokémon GO x ESA",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "in-person",
+   "location": "London, Toulouse, Nuremberg, Valencia, Noordwijk and Transinne",
+   "image": "https://lh3.googleusercontent.com/7CITEYsKb4CAwdYOln7q7h5K6U1cIVu2cnWRbDZtixs10PkfYfHzPn5Iz9wwbMFE3bosgBEiKnZlEZJZmGiyl-YqYRKHlIL8d7VAzR4DjA",
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [
+      {
+       "text": "Look to the skies, Trainers! From October 4 to October 10, 2026, these event-themed Pokémon will appear more frequently around participating locations.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "From October 4, 2026, to April 30, 2027, Trainers visiting participating science and space museums can discover special Pokémon GO gameplay inspired by the wonders of space, including encounters with Astronaut Pikachu!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Look to the skies, Trainers! From October 4 to October 10, 2026, these event-themed Pokémon will appear more frequently around participating locations.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "All the above gameplay, excluding Location Backgrounds, will be available at the following ESA locations across Europe from October 4 to October 10, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-10-04",
+     "end": "2027-04-30"
+    },
+    "imageReviewed": true,
+    "contentHash": "7f210f969cd5090236d0981014fee7b5068b55ecea32ae00be5952633c7e06a3",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "worldEvents"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/european-space-agency-event/"
+    },
+    {
+     "url": "https://pokemongo.com/news/european-space-agency-event/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [
+    {
+     "key": "824:base:none",
+     "speciesId": "824",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Blipbug",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Blipbug"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "824:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "groups": {
+    "wild": [
+     {
+      "identityKey": "824:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ]
+   }
   },
   {
    "schemaVersion": 1,
