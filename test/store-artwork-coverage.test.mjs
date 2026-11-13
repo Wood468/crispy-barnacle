@@ -18,6 +18,12 @@ test('only exact existing WebP icons are accepted, not misleading item substitut
     assert.equal(r.valid,true,path+' must be nonempty and contain real WebP bytes');
   }
   assert.deepEqual(validateIcon('/ico/egg.webp').valid,true);
+  const modified=store.replace("'/ico/g/raidpass.webp'","'/ico/g/event.webp'");
+  const unreviewed=auditStoreArtwork({source:modified,items:[]});
+  assert.equal(unreviewed.counts.invalidLocalIcons,1,
+    'generic event artwork cannot silently replace ordinary Raid Pass artwork');
+  assert.equal(unreviewed.localIcons.find(x=>!x.valid).reason,
+    'new exact-item artwork requires independent source/visual review');
   assert.equal(validateIcon('/ico/../../private.json').valid,false);
   assert.equal(validateIcon('/ico/i/definitely-missing-item.webp').valid,false);
   const missing=validateIcon('/ico/i/max-potion.webp',()=>false);
