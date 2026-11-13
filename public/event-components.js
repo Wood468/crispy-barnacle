@@ -132,7 +132,17 @@ function passGlyph(item,cat){
 function passReward(raw,ctx){
  var item=typeof raw==='string'?{name:raw.trim(),type:'other',quantity:1}:raw;
  if(!item||typeof item.name!=='string'||!item.name||/^[-–—]+$/.test(item.name.trim()))return null;
- if(typeof raw==='string'){var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name);if(q){item={name:q[1].trim(),type:'item',quantity:+q[2]};}}
+ /* Both source string and structured reward names can contain a quantity.
+    Show it once and resolve art against the real item name, but never silently
+    override a disagreeing explicit source quantity. */
+ var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name.trim());
+ if(q){
+  var stated=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:null;
+  var inlineQty=Number(q[2]);
+  if(stated===null||stated===inlineQty){
+   item=Object.assign({},item,{name:q[1].trim(),type:typeof raw==='string'?'item':item.type,quantity:stated||inlineQty});
+  }
+ }
  var cat=passCategory(item),art='',hasArt=false;
  var semantic=typeof globalThis!=='undefined'&&globalThis.GOGoPassRewardArt&&typeof globalThis.GOGoPassRewardArt.resolve==='function'?globalThis.GOGoPassRewardArt.resolve(item):null;
  if(item.type==='encounter'&&ctx.rewardArt){
@@ -165,8 +175,12 @@ function passRewardIdentity(raw){
     If two explicit quantities disagree, preserve that conflict instead of
     silently assuming two rewards are identical. */
  var match=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(name.trim());
- if(match&&(typeof raw==='string'||!(raw&&Number.isInteger(raw.quantity)&&raw.quantity>1))){
-  name=match[1];quantity=Number(match[2]);
+ if(match){
+  var stated=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:null;
+  var inlineQty=Number(match[2]);
+  if(stated===null||stated===inlineQty){
+   name=match[1];quantity=inlineQty;
+  }
  }
  return name.trim().normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
   .replace(/\s+/g,' ').toLowerCase()+'|'+quantity;
