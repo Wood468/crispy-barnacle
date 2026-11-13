@@ -8,6 +8,7 @@
   /* GET /api/ig-decisions returns only the newest rows: src/worker.js igDecisions() runs "ORDER BY at DESC LIMIT 500" and has no per-picture query.
      A list this long may be cut off, so a picture missing from it is UNKNOWN (it may hold an older decision), never "nothing stored". */
   var DECISIONS_CAP = 500;
+  var pokemonCatalogue = [], formCatalogue = [];
   var NET_TIMEOUT_MS = 15000;
   function unknownErr() { var e = new Error('unknown'); e.unknown = true; return e; }
   /* fetch with a time limit: a hung request ends in a timeout error instead of blocking the picture's queue forever. */
@@ -107,7 +108,7 @@
       var hit = list.filter(function (d) { return d && d.id === id; })[0] || null;
       /* A full-length list that does not mention the picture proves nothing: older rows may have been cut off. */
       if (!hit && list.length >= DECISIONS_CAP) throw unknownErr();
-      return hit ? { id: id, status: hit.status, eventId: hit.eventId || '', eventTitle: hit.eventTitle || '' } : null;
+      return hit ? { id: id, status: hit.status, eventId: hit.eventId || '', eventTitle: hit.eventTitle || '', targets: hit.targets || [] } : null;
     });
   }
   var CAP_MSG = 'The saved decisions list is full (' + DECISIONS_CAP + ' shown), so this picture\'s saved state cannot be checked. Nothing was changed.';
@@ -124,7 +125,7 @@
   function setLocal(id, d) { if (d) applyLocal(d); else { delete decs[id]; delete decided[id]; } }
   function undoDiscard() {
     var u = undos[undos.length - 1]; if (!u) return; dropUndo(u); drawUndo(false);
-    var back = u.prev ? { id: u.id, status: u.prev.status, eventId: u.prev.eventId || '', eventTitle: u.prev.eventTitle || '' } : { id: u.id, status: 'reset', eventId: '', eventTitle: '' };
+    var back = u.prev ? { id: u.id, status: u.prev.status, eventId: u.prev.eventId || '', eventTitle: u.prev.eventTitle || '', targets: u.prev.targets || [] } : { id: u.id, status: 'reset', eventId: '', eventTitle: '' };
     queued(u.id, function () {
       return recheckFirst(u.id).then(function (go) { if (!go) return; return readServer(u.id).then(function (now) {
         if (!now || now.status !== 'rejected') { setLocal(u.id, now); msg = 'That picture was changed somewhere else since you discarded it, so Undo did nothing.'; render(); return; }
@@ -165,6 +166,51 @@
     var ids = o.getAttribute('data-ids'); if (!ids) return [{ id: o.value, title: o.getAttribute('data-t') }];
     var ts = o.getAttribute('data-t').split(' | '); return ids.split(',').map(function (x, i) { return { id: x, title: ts[i] || x }; });
   }
+  function bossTargets(id) {
+    var d = decs[id];
+    return d && d.status === 'approved' && Array.isArray(d.targets)
+      ? d.targets.filter(function (t) { return t && t.type === 'raid-boss'; }) : [];
+  }
+  function bossName(id) {
+    var match = pokemonCatalogue.filter(function (p) { return String(p[0]).padStart(3,'0') === String(id); })[0];
+    return match ? match[1] : '#' + String(id);
+  }
+  function bossLabel(t) {
+    return bossName(t.pokemonId) + (t.formId ? ' · ' + t.formId : '') + ' · ' + t.battleMode;
+  }
+  function bossControls() {
+    return '<div class="igr-o ig-boss-controls" role="group" aria-label="Attach infographic to a Pokémon">'
+      + '<label>Pokémon<input type="search" data-ig-boss-name list="ig-boss-list" placeholder="Exact Pokémon name" autocomplete="off" maxlength="90"></label>'
+      + '<label>Battle type<select data-ig-boss-mode><option value="normal">Normal</option><option value="shadow">Shadow</option><option value="dynamax">Dynamax</option><option value="gigantamax">Gigantamax</option><option value="mega">Mega</option><option value="primal">Primal</option></select></label>'
+      + '<label>Exact form<select data-ig-boss-form><option value="">Base/default</option></select></label>'
+      + '<button type="button" class="pill" data-ig-boss-save>Attach to Pokémon</button></div>';
+  }
+  function bossFormCompatible(row, mode) {
+    var kind = row[3];
+    if (mode === 'mega') return kind === 'mega';
+    if (mode === 'primal') return kind === 'primal';
+    if (mode === 'gigantamax') return kind === 'gmax';
+    return kind !== 'mega' && kind !== 'primal' && kind !== 'gmax';
+  }
+  function chosenPokemon(card) {
+    var field = card.querySelector('[data-ig-boss-name]');
+    var value = field ? field.value.trim().toLocaleLowerCase() : '';
+    var found = pokemonCatalogue.filter(function (p) { return String(p[1]).toLocaleLowerCase() === value; });
+    return found.length === 1 ? found[0] : null;
+  }
+  function refreshBossForms(card) {
+    var mon = chosenPokemon(card), mode = card.querySelector('[data-ig-boss-mode]'),
+        field = card.querySelector('[data-ig-boss-form]');
+    if (!mode || !field) return;
+    var was = field.value;
+    var opts = formCatalogue.filter(function (f) {
+      return mon && +f[0] === +mon[0] && bossFormCompatible(f, mode.value);
+    });
+    field.innerHTML = '<option value="">Base/default</option>' + opts.map(function (f) {
+      return '<option value="' + esc(f[1]) + '">' + esc(f[2]) + '</option>';
+    }).join('');
+    if (opts.some(function (f) { return f[1] === was; })) field.value = was;
+  }
   function linkedOf(id) {
     var d = decs[id]; if (!d || d.status !== 'approved' || !d.eventId) return [];
     var ids = String(d.eventId).split(','), ts = String(d.eventTitle || '').split(' | ');
@@ -175,8 +221,9 @@
     return '<article class="igr" data-id="' + esc(it.id) + '">'
       + '<a class="igr-img" href="' + esc(it.image) + '" target="_blank" rel="noopener"><img src="' + esc(it.image) + '" alt="' + esc(it.title || 'Infographic') + '" loading="lazy" decoding="async"></a>'
       + '<div class="igr-b"><b>' + esc(it.title || 'Untitled graphic') + '</b>'
-      + '<div class="igr-g">' + L.map(function (l, n) { return '<button type="button" class="pill all" data-ig-unlink="' + n + '" aria-label="Unlink from ' + esc(l.title) + '">' + esc(l.title) + ' ✕</button>'; }).join('') + '</div>'
+      + '<div class="igr-g">' + bossTargets(it.id).map(function (t,n) { return '<button type="button" class="pill all" data-ig-boss-unlink="' + n + '" aria-label="Unlink ' + esc(bossLabel(t)) + '">' + esc(bossLabel(t)) + ' ✕</button>'; }).join('') + L.map(function (l, n) { return '<button type="button" class="pill all" data-ig-unlink="' + n + '" aria-label="Unlink from ' + esc(l.title) + '">' + esc(l.title) + ' ✕</button>'; }).join('') + '</div>'
       + '<div class="igr-o"><select aria-label="Link to another event"><option value="">Also link to…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-add aria-label="Add event: ' + esc(it.title || 'Untitled graphic') + '">Add</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
+      + bossControls()
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
       + '</div></article>';
   }
@@ -192,6 +239,7 @@
       + (it.signals && it.signals.length ? '<div class="igr-s">' + it.signals.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '')
       + '<div class="igr-g">' + (g.length ? g.map(function (x) { return '<button type="button" class="pill all" data-ig-ok="' + esc(x.eventId) + '" data-t="' + esc(x.eventTitle) + '">Approve: ' + esc(x.eventTitle) + '</button>'; }).join('') : '<small>No likely event found.</small>') + '</div>'
       + '<div class="igr-o"><select aria-label="Choose another event"><option value="">Another event…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-pick aria-label="Approve: ' + esc(it.title || 'Untitled graphic') + '">Approve</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
+      + bossControls()
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
       + (safeUrl(it.post) ? '<small><a href="' + esc(it.post) + '" target="_blank" rel="noopener noreferrer">' + (window.GOLIB.isPrivateLink(it.post) ? 'Open in Discord (owner only)' : 'Original post') + '</a>' + (it.creator ? ' · ' + esc(it.creator) : '') + '</small>' : '')
       + '</div></article>';
@@ -205,28 +253,30 @@
     banner(open.length);
     var capNote = capped ? '<p class="igr-msg igr-cap" role="status">Showing the ' + DECISIONS_CAP + ' most recent decisions; older ones may be hidden. A picture that shows no decision here may still have one, so Discard is refused and Approve asks first.</p>' : '';
     var queueRetry = queueFailed ? '<button type="button" class="pill all" data-ig-retry="1">Retry</button>' : '';
-    var linked = items.filter(function (i) { return linkedOf(i.id).length; });
+    var linked = items.filter(function (i) { return linkedOf(i.id).length || bossTargets(i.id).length; });
     if (!decsOk) {
       host.hidden = false;
-      host.innerHTML = '<details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body"><p class="igr-msg" role="alert">Could not read your saved decisions, so review is paused. Nothing can be approved or discarded until they load, so a choice you made elsewhere is never overwritten.</p>' + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + '<button type="button" class="pill all" data-ig-retry="1">Retry</button></div></details>';
+      host.innerHTML = '<datalist id="ig-boss-list">' + pokemonCatalogue.map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('') + '</datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body"><p class="igr-msg" role="alert">Could not read your saved decisions, so review is paused. Nothing can be approved or discarded until they load, so a choice you made elsewhere is never overwritten.</p>' + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + '<button type="button" class="pill all" data-ig-retry="1">Retry</button></div></details>';
       return;
     }
     if (!open.length && !msg && !capped && !linked.length) { host.hidden = true; host.innerHTML = ''; return; }
     host.hidden = false;
     var kl = document.getElementById('iglinked'), keepLinked = !!(kl && kl.open);
-    host.innerHTML = '<details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
-      + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing is attached to an event until you approve it.</p>'
+    host.innerHTML = '<datalist id="ig-boss-list">' + pokemonCatalogue.map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('') + '</datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
+      + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing appears on an event or Pokémon until you approve it.</p>'
       + capNote + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + queueRetry + '</div></details>'
       + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(linkedCard).join('') + '</div></details>' : '');
   }
-  function send(it, status, eventId, title, note) {
+  function send(it, status, eventId, title, note, specifiedBossTargets) {
     if (!isOwner()) { hideOwnerUi(); return; }
     if (!decsOk) { msg = 'Saved decisions could not be read, so nothing can be changed yet. Tap Retry.'; render(); return; }
     if (!pin()) { msg = 'Set your Sync PIN in Menu → Sync & accounts before reviewing.'; render(); return; }
     /* Older decisions may be hidden (list at the cap): this picture could already hold one, so overwriting it needs a yes. Discard is refused further down. */
     if (capped && status !== 'rejected' && status !== 'unlinked' && !decs[it.id] && !window.confirm('Older saved decisions are hidden, so this picture may already have a saved decision. Replace it?')) return;
     if (status === 'rejected') { if (pendingDiscard[it.id]) return; pendingDiscard[it.id] = true; }
+    var targets = specifiedBossTargets === undefined ? bossTargets(it.id) : specifiedBossTargets;
     var body = { id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' };
+    if (status === 'approved' && targets && targets.length) body.targets = targets;
     queued(it.id, function () {
       return recheckFirst(it.id).then(function (go) {
         if (!go) return;
@@ -235,7 +285,7 @@
       return before.then(function (b) {
         if (b.fail) { msg = b.fail.unknown ? 'Not discarded: ' + CAP_MSG : 'Could not check the saved decision for this picture, so it was not discarded. Try again.'; render(); return; }
         return post(body).then(function () {
-          applyLocal({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' });
+          applyLocal({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '', targets: status === 'approved' ? targets : [] });
           if (status === 'rejected') { msg = ''; showUndo(it, b.prev); } else { clearUndo(it.id); msg = note || (status === 'approved' ? 'Linked. It will appear on the event after the next scheduled update.' : status === 'unlinked' ? 'Unlinked. It is back in the review list.' : 'Discarded.'); }
           render(); document.dispatchEvent(new CustomEvent('gofn-review-updated', { detail: { decided: true } }));
         });
@@ -244,7 +294,7 @@
     }).then(function () { delete pendingDiscard[it.id]; });
   }
   function setLinks(it, list) {
-    if (!list.length) return send(it, 'unlinked');
+    if (!list.length) return bossTargets(it.id).length ? send(it, 'approved', '', '', undefined, bossTargets(it.id)) : send(it, 'unlinked');
     send(it, 'approved', list.map(function (l) { return l.id; }).join(','), list.map(function (l) { return l.title; }).join(' | '));
   }
   function banner(n) {
@@ -272,6 +322,36 @@
     var it = items.filter(function (i) { return i.id === card.getAttribute('data-id'); })[0]; if (!it) return;
     var ok = e.target.closest('[data-ig-ok]');
     if (ok) return send(it, 'approved', ok.getAttribute('data-ig-ok'), ok.getAttribute('data-t'));
+    var bossRemove = e.target.closest('[data-ig-boss-unlink]');
+    if (bossRemove) {
+      var selected = bossTargets(it.id), idx = +bossRemove.getAttribute('data-ig-boss-unlink');
+      if (!Number.isInteger(idx) || idx < 0 || idx >= selected.length) return;
+      var next = selected.filter(function (_, n) { return n !== idx; });
+      var old = decs[it.id] || {};
+      return !next.length && !old.eventId ? send(it, 'unlinked') :
+        send(it, 'approved', old.eventId || '', old.eventTitle || '', undefined, next);
+    }
+    var bossSave = e.target.closest('[data-ig-boss-save]');
+    if (bossSave) {
+      var mon = chosenPokemon(card), mode = card.querySelector('[data-ig-boss-mode]'),
+          form = card.querySelector('[data-ig-boss-form]');
+      if (!mon || !mode || !form) { msg = 'Choose an exact Pokémon name from the list.'; return render(); }
+      var validMode = ['normal','shadow','dynamax','gigantamax','mega','primal'].indexOf(mode.value) >= 0;
+      var possible = formCatalogue.filter(function (f) {
+        return +f[0] === +mon[0] && f[1] === form.value && bossFormCompatible(f, mode.value);
+      });
+      if (!validMode || (['mega','primal','gigantamax'].indexOf(mode.value) >= 0 && !form.value) || (form.value && !possible.length)) {
+        msg = 'Choose an exact Pokémon form and compatible battle type.'; return render();
+      }
+      var target = {type:'raid-boss', pokemonId:String(mon[0]).padStart(3,'0'),
+        formId:form.value || null, battleMode:mode.value};
+      var current = bossTargets(it.id);
+      if (!current.some(function (b) { return b.pokemonId === target.pokemonId &&
+        b.formId === target.formId && b.battleMode === target.battleMode; })) current.push(target);
+      var prior = decs[it.id] || {};
+      return send(it, 'approved', prior.eventId || '', prior.eventTitle || '',
+        'Pokémon guide approved. It will appear in Raids & Max Battles and remain after events end.', current);
+    }
     var un = e.target.closest('[data-ig-unlink]');
     if (un) { var L = linkedOf(it.id), gone = L[Number(un.getAttribute('data-ig-unlink'))]; return setLinks(it, L.filter(function (x) { return x !== gone; })); }
     if (e.target.closest('[data-ig-add]')) {
@@ -288,6 +368,16 @@
       var sel = card.querySelector('select'), o = sel && sel.options[sel.selectedIndex];
       if (!o || !o.value) { msg = 'Choose an event first.'; return render(); }
       var pk = picks(o); send(it, 'approved', pk.map(function (x) { return x.id; }).join(','), pk.map(function (x) { return x.title; }).join(' | '));
+    }
+  });
+  document.addEventListener('input', function (e) {
+    if (e.target.closest && e.target.closest('[data-ig-boss-name]')) {
+      var card = e.target.closest('.igr'); if (card) refreshBossForms(card);
+    }
+  });
+  document.addEventListener('change', function (e) {
+    if (e.target.closest && e.target.closest('[data-ig-boss-mode]')) {
+      var card = e.target.closest('.igr'); if (card) refreshBossForms(card);
     }
   });
   /* "Check Discord now": the Worker looks at the Discord channel straight away instead of waiting for the hourly run, and says what it did. */
@@ -340,6 +430,16 @@
       decsOk = !!R[1]; if (R[1]) takeDecisions(R[1].decisions);
       if (!ensureHost()) return;
       render(); document.dispatchEvent(new Event('gofn-review-updated'));
+      // Catalogues are optional; unknown Pokémon names never get guessed IDs.
+      Promise.all([
+        timedFetch('/dex.json').then(function (r) { return r.ok ? r.json() : []; }),
+        timedFetch('/forms.json').then(function (r) { return r.ok ? r.json() : {}; })
+      ]).then(function (catalogue) {
+        if (token !== loadToken || !isOwner()) return;
+        pokemonCatalogue = Array.isArray(catalogue[0]) ? catalogue[0] : [];
+        formCatalogue = Array.isArray(catalogue[1] && catalogue[1].f) ? catalogue[1].f : [];
+        render();
+      }).catch(function () { /* do not guess when the catalogue cannot load */ });
       if (location.hash === '#review') gotoReview();
     });
   }
