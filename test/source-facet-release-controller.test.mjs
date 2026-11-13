@@ -37,6 +37,8 @@ async function sandbox(fn){
   const rootDir=join(base,'checkout'),durableStateDir=join(base,'trusted-ledger');
   await mkdir(rootDir,{recursive:true});
   await mkdir(durableStateDir,{recursive:true});
+  await writeFile(join(durableStateDir,'promotion-ledger.json'),
+    JSON.stringify({schemaVersion:1,publication:'promotion-ledger',releases:[],pending:null}));
   try{await fn(rootDir,durableStateDir)}finally{await rm(base,{recursive:true,force:true})}
 }
 async function setup(rootDir,durableStateDir,bad=false){
@@ -75,7 +77,8 @@ test('untrusted authorization, missing receipt and tampered manifest write no pu
   await assert.rejects(commitFacetPromotion(m,signed(m),{
     ...opts,trustedPrivateReceipts:{}}),/private writer receipt/);
   await assert.rejects(commitFacetPromotion({...m,commitSha:'b'.repeat(40)},signed(m),opts),/trusted environment/);
-  await assert.rejects(readFile(ledgerFile(durableStateDir)),/ENOENT/);
+  assert.deepEqual(JSON.parse(await readFile(ledgerFile(durableStateDir),'utf8')),
+    {schemaVersion:1,publication:'promotion-ledger',releases:[],pending:null});
   await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
 }));
 test('failed export preserves a pending intent and prevents retry without operator reconciliation',async()=>sandbox(async (rootDir,durableStateDir)=>{
@@ -93,7 +96,8 @@ test('preexisting controller lock rejects second publisher without changes',asyn
   const lock=await open(lockPath,'wx');
   try{
     await assert.rejects(commitFacetPromotion(m,signed(m),opts),/EEXIST/);
-    await assert.rejects(readFile(ledgerFile(durableStateDir)),/ENOENT/);
+    assert.deepEqual(JSON.parse(await readFile(ledgerFile(durableStateDir),'utf8')),
+    {schemaVersion:1,publication:'promotion-ledger',releases:[],pending:null});
   }finally{await lock.close();await rm(lockPath,{force:true})}
 }));
 test('corrupt durable replay ledger can never be overwritten by publication',async()=>sandbox(async (rootDir,durableStateDir)=>{
@@ -103,5 +107,29 @@ test('corrupt durable replay ledger can never be overwritten by publication',asy
   await writeFile(ledger,content);
   await assert.rejects(commitFacetPromotion(m,signed(m),opts),/invalid durable|Untrusted or invalid durable/);
   assert.deepEqual(await readFile(ledger),content);
+  await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
+}));
+
+test('missing replay ledger after storage loss cannot be silently reinitialised',async()=>sandbox(async (rootDir,durableStateDir)=>{
+  const {sha,opts}=await setup(rootDir,durableStateDir),m=manifest(sha);
+  await rm(ledgerFile(durableStateDir),{force:true});
+  await assert.rejects(commitFacetPromotion(m,signed(m),opts),/Missing durable promotion ledger/);
+  await assert.rejects(readFile(ledgerFile(durableStateDir)),/ENOENT/);
+  await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
+}));
+test('missing durable state directory blocks release instead of recreating history',async()=>sandbox(async (rootDir,durableStateDir)=>{
+  const {sha,opts}=await setup(rootDir,durableStateDir),m=manifest(sha);
+  await rm(durableStateDir,{recursive:true,force:true});
+  await assert.rejects(commitFacetPromotion(m,signed(m),opts),/pre-provisioned/);
+  await assert.rejects(readFile(ledgerFile(durableStateDir)),/ENOENT/);
+  await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
+}));
+test('symlinked release state pointing into checkout is not durable isolated storage',async()=>sandbox(async (rootDir,durableStateDir)=>{
+  const {sha,opts}=await setup(rootDir,durableStateDir),m=manifest(sha);
+  const {symlink}=await import('node:fs/promises');
+  const alias=join(durableStateDir,'..','trick-ledger-link');
+  await symlink(rootDir,alias,'dir');
+  await assert.rejects(commitFacetPromotion(m,signed(m),{
+    ...opts,durableStateDir:alias}),/outside the checkout/);
   await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
 }));
