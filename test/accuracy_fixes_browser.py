@@ -129,44 +129,6 @@ with sync_playwright() as p:
         }""")
         assert overflow['dialog'] <= 2 and overflow['document'] <= 2, (width, overflow)
         print(f'PASS Into the Wild 7/7 Field Research DOM/rewards/CP at {width}px, overflow={overflow}')
-        # Verify the entire seven-task source-backed catalogue in a REAL phone browser.
-        # The event is historical after 13 Nov; keep it testable via its stable ID.
-        expected_research = {
-            'Catch 10 Pokémon': ['Horsea', 'Aron', 'Skrelp', 'Magnemite'],
-            'Catch a Dynamax Machop': ['25× Machop Candy', '5000× Stardust'],
-            'Catch a Dynamax Ralts': ['25× Ralts Candy', '5000× Stardust'],
-            'Power up Dragon-type Pokémon 5 times': ['Bagon', 'Skrelp', 'Dratini', 'Horsea'],
-            'Power up Steel-type Pokémon 5 times': ['Aron', 'Magnemite', 'Togedemaru', 'Galarian Meowth'],
-            'Win a Max Battle': ['Bagon', 'Mawile'],
-            'Win a raid': ['Dratini', '2× Rare Candy', 'Scyther'],
-        }
-        rows = page.locator('#evd-s-research .rs-list li.research-task')
-        assert rows.count() == 7, (width, rows.count())
-        for task_name, rewards in expected_research.items():
-            row = rows.filter(has=page.locator('.rs-text', has_text=task_name))
-            assert row.count() == 1, (width, task_name, row.count())
-            assert row.locator('.research-reward').count() == len(rewards), (width, task_name)
-            for reward in rewards:
-                assert reward in row.inner_text(), (width, task_name, reward)
-            alternatives = row.locator('.rs-rewards').get_attribute('aria-label')
-            assert alternatives == f'One of {len(rewards)} possible rewards', (width, task_name, alternatives)
-        for task_name in ('Power up Dragon-type Pokémon 5 times', 'Power up Steel-type Pokémon 5 times', 'Win a Max Battle', 'Win a raid', 'Catch 10 Pokémon'):
-            row = rows.filter(has=page.locator('.rs-text', has_text=task_name))
-            for reward in row.locator('.research-reward-encounter').all():
-                label = reward.inner_text()
-                assert re.search(r'CP \\d+–\\d+', label), (width, task_name, label)
-        assert 'Galarian Meowth' in page.locator('#evd-s-research').inner_text()
-        # No task or reward may escape the Event Details scroll surface.
-        metrics = page.evaluate("""() => {
-            const root=document.querySelector('#evd');
-            const rows=[...root.querySelectorAll('#evd-s-research .rs-list li.research-task')];
-            const box=root.getBoundingClientRect();
-            return {width:innerWidth,scroll:root.scrollWidth,client:root.clientWidth,
-                    document:document.documentElement.scrollWidth,
-                    outside:rows.filter(x=>{const r=x.getBoundingClientRect();return r.left<box.left-2||r.right>box.right+2;}).length};
-        }""")
-        assert metrics['scroll'] <= metrics['client'] + 2 and metrics['document'] <= width + 2 and metrics['outside'] == 0, metrics
-        print('Into the Wild 7/7 mobile research rendered', metrics)
         # Source-backed Into the Wild task "Win a raid" lists 2× Rare Candy.
         # The approved asset list has no exact Rare Candy item picture, so the
         # readable RC glyph must appear, not a fake regular-Candy image/dot.
