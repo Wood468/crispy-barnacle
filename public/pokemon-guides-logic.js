@@ -47,9 +47,12 @@
     var form = (Array.isArray(forms) ? forms : []).filter(function (f) { return f && +f[0] === number && f[1] === g.formId; })[0];
     var name = form ? String(form[2]) : (g.formId ? g.formId : '');
     var mode = g.battleMode;
-    if (mode === 'mega' || mode === 'primal' || mode === 'gigantamax') {
-      return (name || mode.charAt(0).toUpperCase() + mode.slice(1)) + ' ' + base;
+    if (mode === 'mega') {
+      var part = /^Mega(?:\\s+(.+))?$/i.exec(name);
+      return 'Mega ' + base + (part && part[1] ? ' ' + part[1] : (name && !part ? ' (' + name + ')' : ''));
     }
+    if (mode === 'primal') return 'Primal ' + base;
+    if (mode === 'gigantamax') return 'Gigantamax ' + base;
     return (mode === 'normal' ? '' : mode.charAt(0).toUpperCase() + mode.slice(1) + ' ') + base + (name ? ' (' + name + ')' : '');
   }
   return {valid:valid, identity:identity, entries:entries, label:label};
