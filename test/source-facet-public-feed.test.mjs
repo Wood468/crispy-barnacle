@@ -44,10 +44,11 @@ test('explicitly pinned snapshot is published to a separate deterministic public
 test('changed private file or untrusted hash leaves previous public last-good untouched',async()=>sandbox(async rootDir=>{
   const hash=await seed(rootDir);
   const accepted={'synthetic:global.2026':hash};
-  await publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:accepted});
+  const first=await publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:accepted});
   const target=join(rootDir,'public','verified-event-facets.json'),before=await readFile(target);
   await seed(rootDir,{...verified(),benefits:[]});
-  await assert.rejects(publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:accepted}),/SHA mismatch/);
+  await assert.rejects(publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:accepted,
+    expectedPreviousFeedSha256:first.sha256}),/SHA mismatch/);
   assert.deepEqual(await readFile(target),before);
 }));
 test('unverified snapshots, absent pins and malformed source records cannot publish',async()=>sandbox(async rootDir=>{
@@ -70,4 +71,64 @@ test('unreviewed research rewards must not appear in the public projection',asyn
     steps:[{step:1,outOf:6,title:'Stage 1',taskRewardEvidence:'unverified-reward'}]}];
   const hash=await seed(rootDir,v);
   await assert.rejects(publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:{'synthetic:global.2026':hash}}),/Unreviewed research reward/);
+}));
+
+test('second release requires exact previous public digest and preserves old bytes on conflict',async()=>sandbox(async rootDir=>{
+  const oldHash=await seed(rootDir);
+  const hashes={'synthetic:global.2026':oldHash};
+  const first=await publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:hashes});
+  const file=join(rootDir,first.path),original=await readFile(file);
+  await assert.rejects(publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:hashes}),
+    /changed since release review/);
+  await assert.rejects(publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:hashes,
+    expectedPreviousFeedSha256:'a'.repeat(64)}),/changed since release review/);
+  assert.deepEqual(await readFile(file),original);
+  const same=await publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:hashes,
+    expectedPreviousFeedSha256:first.sha256});
+  assert.equal(same.sha256,first.sha256);
+  assert.deepEqual(await readdir(join(rootDir,'public')),['verified-event-facets.json']);
+}));
+test('incomplete source manifest cannot erase published event IDs',async()=>sandbox(async rootDir=>{
+  const firstHash=await seed(rootDir);
+  const second={...verified(),eventId:'synthetic:other.2026'};
+  const secondHash=await seed(rootDir,second);
+  const initial=await publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:{
+    'synthetic:global.2026':firstHash,'synthetic:other.2026':secondHash
+  }});
+  const target=join(rootDir,initial.path),original=await readFile(target);
+  await assert.rejects(publishApprovedFacetFeed({rootDir,
+    expectedPreviousFeedSha256:initial.sha256,
+    expectedSha256ByEvent:{'synthetic:global.2026':firstHash}}),/removal requires separate review/);
+  assert.deepEqual(await readFile(target),original);
+  const full=await publishApprovedFacetFeed({rootDir,
+    expectedPreviousFeedSha256:initial.sha256,
+    expectedSha256ByEvent:{
+      'synthetic:other.2026':secondHash,'synthetic:global.2026':firstHash
+    }});
+  assert.equal(full.eventCount,2);
+}));
+test('exclusive publishing lock blocks overlapping exporters without altering last-good',async()=>sandbox(async rootDir=>{
+  const hash=await seed(rootDir);
+  const pins={'synthetic:global.2026':hash};
+  const first=await publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:pins});
+  const file=join(rootDir,first.path),original=await readFile(file);
+  const lockPath=file+'.lock';
+  const fs=await import('node:fs/promises');
+  const lock=await fs.open(lockPath,'wx');
+  try{
+    await assert.rejects(publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:pins,
+      expectedPreviousFeedSha256:first.sha256}),/EEXIST/);
+    assert.deepEqual(await readFile(file),original);
+  }finally{await lock.close();await rm(lockPath,{force:true})}
+}));
+test('unreconciled existing feed cannot be replaced even with its correct hash',async()=>sandbox(async rootDir=>{
+  const hash=await seed(rootDir);
+  const pins={'synthetic:global.2026':hash};
+  const target=join(rootDir,'public','verified-event-facets.json');
+  await mkdir(join(rootDir,'public'),{recursive:true});
+  const corrupt=Buffer.from('{"events":false}');
+  await writeFile(target,corrupt);
+  await assert.rejects(publishApprovedFacetFeed({rootDir,expectedSha256ByEvent:pins,
+    expectedPreviousFeedSha256:digest(corrupt)}),/cannot be safely reconciled/);
+  assert.deepEqual(await readFile(target),corrupt);
 }));
