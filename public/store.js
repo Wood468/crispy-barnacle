@@ -64,9 +64,6 @@
       }).join('')
       + '<p class="note">Rp prices read from the Indonesian web store and converted at ' + esc(String(fx.rate)) + ' A$ per Rp (' + esc(fx.source || '') + ', ' + esc(fx.observed || '') + '). Australian prices from the Australian store. Nothing is converted from US prices.</p></details>';
   }
-  var COINS_KEY = 'gofn-store-coins-v1';
-  function lsGet(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
-  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
   function when(iso) { var d = new Date(iso + 'T00:00:00Z'); return isNaN(d) ? String(iso) : d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); }
   function chan(p) { var R = window.GORegionalPrices; return R.REGIONS[p.region] + ' ' + R.CHANNELS[p.channel]; }
   /* The approximate AUD reference goes ABOVE the local checkout currency. */
@@ -100,14 +97,66 @@
       + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>'
       + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
   }
-  function cheapestHtml(obs, balance) {
-    var R = window.GORegionalPrices, packs = obs.filter(function (o) { return o.kind === 'coins' && o.coins && o.status === 'verified'; }).map(function (o) { return { coins: o.coins, amount: o.amount, currency: o.currency, oneTime: !!o.oneTime }; });
-    var products = obs.filter(function (o) { return o.region === 'ID' && o.status === 'verified' && /pass|ultra/i.test(o.product); });
-    return products.map(function (o) {
-      var r = R.cheapest({ region: 'ID', product: o.product }, obs, { coinBalance: balance, packs: packs });
-      var b = r.best; if (!b) return '';
-      return '<div class="sp-r sp-regional-row"><span class="sp-n">' + esc(o.product) + '</span><span class="sp-regional-value"><b>' + esc(R.fmt(b.cash, b.currency)) + '</b> <small>'
-        + esc('Lowest verified observed: ' + b.channelLabel + ', checked ' + when(b.price.observed) + (b.coinsUsed ? ', using ' + b.coinsUsed + ' coins' : '') + (b.leftoverCoins > 0 ? '; ' + b.leftoverCoins + ' coins left unused' : '') + '. Not a live checkout quote.') + '</small></span></div>';
+  /* A source-verified channel ledger for EVERY known regional product.
+     Only claim a cheapest option when two or more channels share an explicit
+     source SKU, exact package/bonus identity and currency; one channel is not a win. */
+  function verifiedOptionsHtml(obs) {
+    var R = window.GORegionalPrices, rows = Array.isArray(obs) ? obs : [];
+    var observed = rows.filter(function (o) {
+      return o && o.status === 'verified' && o.product && o.region && o.channel
+        && o.currency && Number.isFinite(o.amount) && o.amount > 0
+        && Number.isFinite(Date.parse(o.observed));
+    });
+    if (!observed.length) return '';
+    /* Display each exact observation identity independently. A shared human
+       label is NOT proof that two boxes or coin bonuses have the same SKU.
+       Only an explicit verified sourceSku can authorize channel comparison. */
+    var groups = new Map();
+    observed.forEach(function (o) {
+      var sku = typeof o.sourceSku === 'string' && /^[a-z0-9_.:-]{2,100}$/i.test(o.sourceSku)
+        ? o.sourceSku.toLowerCase() : '';
+      var labelKey = String(o.product).trim().toLowerCase().replace(/\s+/g, ' ');
+      var key = o.region + '|' + (sku
+        ? 'sku:' + sku + '|product:' + labelKey + '|promo:' + !!o.oneTime
+        : 'obs:' + String(o.id || 'unidentified') + '|product:' + labelKey
+          + '|channel:' + o.channel + '|currency:' + o.currency);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(o);
+    });
+    return Array.from(groups.values()).map(function (group) {
+      var item = group[0], product = item.product, region = item.region;
+      var sku = typeof item.sourceSku === 'string' && /^[a-z0-9_.:-]{2,100}$/i.test(item.sourceSku)
+        ? item.sourceSku.toLowerCase() : '';
+      var candidates = new Map();
+      group.forEach(function (o) {
+        var key = o.channel + '|' + o.currency;
+        var old = candidates.get(key);
+        if (!old || String(o.observed) > String(old.observed)) candidates.set(key, o);
+      });
+      var offers = Array.from(candidates.values());
+      var sameCurrency = offers.every(function (o) { return o.currency === offers[0].currency; });
+      var canCompare = !!sku && offers.length >= 2 && sameCurrency
+        && offers.every(function (o) { return o.sourceSku && o.sourceSku.toLowerCase() === sku
+          && o.product === product && !!o.oneTime === !!item.oneTime; });
+      var validBest = canCompare ? offers.slice().sort(function (a,b) { return a.amount - b.amount; })[0] : null;
+      var regionName = R.REGIONS[region] || region;
+      var label = regionName + ' · ' + product;
+      var observedText = offers.map(function (o) {
+        return (R.CHANNELS[o.channel] || o.channel) + ': ' + R.fmt(o.amount, o.currency)
+          + ', checked ' + when(o.observed);
+      }).join('; ');
+      var status = validBest
+        ? 'Lowest verified cash price across ' + offers.length + ' exact-SKU channels: '
+          + (R.CHANNELS[validBest.channel] || validBest.channel) + ' · '
+          + R.fmt(validBest.amount, validBest.currency)
+        : offers.length > 1 && !sameCurrency
+          ? 'Different currencies: no reliable lowest-price comparison'
+          : offers.length > 1
+            ? 'Matching product identity not established; no lowest-price comparison'
+            : 'Only one verified buying channel observed; no lowest-price comparison';
+      return '<div class="sp-r sp-regional-row"' + (canCompare ? ' data-sp-compared="yes"' : '') + '><span class="sp-n">' + esc(label)
+        + '</span><span class="sp-regional-value"><b>' + esc(status) + '</b><small>'
+        + esc(observedText + '. Not a live checkout quote.') + '</small></span></div>';
     }).join('');
   }
   /* Product-first regional comparison. One card per known item, with price provenance
@@ -120,8 +169,7 @@
     var prices = Array.isArray(data.prices) ? data.prices : [];
     var items = R.catalogue(prices, obs);
     if (!items.length) return '';
-    var balance = Math.max(0, parseInt(lsGet(COINS_KEY), 10) || 0);
-    var comparableOffers = cheapestHtml(obs, balance);
+    var comparableOffers = verifiedOptionsHtml(obs);
     var sections = [
       { id: 'passes', label: 'Passes & tickets', open: true },
       { id: 'storage', label: 'Storage upgrades', open: true },
@@ -162,9 +210,8 @@
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
-      + (comparableOffers ? '<details class="sp-compare-more"><summary>Lowest verified observed options <small>Advanced comparison</small></summary>'
-      + '<p class="note">Only verified, directly comparable offers qualify. Recorded and modelled prices cannot win. Your existing PokéCoins may reduce cash cost; estimates are never checkout quotes.</p>'
-      + '<label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
+      + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
+      + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed cash price is named only when two or more channels share an explicit verified product SKU and currency. Estimated, recorded-only and ambiguous boxes cannot win; no result is a live checkout quote.</p>'
       + '<div data-sp-cheapest>' + comparableOffers + '</div></details>' : '') + '</details>';
   }
   function go() {
@@ -228,11 +275,7 @@
         fallback.textContent = bad.getAttribute('data-sp-fallback') || '·';
         bad.replaceWith(fallback);
       }, true);
-      var inp = el.querySelector('[data-sp-coins]');
-      if (inp) inp.addEventListener('input', function () {
-        var n = Math.max(0, parseInt(inp.value, 10) || 0); lsSet(COINS_KEY, String(n));
-        el.querySelector('[data-sp-cheapest]').innerHTML = cheapestHtml(d.regional, n);
-      });
+
     }).catch(function () { });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
