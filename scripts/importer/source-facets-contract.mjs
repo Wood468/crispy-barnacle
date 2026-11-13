@@ -107,9 +107,17 @@ function normalizeClaim(type,raw,source){
     const pokemonLabel=safe(raw.pokemonLabel,100),move=safe(raw.move,90),moveKind=trim(raw.moveKind);
     if(!pokemonLabel||!move||!MOVE_KIND.has(moveKind))return null;
     const methods=cleanMoveMethods(raw.acquisitionMethods);
-    return {...core,id:atom(['move',pokemonLabel,moveKind,move,access,methods.join(',')].join('|')),
+    // Only retain explicit source-scoped availability. A ticketed Saturday
+    // move and an otherwise identical Sunday move are distinct claims.
+    // Missing timing remains unknown; never inherit event-wide hours.
+    const dayScope=DAY_SCOPE.has(raw.dayScope)?raw.dayScope:null;
+    const windowText=safe(raw.windowText,400)||null;
+    const sessionLabel=safe(raw.sessionLabel,140)||null;
+    const identity=[pokemonLabel,moveKind,move,access,methods.join(','),dayScope,windowText,sessionLabel];
+    return {...core,id:atom(['move',...identity].join('|')),
       pokemonLabel,move,moveKind,acquisitionMethods:methods,
-      _key:fmtKey([pokemonLabel,moveKind,move,access,methods.join(',')])};
+      dayScope,windowText,sessionLabel,
+      _key:fmtKey(identity)};
   }
   if(type==='researchPrograms'){
     const title=safe(raw.title,200),kind=trim(raw.kind);
