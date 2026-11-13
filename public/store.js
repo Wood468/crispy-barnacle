@@ -12,7 +12,7 @@
     [/^max revives?(?:\s*[×x]\s*\d+)?$/i, '/ico/i/max-revive.webp'],
     [/^golden razz berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i, '/ico/i/golden-razz.webp'],
     [/^silver pinap berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i, '/ico/i/silver-pinap.webp'],
-    [/^incense$/i, '/ico/incense.webp'],
+    [/^incense(?:\s*[×x]\s*\d+)?$/i, '/ico/incense.webp'],
     [/^elite fast tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-fast-tm.webp'],
     [/^elite charged tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-charged-tm.webp'],
     [/^raid pass(?:es)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/raidpass.webp']
@@ -21,6 +21,11 @@
      different item image. Every future SKU has a visible honest fallback. */
   function kindToken(label) {
     var name = String(label || '');
+    if (/^max potions?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'POT';
+    if (/^max revives?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'REV';
+    if (/^golden razz berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'RAZZ';
+    if (/^silver pinap berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'PIN';
+    if (/^incense(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'INS';
     if (/pok[eé]coins?/i.test(name)) return '◎';
     if (/storage|item bag|bag upgrade|capacity/i.test(name)) return '↑';
     if (/^go[- ]pass|monthly.*pass|(?:event|admission).*ticket/i.test(name)) return 'PASS';
