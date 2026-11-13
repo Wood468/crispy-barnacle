@@ -101,3 +101,20 @@ test("future source trust values remain unknown and cannot inject badge markup",
     assert.equal(renderTrust(val), '<span class="st st-u">Trust not labelled</span>');
   }
 });
+
+test("curated event source fallbacks evaluate domain legitimacy correctly and respect overrides", () => {
+  const isOfficialMatch = detail.match(/function isOfficialUrl\(u\) \{([\s\S]*?)\n  \}/);
+  assert.ok(isOfficialMatch, "isOfficialUrl exists");
+  const isOfficialUrl = new Function("u", isOfficialMatch[1]);
+  const safeUrlMatch = detail.match(/function safeUrl\(u\) \{([\s\S]*?)\n  \}/);
+  assert.ok(safeUrlMatch, "safeUrl exists");
+  const safeUrl = new Function("u", safeUrlMatch[1]);
+  const checkUrl = (u) => isOfficialUrl(safeUrl(u));
+  assert.equal(checkUrl("https://pokemongo.com/news"), true);
+  assert.equal(checkUrl("https://www.pokemongo.com/news"), true);
+  assert.equal(checkUrl("https://leekduck.com/events"), false);
+  assert.equal(checkUrl("https://fake-pokemongo.com/news"), false);
+  assert.equal(checkUrl("http://pokemongo.com/news"), false);
+  assert.equal(checkUrl(""), false);
+  assert.equal(checkUrl(null), false);
+});
