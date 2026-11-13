@@ -144,6 +144,8 @@ jobs:
 
       - name: Verify premium Today, Schedule and event detail surfaces
         if: matrix.shard == 'd'
+        env:
+          GO_FIELD_NOTES_SCREENSHOTS: /tmp/gofn-s4-research-screenshots
         run: |
           python test/premium_surfaces_browser.py
           python test/today_detail_redesign_browser.py
@@ -158,6 +160,14 @@ jobs:
           python test/schedule_gopass_browser.py
           python test/visual_refinements_browser.py
           python test/accuracy_fixes_browser.py
+
+      - name: Retain Sprint 4 research mobile screenshots
+        if: always() && matrix.shard == 'd'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: sprint4-research-mobile-screenshots
+          path: /tmp/gofn-s4-research-screenshots/accuracy-research-*.png
+          if-no-files-found: warn
 
       - name: Verify combined source rendering and offline upgrade
         if: matrix.shard == 'e'

@@ -91,8 +91,44 @@ with sync_playwright() as p:
         listed = int(re.match(r'(\d+) ranks with published entries', pc).group(1))
         assert 'of 600 ranks listed' not in pc, pc  # Do not imply every rank has published rewards.
         assert listed >= 100, listed
-        # Single-panel Event Details keeps Research hidden until selected.
+        # Continuous Event Details still offers an optional Research jump chip.
         page.locator('#evd .evd-nav-link[data-sec="research"]').click()
+        # Assert the actual DOM, not just the research count badge: all seven
+        # source-backed task boundaries and each reward/CP value must render.
+        # This also exercises compact reward geometry at four phone widths.
+        tasks = page.evaluate("""async () => {
+            const response = await fetch('/event-details.json', {cache: 'no-store'});
+            if (!response.ok) throw new Error('source research catalogue unavailable');
+            const data = await response.json();
+            return data.events.into.researchTasks.map(task => ({
+                task: task.task, category: task.category, rewards: task.rewards
+            }));
+        }""")
+        assert len(tasks) == 7 and n == 7, (width, n, [task['task'] for task in tasks])
+        all_rows = page.locator('#evd-s-research li.research-task')
+        assert all_rows.count() == 7, (width, all_rows.count())
+        for task in tasks:
+            row = all_rows.filter(has=page.locator('.rs-text', has_text=task['task']))
+            assert row.count() == 1, (width, 'missing or duplicated task', task['task'])
+            rewards = row.locator('.research-reward')
+            assert rewards.count() == len(task['rewards']), (width, task['task'], rewards.count())
+            assert row.locator('.rs-rewards').get_attribute('aria-label') == f"One of {len(task['rewards'])} possible rewards", (width, task['task'])
+            for reward in task['rewards']:
+                tile = rewards.filter(has_text=reward['name'])
+                assert tile.count() == 1 and tile.first.is_visible(), (width, task['task'], reward)
+                text = tile.first.inner_text()
+                if reward['type'] == 'encounter':
+                    assert f"CP {reward['cpMin']}–{reward['cpMax']}" in text, (width, task['task'], text)
+                elif reward['quantity'] > 1:
+                    assert f"{reward['quantity']}× {reward['name']}" in text, (width, task['task'], text)
+        assert page.locator('#evd-s-research').is_visible(), (width, 'Research section hidden')
+        overflow = page.evaluate("""() => {
+            const root = document.querySelector('#evd');
+            return {dialog: root.scrollWidth - root.clientWidth,
+                document: document.documentElement.scrollWidth - document.documentElement.clientWidth};
+        }""")
+        assert overflow['dialog'] <= 2 and overflow['document'] <= 2, (width, overflow)
+        print(f'PASS Into the Wild 7/7 Field Research DOM/rewards/CP at {width}px, overflow={overflow}')
         # Source-backed Into the Wild task "Win a raid" lists 2× Rare Candy.
         # The approved asset list has no exact Rare Candy item picture, so the
         # readable RC glyph must appear, not a fake regular-Candy image/dot.
@@ -107,6 +143,16 @@ with sync_playwright() as p:
         page.locator('#evd #evd-h-research').scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
         shot(page, f'accuracy-research-count-{width}')
+        if SHOTS:
+            # The whole research section is taller than the clipped dialog viewport.
+            # Element screenshots of that full section incorrectly include Today behind
+            # the clipping boundary. Scroll each task into view and capture only its
+            # actual visible row so all seven rewards are independently inspectable.
+            for index in range(all_rows.count()):
+                task_row = all_rows.nth(index)
+                task_row.scroll_into_view_if_needed()
+                assert task_row.is_visible(), (width, 'research row not visible', index)
+                task_row.screenshot(path=f'{SHOTS}/accuracy-research-task-{width}-{index + 1:02d}.png')
         page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.locator('#evd .ue-pass-count').first.scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
