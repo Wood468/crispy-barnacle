@@ -8,7 +8,10 @@
   var MODES = ['normal', 'shadow', 'mega', 'primal', 'dynamax', 'gigantamax'];
   function dateMs(value) {
     if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2})?)?$/.test(value)) return NaN;
-    return +new Date(value.length === 10 ? value + 'T00:00' : value);
+    var d = new Date(value.length === 10 ? value + 'T00:00' : value);
+    if (!Number.isFinite(+d)) return NaN;
+    var day = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    return day === value.slice(0, 10) ? +d : NaN;
   }
   function nextDay(value) {
     var start = dateMs(value);
@@ -37,8 +40,14 @@
     if (/^Shadow\s/i.test(s)) return 'shadow';
     return fallback;
   }
-  function options(data, dex, nowMs, splitBosses) {
+  function options(data, dex, nowMs, splitBosses, parseClock) {
     if (!data || !Array.isArray(dex) || !Number.isFinite(nowMs) || typeof splitBosses !== 'function') return [];
+    function instant(value) {
+      if (!Number.isFinite(dateMs(value))) return NaN;
+      if (typeof parseClock !== 'function') return dateMs(value);
+      var parsed = parseClock(value);
+      return Number.isFinite(+parsed) ? +parsed : NaN;
+    }
     var byName = Object.create(null), allowed = Object.create(null);
     dex.forEach(function (row) {
       if (!Array.isArray(row) || !Number.isInteger(row[0]) || typeof row[1] !== 'string') return;
@@ -47,7 +56,7 @@
       else byName[key] = row;
     });
     function add(raw, fallbackMode, start, end) {
-      var from = dateMs(start), until = dateMs(end);
+      var from = instant(start), until = instant(end);
       if (!Number.isFinite(from) || !Number.isFinite(until) || from >= until || until <= nowMs) return;
       var names = splitBosses(raw);
       if (!Array.isArray(names)) return;
@@ -96,8 +105,8 @@
         var e = tier.day && nextDay(tier.day) ? nextDay(tier.day) + 'T00:00' : r.e;
         /* A daily boss ends no later than its parent event; do not display
            a 5-star Max roster after the event's published closing hour. */
-        if (tier.day && Number.isFinite(dateMs(r.s)) && dateMs(r.s) > dateMs(s)) s = r.s;
-        if (tier.day && Number.isFinite(dateMs(r.e)) && dateMs(r.e) < dateMs(e)) e = r.e;
+        if (tier.day && Number.isFinite(instant(r.s)) && instant(r.s) > instant(s)) s = r.s;
+        if (tier.day && Number.isFinite(instant(r.e)) && instant(r.e) < instant(e)) e = r.e;
         tier.names.forEach(function (name) { add(name, 'dynamax', s, e); });
       });
     });
