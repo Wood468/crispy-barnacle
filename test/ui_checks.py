@@ -2800,7 +2800,7 @@ with sync_playwright() as p:
         const watched=['#today-v1','#today-legacy','#today-top','#day-brief','.today-layout'];
         const geometry=()=>Object.fromEntries(watched.map(sel=>{
             const el=document.querySelector(sel),r=el?.getBoundingClientRect(),cs=el?getComputedStyle(el):null;
-            return [sel,el?{y:Math.round(r.y),height:Math.round(r.height),display:cs.display,hidden:el.hidden}:null];
+            return [sel,el?{y:Math.round(r.y),height:Math.round(r.height),display:cs.display,hidden:el.hidden,children:sel==='#today-top'?Array.from(el.children).map(c=>({tag:c.tagName,id:c.id,cls:typeof c.className==='string'?c.className:'',y:Math.round(c.getBoundingClientRect().y),height:Math.round(c.getBoundingClientRect().height),display:getComputedStyle(c).display})):undefined}:null];
         }));
         window.__clsGeometry=[];
         const capture=(reason)=>{if(window.__clsGeometry.length<100)window.__clsGeometry.push({at:Math.round(performance.now()),reason,geometry:geometry()});};
