@@ -6,6 +6,7 @@
 import { collectSourceFacetStaging } from './source-facets-stage.mjs';
 import { linkStagedFacetsToCanonicalEvents } from './source-facet-event-links.mjs';
 import { normalizeEventSourceFacets } from './source-facets-contract.mjs';
+import { canonicalLeekDuckEventKey } from './source-facet-event-links.mjs';
 
 /**
  * Link the already-validated generated world-event catalogue back to staged
@@ -16,16 +17,6 @@ import { normalizeEventSourceFacets } from './source-facets-contract.mjs';
 // Known owners and generated world records must use the SAME strict source
 // URL identity; query/fragment/non-standard-port URLs may never suppress a
 // legitimate world event by normalizing to an unrelated clean article.
-function worldLeekDuckKey(value){
-  if(typeof value!=='string'||value!==value.trim()||value.includes('\\'))return null;
-  try{
-    const u=new URL(value);
-    if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||u.port||
-       !['leekduck.com','www.leekduck.com'].includes(u.hostname.toLowerCase())||
-       !/^\/events\/[a-z0-9_-]+\/?$/i.test(u.pathname))return null;
-    return 'leekduck.com'+u.pathname.replace(/\/$/,'');
-  }catch{return null}
-}
 export function worldSourceFacetCandidates(world,knownEvents=[]){
   if(!Array.isArray(world))throw new TypeError('World event records array required');
   if(!Array.isArray(knownEvents))throw new TypeError('Known canonical events array required');
@@ -37,7 +28,7 @@ export function worldSourceFacetCandidates(world,knownEvents=[]){
     }
     for(const url of [item?.link,item?.sourceUrl,
       ...(Array.isArray(item?.sources)?item.sources.filter(s=>s?.id==='leekduck').map(s=>s.url):[])]){
-      const key=worldLeekDuckKey(url);
+      const key=canonicalLeekDuckEventKey(url);
       if(key)knownPages.add(key);
     }
   }
@@ -48,7 +39,7 @@ export function worldSourceFacetCandidates(world,knownEvents=[]){
        !Array.isArray(event.sources))continue;
     for(const source of event.sources){
       if(source?.id!=='leekduck')continue;
-      const pageKey=worldLeekDuckKey(source.url);
+      const pageKey=canonicalLeekDuckEventKey(source.url);
       if(!pageKey)continue;
       const alias='leekduck:'+pageKey.slice('leekduck.com/events/'.length);
       // Exact canonical ownership only. Names, nearby dates and geographic
