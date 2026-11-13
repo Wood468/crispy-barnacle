@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,readFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {generateKeyPairSync,sign} from 'node:crypto';
+import {generateKeyPairSync,sign,createHash} from 'node:crypto';
 import {buildFacetReviewPlan} from '../scripts/importer/source-facet-review-plan.mjs';
 import {facetReleaseAttestationMessage} from '../scripts/importer/source-facet-signed-release.mjs';
 import {persistSignedFacetSnapshot} from '../scripts/importer/source-facet-atomic-store.mjs';
@@ -53,9 +53,20 @@ async function sandbox(fn){
   await (await import('node:fs/promises')).mkdir(durableStateDir,{recursive:true});
   await (await import('node:fs/promises')).writeFile(join(durableStateDir,'promotion-ledger.json'),
     JSON.stringify({schemaVersion:1,publication:'promotion-ledger',releases:[],pending:null}));
-  try{await fn(rootDir,durableStateDir)}finally{await rm(base,{recursive:true,force:true})}
+  const importerReport={runAt:'2026-11-13T04:00:00.000Z',
+    sourceFacetStaging:{schemaVersion:1,publication:'audit-only',
+      sourceId:'leekduck',eligiblePages:1,skippedLarge:0,errors:[],
+      canonicalLinks:{publication:'staging-only',eligiblePages:1,
+        linkedPages:1,ambiguousPages:0,unlinkedPages:0,
+        duplicatePages:0,rejectedPages:0}}};
+  await (await import('node:fs/promises')).mkdir(join(rootDir,'data'),{recursive:true});
+  const auditBytes=Buffer.from(JSON.stringify(importerReport));
+  await (await import('node:fs/promises')).writeFile(join(rootDir,'data','importer-report.json'),auditBytes);
+  const trustedAuditSha=createHash('sha256').update(auditBytes).digest('hex');
+  try{await fn(rootDir,durableStateDir,trustedAuditSha)}
+  finally{await rm(base,{recursive:true,force:true})}
 }
-test('source-backed review through two signatures and replay-safe public feed works as one journey',async()=>sandbox(async (rootDir,durableStateDir)=>{
+test('source-backed review through two signatures and replay-safe public feed works as one journey',async()=>sandbox(async (rootDir,durableStateDir,trustedAuditSha)=>{
   const raw=stage([
     bonus('free','free'),
     bonus('ticket','ticket'),
@@ -69,7 +80,8 @@ test('source-backed review through two signatures and replay-safe public feed wo
   assert.equal(stored.publication,'verified');
   const promoted=publicationManifest(stored.sha256);
   const completed=await commitFacetPromotion(promoted,releaseSignature(promoted),{
-    rootDir,durableStateDir,allowLocalWrite:true,trustedReleasePublicKey:pub(releaser),
+    rootDir,durableStateDir,allowLocalWrite:true,expectedImporterReportSha256:trustedAuditSha,
+    trustedReleasePublicKey:pub(releaser),
     environment:'production',trustedCommitSha:'a'.repeat(40),
     now:'2026-11-13T04:10:00.000Z',
     trustedCanonicalEventIds:[eventId],

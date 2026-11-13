@@ -46,11 +46,22 @@ async function setup(rootDir,durableStateDir,bad=false){
   const dir=join(rootDir,'data','verified-event-facets');
   await mkdir(dir,{recursive:true});
   await writeFile(join(dir,eventId+'.json'),bytes);
-  return {sha:hash(bytes),opts:{...baseOptions,rootDir,durableStateDir,trustedPrivateReceipts:{
+  const auditBytes=Buffer.from(JSON.stringify(auditReport()));
+  await writeFile(join(rootDir,'data','importer-report.json'),auditBytes);
+  return {sha:hash(bytes),opts:{...baseOptions,rootDir,durableStateDir,
+    expectedImporterReportSha256:hash(auditBytes),trustedPrivateReceipts:{
     [eventId]:{sha256:hash(bytes),reviewFingerprint:doc.reviewFingerprint}
   }}};
 }
 const ledgerFile=stateDir=>join(stateDir,'promotion-ledger.json');
+const auditReport=()=>({
+  runAt:'2026-11-13T04:00:00.000Z',
+  sourceFacetStaging:{schemaVersion:1,publication:'audit-only',
+    sourceId:'leekduck',eligiblePages:1,skippedLarge:0,errors:[],
+    canonicalLinks:{publication:'staging-only',
+      eligiblePages:1,linkedPages:1,unlinkedPages:0,
+      ambiguousPages:0,duplicatePages:0,rejectedPages:0}}
+});
 test('explicit signed local promotion writes both verified public feed and durable release ledger',async()=>sandbox(async (rootDir,durableStateDir)=>{
   const {sha,opts}=await setup(rootDir,durableStateDir),m=manifest(sha);
   const result=await commitFacetPromotion(m,signed(m),opts);
@@ -133,4 +144,34 @@ test('symlinked release state pointing into checkout is not durable isolated sto
   await assert.rejects(commitFacetPromotion(m,signed(m),{
     ...opts,durableStateDir:alias}),/outside the checkout/);
   await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
+}));
+
+test('current ambiguous or unlinked canonical source IDs prohibit signed release',async()=>sandbox(async (rootDir,durableStateDir)=>{
+  const {sha,opts}=await setup(rootDir,durableStateDir),m=manifest(sha);
+  const audit=auditReport();
+  audit.sourceFacetStaging.eligiblePages=3;
+  Object.assign(audit.sourceFacetStaging.canonicalLinks,{
+    eligiblePages:3,linkedPages:1,ambiguousPages:1,unlinkedPages:1
+  });
+  const bytes=Buffer.from(JSON.stringify(audit));
+  await writeFile(join(rootDir,'data','importer-report.json'),bytes);
+  await assert.rejects(commitFacetPromotion(m,signed(m),{
+    ...opts,expectedImporterReportSha256:hash(bytes)}),/Unresolved canonical source ownership/);
+  assert.deepEqual(JSON.parse(await readFile(ledgerFile(durableStateDir),'utf8')),
+    {schemaVersion:1,publication:'promotion-ledger',releases:[],pending:null});
+  await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
+}));
+test('stale, missing, or altered importer audit digest fails before pending release intent',async()=>sandbox(async (rootDir,durableStateDir)=>{
+  const {sha,opts}=await setup(rootDir,durableStateDir),m=manifest(sha);
+  await assert.rejects(commitFacetPromotion(m,signed(m),{
+    ...opts,expectedImporterReportSha256:'f'.repeat(64)}),/changed since trusted/);
+  const old=auditReport();old.runAt='2026-11-10T04:00:00.000Z';
+  const oldBytes=Buffer.from(JSON.stringify(old));
+  await writeFile(join(rootDir,'data','importer-report.json'),oldBytes);
+  await assert.rejects(commitFacetPromotion(m,signed(m),{
+    ...opts,expectedImporterReportSha256:hash(oldBytes)}),/Fresh canonical source audit/);
+  await rm(join(rootDir,'data','importer-report.json'));
+  await assert.rejects(commitFacetPromotion(m,signed(m),opts),/ENOENT/);
+  assert.deepEqual(JSON.parse(await readFile(ledgerFile(durableStateDir),'utf8')),
+    {schemaVersion:1,publication:'promotion-ledger',releases:[],pending:null});
 }));
