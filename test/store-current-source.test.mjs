@@ -22,7 +22,21 @@ const fixture = {version:1,updated:seen,
 };
 
 test('snapshot is derived from official watcher and contains no checkout prices or owner records', () => {
-  assert.deepEqual(snapshot, storeCurrentSnapshot(state));
+  /* The Store watcher commits timestamp-only refreshes to main during a PR.
+     Actions checks out the virtual PR merge, so current watched timestamps can
+     be newer than the initial seeded snapshot while SKU truth is unchanged.
+     Keep exact product/retirement/provenance parity; allow only fresh watcher
+     metadata to advance without making every such refresh break PR CI. */
+  const nonvolatile = value => ({
+    ...value,
+    updated: undefined,
+    items: value.items.map(({ lastSeen, ...item }) => item),
+    gone: value.gone.map(({ lastSeen, ...item }) => item)
+  });
+  assert.deepEqual(nonvolatile(snapshot), nonvolatile(storeCurrentSnapshot(state)));
+  const lag = Date.parse(state.updated) - Date.parse(snapshot.updated);
+  assert.ok(Number.isFinite(lag) && lag >= 0 && lag <= 7 * 86400000,
+    'Source snapshot must have valid recent provenance; watcher may advance timestamps only');
   assert.ok(snapshot.items.length >= 1, 'source watcher must keep at least one observed item');
   assert.ok(Array.isArray(snapshot.gone));
   for (const item of snapshot.items.concat(snapshot.gone)) {
@@ -126,6 +140,6 @@ test('India in-app coin packs are recorded separately from AU Web packs and neve
 });
 
 test('publisher image candidates remain unapproved for runtime display', () => {
-  assert.equal(IMAGE_CSP_HOSTS.includes('https://assets.pgo.webstore.nianticlabs.com'),false);
+  assert.equal(IMAGE_CSP_HOSTS.some(origin => origin === 'https://assets.pgo.webstore.nianticlabs.com'),false);
   assert.equal(R.sourceOffer('GO Pass Deluxe: November', fixture, NOW).image,null);
 });
