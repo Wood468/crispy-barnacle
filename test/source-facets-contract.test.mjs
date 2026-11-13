@@ -13,7 +13,9 @@ const duck='https://leekduck.com/events/synthetic/';
 const official='https://pokemongo.com/news/synthetic/';
 const benefit=(access,label,url,opts={})=>({
   label,kind:'raid-passes',access,windowText:'10 am to 6 pm',dayScope:'both-event-days',
-  replacesFreeLimit:access==='ticket',source:source(url,'Ticket Holder Bonuses'),...opts
+  replacesFreeLimit:access==='ticket',
+  replacementEvidence:access==='ticket'?'The ticketed Raid Pass limits replace the free limits.':null,
+  source:source(url,'Ticket Holder Bonuses'),...opts
 });
 test('audiences and replace-versus-stack cannot be coalesced',()=>{
  const data=normalizeEventSourceFacets('wag',[
@@ -145,6 +147,66 @@ test('long benefit descriptions retain unique stable IDs beyond readable-slug tr
  assert.equal(one.benefits.length,2);
  assert.equal(new Set(one.benefits.map(b=>b.id)).size,2);
  assert.deepEqual(one.benefits.map(b=>b.id),two.benefits.map(b=>b.id));
+});
+
+test('conflicting ticket replacement claims remain one disputed record and cannot stack',()=>{
+ const paid='Up to six free Raid Passes';
+ const entries=[
+   mk('leekduck',duck,{benefits:[
+     benefit('free','Up to three free Raid Passes',duck,{replacesFreeLimit:false}),
+     benefit('ticket',paid,duck),
+     benefit('addon','Up to eighteen passes from Raid Lover',duck,{addonLabel:'Raid Lover',replacesFreeLimit:false})
+   ]}),
+   mk('official',official,{benefits:[
+     benefit('ticket',paid,official,{
+       replacesFreeLimit:false,
+       replacementEvidence:'The ticketed Raid Pass limit is in addition to the free limit.'
+     })
+   ]})
+ ];
+ const first=normalizeEventSourceFacets('wag',entries);
+ const reverse=normalizeEventSourceFacets('wag',entries.slice().reverse());
+ assert.deepEqual(first,reverse);
+ assert.equal(first.benefits.length,3);
+ const ticket=first.benefits.find(v=>v.access==='ticket');
+ assert.equal(ticket.status,'disputed');
+ assert.equal(ticket.replacesFreeLimit,null);
+ assert.equal(ticket.replacementEvidence,null);
+ assert.equal(ticket.sourceRefs.length,2);
+ assert.ok(first.warnings.some(w=>w.reason==='replacement-rule-disagreement'&&w.id===ticket.id));
+ assert.equal(first.benefits.find(v=>v.access==='addon').addonLabel,'Raid Lover');
+ assert.equal(first.benefits.find(v=>v.access==='free').access,'free');
+});
+
+test('a publisher boolean without an explicit source excerpt cannot grant replacement limits',()=>{
+ const raw=benefit('ticket','Up to six free Raid Passes',duck,{replacementEvidence:null});
+ const result=normalizeEventSourceFacets('wag',[mk('leekduck',duck,{benefits:[raw]})]);
+ assert.equal(result.benefits[0].replacesFreeLimit,null);
+ assert.equal(result.benefits[0].replacementEvidence,null);
+ assert.ok(result.warnings.some(w=>w.reason==='replacement-evidence-missing'));
+});
+
+test('conflicting once-only research and mismatched stage titles fail closed regardless of source order',()=>{
+ const program=(url,onceOnly,title)=>({
+   kind:'special',access:'ticket',title:'Ticket Holder Special Research',onceOnly,
+   paths:['Steel-type','Dragon-type'],
+   steps:[{step:1,outOf:6,title}],
+   source:source(url,'Special Research')
+ });
+ const records=[
+   mk('leekduck',duck,{researchPrograms:[program(duck,true,'Claim six rewards')]}),
+   mk('official',official,{researchPrograms:[program(official,false,'Catch five Pokémon')]})
+ ];
+ const a=normalizeEventSourceFacets('wag',records);
+ const b=normalizeEventSourceFacets('wag',records.slice().reverse());
+ assert.deepEqual(a,b);
+ assert.equal(a.researchPrograms.length,1);
+ assert.equal(a.researchPrograms[0].status,'disputed');
+ assert.equal(a.researchPrograms[0].onceOnly,null);
+ assert.equal(a.researchPrograms[0].steps[0].title,'');
+ assert.equal(a.researchPrograms[0].steps[0].taskRewardEvidence,'disputed');
+ assert.ok(a.warnings.some(w=>w.reason==='research-once-only-disagreement'));
+ assert.ok(a.warnings.some(w=>w.reason==='research-stage-disagreement:1/6'));
 });
 
 test('source order, duplicate records and omitted optional fields do not affect stable output',()=>{
