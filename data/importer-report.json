@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-13T11:26:12.366Z",
+ "runAt": "2026-11-13T11:51:51.879Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -1220,17 +1220,12 @@
   "canonicalLinks": {
    "publication": "staging-only",
    "eligiblePages": 44,
-   "linkedPages": 43,
-   "unlinkedPages": 1,
+   "linkedPages": 44,
+   "unlinkedPages": 0,
    "ambiguousPages": 0,
    "duplicatePages": 0,
    "rejectedPages": 0,
-   "unlinkedExamples": [
-    {
-     "sourceUrl": "https://leekduck.com/events/clefable-super-mega-raid-day-2026",
-     "expectedAlias": "leekduck:clefable-super-mega-raid-day-2026"
-    }
-   ],
+   "unlinkedExamples": [],
    "ambiguousExamples": [],
    "linkedExamples": [
     {
@@ -1415,7 +1410,7 @@
     }
    ],
    "normalizedCounts": {
-    "events": 43,
+    "events": 44,
     "benefits": 69,
     "featuredMoves": 11,
     "researchPrograms": 18,
