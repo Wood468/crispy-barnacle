@@ -2,7 +2,7 @@
  "updated": "2026-11-13T11:46:48.348Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1570729091731292201",
    "title": "Dialga",
    "image": "/infographics/g47ix/discord-1570729091731292201.webp",
@@ -35,7 +35,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1570487718994120835",
    "title": "Zekrom",
    "image": "/infographics/g47ix/discord-1570487718994120835.png",
@@ -69,7 +69,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1570487591273242727",
    "title": "tr NOV 12 6PM Counter Zekrom",
    "image": "/infographics/g47ix/discord-1570487591273242727.png",
@@ -103,40 +103,7 @@
    ]
   },
   {
-   "linked": false,
-   "id": "discord:1570442649834360894",
-   "title": "Lati@s",
-   "image": "/infographics/g47ix/discord-1570442649834360894.webp",
-   "post": "",
-   "creator": "",
-   "source": "discord",
-   "publishedAt": "2026-11-12T14:18:25.134000+00:00",
-   "note": "Match is not strong enough (medium).",
-   "history": false,
-   "signals": [
-    "picture text names the event"
-   ],
-   "text": "Special ») Background Chance i <4 o™, ad 2\" + + + LATIAS aq (= a~ ei, @ 2006 cp Weekresses © HBQODMD Wang by © Wil eae) , fe , \\e ya a tee oe a 8 WZ, WW Za ac ie - ANS ~~ AN —— ‘(f WY Se Pal ¢ a es © Pounp © METAL cLaw © METAL CLAW @ Fury cuTTER @ Lock-on @ THUNDER SHOCK Ea Bec) iat { Ao) Rc pt. f |) ge oy \\ Pat \\fe dD @ P \\(asa ) @ @ IANS Kae) \\| 1) ) he A v —A wa *% ’ Za \\) y > )) ED PUNCH ® DRAGON TAIL (@ SHADOW CLAW © METAL CLAW ® DR. BREATH ® DR. BREATH Use this Switch to Unlock Tank Upgrade its For extra help, la this Pokémon Max Spirit Max Attack and use Zacian’s to build to take y and heal your use it as your H or Eternatus’s energy resisted hits teammates Damage Dealer ss Adventure ",
-   "guesses": [
-    {
-     "eventId": "leekduck:max-battle-day-december-2026",
-     "eventTitle": "Max Battle Day",
-     "score": 0.525
-    },
-    {
-     "eventId": "leekduck:max-battle-day-january-2027",
-     "eventTitle": "Max Battle Day",
-     "score": 0.525
-    },
-    {
-     "eventId": "leekduck:max-mondays-2026-11-16",
-     "eventTitle": "Max Monday: Pokémon to be announced",
-     "score": 0.475
-    }
-   ]
-  },
-  {
-   "linked": false,
+   "linked": true,
    "id": "discord:1570339976657506324",
    "title": "GOWILD 2026",
    "image": "/infographics/g47ix/discord-1570339976657506324.webp",
@@ -200,39 +167,6 @@
      "eventId": "leekduck:raid-day-december-2026",
      "eventTitle": "Raid Day",
      "score": 0.785
-    }
-   ]
-  },
-  {
-   "linked": false,
-   "id": "discord:1570079999069786305",
-   "title": "Regidrago",
-   "image": "/infographics/g47ix/discord-1570079999069786305.webp",
-   "post": "",
-   "creator": "",
-   "source": "discord",
-   "publishedAt": "2026-11-11T14:17:22.454000+00:00",
-   "note": "Match is not strong enough (medium).",
-   "history": false,
-   "signals": [
-    "picture text names the event"
-   ],
-   "text": "\\\\ iS P| Special Background + + aA iy Chance oe se y @ v ) | x al REGIDRAGO A r Weaknesses Ww Na eno - ®@ 1699 cP Ma O® \\f ie on \\(4 VE) (ULe toe WW, iy WW ~—— a i it ee Saeed] © METAL cLaw © METAL CLAW @ Lock-on © Pounp @ Fury cuTTER @ SAND ATTACK net ‘OF ee < “ee? 7) 4 wX ‘ a 9 2 oe \\(4 ”» 5 MT = _* Xi, \\ “S a ) \\ — vA »)) ® DRAGON TAIL © METAL CLAW ® DR. BREATH ® DR. BREATH ® DR. BREATH @ Ice SHARD Use this Unlock Upgrade its For extra help, Tank fa eae Max Spirit Max Attack and use Zacian’s to build to take and heal your use it as your H or Eternatus’s energy resisted hits y teammates S| Damage Dealer — Adventure Effect Set the right Fast Move because, the type of your Dynamax Swipe to g",
-   "guesses": [
-    {
-     "eventId": "leekduck:max-battle-day-december-2026",
-     "eventTitle": "Max Battle Day",
-     "score": 0.526
-    },
-    {
-     "eventId": "leekduck:max-battle-day-january-2027",
-     "eventTitle": "Max Battle Day",
-     "score": 0.526
-    },
-    {
-     "eventId": "dyntrails",
-     "eventTitle": "Dynamax Trails",
-     "score": 0.401
     }
    ]
   },

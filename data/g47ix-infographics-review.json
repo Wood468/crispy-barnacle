@@ -13,8 +13,8 @@
       "title": "Dialga",
       "publishedAt": "2026-11-13T09:16:38.204000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570724917861814362/tr_DMax_Dialga_counters_v2.png?ex=6af82313&is=6af6d193&hm=e2e9002838a5da6091b96663db3de00d782ec686dc665347ecf7e9dd9f595fe3&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "wl oH E*\\ NS cx G Special Background Chance ] | \\ Ke <4 = DIALGA ~~ A | y io sD il Weaknesses @ 2307 cp O® Wil a tee Ven) wy <|[é y L as if Yjild N ] oS N .— (eS OX > ‘ahs eS) ee (ae 14 © METAL CLAW © Pounp @ Lock-on @ Fury cuTTER @ SAND ATTACK © METAL cLaw Fy rea vo) PhoTED +8 > ft a. a Tt) A ee : \\ a rie ‘ > io Ni at fai-) w\\% = We! i PN 600 (a) COUNTER @ MuD sHOT (a) COUNTER @ mup sLap (a LOW KICK (a) LOW KICK Use this Switch to Unlock Upgrade its For extra help, Tank la this Pokémon Max Spirit Max Attack and use Zacian’s Ole to build to take y and heal your use it as your H or Eternatus’s energy resisted hits teammates q Damage Dealer — Adventure Effect Set the right Fast Move because, the type of your Dynamax Swipe to get Keep tapping to = =. Ss Max Move depends on your Fast Move energy bubbles help your teammates (this doesn’t apply for GMax) « 07°\" You can leave and rejoin a Max Battle Follow for more G47|X £) @®X@ www.g47ix.pro RJ toereroll for a different boss moveset.",
       "eventMatch": {
@@ -51,7 +51,17 @@
         "picture text names the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1570729091731292201.webp"
+      "stagedPath": "/infographics/g47ix/discord-1570729091731292201.webp",
+      "publishedEvent": "",
+      "publishedEvents": [],
+      "publishedTargets": [
+        {
+          "type": "raid-boss",
+          "pokemonId": "483",
+          "formId": null,
+          "battleMode": "dynamax"
+        }
+      ]
     },
     {
       "id": "discord:1570487718994120835",
@@ -60,8 +70,8 @@
       "title": "Zekrom",
       "publishedAt": "2026-11-12T17:17:30.459000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570483351033225337/tr_NOV_12_6PM_Counter_Zekrom.png?ex=6af74219&is=6af5f099&hm=8aec326a2df9a01f660c946fcc4bcc05f8eeb636ac765f5a7ee235b98a2c6172&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "#64497 45,4 fo} || 53394 CP “This legendary Pokémon can scorch the world with lightning. It assists those who want to build an ideal world.” sa8 &™. _— Fee | A iS i a Special ne 3 <3 =f SS iy Chance Background Difficulty: 2+ trainers needed Boost J %] @ %2307 cP we2884 cP Rainy Windy ran 44 = @ Dragon Tail ® Dragon Tail EN, A ® Dragon Tail ® Dragon Tail 6 Dynamax Cannon n ® Breaking S wi \\ 6 Outrage+ @ Freeze Shock (1 ~ * ‘y 7 Z. - @ Mud Shot - @ Mud of ot ® Ice Fang @ Precipice Blad @ Earth Powe @ Ice Burn (5 Precipice Blad 2, 6 Dragon Tail 6 Dragon Tail ® Dragon Breath ® Dragon Breath © Spacial Rend : 6 Bache Swi ® Glaive Rush (5 ® Roar of Time ” Follow for more: Remember to use proper counters, Party Play ‘wat and Zacian’s Adventure Effect if needed. oy Sy) G47IXO OMX B | g47ix.pro",
       "eventMatch": {
@@ -103,7 +113,17 @@
         "posted around the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1570487718994120835.png"
+      "stagedPath": "/infographics/g47ix/discord-1570487718994120835.png",
+      "publishedEvent": "",
+      "publishedEvents": [],
+      "publishedTargets": [
+        {
+          "type": "raid-boss",
+          "pokemonId": "644",
+          "formId": null,
+          "battleMode": "normal"
+        }
+      ]
     },
     {
       "id": "discord:1570487591273242727",
@@ -112,8 +132,8 @@
       "title": "tr NOV 12 6PM Counter Zekrom",
       "publishedAt": "2026-11-12T17:17:00.008000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570483323229306920/tr_NOV_12_6PM_Counter_Zekrom.png?ex=6af74212&is=6af5f092&hm=14ead7c8c8e12e44e8a2e9bd3f4903f1db4898ea141f79d5965698dd7810494e&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "#64497 45,4 fo} || 53394 CP “This legendary Pokémon can scorch the world with lightning. It assists those who want to build an ideal world.” sa8 &™. _— Fee | A iS i a Special ne 3 <3 =f SS iy Chance Background Difficulty: 2+ trainers needed Boost J %] @ %2307 cP we2884 cP Rainy Windy ran 44 = @ Dragon Tail ® Dragon Tail EN, A ® Dragon Tail ® Dragon Tail 6 Dynamax Cannon n ® Breaking S wi \\ 6 Outrage+ @ Freeze Shock (1 ~ * ‘y 7 Z. - @ Mud Shot - @ Mud of ot ® Ice Fang @ Precipice Blad @ Earth Powe @ Ice Burn (5 Precipice Blad 2, 6 Dragon Tail 6 Dragon Tail ® Dragon Breath ® Dragon Breath © Spacial Rend : 6 Bache Swi ® Glaive Rush (5 ® Roar of Time ” Follow for more: Remember to use proper counters, Party Play ‘wat and Zacian’s Adventure Effect if needed. oy Sy) G47IXO OMX B | g47ix.pro",
       "eventMatch": {
@@ -156,7 +176,17 @@
         "posted around the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1570487591273242727.png"
+      "stagedPath": "/infographics/g47ix/discord-1570487591273242727.png",
+      "publishedEvent": "",
+      "publishedEvents": [],
+      "publishedTargets": [
+        {
+          "type": "raid-boss",
+          "pokemonId": "644",
+          "formId": null,
+          "battleMode": "normal"
+        }
+      ]
     },
     {
       "id": "discord:1570442649834360894",
@@ -165,8 +195,8 @@
       "title": "Lati@s",
       "publishedAt": "2026-11-12T14:18:25.134000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570438073928650793/DMax_Latias_counters_v2.png?ex=6af717ee&is=6af5c66e&hm=820e4326ca794dfb85b6529523bbf736c4f2072202073acdb320f9dc971ce834&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "Special ») Background Chance i <4 o™, ad 2\" + + + LATIAS aq (= a~ ei, @ 2006 cp Weekresses © HBQODMD Wang by © Wil eae) , fe , \\e ya a tee oe a 8 WZ, WW Za ac ie - ANS ~~ AN —— ‘(f WY Se Pal ¢ a es © Pounp © METAL cLaw © METAL CLAW @ Fury cuTTER @ Lock-on @ THUNDER SHOCK Ea Bec) iat { Ao) Rc pt. f |) ge oy \\ Pat \\fe dD @ P \\(asa ) @ @ IANS Kae) \\| 1) ) he A v —A wa *% ’ Za \\) y > )) ED PUNCH ® DRAGON TAIL (@ SHADOW CLAW © METAL CLAW ® DR. BREATH ® DR. BREATH Use this Switch to Unlock Tank Upgrade its For extra help, la this Pokémon Max Spirit Max Attack and use Zacian’s to build to take y and heal your use it as your H or Eternatus’s energy resisted hits teammates Damage Dealer ss Adventure Effect Set the right Fast Move because, = the type of your Dynamax Swipe to get Keep tapping to — Max Move depends on your Fast Move energy bubbles help your teammates (this doesn’t apply for GMax) ® « 07\" You can leave and rejoin a Max Battle Follow for more G471X £) @®X@ www.g47ix.pro RJ toereroll for a different boss moveset.",
       "eventMatch": {
@@ -203,7 +233,9 @@
         "picture text names the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1570442649834360894.webp"
+      "stagedPath": "/infographics/g47ix/discord-1570442649834360894.webp",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1570339976657506324",
@@ -212,8 +244,8 @@
       "title": "GOWILD 2026",
       "publishedAt": "2026-11-12T07:30:25.941000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1570136921001295902/GOWILD_2026.png?ex=6af6a835&is=6af556b5&hm=d997ac2ee1f910fb407db1d5c112a2dddc0a154a7042412c5b580741ad7e2ce2&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "local time —— Le i ¢ O WILD aa, 14°15 AREA V at % “ae i NOV NOV = No Remote SRY 20 2026 Raid Limit CHANGE ‘OUND 10:00 am - 6:00 pm each day GC op Nan no) 14 15 NOV NL NOV ke = * ms rf > Both i wv) Days * Ny whe, tt eee y (OR) 4 ¢o > Event themed MP collection limit 8h Up to 3 free Raid 3 GO Snapshot Mighty Pokémon Passes per day Field Research encounters per day increased to 1600 Party Play on Routes <87, Mighty Can be —— More likely to aa More difficult More likely to Pokémon shiny —_—— have high IVs be XL or XXL > sa ay are back! ET to catch i GMAX “ wa DURALUDO cp Both Days » ny a tit yl Eos GO Safari Balls @ Sunday in the wild in the wild 7 available Pere rey ele ‘ible <p DP dee ON Dx 4+ = a Sas. Le 4 e Ow) ‘whe e+ bi z= $11.99 © Ticket-holder exclusives Featured BI r ( \\( ‘ Attacks ‘ay PAY meen |= -2x Catch Max Particle collection limit Bp Upto 6 Special @ Trades each day Karate Chop + Increased chance Up to 6 Raid Passes ems candy QR) to 3200 increased trade cost and reduced + from Gyms each day CW Special Research Choose your path ( ( Lure Module \\ More MP 2x Incense } pil, ih, Six event » Increased Chance _ will last 2h from Power Spots Duration snapshot encounters of 10 km eggs Earth Power Meteor cet Magnet Bomb k and exploration & & per day from Stops/Gyms Wt Wt Hourly Supply Ticket Holders Adventure Incense) (Exe. Daily Balloons with Ry GO Incense Spawns & e’ « Om Oe ee GO Safari Balls Breaking! Swipe Brutal Swing Gigaton eB Hammer Daily Discoveries paused www.g47i",
       "eventMatch": {
@@ -261,7 +293,12 @@
         "posted around the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1570339976657506324.webp"
+      "stagedPath": "/infographics/g47ix/discord-1570339976657506324.webp",
+      "publishedEvent": "leekduck:pokemon-go-wild-area-2026-global",
+      "publishedEvents": [
+        "leekduck:pokemon-go-wild-area-2026-global"
+      ],
+      "publishedTargets": []
     },
     {
       "id": "discord:1570142493692006461",
@@ -332,8 +369,8 @@
       "title": "Regidrago",
       "publishedAt": "2026-11-11T14:17:22.454000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570075660674801744/DMax_Regidrago_counters_v2.png?ex=6af5c668&is=6af474e8&hm=f64e8e847498ba85f5a8a921333601b1c180d26b3afc42efe9fde18b1ba4c6ae&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "\\\\ iS P| Special Background + + aA iy Chance oe se y @ v ) | x al REGIDRAGO A r Weaknesses Ww Na eno - ®@ 1699 cP Ma O® \\f ie on \\(4 VE) (ULe toe WW, iy WW ~—— a i it ee Saeed] © METAL cLaw © METAL CLAW @ Lock-on © Pounp @ Fury cuTTER @ SAND ATTACK net ‘OF ee < “ee? 7) 4 wX ‘ a 9 2 oe \\(4 ”» 5 MT = _* Xi, \\ “S a ) \\ — vA »)) ® DRAGON TAIL © METAL CLAW ® DR. BREATH ® DR. BREATH ® DR. BREATH @ Ice SHARD Use this Unlock Upgrade its For extra help, Tank fa eae Max Spirit Max Attack and use Zacian’s to build to take and heal your use it as your H or Eternatus’s energy resisted hits y teammates S| Damage Dealer — Adventure Effect Set the right Fast Move because, the type of your Dynamax Swipe to get Keep tapping to 7 x\\ Max Move depends on your Fast Move energy bubbles help your teammates (this doesn’t apply for GMax) « 07°\" You can leave and rejoin a Max Battle Follow for more G47|X Cf) @®X@ www.g47ix.pro RJ to reroll for a different boss moveset.",
       "eventMatch": {
@@ -370,7 +407,9 @@
         "picture text names the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1570079999069786305.webp"
+      "stagedPath": "/infographics/g47ix/discord-1570079999069786305.webp",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1569809252376256523",
