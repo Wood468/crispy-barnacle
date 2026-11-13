@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-13T05:38:18.634Z",
+ "runAt": "2026-11-13T06:11:59.484Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -556,7 +556,7 @@
    "error": ""
   },
   "hub": {
-   "listed": 9,
+   "listed": 10,
    "error": ""
   }
  },
@@ -817,20 +817,6 @@
    "missingFrom": []
   },
   {
-   "event": "Minior Showers: Leonids",
-   "field": "bonuses",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Minior Showers: Leonids",
-   "field": "research",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
    "event": "GO Wild Area: Sendai",
    "field": "bonuses",
    "missingFrom": [
@@ -934,6 +920,20 @@
    "event": "Into the Wild",
    "field": "dates",
    "missingFrom": []
+  },
+  {
+   "event": "Minior Showers: Leonids",
+   "field": "bonuses",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Minior Showers: Leonids",
+   "field": "research",
+   "missingFrom": [
+    "leekduck"
+   ]
   },
   {
    "event": "Super Mega Raid Day",
