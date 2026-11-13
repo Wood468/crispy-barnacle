@@ -7,8 +7,7 @@ export const IMAGE_CSP_HOSTS = Object.freeze([
   "https://leekduck.com",                     // Leek Duck event graphics (supported page parser)
   "https://cdn.leekduck.com",                 // Leek Duck event graphics and og:image
   "https://lh3.googleusercontent.com",        // official Pokémon GO event artwork
-  "https://storage.googleapis.com",           // official Pokémon GO event artwork
-  "https://assets.pgo.webstore.nianticlabs.com" // exact current-SKU publisher storefront art
+  "https://storage.googleapis.com"            // official Pokémon GO event artwork
 ]);
 
 // og:image is extracted only from official Pokémon GO and Leek Duck pages.
