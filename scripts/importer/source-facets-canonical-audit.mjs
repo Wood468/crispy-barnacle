@@ -18,8 +18,8 @@ function worldLeekDuckKey(value){
     const u=new URL(value);
     if(u.protocol!=='https:'||u.username||u.password||u.hash||
        !['leekduck.com','www.leekduck.com'].includes(u.hostname.toLowerCase())||
-       !/^\\/events\\/[^/]+\\/?$/.test(u.pathname))return null;
-    return 'leekduck.com'+u.pathname.replace(/\\/$/,'');
+       !/^\/events\/[^/]+\/?$/.test(u.pathname))return null;
+    return 'leekduck.com'+u.pathname.replace(/\/$/,'');
   }catch{return null;}
 }
 export function worldSourceFacetCandidates(world,knownEvents=[]){
