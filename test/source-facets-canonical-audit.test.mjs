@@ -25,6 +25,12 @@ test('canonical audit links global and venue editions by exact URL aliases only'
   assert.deepEqual(result.report.canonicalLinks.linkedExamples.map(x=>x.eventId),
     ['leekduck:pokemon-go-wild-area-2026-mexico-city','wag']);
   assert.equal(result.byEvent.get('wag')[0].facets.researchPrograms[0].access,'ticket');
+  assert.equal(result.normalizedByEvent.get('wag').publication,'staging-only');
+  assert.equal(result.normalizedByEvent.get('wag').benefits[0].access,'ticket');
+  assert.equal(result.normalizedByEvent.get('wag').benefits[0].status,'source-claimed');
+  assert.equal(result.report.canonicalLinks.normalizedCounts.events,2);
+  assert.equal(result.report.canonicalLinks.normalizedCounts.benefits,2);
+  assert.equal(result.report.canonicalLinks.normalizedCounts.researchPrograms,2);
   assert.equal(result.byEvent.get('leekduck:pokemon-go-wild-area-2026-mexico-city')[0].sourceUrl,mexico);
 });
 
@@ -68,4 +74,28 @@ test('missing HTML, unsafe source URLs and invalid caller inputs fail closed',()
   assert.equal(result.byEvent.size,0);
   assert.throws(()=>collectCanonicalSourceFacetAudit([],null),/events array/);
   assert.throws(()=>collectCanonicalSourceFacetAudit(null,events),/pages must be an array/);
+});
+
+test('normalized audit keeps free and paid benefits separate without publication',()=>{
+  const both='<main><h2>Bonuses for All Trainers</h2>'+
+    '<img alt="Up to three free Raid Passes per day">'+
+    '<h2>Additional Ticket Holder Bonuses</h2>'+
+    '<img alt="Up to six free Raid Passes per day">'+
+    '<h2>Research</h2></main>';
+  const result=collectCanonicalSourceFacetAudit([{source:'leekduck',url:global,html:both}],events);
+  const staged=result.normalizedByEvent.get('wag');
+  assert.deepEqual(new Set(staged.benefits.map(b=>b.access)),new Set(['free','ticket']));
+  assert.equal(staged.benefits.length,2);
+  assert.equal(staged.benefits.find(b=>b.access==='ticket').replacesFreeLimit,null);
+  assert.equal(result.report.publication,'audit-only');
+  assert.equal(result.report.canonicalLinks.normalizedCounts.disputed,0);
+  assert.equal(result.report.canonicalLinks.normalizedCounts.unconfirmed,0);
+});
+
+test('unlinked sources are never normalized or promoted to source-backed benefits',()=>{
+  const result=collectCanonicalSourceFacetAudit([page(unknown)],events);
+  assert.equal(result.report.canonicalLinks.unlinkedPages,1);
+  assert.equal(result.normalizedByEvent.size,0);
+  assert.equal(result.report.canonicalLinks.normalizedCounts.events,0);
+  assert.equal(result.report.canonicalLinks.normalizedCounts.benefits,0);
 });
