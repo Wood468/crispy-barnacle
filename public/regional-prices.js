@@ -250,8 +250,12 @@
         regionalUnmatched: !!p.regionalUnmatched, unpricedOfficial: !!p.unpricedOfficial,
         aud: p.aud, observed: p.observed,
         contents: p.contents || [], contentsSource: p.contentsSource || null,
-        india: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
-        indonesia: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
+        india: ambiguous ? null : p.unpricedOfficial
+          ? estimate({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now)
+          : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
+        indonesia: ambiguous ? null : p.unpricedOfficial
+          ? estimate({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now)
+          : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
     });
   }
   /* Source-only listing state. Store price observations are historical receipts:
