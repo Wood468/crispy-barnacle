@@ -12,7 +12,9 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   const prices = { prices: [
     { product: 'store-x', label: 'Lucky Egg x8', group: 'Items', currency: 'AUD', amount: 7.99, region: 'AU', verified: true, observed: '2026-10-12' },
     { product: 'store-box-test', label: 'Ultra Training Box', group: 'Boxes', currency: 'AUD', amount: 46.99, region: 'AU', verified: true, observed: '2026-10-12' },
-    { product: 'store-idr-legacy', label: 'GO Pass Deluxe', group: 'Tickets', currency: 'IDR', amount: 76000, region: 'ID', verified: true, observed: '2026-11-09' }
+    { product: 'store-idr-legacy', label: 'GO Pass Deluxe', group: 'Tickets', currency: 'IDR', amount: 76000, region: 'ID', verified: true, observed: '2026-11-09' },
+    { product: 'go-pass-oct-deluxe', currency: 'AUD', region: 'AU', amount: 12.99,
+      verified: true, observed: '2026-10-12', url: 'https://store.pokemongo.com/' }
   ], regional: OBSERVATIONS, owner: true };
   const win = { GORegionalPrices: R, GOLIB: { esc: s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';'), loadPrices: () => Promise.resolve(prices), priceView: () => ({ sub: '', save: '', main: '' }) }, GODASH: {} };
   const doc = { readyState: 'complete', getElementById: id => id === 'evsource' ? host : id === 'storep-host' ? null : null, createElement: () => el, addEventListener() {} };
@@ -31,6 +33,9 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.ok(el.innerHTML.includes('sp-market-grid'), 'regional prices share one compact grid');
   assert.ok(el.innerHTML.includes('sp-market-au'), 'Australia price is visually grouped with the other regions');
   assert.ok(el.innerHTML.includes('data-sp-product'), 'each item renders once in the browseable catalogue');
+  assert.ok(el.innerHTML.includes('go-pass-oct-deluxe'), 'verified official AU pass offer is not silently filtered out');
+  assert.ok(el.innerHTML.includes('exact SKU; item name not recorded'),
+    'unlabelled source offer cannot masquerade as a verified product name');
   assert.doesNotMatch(el.innerHTML, /class="sp-product-group"/,
     'internal event-pass/sku classifier strings must not be exposed as product labels');
   assert.doesNotMatch(el.innerHTML, />event-pass-ranks-ultra</,
