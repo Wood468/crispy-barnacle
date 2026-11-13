@@ -167,6 +167,14 @@
     var ids = o.getAttribute('data-ids'); if (!ids) return [{ id: o.value, title: o.getAttribute('data-t') }];
     var ts = o.getAttribute('data-t').split(' | '); return ids.split(',').map(function (x, i) { return { id: x, title: ts[i] || x }; });
   }
+  /* Only bosses actually published on the current/upcoming Battle schedule.
+     The full Dex remains available to resolve exact IDs, never to offer arbitrary choices. */
+  function currentBossChoices() {
+    var picker = window.GOINFOGRAPHICRAIDPICKER;
+    var data = window.GO && window.GO.D;
+    return picker && data && window.GOLIB && window.GOLIB.raidBossNames
+      ? picker.options(data, pokemonCatalogue, Date.now(), window.GOLIB.raidBossNames, window.GOEventClock && window.GOEventClock.parseDate) : [];
+  }
   function bossTargets(id) {
     var d = decs[id];
     return d && d.status === 'approved' && Array.isArray(d.targets)
@@ -181,10 +189,10 @@
   }
   function bossControls(it) {
     return '<div class="igr-o ig-boss-controls" role="group" aria-label="Attach infographic to a Pokémon">'
-      + '<label>Pokémon<input type="search" data-ig-boss-name list="ig-boss-list" placeholder="Exact Pokémon name" autocomplete="off" maxlength="90"></label>'
-      + '<label>Battle type<input type="text" data-ig-boss-mode list="ig-boss-mode-list" value="normal" maxlength="15" autocomplete="off" aria-label="Battle type: normal, shadow, dynamax, gigantamax, mega or primal"></label>'
+      + '<label>Current or upcoming Raid / Max Battle Pokémon<input type="search" data-ig-boss-name list="ig-boss-list" placeholder="Select a scheduled Pokémon" autocomplete="off" maxlength="90"></label>'
+      + '<label>Scheduled battle type<input type="text" data-ig-boss-mode list="ig-boss-mode-' + esc(it.id) + '" value="" maxlength="15" autocomplete="off" aria-label="Battle type from published schedule"><datalist id="ig-boss-mode-' + esc(it.id) + '" data-ig-boss-mode-options></datalist></label>'
       + '<label>Exact form<input type="text" data-ig-boss-form list="ig-boss-form-' + esc(it.id) + '" value="" maxlength="80" autocomplete="off" placeholder="Base/default" aria-label="Exact form"><datalist id="ig-boss-form-' + esc(it.id) + '" data-ig-boss-form-options></datalist></label>'
-      + '<button type="button" class="pill" data-ig-boss-save>Attach to Pokémon</button></div>';
+      + '<button type="button" class="pill" data-ig-boss-save>Attach to Pokémon</button><small>Only Pokémon in the published current or upcoming raid and Max Battle schedule can be attached. Previously approved guides remain available.</small></div>';
   }
   function bossFormCompatible(row, mode) {
     var kind = row[3];
@@ -198,13 +206,18 @@
   function chosenPokemon(card) {
     var field = card.querySelector('[data-ig-boss-name]');
     var value = field ? field.value.trim().toLocaleLowerCase() : '';
-    var found = pokemonCatalogue.filter(function (p) { return String(p[1]).toLocaleLowerCase() === value; });
-    return found.length === 1 ? found[0] : null;
+    var found = currentBossChoices().filter(function (entry) { return String(entry.dex[1]).toLocaleLowerCase() === value; });
+    return found.length === 1 ? found[0].dex : null;
   }
   function refreshBossForms(card) {
     var mon = chosenPokemon(card), mode = card.querySelector('[data-ig-boss-mode]'),
         field = card.querySelector('[data-ig-boss-form]');
     if (!mode || !field) return;
+    var allowed = currentBossChoices().filter(function (entry) { return mon && entry.dex[0] === mon[0]; })[0];
+    var modes = allowed ? allowed.modes : [];
+    var chooser = card.querySelector('[data-ig-boss-mode-options]');
+    if (chooser) chooser.innerHTML = modes.map(function (m) { return '<option value="' + esc(m) + '"></option>'; }).join('');
+    if (modes.indexOf(mode.value) < 0) mode.value = modes[0] || '';
     var was = field.value;
     var opts = formCatalogue.filter(function (f) {
       return mon && +f[0] === +mon[0] && bossFormCompatible(f, mode.value);
@@ -258,13 +271,13 @@
     var linked = items.filter(function (i) { return linkedOf(i.id).length || bossTargets(i.id).length; });
     if (!decsOk) {
       host.hidden = false;
-      host.innerHTML = '<datalist id="ig-boss-list">' + pokemonCatalogue.map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('') + '</datalist><datalist id="ig-boss-mode-list"><option value="normal"><option value="shadow"><option value="dynamax"><option value="gigantamax"><option value="mega"><option value="primal"></datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body"><p class="igr-msg" role="alert">Could not read your saved decisions, so review is paused. Nothing can be approved or discarded until they load, so a choice you made elsewhere is never overwritten.</p>' + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + '<button type="button" class="pill all" data-ig-retry="1">Retry</button></div></details>';
+      host.innerHTML = '<datalist id="ig-boss-list">' + currentBossChoices().map(function (p) { return '<option value="' + esc(p.dex[1]) + '">'; }).join('') + '</datalist><datalist id="ig-boss-mode-list"><option value="normal"><option value="shadow"><option value="dynamax"><option value="gigantamax"><option value="mega"><option value="primal"></datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body"><p class="igr-msg" role="alert">Could not read your saved decisions, so review is paused. Nothing can be approved or discarded until they load, so a choice you made elsewhere is never overwritten.</p>' + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + '<button type="button" class="pill all" data-ig-retry="1">Retry</button></div></details>';
       return;
     }
     if (!open.length && !msg && !capped && !linked.length) { host.hidden = true; host.innerHTML = ''; return; }
     host.hidden = false;
     var kl = document.getElementById('iglinked'), keepLinked = !!(kl && kl.open);
-    host.innerHTML = '<datalist id="ig-boss-list">' + pokemonCatalogue.map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('') + '</datalist><datalist id="ig-boss-mode-list"><option value="normal"><option value="shadow"><option value="dynamax"><option value="gigantamax"><option value="mega"><option value="primal"></datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
+    host.innerHTML = '<datalist id="ig-boss-list">' + currentBossChoices().map(function (p) { return '<option value="' + esc(p.dex[1]) + '">'; }).join('') + '</datalist><datalist id="ig-boss-mode-list"><option value="normal"><option value="shadow"><option value="dynamax"><option value="gigantamax"><option value="mega"><option value="primal"></datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
       + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing appears on an event or Pokémon until you approve it.</p>'
       + capNote + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + queueRetry + '</div></details>'
       + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(linkedCard).join('') + '</div></details>' : '');
@@ -338,12 +351,13 @@
       var mon = chosenPokemon(card), mode = card.querySelector('[data-ig-boss-mode]'),
           form = card.querySelector('[data-ig-boss-form]');
       if (!mon || !mode || !form) { msg = 'Choose an exact Pokémon name from the list.'; return render(); }
-      var validMode = ['normal','shadow','dynamax','gigantamax','mega','primal'].indexOf(mode.value) >= 0;
+      var selected = currentBossChoices().filter(function (entry) { return entry.dex[0] === mon[0]; })[0];
+      var validMode = !!selected && selected.modes.indexOf(mode.value) >= 0;
       var possible = formCatalogue.filter(function (f) {
         return +f[0] === +mon[0] && f[1] === form.value && bossFormCompatible(f, mode.value);
       });
       if (!validMode || (['mega','primal','gigantamax'].indexOf(mode.value) >= 0 && !form.value) || (form.value && !possible.length)) {
-        msg = 'Choose an exact Pokémon form and compatible battle type.'; return render();
+        msg = 'Choose a battle type from the current or upcoming raid schedule and an exact compatible form.'; return render();
       }
       var target = {type:'raid-boss', pokemonId:String(mon[0]).padStart(3,'0'),
         formId:form.value || null, battleMode:mode.value};
