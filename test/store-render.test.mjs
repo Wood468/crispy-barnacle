@@ -375,3 +375,40 @@ test('Store product search accepts unaccented and composed/decomposed Pokémon n
   assert.equal(groups.find(g=>g.id==='items').open,false,
     'clearing search keeps secondary categories collapsed');
 });
+
+
+test('Store counters separate fresh listings from visible unconfirmed and archived historical offers', async () => {
+  const R = createRequire(import.meta.url)('../public/regional-prices.js');
+  const source = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
+  const now = new Date().toISOString();
+  const prices = [
+    {product:'current-pass',label:'Current Fixture Pass',group:'Tickets',currency:'AUD',amount:8.99,region:'AU',verified:true,observed:'2026-11-13'},
+    {product:'storage-upgrade',label:'Item Bag Upgrade',group:'Storage',currency:'AUD',amount:3.99,region:'AU',verified:true,observed:'2026-11-13'},
+    {product:'old-pass',label:'Previous Fixture Pass',group:'Tickets',currency:'AUD',amount:6.99,region:'AU',verified:true,observed:'2026-10-12'}
+  ];
+  const snapshot = {version:1,updated:now,items:[{name:'Current Fixture Pass',lastSeen:now}],
+    gone:[{name:'Previous Fixture Pass',lastSeen:'2026-10-12',goneAt:now}]};
+  const data = {owner:true,prices,regional:[]};
+  const root = {innerHTML:'',addEventListener(){},querySelector:()=>null};
+  const host = {parentNode:{insertBefore(){}}};
+  const doc = {readyState:'complete',getElementById:id=>id==='evsource'?host:null,
+    createElement:()=>root,addEventListener(){}};
+  const win = {GORegionalPrices:R,fetch:async()=>({ok:true,json:async()=>snapshot}),
+    GOLIB:{esc:s=>String(s),loadPrices:()=>Promise.resolve(data),
+      priceView:()=>({sub:'',save:'',main:''})},document:doc,
+    localStorage:{getItem:()=>null,setItem(){}},console};
+  win.window=win;
+  vm.runInNewContext(source,win);
+  await new Promise(resolve=>setTimeout(resolve,30));
+  assert.match(root.innerHTML,/1 recently listed · 1 visible unconfirmed · 1 previous\/unconfirmed/,
+    'summary and live-region must count only source-listed offers as recently listed');
+  assert.equal((root.innerHTML.match(/1 recently listed · 1 visible unconfirmed · 1 previous\/unconfirmed/g)||[]).length,2,
+    'summary and accessible results must agree');
+  assert.match(root.innerHTML,/data-sp-listing="listed"/);
+  assert.match(root.innerHTML,/data-sp-listing="unconfirmed"/);
+  assert.match(root.innerHTML,/data-sp-listing="archived"/);
+  assert.match(root.innerHTML,/Item Bag Upgrade/);
+  assert.match(root.innerHTML,/A\$3\.99/,'historical storage price remains visible');
+  assert.match(root.innerHTML,/data-sp-group="earlier"/,'retired pass remains in archive');
+  assert.match(root.innerHTML,/data-sp-search/,'search remains available for all product cards');
+});
