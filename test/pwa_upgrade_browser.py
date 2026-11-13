@@ -133,8 +133,10 @@ with sync_playwright() as pw:
     page.keyboard.press('Escape')
     page.locator('nav.tabs button[data-tab="events"]').click()
     page.wait_for_selector('#tab-events:not([hidden])')
-    page.wait_for_selector('#tab-events .evc', timeout=15000)
-    assert page.locator('#tab-events .evc').count() > 0
+    # A hidden first event card may precede the visible Schedule cards;
+    # check actual visible content instead of waiting on the first DOM match.
+    page.wait_for_selector('#tab-events .evc:visible', timeout=15000)
+    assert page.locator('#tab-events .evc:visible').count() > 0, 'no visible Schedule cards after offline PWA upgrade'
     assert page.evaluate(READ_KEYS, KEYS) == SEED, 'keys changed after offline navigation on the new shell'
     assert page.evaluate('GO.dex().m.own[25]') == 1
 
