@@ -72,6 +72,7 @@ test('untrusted authorization, missing receipt and tampered manifest write no pu
     ...opts,allowLocalWrite:false}),/Explicit trusted/);
   await assert.rejects(commitFacetPromotion(m,signed(m),{
     ...opts,durableStateDir:undefined}),/persistent state directory/);
+  await mkdir(join(rootDir,'ephemeral-ledger'),{recursive:true});
   await assert.rejects(commitFacetPromotion(m,signed(m),{
     ...opts,durableStateDir:join(rootDir,'ephemeral-ledger')}),/outside the checkout/);
   await assert.rejects(commitFacetPromotion(m,signed(m),{
