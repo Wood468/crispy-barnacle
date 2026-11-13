@@ -17,7 +17,7 @@
   function kindToken(label) {
     if (/pok[eé]coins?/i.test(label)) return '◎';
     if (/storage|item bag|bag upgrade|capacity/i.test(label)) return '↑';
-    if (/^go pass|monthly.*pass|(?:event|admission).*ticket/i.test(label)) return 'PASS';
+    if (/^go[- ]pass|monthly.*pass|(?:event|admission).*ticket/i.test(label)) return 'PASS';
     if (/lucky eggs?/i.test(label)) return 'LE';
     if (/star pieces?/i.test(label)) return 'SP';
     if (/incubator/i.test(label)) return 'INC';
@@ -127,7 +127,8 @@
         : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">Not observed</span>';
       var search = (p.label + ' ' + p.group + ' ' + priority(p)).toLowerCase();
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '">'
-        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span></header>'
+        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span>'
+        + (p.sourceIdOnly ? '<small class="sp-source-id-note">Official AU observation · exact SKU; item name not recorded</small>' : '') + '</header>'
         + '<div class="sp-market-grid">'
         + '<div class="sp-market sp-market-au"><span class="sp-market-label">Australia <small>Web</small></span>' + au + '</div>'
         + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'

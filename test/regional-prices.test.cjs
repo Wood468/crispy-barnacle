@@ -164,3 +164,62 @@ test('standard Web Store PokéCoin labels pair AU and Indonesia without hiding a
   const bonus = rows.find(r => r.label.includes('one-time Web Store bonus'));
   assert.ok(bonus && bonus.aud === null, 'one-time bonus pack must stay separate');
 });
+
+test('catalogue includes every source-verified Australian Web Store offer regardless of legacy ID prefix', () => {
+  const observed = require('../public/prices.json').prices;
+  const rows = R.catalogue(observed, OBS, NOW);
+  const offerIds = [
+    'go-pass-oct-deluxe','go-pass-oct-deluxe-10','go-pass-oct-ultrabox',
+    'go-pass-fall-deluxe','go-pass-fall-deluxe-6','go-pass-fall-ultrabox',
+    'wild-area-2026-global-ultra-box'
+  ];
+  for (const sku of offerIds) {
+    const matches = rows.filter(row => row.product === sku);
+    assert.equal(matches.length, 1, sku + ' must appear once, even when the AU price was observed twice');
+    assert.ok(matches[0].aud > 0);
+    assert.equal(matches[0].group, 'Passes & tickets');
+    assert.equal(matches[0].sourceIdOnly, true, 'unnamed source SKU must remain visibly unattributed');
+    assert.equal(matches[0].indonesia, null, 'an event-specific pass must never borrow a different pass price');
+  }
+  assert.equal(rows.some(row => /^safari-brisbane/.test(row.product)), false,
+    'GO Hub City Safari tickets are not items sold in the official Web Store');
+});
+
+test('non-store AU offers require a verified exact official HTTPS Web Store URL', () => {
+  const base = { product: 'go-pass-demo-sku', label: 'Example Deluxe GO Pass',
+    region: 'AU', currency: 'AUD', amount: 12.99, verified: true,
+    observed: '2026-11-13', url: 'https://store.pokemongo.com/' };
+  const rows = R.catalogue([base], [], NOW);
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].label, 'Example Deluxe GO Pass');
+  assert.equal(rows[0].sourceIdOnly, false);
+  const invalid = [
+    'http://store.pokemongo.com/',
+    'https://evil@store.pokemongo.com/',
+    'https://store.pokemongo.com.evil.example/',
+    'https://pokemongo.com/en/news/ticket',
+    'https://store.pokemongo.com/ticket',
+    'https://store.pokemongo.com/?account=token'
+  ];
+  for (const url of invalid) assert.equal(R.catalogue([{...base, url}], [], NOW).length, 0, url);
+  assert.equal(R.catalogue([{...base, verified:false}], [], NOW).length, 0);
+  assert.equal(R.catalogue([{...base, currency:'USD'}], [], NOW).length, 0);
+  assert.equal(R.catalogue([{...base, amount:0}], [], NOW).length, 0);
+});
+
+test('verified Store SKU variants remain distinct and region-only records keep their own identity', () => {
+  const prices = [
+    {product:'go-pass-oct-deluxe', currency:'AUD', region:'AU', amount:12.99,
+      url:'https://store.pokemongo.com/', observed:'2026-10-11', verified:true},
+    {product:'go-pass-oct-deluxe-10', currency:'AUD', region:'AU', amount:14.99,
+      url:'https://store.pokemongo.com/', observed:'2026-10-11', verified:true},
+    {product:'go-pass-oct-deluxe', currency:'AUD', region:'AU', amount:13.49,
+      url:'https://store.pokemongo.com/', observed:'2026-10-12', verified:true}
+  ];
+  const rows = R.catalogue(prices,[id('GO Pass Deluxe: Into the Wild','event-pass',76000)],NOW);
+  assert.equal(rows.length,3);
+  assert.equal(rows.find(r=>r.product==='go-pass-oct-deluxe').aud,13.49,'latest dated AU observation wins');
+  assert.equal(rows.find(r=>r.product==='go-pass-oct-deluxe-10').aud,14.99);
+  assert.equal(rows.find(r=>r.label==='GO Pass Deluxe: Into the Wild').aud,null,
+    'do not claim an unrelated AU price for a regional-only event pass');
+});
