@@ -92,3 +92,37 @@ test('real curated GO Wild Area event keeps its own identity and details under v
   const other=withVerifiedFacetPanels({...model,eventId:into.id,title:into.t},sample);
   assert.equal(Object.hasOwn(other,'verifiedFacets'),false);
 });
+
+test('disputed or unconfirmed source claims cannot be upgraded to verified',()=>{
+  for(const status of ['disputed','unconfirmed','not-published','verified','']){
+    const f=feed();
+    f.events[0].benefits[0].status=status;
+    assert.throws(()=>indexVerifiedFacetFeed(f),/Invalid verified facet claim/);
+  }
+});
+test('nonstandard HTTPS source port is not an approved exact origin',()=>{
+  const f=feed();
+  f.events[0].benefits[0].sourceRefs=[{...source,
+    url:'https://pokemongo.com:444/news/synthetic/'}];
+  assert.throws(()=>indexVerifiedFacetFeed(f),/Unsafe verified facet citation/);
+});
+test('absence from the new complete verified feed clears old verified panels',()=>{
+  const old=withVerifiedFacetPanels({schemaVersion:1,eventId:'wild-area:global.2026',
+    bonuses:['curated bonus']},feed());
+  assert.ok(old.verifiedFacets);
+  const next=feed();
+  next.events[0].eventId='different-event';
+  const updated=withVerifiedFacetPanels(old,next);
+  assert.equal(Object.hasOwn(updated,'verifiedFacets'),false);
+  assert.deepEqual(updated.bonuses,['curated bonus']);
+  assert.ok(old.verifiedFacets,'caller original remains unchanged');
+});
+
+test('explicit add-on access stays separate from ticket and free, invalid universal grant rejected',()=>{
+  const f=feed();
+  f.events[0].benefits.push({...claim('addon-bonus','addon')});
+  const selected=verifiedFacetPanelsForEvent(f,'wild-area:global.2026');
+  assert.deepEqual(selected.bonuses.map(x=>x.access),['free','ticket','addon']);
+  f.events[0].benefits[2].access='all';
+  assert.throws(()=>indexVerifiedFacetFeed(f),/Invalid verified facet claim/);
+});

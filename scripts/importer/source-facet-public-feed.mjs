@@ -33,7 +33,7 @@ const cleanText=(value,max=300)=>typeof value==='string'?value.slice(0,max):unde
 function sourceRef(ref){
   if(!plain(ref)||!Object.hasOwn(VALID_SOURCE_HOSTS,ref.sourceId))throw new TypeError('Unrecognized source attribution');
   const url=new URL(ref.url);
-  if(url.protocol!=='https:'||url.username||url.password||
+  if(url.protocol!=='https:'||url.username||url.password||url.port||
      !VALID_SOURCE_HOSTS[ref.sourceId].includes(url.hostname.toLowerCase()))
     throw new TypeError('Invalid source provenance');
   url.search='';url.hash='';
@@ -41,7 +41,9 @@ function sourceRef(ref){
     section:cleanText(ref.section,160)||''};
 }
 function project(type,record){
-  if(!plain(record)||typeof record.id!=='string'||!record.id.trim()||record.id.length>160)
+  if(!plain(record)||typeof record.id!=='string'||!record.id.trim()||record.id.length>160||
+     record.status!=='source-claimed'||
+     !['free','ticket','addon','unknown'].includes(record.access))
     throw new TypeError('Invalid verified facet claim');
   if(!Array.isArray(record.sourceRefs)||!record.sourceRefs.length||record.sourceRefs.length>12)
     throw new TypeError('Verified claim missing bounded sources');
