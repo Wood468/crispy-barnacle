@@ -6,7 +6,7 @@ const official='https://pokemongo.com/news/synthetic-event/';
 const duck='https://leekduck.com/events/synthetic-event/';
 const ref=(sourceId,url)=>({sourceId,url,section:'Synthetic section'});
 const benefit=(id,access,sourceRefs)=>({
-  id,label:'Synthetic benefit',kind:'candy',access,sourceRefs,status:'source-claimed',
+  id,label:'Synthetic benefit '+id,kind:'candy',access,sourceRefs,status:'source-claimed',
   dayScope:'ticketed-day',windowText:'10 a.m. to 6 p.m.',
   internalPlayerToken:'SHOULD NEVER LEAK'
 });
