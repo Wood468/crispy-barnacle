@@ -22,6 +22,34 @@ function passReward(raw){
  if(quantity){var amount=+(quantity[1]||quantity[4]),label=text(quantity[2]||quantity[3]);if(Number.isSafeInteger(amount)&&amount>0&&amount<=1e9&&!/[|,×·]/.test(label))return {type:/\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|coin|pok[eé]coin|incense|lure|egg|berry)\b/i.test(label)?'item':'other',name:label,quantity:amount};}
  return value;
 }
+/* Structured v1 GO Pass stages may retain source rewards as bare strings,
+   unlike legacy Rank text parsed through passFields(). Only promote a source
+   name that exactly matches a configured Pokédex species (with an explicit
+   known form) to an encounter. Never infer rewards, tracks or quantities. */
+function enrichPassEncounters(passes){
+ return (passes||[]).map(function(pass){
+  if(!pass||!Array.isArray(pass.stages))return pass;
+  var changed=false;
+  var stages=pass.stages.map(function(stage){
+   if(!stage||typeof stage!=='object')return stage;
+   var next=stage;
+   ['free','deluxe','rewards'].forEach(function(track){
+    if(!Array.isArray(stage[track]))return;
+    var mapped=stage[track].map(function(raw){
+     if(typeof raw!=='string')return raw; // Explicit source type wins.
+     var typed=passReward(raw);
+     return typed&&typeof typed==='object'&&typed.type==='encounter'?typed:raw;
+    });
+    if(mapped.some(function(item,i){return item!==stage[track][i];})){
+     if(next===stage)next=Object.assign({},stage);
+     next[track]=mapped;changed=true;
+    }
+   });
+   return next;
+  });
+  return changed?Object.assign({},pass,{stages:stages}):pass;
+ });
+}
 function splitRewards(v){return String(v).split(/\s+·\s+/).map(function(x){return passReward(x.trim());}).filter(function(x){return x!==''&&!/^[-–—]+$/.test(typeof x==='string'?x:'x');});}
 function passFields(tickets){
  var stages=new Map(),other=[];
@@ -29,7 +57,7 @@ function passFields(tickets){
  return {tickets:other,passes:stages.size?[{title:'GO Pass rewards',stages:Array.from(stages.values()).sort(function(a,b){return a.rank-b.rank;})}]:[]};
 }
 function adapt(ev,details,info){
- if(ev.schemaVersion===1){var raw=Object.assign({},ev,{pokemon:(ev.pokemon||[]).map(function(p){return p.name?p:Object.assign({},p,{name:names[String(p.speciesId)]||String(p.speciesId)});})});return C.normalize(raw);}
+ if(ev.schemaVersion===1){var raw=Object.assign({},ev,{pokemon:(ev.pokemon||[]).map(function(p){return p.name?p:Object.assign({},p,{name:names[String(p.speciesId)]||String(p.speciesId)});}),passes:enrichPassEncounters(ev.passes)});return C.normalize(raw);}
  details=details||{};info=info||{};var id=text(ev.id||ev.eventId),title=text(ev.name||ev.t||ev.title);if(!id||!title)throw Error('Event requires a stable source ID and title');
  var fields=details.fields||{},roster=[],edges=[],activities=ev.activities||[];
  // Explicit structured Pokémon and methods are authoritative. Legacy featured art stays in "Featured Pokémon".
@@ -39,14 +67,14 @@ function adapt(ev,details,info){
  var notes=(ev.notes||ev.p||[]).filter(function(n){return typeof n==='string'&&!(lib.isPlaceholder&&lib.isPlaceholder(n));});
  var rows={};Object.keys(fields).forEach(function(k){rows[k]=(fields[k]||[]).filter(function(r){return r&&text(r.text);});});
  var result={schemaVersion:1,eventId:id,aliases:unique([].concat(ev.aliases||[],ev.aliasIds||[],details.aliases||[]).filter(Boolean)),family:C.classify(title,ev.kind),title:title,lifecycle:ev.lifecycle||'announced',attendance:lib.attendanceOf(ev)==='in-person'?'in-person':'',location:ev.location||ev.place||ev.where||ev.region||null,image:text(ev.img||ev.image||details.image)||null,notes:notes,schedule:null,pokemon:unique(roster),encounters:edges,activities:activities,bonuses:unique([].concat(ev.bonuses||[],rows.bonuses||[])),research:unique([].concat(details.researchTasks||[],rows.research||[])),passes:ev.passes||[],tickets:unique([].concat(ev.tickets||[],rows.tickets||[])),sources:unique([].concat(ev.sources||[],details.sources||[],info.source?[info.source]:[],ev.link||ev.sourceUrl?[{url:ev.link||ev.sourceUrl,name:ev.source||'Event source'}]:[])),internalValidation:{warnings:[],lifecycleDeclared:typeof ev.lifecycle==='string',conflicts:[].concat(details.conflicts||[],details.encounterConflicts||[]),fields:rows,info:info.info||[],detailRefs:[].concat(ev.detailIds||[],ev.season&&ev.season.detailId||[]),legacyDates:{start:wall(ev.s||ev.start),end:wall(ev.e||ev.end)}}};
- var ranks=passFields(result.tickets);if(ranks.passes.length){result.tickets=ranks.tickets;result.passes=result.passes.concat(ranks.passes);}
+ var ranks=passFields(result.tickets);if(ranks.passes.length){result.tickets=ranks.tickets;result.passes=result.passes.concat(ranks.passes);}result.passes=enrichPassEncounters(result.passes);
  try{result.schedule=schedule(ev);return C.normalize(result);}catch(error){if(!/schedule|IANA|local|boundary|offset/i.test(error.message))throw error;result.schedule=null;result.internalValidation.warnings.push(error.message);return C.normalize(result);}
 }
 function retain(previous,next){if(!previous)return next;if(previous.eventId!==next.eventId)throw Error('Cannot retain data across identities');var out=Object.assign({},next);if(previous.internalValidation&&previous.internalValidation.imageReviewed&&!(next.internalValidation&&next.internalValidation.imageReviewed)){out.image=previous.image||null;out.internalValidation=Object.assign({},next.internalValidation,{imageReviewed:true});}if(previous.lifecycle==='cancelled'&&!(next.internalValidation&&next.internalValidation.lifecycleDeclared))out.lifecycle='cancelled';if(next.lifecycle!=='cancelled'&&next.completeness!=='complete'){
  ['bonuses','research','passes','tickets','notes'].forEach(function(k){if(!out[k]||!out[k].length)out[k]=(previous[k]||[]).slice();});
  if(next.completeness!=='complete'){var seen=new Map();(previous.pokemon||[]).concat(next.pokemon||[]).forEach(function(p){var old=seen.get(p.key);var merged=Object.assign({},old||{},p);if(old){['debut','boostedShiny','assetKey'].forEach(function(k){if(p[k]===null||p[k]===undefined)merged[k]=old[k];});if(p.shiny==='unknown'&&!(next.internalValidation&&next.internalValidation.conflicts||[]).some(function(c){return c.identityKey===p.key;}))merged.shiny=old.shiny;}seen.set(p.key,merged);});out.pokemon=Array.from(seen.values());out.encounters=unique((previous.encounters||[]).concat(next.encounters||[]));var acts=new Map();(previous.activities||[]).concat(next.activities||[]).forEach(function(a){acts.set(a.id,a);});out.activities=Array.from(acts.values());}
  if(!out.schedule)out.schedule=previous.schedule||null;if(!out.image&&!(next.internalValidation&&next.internalValidation.imageReviewed))out.image=previous.image||null;
- }out.aliases=unique((previous.aliases||[]).concat(next.aliases||[]));out.sources=unique((previous.sources||[]).concat(next.sources||[]));return C.normalize(out);}
+ }out.aliases=unique((previous.aliases||[]).concat(next.aliases||[]));out.sources=unique((previous.sources||[]).concat(next.sources||[]));out.passes=enrichPassEncounters(out.passes);return C.normalize(out);}
 
 /* When a verified source ties Gimmighoul to Coin Bag, the encountered form
    is Roaming, not the default Chest. This is view-only identity repair,
