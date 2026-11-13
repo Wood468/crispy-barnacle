@@ -250,8 +250,8 @@
         regionalUnmatched: !!p.regionalUnmatched, unpricedOfficial: !!p.unpricedOfficial,
         aud: p.aud, observed: p.observed,
         contents: p.contents || [], contentsSource: p.contentsSource || null,
-        india: ambiguous ? null : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
-        indonesia: ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
+        india: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
+        indonesia: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
     });
   }
   /* The latest public snapshot proves which exact SKUs were observed on the
@@ -271,7 +271,7 @@
     'golden razz berries x15':'web-15-gold-razz',
     'max potions x10':'web-10-max-potions'
   };
-  function currentCatalogue(items, snapshot, now) {
+  function currentCatalogue(items, snapshot, now, obs) {
     var at=now==null?Date.now():now;
     var seen=Date.parse(snapshot && snapshot.updated);
     var valid=Number.isFinite(seen) && seen<=at && at-seen<=2*DAY &&
@@ -296,7 +296,15 @@
       var row=matches[0], art=typeof row.image==='string' &&
         /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()-]+\/w256\.webp$/i.test(row.image)
           ? row.image : null;
-      current.push(Object.assign({},item,{storeSlug:row.slug,storeArt:art,listedAt:row.seenAt}));
+      var model = {};
+      if (item.unpricedOfficial) {
+        // A publisher announcement is not a checkout price. Only a separately
+        // confirmed current listing may show an explicitly labelled model.
+        var kind = kindOf(item.label);
+        model.indonesia = estimate({region:'ID',channel:'web',product:item.label,kind:kind,aud:item.aud},obs,at);
+        model.india = estimate({region:'IN',channel:'in-app',product:item.label,kind:kind,aud:item.aud},obs,at);
+      }
+      current.push(Object.assign({},item,model,{storeSlug:row.slug,storeArt:art,listedAt:row.seenAt}));
     });
     return {current:current,historical:historical,checkedAt:valid?snapshot.updated:null,stale:!valid};
   }
