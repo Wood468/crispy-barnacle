@@ -118,13 +118,48 @@ test('dense and single-rank groups avoid cross-boundary gaps and do not fabricat
  assert.equal((html.match(/class="ue-pass-rank" data-rank="/g)||[]).length,6);
 }));
 
+test('GO Pass encounter art stays species-specific with a separate source-labelled Dynamax badge', () => withSemantic(() => {
+ const seen=[];
+ const art = item => {
+  seen.push(item.name);
+  return '<img class="art ea" src="/api/art?n='+encodeURIComponent(item.name)
+   +(/^Dynamax /i.test(item.name)?'&dynamax=1':'')+'" alt="'+item.name+'">';
+ };
+ const html=UI.render(model([
+  {rank:45,free:[{type:'encounter',name:'Dynamax Meltan',quantity:1,level:15}],
+    deluxe:[{type:'encounter',name:'Dynamax Meltan'}]},
+  {rank:46,free:[{type:'encounter',name:'Dynamax Rookidee'},
+    {type:'encounter',name:'Groudon'},
+    {type:'item',name:'Dynamax Candy'}]},
+  {rank:47,deluxe:[{type:'encounter',name:'Gigantamax Charizard'},
+    {type:'encounter',name:'Shadow Mewtwo'}]}
+ ]),{rewardArt:art});
+ assert.ok(seen.includes('Dynamax Meltan'),'species art resolver is called for the published encounter');
+ const reward=html.match(/<div class="ue-pass-reward" data-cat="Pokémon" data-battle-mode="dynamax">[\s\S]*?<b>Dynamax Meltan<\/b>[\s\S]*?<\/div>/);
+ assert.ok(reward,'Rank 45 includes a real encounter image and a distinct Dynamax mode');
+ assert.match(reward[0],/src="\/api\/art\?n=Dynamax%20Meltan&dynamax=1"/);
+ assert.match(reward[0],/ue-pass-mode-dynamax">Dynamax<\/span>/);
+ assert.match(reward[0],/Level 15/);
+ assert.doesNotMatch(reward[0],/ue-reward-icon">(?:PKM|MAX)<\/span>/,'generic MAX symbol cannot replace actual species art');
+ assert.match(html,/data-battle-mode="gigantamax"/);
+ assert.match(html,/data-battle-mode="shadow"/);
+ const ordinary=html.match(/<div class="ue-pass-reward" data-cat="Pokémon">[\s\S]*?<b>Groudon<\/b>/);
+ assert.ok(ordinary,'ordinary Pokémon encounter has no invented battle mode');
+ assert.doesNotMatch(ordinary[0],/data-battle-mode|ue-pass-mode/);
+ const item=html.match(/<div class="ue-pass-reward" data-cat="[^"]+"[^>]*>[\s\S]*?<b>Dynamax Candy<\/b>/);
+ assert.ok(item,'published item remains an item');
+ assert.doesNotMatch(item[0].slice(item[0].lastIndexOf('<div class="ue-pass-reward"')),/data-battle-mode/,'mode is never guessed for items');
+ const css=file('event-redesign.css');
+ assert.match(css,/\.ue-pass-mode-line\{/);
+ assert.match(css,/\.ue-pass-reward\[data-battle-mode="dynamax"\]/);
+}));
 test('load order, offline references and post-render mount form a complete PWA integration', () => {
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
  const assets=[
   '/go-pass-navigation.css?v=20261118h',
   '/go-pass-navigation.js?v=20261118i',
   '/go-pass-reward-art.js?v=20261118d',
-  '/event-components.js?v=20261118g',
+  '/event-components.js?v=20261118h',
   '/dash.js?v=20261118c'
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
