@@ -81,6 +81,44 @@
     document.querySelectorAll('[data-boss-guide-filter]').forEach(function (b) {
       b.setAttribute('aria-pressed', String(b.getAttribute('data-boss-guide-filter') === filter));
     });
+    attachBossLinks();
+  }
+  /* Link current raid and Max rows by exact visible boss identity only. */
+  function attachBossLinks() {
+    var host=$('rotnow');if(!host)return;
+    var byName=Object.create(null);
+    guides.forEach(function(g,i){
+      var name=L.label(g,dex,forms).trim().toLocaleLowerCase();
+      if(!name)return;
+      if(!byName[name])byName[name]=[];
+      byName[name].push(i);
+    });
+    Array.prototype.forEach.call(host.querySelectorAll('.rc[data-boss],.rw-max-pokemon'),function(row){
+      var raw='',kind='';
+      if(row.hasAttribute('data-boss')){
+        raw=row.getAttribute('data-boss')||'';
+        var share=row.querySelector('[data-raid-kind]');
+        kind=share&&share.getAttribute('data-raid-kind')||'';
+        if(/^shadow/i.test(kind)&&!/^shadow\s/i.test(raw))raw='Shadow '+raw;
+      } else {
+        var boss=row.querySelector('.rw-max-txt b');
+        raw=boss?boss.textContent:'';
+      }
+      var key=String(raw).trim().toLocaleLowerCase(),matches=byName[key]||[];
+      var existing=row.querySelector('.boss-guide-inline');
+      if(matches.length!==1){
+        if(existing)existing.remove();
+        return;
+      }
+      var idx=matches[0];
+      if(existing){existing.setAttribute('data-boss-guide',idx);return;}
+      var button=document.createElement('button');
+      button.type='button';button.className='rc-info boss-guide-inline';
+      button.textContent='▧ Boss guide';
+      button.setAttribute('data-boss-guide',idx);
+      button.setAttribute('aria-label','View approved infographic for '+L.label(guides[idx],dex,forms));
+      row.appendChild(button);
+    });
   }
   function modal(g, focus) {
     var images = g.infographics.filter(function (im) { return imageURL(im.url); });
@@ -143,6 +181,8 @@
   var panel=$('tab-raids');
   if (panel && typeof MutationObserver === 'function') {
     new MutationObserver(maybeLoad).observe(panel,{attributes:true,attributeFilter:['hidden']});
+    var rows=$('rotnow');
+    if(rows)new MutationObserver(attachBossLinks).observe(rows,{childList:true,subtree:true});
   }
   document.addEventListener('click', function(e) {
     var tab=e.target && e.target.closest && e.target.closest('[data-tab="raids"]');
