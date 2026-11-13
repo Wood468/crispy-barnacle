@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { storeCurrentSnapshot } from '../scripts/store-watch.mjs';
+import { IMAGE_CSP_HOSTS } from '../src/image-policy.js';
 const require = createRequire(import.meta.url);
 const R = require('../public/regional-prices.js');
 const snapshot = JSON.parse(readFileSync(new URL('../public/store-current-snapshot.json', import.meta.url)));
@@ -107,7 +108,6 @@ test('India in-app coin packs are recorded separately from AU Web packs and neve
 });
 
 test('publisher image candidates remain unapproved for runtime display', () => {
-  const { IMAGE_CSP_HOSTS } = require('../src/image-policy.js');
   assert.equal(IMAGE_CSP_HOSTS.includes('https://assets.pgo.webstore.nianticlabs.com'),false);
   assert.equal(R.sourceOffer('GO Pass Deluxe: November', fixture, NOW).image,null);
 });
