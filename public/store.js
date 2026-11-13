@@ -164,6 +164,27 @@
         + esc(observedText + '. Not a live checkout quote.') + '</small></span></div>';
     }).join('');
   }
+  /* Only source-attributed contents, not a guessed bundle breakdown or
+     evidence that an expired pass is available for checkout today. */
+  function offerContents(p) {
+    var items = Array.isArray(p.contents) ? p.contents.filter(function (entry) {
+      return entry && typeof entry.item === 'string' && entry.item.trim()
+        && Number.isSafeInteger(entry.quantity) && entry.quantity > 0;
+    }) : [];
+    if (!items.length) return '';
+    var source = String(p.contentsSource || '');
+    var safe = /^https:\/\/pokemongo\.com\/news\/[a-z0-9-]+$/i.test(source)
+      || /^https:\/\/store\.pokemongo\.com\/\?country_code=US&game_client=iOS$/.test(source);
+    return '<details class="sp-offer-contents">'
+      + '<summary>Included in the published offer <small>Official description</small></summary>'
+      + '<ul>' + items.map(function (entry) {
+        return '<li>' + esc(entry.item) + ' ×' + entry.quantity + '</li>';
+      }).join('') + '</ul>'
+      + (safe ? '<p class="note"><a href="' + esc(source)
+        + '" target="_blank" rel="noopener noreferrer">Official offer description</a></p>' : '')
+      + '<p class="note">Published contents are not proof this historical offer is still for sale.</p>'
+      + '</details>';
+  }
   function coveragePanel(items, R) {
     var data = R.coverage(items);
     var withExactArt = items.filter(function (p) {
@@ -240,7 +261,7 @@
         + '<div class="sp-market sp-market-au"><span class="sp-market-label">Australia <small>Web</small></span>' + au + '</div>'
         + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
         + '<div class="sp-market"><span class="sp-market-label">India <small>in-app</small></span>' + priceCell(p.india, data.audQuotes) + '</div>'
-        + '</div></article>';
+        + '</div>' + offerContents(p) + '</article>';
     }
     var catalogue = sections.filter(function (s) { return bySection[s.id].length; }).map(function (s) {
       return '<details class="sp-group" data-sp-group="' + s.id + '" data-sp-default-open="' + (s.open ? 'yes' : 'no') + '"' + (s.open ? ' open' : '') + '>'
