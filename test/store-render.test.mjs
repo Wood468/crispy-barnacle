@@ -291,7 +291,7 @@ test('Store product search accepts unaccented and composed/decomposed Pokémon n
     'PokéCoins must not require an accented keyboard');
   function search(term,expected) {
     input.value=term;onSearch();
-    assert.equal(counter.textContent,expected+' products shown','query '+JSON.stringify(term));
+    assert.equal(counter.textContent,expected+(expected===1?' product':' products')+' shown','query '+JSON.stringify(term));
     assert.equal(groups.flatMap(g=>g.cards).filter(card=>!card.hidden).length,expected);
   }
   search('poke',2);
