@@ -111,21 +111,22 @@
         && Number.isFinite(Date.parse(o.observed));
     });
     if (!observed.length) return '';
-    var packs = observed.filter(function (o) {
-      return o.kind === 'coins' && o.coins > 0;
-    }).map(function (o) {
-      return { coins: o.coins, amount: o.amount, currency: o.currency, oneTime: !!o.oneTime };
-    });
-    /* Regional and exact product are inseparable. Similar boxes, one-time
-       coin bonuses and rank upgrades never share a comparison group. */
+    /* Display each exact observation identity independently. A shared human
+       label is NOT proof that two boxes or coin bonuses have the same SKU.
+       Only an explicit verified sourceSku can authorize channel comparison. */
     var groups = new Map();
     observed.forEach(function (o) {
-      var key = o.region + '|' + String(o.product).trim().toLowerCase().replace(/\s+/g, ' ');
+      var sku = typeof o.sourceSku === 'string' && /^[a-z0-9_.:-]{2,100}$/i.test(o.sourceSku)
+        ? o.sourceSku.toLowerCase() : '';
+      var key = o.region + '|' + (sku ? 'sku:' + sku
+        : 'obs:' + String(o.id || (o.channel + '|' + o.currency + '|' + o.product)));
       if (!groups.has(key)) groups.set(key, []);
       groups.get(key).push(o);
     });
     return Array.from(groups.values()).map(function (group) {
       var item = group[0], product = item.product, region = item.region;
+      var sku = typeof item.sourceSku === 'string' && /^[a-z0-9_.:-]{2,100}$/i.test(item.sourceSku)
+        ? item.sourceSku.toLowerCase() : '';
       var candidates = new Map();
       group.forEach(function (o) {
         var key = o.channel + '|' + o.currency;
@@ -134,12 +135,10 @@
       });
       var offers = Array.from(candidates.values());
       var sameCurrency = offers.every(function (o) { return o.currency === offers[0].currency; });
-      var result = offers.length >= 2 && sameCurrency
-        ? R.cheapest({ region: region, product: product, kind: item.kind }, rows,
-            { coinBalance: balance, packs: packs }) : null;
-      var validBest = result && result.best && result.best.basis === 'verified'
-        && result.options.filter(function (option) { return option.basis === 'verified'; }).length >= 2
-        ? result.best : null;
+      var canCompare = !!sku && offers.length >= 2 && sameCurrency
+        && offers.every(function (o) { return o.sourceSku && o.sourceSku.toLowerCase() === sku
+          && o.product === product && !!o.oneTime === !!item.oneTime; });
+      var validBest = canCompare ? offers.slice().sort(function (a,b) { return a.amount - b.amount; })[0] : null;
       var regionName = R.REGIONS[region] || region;
       var label = regionName + ' · ' + product;
       var observedText = offers.map(function (o) {
@@ -147,15 +146,15 @@
           + ', checked ' + when(o.observed);
       }).join('; ');
       var status = validBest
-        ? 'Lowest among ' + offers.length + ' comparable verified channels: '
-          + (validBest.channelLabel || validBest.channel) + ' · '
-          + R.fmt(validBest.cash, validBest.currency)
-          + (validBest.coinsUsed ? ' using ' + validBest.coinsUsed + ' PokéCoins' : '')
-          + (validBest.leftoverCoins > 0 ? '; ' + validBest.leftoverCoins + ' coins unused' : '')
+        ? 'Lowest verified cash price across ' + offers.length + ' exact-SKU channels: '
+          + (R.CHANNELS[validBest.channel] || validBest.channel) + ' · '
+          + R.fmt(validBest.amount, validBest.currency)
         : offers.length > 1 && !sameCurrency
           ? 'Different currencies: no reliable lowest-price comparison'
-          : 'Only one verified buying channel observed; no lowest-price comparison';
-      return '<div class="sp-r sp-regional-row"><span class="sp-n">' + esc(label)
+          : offers.length > 1
+            ? 'Matching product identity not established; no lowest-price comparison'
+            : 'Only one verified buying channel observed; no lowest-price comparison';
+      return '<div class="sp-r sp-regional-row"' + (canCompare ? ' data-sp-compared="yes"' : '') + '><span class="sp-n">' + esc(label)
         + '</span><span class="sp-regional-value"><b>' + esc(status) + '</b><small>'
         + esc(observedText + '. Not a live checkout quote.') + '</small></span></div>';
     }).join('');
@@ -213,8 +212,7 @@
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
       + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
-      + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed option is named only when multiple identical-product channels use the same currency. Estimates and recorded-only prices never win; no result is a live checkout quote.</p>'
-      + '<label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
+      + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed cash price is named only when two or more channels share an explicit verified product SKU and currency. Estimated, recorded-only and ambiguous boxes cannot win; no result is a live checkout quote.</p>'
       + '<div data-sp-cheapest>' + comparableOffers + '</div></details>' : '') + '</details>';
   }
   function go() {
@@ -278,11 +276,7 @@
         fallback.textContent = bad.getAttribute('data-sp-fallback') || '·';
         bad.replaceWith(fallback);
       }, true);
-      var inp = el.querySelector('[data-sp-coins]');
-      if (inp) inp.addEventListener('input', function () {
-        var n = Math.max(0, parseInt(inp.value, 10) || 0); lsSet(COINS_KEY, String(n));
-        el.querySelector('[data-sp-cheapest]').innerHTML = cheapestHtml(d.regional, n);
-      });
+
     }).catch(function () { });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
