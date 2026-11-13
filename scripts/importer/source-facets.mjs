@@ -82,8 +82,16 @@ function parseMoves(sec,url){
     if(/\bevolve\b/i.test(local))acquisition.push('evolve');
     if(/\bcatch\b|\bcaught\b/i.test(local))acquisition.push('catch');
     if(/\braids?\b/i.test(local)&&/\b(?:caught|catch|obtain|available)\b/i.test(local))acquisition.push('raid');
+    // A move can have different acquisition windows for separate sessions.
+    // Read only the specific Pokémon's prose, never the enclosing Moves
+    // introduction or a different Pokémon's hours.
+    const windowText=entryWindow(body);
+    const day=windowText?dayScope(windowText):null;
+    const explicitDay=windowText?(/\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b/i.exec(windowText)?.[0]||null):null;
+    const sessionLabel=explicitDay?explicitDay[0].toUpperCase()+explicitDay.slice(1).toLowerCase():null;
     output.push({id:slug(pokemon)+'--'+slug(move)+'--'+kind.toLowerCase(),pokemonLabel:pokemon,move:moveName(move),
       moveKind:kind.toLowerCase(),access,acquisitionMethods:acquisition.length?[...new Set(acquisition)]:['unknown'],
+      dayScope:day,windowText,sessionLabel,
       source:sourceRef(url,section)});
   };
   for(const s of sub){
