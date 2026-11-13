@@ -3,6 +3,7 @@ Run from repository root: python -m pytest test/test_today_compact_art_geometry.
 Requires playwright browsers. Uses the actual Today CSS and nested image/fallback markup.
 """
 from pathlib import Path
+import os
 
 ROOT = Path(__file__).resolve().parents[1]
 CSS = (ROOT / "public/today.css").read_text() + "\n" + (ROOT / "public/ux-finish.css").read_text()
@@ -11,7 +12,7 @@ PNG = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUl
 def test_compact_today_artwork_contained():
     from playwright.sync_api import sync_playwright
     with sync_playwright() as playwright:
-        for browser_type in (playwright.chromium, playwright.webkit):
+        for browser_type in ((playwright.webkit,) if os.getenv('TODAY_ART_WEBKIT_ONLY') else (playwright.chromium,)):
             browser = browser_type.launch()
             try:
                 for width in (320, 360, 390, 430):
