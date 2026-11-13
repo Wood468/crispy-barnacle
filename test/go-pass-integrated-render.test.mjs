@@ -124,7 +124,7 @@ test('load order, offline references and post-render mount form a complete PWA i
   '/go-pass-navigation.css?v=20261118g',
   '/go-pass-navigation.js?v=20261118f',
   '/go-pass-reward-art.js?v=20261118d',
-  '/event-components.js?v=20261118f',
+  '/event-components.js?v=20261118g',
   '/dash.js?v=20261118c'
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
@@ -203,4 +203,56 @@ test('conflicting explicit GO Pass quantities remain separate pending source rec
  assert.match(rank,/<div class="ue-lane ue-lane-unspecified">/);
  assert.equal((rank.match(/<b>Incense<\/b>|<b>Incense ×2<\/b>/g)||[]).length,2,
    'conflicting quantities are not silently merged into a single entitlement');
+}));
+
+test('fallback without optional item-art mapper never borrows remote or premium pass artwork', () => {
+ const previous = globalThis.GOGoPassRewardArt;
+ try {
+  delete globalThis.GOGoPassRewardArt;
+  const html = UI.render(model([{rank:1,free:[
+   {type:'item',name:'Remote Raid Pass'},
+   {type:'item',name:'Premium Battle Pass'},
+   {type:'item',name:'Raid Pass'},
+   {type:'encounter',name:'Dynamax Meltan'},
+   {type:'item',name:'Golden Razz Bonus'}
+  ]}]),{});
+  const row=html.match(/<li class="ue-pass-rank" data-rank="1">([\s\S]*?)<\/li>/);
+  assert.ok(row,'actual GO Pass reward row renders');
+  assert.equal((row[1].match(/src="\/ico\/g\/raidpass\.webp"/g)||[]).length,1,
+    'only the ordinary Raid Pass uses its exact verified image');
+  const tiles=row[1].match(/<div class="ue-pass-reward"[\s\S]*?<\/div>/g)||[];
+  function tile(name){return tiles.find(t=>t.includes('<b>'+name+'</b>'));}
+  for(const name of ['Remote Raid Pass','Premium Battle Pass']){
+    assert.ok(tile(name),name+' displayed');
+    assert.doesNotMatch(tile(name),/\/ico\/g\/raidpass\.webp/,
+      name+' must not masquerade as an ordinary Raid Pass');
+  }
+  assert.match(tile('Raid Pass'),/\/ico\/g\/raidpass\.webp/);
+  assert.match(row[1],/ue-reward-icon">PKM<\/span>/,
+    'encounters with no sourced asset should show an honest category indicator, not a broken-image question mark');
+  assert.doesNotMatch(row[1],/\/ico\/i\/golden-razz\.webp/,
+    'a Golden Razz Bonus is not proof of a Golden Razz Berry reward');
+ } finally {
+  if(previous === undefined) delete globalThis.GOGoPassRewardArt;
+  else globalThis.GOGoPassRewardArt = previous;
+ }
+});
+
+test('agreeing inline and structured reward quantities display once with exact semantic artwork', () => withSemantic(() => {
+ const html=UI.render(model([{rank:8,
+  free:[{name:'Raid Pass x2',quantity:2,type:'item'},{name:'Poké Ball ×3',quantity:3,type:'item'}],
+  rewards:[{name:'Raid Pass',quantity:2,type:'item'},{name:'Poké Ball',quantity:3,type:'item'},
+   {name:'Poké Ball',quantity:4,type:'item'}]
+ }]),{});
+ const row=html.match(/<li class="ue-pass-rank" data-rank="8">([\s\S]*?)<\/li>/)[1];
+ assert.equal((row.match(/<b>Raid Pass<\/b>/g)||[]).length,1);
+ assert.equal((row.match(/<b>Poké Ball<\/b>/g)||[]).length,2,
+  'an agreed inline ×3 is the same reward; a genuinely distinct ×4 remains');
+ assert.doesNotMatch(row,/<b>(?:Raid Pass x2|Poké Ball ×3)<\/b>/,
+  'quantities in the name are displayed once instead of repeated');
+ assert.match(row,/src="\/ico\/g\/raidpass\.webp"/,
+  'the exact item resolver can recognise a named reward after normalisation');
+ assert.match(row,/×2 · Item/);
+ assert.match(row,/×3 · Item/);
+ assert.match(row,/×4 · Item/);
 }));

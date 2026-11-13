@@ -1,11 +1,11 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v324';
+const SHELL_CACHE = 'gofn-shell-v325';
 const EVENT_BANNER_CACHE = 'gofn-event-banners-v1';
 const MAX_EVENT_BANNERS = 40;
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   /* Versioned code and styles are listed once, exactly as index.html, app.js and dash.js request them. Any other ?v= (or unversioned) request is answered offline by the ignoreSearch fallback below. */
-  '/timezone.js?v=20261108b', '/event-catalogue.js?v=20261107b', '/event-clock.js?v=20261108b', '/event-contract.js?v=20261107b', '/event-view.js?v=20261116a', '/event-adapter.js?v=20261117b', '/go-pass-reward-art.js?v=20261118d', '/event-components.js?v=20261118f', '/go-pass-navigation.js?v=20261118f', '/event-encounter-rotations.js?v=20261111d', '/event-registry.js?v=20261115a', '/event-identity.js?v=20261107a', '/event-policy.js?v=20261107a', '/events-v1.json',
+  '/timezone.js?v=20261108b', '/event-catalogue.js?v=20261107b', '/event-clock.js?v=20261108b', '/event-contract.js?v=20261107b', '/event-view.js?v=20261116a', '/event-adapter.js?v=20261117b', '/go-pass-reward-art.js?v=20261118d', '/event-components.js?v=20261118g', '/go-pass-navigation.js?v=20261118f', '/event-encounter-rotations.js?v=20261111d', '/event-registry.js?v=20261115a', '/event-identity.js?v=20261107a', '/event-policy.js?v=20261107a', '/events-v1.json',
   '/styles.css?v=20261112a', '/dash.css?v=20261113c', '/event-redesign.css?v=20261117k', '/go-pass-navigation.css?v=20261118g', '/event-encounter-rotations.css?v=20261111c', '/today.css?v=20261115a', '/ux-finish.css?v=20261116d', '/today.js?v=20261117b', '/today-logic.js?v=20261118a', '/event-art.js?v=20261116b', '/variant-art.js?v=20261111b', '/lib.js?v=20261116a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261118d-w658', '/raid-share.js?v=20261102b', '/dash.js?v=20261118c-w658', '/detail.js?v=20261118b', '/fresh.js?v=20261114a', '/places.js?v=20261103b', '/review.js?v=20261104b', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/regional-prices.js?v=20261113e', '/store-fx.js?v=20261113c', '/store.js?v=20261113e', '/season.js?v=20261107c', '/research.js?v=20261114b', '/weekly.js?v=20261115b', '/buy.js?v=20261103a', '/extra.js?v=20261102c', '/infographic.js?v=20261103b', '/pwa.js',
   '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
