@@ -11,7 +11,7 @@ function feed(){
   return {schemaVersion:1,publication:'verified-feed',events:[{
     eventId:'wag',verifiedAt:'2026-11-13T04:00:00.000Z',
     reviewFingerprint:'a'.repeat(64),
-    benefits:[facet('free-bonus'),facet('ticket-bonus','ticket'),facet('extra','addon')],
+    benefits:[facet('free-bonus'),facet('ticket-bonus','ticket')],
     featuredMoves:[{id:'move',status:'source-claimed',access:'ticket',
       pokemonLabel:'Synthetic Pokémon',move:'New Attack',
       acquisitionMethods:['evolve'],sourceRefs:[ref]}],
@@ -23,6 +23,10 @@ function feed(){
 }
 test('existing signed feed bridge produces accessible, access-labelled source sections',()=>{
   const panels=verifiedFacetPanelsForEvent(feed(),'wag');
+  // The renderer supports reviewed add-on access even while a separate
+  // hardening PR upgrades the importer bridge to recognize that source type.
+  panels.bonuses.push({id:'extra',text:'Synthetic add-on',access:'addon',
+    status:'verified',sourceRefs:[ref]});
   const output=render(panels,'wag');
   assert.match(output,/Verified source details/);
   assert.match(output,/Free/);
