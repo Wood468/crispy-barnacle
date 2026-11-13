@@ -50,6 +50,27 @@ test('successful AUD-base provider response saves only sourced IDR/INR reference
     assert.ok(!JSON.stringify(saved).includes('ownerSecret'));
   });
 });
+test('online AUD references revalidate expired browser FX instead of pinning a stale HTTP response', async () => {
+  const storage=fakeStore();
+  storage.setItem(FX.CACHE_KEY,JSON.stringify(snapshot('2026-10-31T00:00:00Z')));
+  await withStorage(storage,async () => {
+    let requested=0;
+    const quotes=await FX.retrieve(async (url,settings)=>{
+      requested++;
+      assert.equal(url,FX.ENDPOINT);
+      assert.equal(settings.mode,'cors');
+      assert.equal(settings.credentials,'omit','never send owner login or account data to the FX source');
+      assert.equal(settings.cache,'no-cache','an expired HTTP cache must be revalidated online');
+      return {ok:true,json:async()=>snapshot('2026-11-13T00:00:00Z')};
+    },null,NOW,100);
+    assert.equal(requested,1);
+    assert.equal(quotes.IDR.observed,'2026-11-13');
+    assert.equal(quotes.INR.observed,'2026-11-13');
+    assert.equal(FX.display({currency:'IDR',amount:16000},quotes).text,'≈ A$1.00');
+    assert.equal(FX.display({currency:'INR',amount:90},quotes).text,'≈ A$1.00');
+    assert.equal(JSON.parse(storage.getItem(FX.CACHE_KEY)).time_last_update_unix,unix('2026-11-13T00:00:00Z'));
+  });
+});
 test('offline or failed provider request reuses a still-fresh dated quote for both currencies', async () => {
   const store=fakeStore();store.setItem(FX.CACHE_KEY,JSON.stringify(snapshot('2026-11-12T00:00:00Z')));
   await withStorage(store,async () => {
