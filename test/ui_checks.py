@@ -3407,6 +3407,9 @@ with sync_playwright() as p:
         link_txt = opg.locator('#igreview .igr[data-id="discord:b9-solo"] a[href*="discord.com/channels"]').inner_text()
         check('review (owner only): the Discord post link stays, clearly labelled', link_txt == 'Open in Discord (owner only)', link_txt)
         check('review: Discard and Approve buttons say which picture they are for', opg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').get_attribute('aria-label') == 'Discard: Solo picture')
+        check('review: event approval and exact scheduled Pokémon selectors remain distinct',
+              opg.locator('#igreview .igr[data-id="discord:b9-solo"] select[aria-label="Choose another event"]').count() == 1 and
+              opg.locator('#igreview .igr[data-id="discord:b9-solo"] select[data-ig-boss-choice]').count() == 1)
         n_gets = len(gets)
         opg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').click(); opg.wait_for_selector('#igundo')
         check('Discard posts one rejected decision and the card leaves the list', posts == [{'id': 'discord:b9-solo', 'status': 'rejected', 'eventId': '', 'eventTitle': ''}] and opg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 0, posts)
@@ -3494,7 +3497,7 @@ with sync_playwright() as p:
         card_sel = '#igreview .igr[data-id="discord:b9-solo"]'
         gpg.locator(card_sel + ' [data-ig-no]').click(); gpg.wait_for_timeout(300)
         check('B11: a Discard still in flight is held at the server', len(gsrv['held']) == 1 and gsrv['posts'] == [])
-        sel_ev = gpg.locator(card_sel + ' select'); sel_ev.select_option(index=1)
+        sel_ev = gpg.locator(card_sel + ' select[aria-label="Choose another event"]'); sel_ev.select_option(index=1)
         gpg.locator(card_sel + ' [data-ig-pick]').click(); gpg.wait_for_timeout(400)
         check('B11: an Approve tapped on the same card meanwhile is NOT sent while the Discard is unfinished', len(gsrv['held']) == 1 and gsrv['posts'] == [], (len(gsrv['held']), gsrv['posts']))
         gsrv['hold'] = False; gsrv['held'].pop(0)(); gpg.wait_for_timeout(500)
@@ -3533,7 +3536,7 @@ with sync_playwright() as p:
         check('B13: with 500 rows and the picture missing, Discard is refused calmly (it was re-read, nothing written, card stays, no Undo)', gsrv['gets'] > g0 and gsrv['posts'] == [] and gpg.locator(SOLO).count() == 1 and gpg.locator('#igundo').count() == 0 and 'Not discarded' in gpg.inner_text('#igreview .igr-msg:not(.igr-cap)'), (gsrv['gets'], gsrv['posts']))
         dlg = []
         gpg.once('dialog', lambda d: (dlg.append(d.message), d.dismiss()))
-        gpg.locator(SOLO + ' select').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
+        gpg.locator(SOLO + ' select[aria-label="Choose another event"]').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
         check('B13: at the cap, Approve of a picture with no visible decision asks first, and a "no" writes nothing', len(dlg) == 1 and gsrv['posts'] == [] and gpg.locator(SOLO).count() == 1, (dlg, gsrv['posts']))
         gpg.once('dialog', lambda d: d.accept())
         gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached', timeout=5000)
@@ -3558,7 +3561,7 @@ with sync_playwright() as p:
         # (d) A POST that never answers: after about 15 s the calm error shows, the card stays, the queue is free, and the next action re-reads before writing.
         gpg, gsrv = b11_owner([])
         gsrv['hold'] = True
-        gpg.locator(SOLO + ' select').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
+        gpg.locator(SOLO + ' select[aria-label="Choose another event"]').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
         check('B13: the hung write is waiting at the server', len(gsrv['held']) == 1 and gsrv['posts'] == [])
         gpg.clock.fast_forward(16000); gpg.wait_for_function("((document.querySelector('#igreview .igr-msg:not(.igr-cap)')||{}).textContent||'').includes('too long')", timeout=5000)
         check('B13: a write that times out shows the calm error and keeps the card (nothing is assumed saved)', gpg.locator(SOLO).count() == 1 and gpg.locator('#iglinked').count() == 0, gpg.inner_text('#igreview'))
