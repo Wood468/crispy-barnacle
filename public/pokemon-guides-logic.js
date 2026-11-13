@@ -48,7 +48,7 @@
     var name = form ? String(form[2]) : (g.formId ? g.formId : '');
     var mode = g.battleMode;
     if (mode === 'mega') {
-      var part = /^Mega(?:\\s+(.+))?$/i.exec(name);
+      var part = /^Mega(?:\s+(.+))?$/i.exec(name);
       return 'Mega ' + base + (part && part[1] ? ' ' + part[1] : (name && !part ? ' (' + name + ')' : ''));
     }
     if (mode === 'primal') return 'Primal ' + base;
