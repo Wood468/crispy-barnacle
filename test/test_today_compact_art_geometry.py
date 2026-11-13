@@ -59,5 +59,55 @@ def test_compact_today_artwork_contained():
             finally:
                 browser.close()
 
+
+def test_real_today_renderer_geometry():
+    """Exercise GOTODAY.render, not hand-built cards, at every mobile breakpoint."""
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as playwright:
+        browser_type = playwright.webkit if os.getenv("TODAY_ART_WEBKIT_ONLY") else playwright.chromium
+        browser = browser_type.launch()
+        try:
+            for width in (320, 360, 390, 430):
+                page = browser.new_page(viewport={"width": width, "height": 800}, device_scale_factor=2)
+                page.set_content('<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#0c1119;color:white"><main id="tab-now" style="padding:12px"><div class="t1" id="today-root"></div></main></body></html>')
+                page.add_style_tag(content=CSS)
+                page.add_script_tag(content=(ROOT / "public" / "today-logic.js").read_text())
+                page.add_script_tag(content=(ROOT / "public" / "today.js").read_text())
+                result = page.evaluate("""(png) => {
+                  const now = Date.UTC(2026,10,14,10), hour = 3600000;
+                  const minor = {id:'fixture-compact',name:'GO Wild Area: Global — long compact artwork containment fixture',
+                    kind:'spot',start:now+hour,end:now+2*hour,region:'Global',
+                    featured:[{name:'Fixture Pokémon'}],tags:[]};
+                  const major = {id:'fixture-major',name:'Minior Showers: Leonids — major card fixture',
+                    kind:'event',start:now+hour,end:now+48*hour,region:'Global',
+                    featured:[{name:'Minior'}],tags:[]};
+                  const ctx = {now,live:[],soon:[minor,major],week:[],regLive:[],regSoon:[],regWeek:[],
+                    boosts:{live:[],upcoming:[]},seasons:[],done:[],hidden:[],ending:[],
+                    kindOf:()=>['Event','#27a4b0'],overseas:()=>false,dayLabel:()=> 'Saturday',
+                    fallbackArt:()=>'',monArt:()=>'<span class="art-fb" style="width:150px;height:150px"><img class="art" src="'+png+'" alt="Featured Pokémon"><span class="form-chip">Special form</span></span>'};
+                  document.getElementById('today-root').innerHTML = GOTODAY.render(ctx);
+                  const compact = document.querySelector('[data-id="fixture-compact"]');
+                  const majorCard = document.querySelector('[data-id="fixture-major"]');
+                  const slot = compact && compact.querySelector('.t1-minor-art');
+                  const menu = compact && compact.querySelector('.t1-more');
+                  const title = compact && compact.querySelector('.t1-title');
+                  const rect = e=>e.getBoundingClientRect();
+                  const overlap=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
+                  const a=slot&&rect(slot), c=compact&&rect(compact);
+                  return {compact:!!compact&&compact.classList.contains('t1-minor'),
+                    major:!!majorCard&&majorCard.classList.contains('t1-major'),
+                    slotWithinCard:!!a&&a.left>=c.left-1&&a.right<=c.right+1&&a.top>=c.top-1&&a.bottom<=c.bottom+1,
+                    slotContained:!!slot&&getComputedStyle(slot).overflow==='hidden',
+                    imageVisible:!!slot&&!!slot.querySelector('img')&&slot.querySelector('img').naturalWidth>0,
+                    separated:!!majorCard&&c.bottom<=rect(majorCard).top+1,
+                    titleClear:!!title&&!!menu&&!overlap(rect(title),rect(menu)),
+                    noOverflow:document.documentElement.scrollWidth<=innerWidth+1};
+                }""", PNG)
+                assert all(result.values()), (browser_type.name, width, result)
+                page.close()
+        finally:
+            browser.close()
+
 if __name__ == '__main__':
     test_compact_today_artwork_contained()
+    test_real_today_renderer_geometry()
