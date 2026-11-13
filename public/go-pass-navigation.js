@@ -56,10 +56,19 @@
         var name = textNode && String(textNode.textContent || '').trim();
         if (!name) return;
         var track = tile.closest('.ue-lane-deluxe') ? 'deluxe' : tile.closest('.ue-lane-free') ? 'free' : 'unknown';
-        var key = n + '|' + track + '|' + cleanName(name);
+        /* The rendered reward metadata is source-backed. Two identical names
+           in one rank/track can still be distinct rewards at ×3 and ×4. */
+        var meta = container.querySelector('small');
+        var quantityText = meta && String(meta.textContent || '').trim();
+        var quantityMatch = /^×([1-9][0-9]*)\s*·/.exec(quantityText || '');
+        var parsedQuantity = quantityMatch ? Number(quantityMatch[1]) : 1;
+        var quantity = Number.isSafeInteger(parsedQuantity) ? parsedQuantity : 1;
+        var key = n + '|' + track + '|' + cleanName(name) + '|' + quantity;
         if (seen.has(key)) return;
         seen.add(key);
-        entries.push({rank:n,name:name,track:track});
+        var entry = {rank:n,name:name,track:track};
+        if (quantity > 1) entry.quantity = quantity;
+        entries.push(entry);
       });
     });
     return entries.sort(function (a, b) { return a.rank-b.rank || a.name.localeCompare(b.name); });
@@ -174,10 +183,11 @@
           button.type = 'button';
           button.className = 'ue-pass-find-result';
           var lane = item.track === 'free' ? 'Free' : item.track === 'deluxe' ? 'Deluxe' : 'Track not specified';
-          button.textContent = 'Rank ' + item.rank + ' · ' + item.name + ' · ' + lane;
+          var quantityLabel = item.quantity > 1 ? ' · ×' + item.quantity : '';
+          button.textContent = 'Rank ' + item.rank + ' · ' + item.name + quantityLabel + ' · ' + lane;
           button.addEventListener('click', function () {
             openRank(item.rank, false);
-            finderStatus.textContent = 'Opened Rank ' + item.rank + ' · ' + item.name + ' (' + lane + ').';
+            finderStatus.textContent = 'Opened Rank ' + item.rank + ' · ' + item.name + quantityLabel + ' (' + lane + ').';
           });
           finderResults.appendChild(button);
         });
