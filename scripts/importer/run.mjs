@@ -5,7 +5,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { SOURCES, sourceFor } from "./sources.mjs";
 import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent, researchOptions } from "./extract.mjs";
-import { collectCanonicalSourceFacetAudit } from "./source-facets-canonical-audit.mjs";
+import { collectCanonicalSourceFacetAudit, worldSourceFacetCandidates } from "./source-facets-canonical-audit.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
 import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries, sharedArticleKey } from "./world.mjs";
@@ -326,7 +326,7 @@ async function main() {
   for(const page of pages)page.fields=extractFields(page.html,rewardOptions);
   // Staging only: count additional verified-source claims for importer QA.
   // Do not merge these preliminary facets into published event-details data.
-  const sourceFacetStaging = collectCanonicalSourceFacetAudit(pages,events).report;
+  // Exact source-facet auditing happens after generated world-event identities are resolved.
   const byEvent = new Map(), unmatched = [];
   for (const p of pages) {
     const hit = pickEvent(p, events);
@@ -373,6 +373,12 @@ async function main() {
   let nameFixes = {}; try { nameFixes = JSON.parse(await readFile("data/name-overrides.json", "utf8")).names || {}; } catch { /* none */ }
   world = world.map(w => ({ ...w, name: nameFixes[w.id] || ((w.sources || []).some(x => x.id === "official") && !(w.sources || []).some(x => x.auto) ? tidyName(w.name) : w.name) }));
   world = world.map(w => ({ ...w, seen: w.seen && !entries.some(e => e.name === w.name) ? w.seen : today })).sort((a, b) => String(a.start || "9").localeCompare(String(b.start || "9")));
+  // A source can belong to an independently discovered in-person world event
+  // not present in the curated/API feed. Join only its explicit LeekDuck URL
+  // and keep all ticket/move/research claims staging-only until publication QA.
+  const sourceFacetStaging = collectCanonicalSourceFacetAudit(
+    pages,events.concat(worldSourceFacetCandidates(world))
+  ).report;
   await writeFile(WORLD_OUT, JSON.stringify({ updated: new Date().toISOString(), events: world }, null, 1) + "\n");
   let old = {}; try { old = JSON.parse(await readFile(OUT, "utf8")).events || {}; } catch { /* first run */ }
   const now = new Date().toISOString(), out = {};
