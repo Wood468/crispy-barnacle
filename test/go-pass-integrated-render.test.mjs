@@ -220,8 +220,14 @@ test('fallback without optional item-art mapper never borrows remote or premium 
   assert.ok(row,'actual GO Pass reward row renders');
   assert.equal((row[1].match(/src="\/ico\/g\/raidpass\.webp"/g)||[]).length,1,
     'only the ordinary Raid Pass uses its exact verified image');
-  assert.doesNotMatch(row[1],/<b>Remote Raid Pass<\/b>[\s\S]*?<img src="\/ico\/g\/raidpass\.webp"/,
-    'remote pass must not masquerade as an ordinary Raid Pass');
+  const tiles=row[1].match(/<div class="ue-pass-reward"[\s\S]*?<\/div>/g)||[];
+  function tile(name){return tiles.find(t=>t.includes('<b>'+name+'</b>'));}
+  for(const name of ['Remote Raid Pass','Premium Battle Pass']){
+    assert.ok(tile(name),name+' displayed');
+    assert.doesNotMatch(tile(name),/\/ico\/g\/raidpass\.webp/,
+      name+' must not masquerade as an ordinary Raid Pass');
+  }
+  assert.match(tile('Raid Pass'),/\/ico\/g\/raidpass\.webp/);
   assert.match(row[1],/ue-reward-icon">PKM<\/span>/,
     'encounters with no sourced asset should show an honest category indicator, not a broken-image question mark');
   assert.doesNotMatch(row[1],/\/ico\/i\/golden-razz\.webp/,
