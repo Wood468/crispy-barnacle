@@ -13,7 +13,22 @@
     box.remove(); document.removeEventListener('keydown', onKey);
     if (opener && opener.focus) opener.focus();
   }
-  function onKey(e) { if (e.key === 'Escape') close(); }
+  function onKey(e) {
+    if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+    if (e.key !== 'Tab') return;
+    var box = document.getElementById('weekly-box');
+    if (!box) return;
+    var focusable = Array.prototype.filter.call(box.querySelectorAll('a[href], button:not([disabled])'), function (el) {
+      return el.getClientRects().length > 0;
+    });
+    if (!focusable.length) { e.preventDefault(); box.focus(); return; }
+    var first = focusable[0], last = focusable[focusable.length - 1], active = document.activeElement;
+    if (e.shiftKey && (active === first || !box.contains(active))) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && (active === last || !box.contains(active))) {
+      e.preventDefault(); first.focus();
+    }
+  }
   function open(list, from) {
     var it = list[0]; opener = from; close();
     var box = document.createElement('div');
