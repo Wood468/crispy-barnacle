@@ -76,7 +76,7 @@ with sync_playwright() as p:
             const cells = [...document.querySelector(selector).querySelectorAll('.sp-market')];
             return cells.length === 3 && cells.slice(1).every(cell =>
                 cell.querySelector('.sp-aud-equivalent')?.textContent.includes('≈ A$'));
-        }""", target)
+        }""", arg=target)
         metrics = page.evaluate("""selector => {
             const card = document.querySelector(selector);
             if (!card || !card.getClientRects().length) throw new Error("Synthetic Store card is not visible");
