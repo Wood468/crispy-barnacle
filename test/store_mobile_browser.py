@@ -4,6 +4,7 @@ Run against the real static application served on localhost:8791. No owner API
 response, credentials or actual regional price data enter CI artifacts.
 """
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -31,6 +32,20 @@ FIXTURE = {
          "source": "synthetic-test-only", "status": "recorded"}
     ],
 }
+# Fixed product identities but a fresh synthetic observation timestamp so
+# future releases keep testing the same transition without relying on November
+# 2026 continuing to be on sale.
+SEEN = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+SOURCE_IMAGE = ("https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/"
+                "v1/sku_assets/bundle3.sprite.a-da6f21e79d79/w256.webp")
+def listing(name, retired=False):
+    return {"name": name, "image": SOURCE_IMAGE, "lastSeen": SEEN,
+            "endsAt": None, "goneAt": SEEN if retired else None}
+SOURCE_FIXTURE = {
+    "version": 1, "updated": SEEN,
+    "items": [listing("Synthetic Test Ticket"), listing("GO Pass Deluxe: November")],
+    "gone": [listing("GO Pass Deluxe: October", retired=True)]
+}
 with sync_playwright() as p:
     browser = p.chromium.launch()
     for width in (320, 390, 430):
@@ -38,6 +53,9 @@ with sync_playwright() as p:
                                       service_workers="block", locale="en-AU")
         page = context.new_page()
         page.route("**/api/**", lambda route: route.fulfill(status=404, body="{}"))
+        page.route("**/store-current-snapshot.json",
+                   lambda route: route.fulfill(status=200, content_type="application/json",
+                                               body=json.dumps(SOURCE_FIXTURE)))
         page.goto(BASE, wait_until="domcontentloaded")
         # The regional Store is rendered inside the Events timeline panel.
         # Activate that real app surface before checking visibility or layout.
