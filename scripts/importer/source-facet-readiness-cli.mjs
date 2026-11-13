@@ -29,7 +29,8 @@ try{
   const result={
     schemaVersion:1,publication:'audit-only',
     reviewStatus:report.sourceLinkReviewRequired?'HOLD':'SOURCE_IDENTITY_CHECK_PASSED',
-    importerRunAt:typeof input.runAt==='string'?input.runAt:null,
+    importerRunAt:typeof input.runAt==='string'&&Number.isFinite(Date.parse(input.runAt))&&
+      new Date(input.runAt).toISOString()===input.runAt?input.runAt:null,
     coverage:report.coverage,
     blockers:report.reviewBlockers,
     requiresIndependentClaimReview:true,
