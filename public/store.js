@@ -104,7 +104,7 @@
   /* Exact observed local prices are preserved, and estimates retain ranges. */
   function priceCell(p, quotes) {
     var R = window.GORegionalPrices;
-    if (!p) return '<span class="sp-regional-value sp-none" title="No sourced price observed for this region and channel">Not observed</span>';
+    if (!p) return '<span class="sp-regional-value sp-none" title="No sourced price observed for this region and channel">—<span class="sr-only">Not observed</span></span>';
     if (p.basis === 'estimate') {
       return '<span class="sp-regional-value sp-est">' + audPlaceholder(p, quotes)
         + '<b class="sp-local-price">Estimate ' + esc(R.fmt(p.min, p.currency) + '–' + R.fmt(p.max, p.currency)) + '</b>'
@@ -112,8 +112,8 @@
         + '<small class="sp-basis">' + esc('Based on ' + p.basisText + ' · ' + chan(p)) + '</small></span>';
     }
     var state = p.basis === 'verified' ? 'Verified' : 'Recorded · not re-checked';
-    var source = state + ' · ' + chan(p) + ' · ' + when(p.observed);
-    return '<span class="sp-regional-value sp-ver" aria-label="' + esc(R.fmt(p.amount, p.currency) + '. ' + source) + '">'
+    /* Preserve AUD-first child text for VoiceOver; do not mask it with a local-only parent label. */
+    return '<span class="sp-regional-value sp-ver">' 
       + audPlaceholder(p, quotes)
       + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>'
       + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
@@ -264,7 +264,7 @@
     function productCard(p) {
       var au = p.aud > 0
         ? '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.aud, 'AUD')) + '</b><small>Verified · ' + esc(when(p.observed)) + '</small></span>'
-        : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">Not observed</span>';
+        : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">—<span class="sr-only">Not observed</span></span>';
       var search = storeSearchKey(p.label + ' ' + p.product + ' ' + p.group + ' ' + priority(p));
       var identityNote = p.unpricedOfficial
         ? '<small class="sp-source-id-note">Official published product · no matched AU / ID / IN checkout observation · regional availability not verified</small>'
@@ -278,9 +278,9 @@
         + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span>'
         + identityNote + '</header>'
         + '<div class="sp-market-grid">'
-        + '<div class="sp-market sp-market-au"><span class="sp-market-label">Australia <small>Web</small></span>' + au + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label">India <small>in-app</small></span>' + priceCell(p.india, data.audQuotes) + '</div>'
+        + '<div class="sp-market sp-market-au"><span class="sp-market-label"><span aria-hidden="true">🇦🇺</span> Australia <small>Web</small></span>' + au + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label"><span aria-hidden="true">🇮🇩</span> Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label"><span aria-hidden="true">🇮🇳</span> India <small>in-app</small></span>' + priceCell(p.india, data.audQuotes) + '</div>'
         + '</div>' + offerContents(p) + '</article>';
     }
     var catalogue = sections.filter(function (s) { return bySection[s.id].length; }).map(function (s) {
