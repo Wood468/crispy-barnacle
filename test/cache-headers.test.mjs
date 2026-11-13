@@ -125,5 +125,5 @@ test("static HTML receives narrow security headers without changing asset cache 
 test("malformed header patterns and orphan header lines fail closed", () => {
   assert.throws(() => parseRules("X-Frame-Options: DENY"), /unexpected header pattern/);
   assert.throws(() => parseRules("  X-Frame-Options: DENY"), /header value must follow a pattern/);
-  assert.throws(() => parseRules("/\\n  X-Frame-Options: DENY\\n/\\n  X-Frame-Options: DENY"), /duplicate header pattern/);
+  assert.throws(() => parseRules("/\n  X-Frame-Options: DENY\\n/\n  X-Frame-Options: DENY"), /duplicate header pattern/);
 });
