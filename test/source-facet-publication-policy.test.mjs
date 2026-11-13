@@ -140,7 +140,7 @@ test('research evidence cannot impersonate a different publisher or source recor
 });
 
 test('reported counts are deterministic and none of the held source claims leak into report',()=>{
-  const claims=[record('z','ticket'),record('a','free',[proof('official',official)])];
+  const claims=[record('z','ticket'),record('a','free',[proof('official',official)],{label:'3× catch Candy'})];
   const a=assess(staged({benefits:claims}));
   const b=assess(staged({benefits:claims.slice().reverse()}));
   assert.deepEqual(a,b);
