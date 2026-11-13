@@ -209,3 +209,58 @@ test('reward finder ignores milestone-only artwork and unlisted rank placeholder
   assert.match(status.textContent,/No published reward entry/);
   assert.equal(f.article.querySelectorAll('.ue-pass-rank[data-rank]').length,5,'fixture includes a deliberately unlisted row');
 });
+
+
+test('reward finder preserves distinct source quantities within the same published rank and track', () => {
+  const f=fixture(),doc=f.article.ownerDocument;
+  const lane=f.rows[45].querySelector('.ue-lane-free');
+  function addReward(quantity) {
+    const tile=doc.createElement('div');tile.className='ue-pass-reward';
+    const label=doc.createElement('span');label.className='ue-pass-name';
+    const name=doc.createElement('b');name.textContent='Rare Candy XL';
+    const meta=doc.createElement('small');meta.textContent='×'+quantity+' · Item';
+    label.append(name,meta);tile.appendChild(label);lane.appendChild(tile);
+  }
+  addReward(3);
+  addReward(4);
+  addReward(3); // Repeated equivalent listing should not create a duplicate.
+  const indexed=N.indexRewardEntries([f.rows[45]]);
+  const found=N.findRewards(indexed,'rare candy',8);
+  assert.deepEqual(found.entries,[
+    {rank:45,name:'Rare Candy XL',track:'free',quantity:3},
+    {rank:45,name:'Rare Candy XL',track:'free',quantity:4}
+  ],'one source-backed result per actual name, track, rank and quantity');
+  assert.equal(found.total,2);
+  assert.equal(N.mount(f.root),1);
+  const finder=f.article.querySelector('.ue-pass-finder');
+  const input=finder.querySelector('input'),results=finder.querySelector('.ue-pass-find-results');
+  input.value='rare candy';input.dispatch('input');
+  assert.equal(results.children.length,2);
+  assert.equal(results.children[0].textContent,'Rank 45 · Rare Candy XL · ×3 · Free');
+  assert.equal(results.children[1].textContent,'Rank 45 · Rare Candy XL · ×4 · Free');
+  results.children[1].dispatch('click');
+  assert.equal(f.groups[26].details.open,true);
+  assert.equal(f.rows[45].focused,true);
+  assert.match(finder.querySelector('.ue-pass-find-status').textContent,/Rare Candy XL · ×4/);
+});
+
+test('quantity discovery ignores unrelated text and unsafe numeric metadata', () => {
+  const f=fixture(),doc=f.article.ownerDocument,row=f.rows[45];
+  const lane=row.querySelector('.ue-lane-free');
+  for (const [name,meta] of [
+    ['Elite Fast TM','Level 4 · Item'],
+    ['Remote Raid Pass','×9007199254740992 · Item']
+  ]) {
+    const tile=doc.createElement('div');tile.className='ue-pass-reward';
+    const label=doc.createElement('span');label.className='ue-pass-name';
+    const title=doc.createElement('b');title.textContent=name;
+    const small=doc.createElement('small');small.textContent=meta;
+    label.append(title,small);tile.appendChild(label);lane.appendChild(tile);
+  }
+  const indexed=N.indexRewardEntries([row]);
+  const tm=indexed.find(item=>item.name==='Elite Fast TM');
+  const remote=indexed.find(item=>item.name==='Remote Raid Pass');
+  assert.ok(tm&&remote);
+  assert.equal(Object.hasOwn(tm,'quantity'),false);
+  assert.equal(Object.hasOwn(remote,'quantity'),false);
+});
