@@ -178,8 +178,11 @@ test('catalogue includes every source-verified Australian Web Store offer regard
     assert.equal(matches.length, 1, sku + ' must appear once, even when the AU price was observed twice');
     assert.ok(matches[0].aud > 0);
     assert.equal(matches[0].group, 'Passes & tickets');
-    assert.equal(matches[0].sourceIdOnly, true, 'unnamed source SKU must remain visibly unattributed');
-    assert.equal(matches[0].indonesia, null, 'an event-specific pass must never borrow a different pass price');
+    assert.equal(matches[0].sourceIdOnly, false, 'officially named pass retains its product identity');
+    assert.ok(Array.isArray(matches[0].contents) && matches[0].contents.length >= 3,
+      'officially named pass includes independently sourced offer contents');
+    assert.match(matches[0].contentsSource, /^https:\/\/(?:pokemongo\.com|store\.pokemongo\.com)\//);
+    assert.equal(matches[0].indonesia, null, 'a historical pass must never borrow an unrelated regional price estimate');
   }
   assert.equal(rows.some(row => /^safari-brisbane/.test(row.product)), false,
     'GO Hub City Safari tickets are not items sold in the official Web Store');
@@ -352,4 +355,42 @@ test('owner catalogue coverage keeps missing and unverified regional prices dist
   assert.deepEqual(result.reviewDue,['Australia · store-legacy']);
   assert.equal(R.coverage(rows,Date.parse('2026-11-13T00:00:00Z'),60).reviewDue.length,0);
   assert.equal(R.coverage([],0).total,0);
+});
+
+test('official descriptions preserve exact historic pass variants and original AUD observations', () => {
+  const records = require('../public/prices.json').prices;
+  const expected = {
+    'go-pass-oct-deluxe': ['GO Pass Deluxe: October',12.99,0,1],
+    'go-pass-oct-deluxe-10': ['GO Pass Deluxe: October + 10 Ranks',14.99,10,2],
+    'go-pass-oct-ultrabox': ['GO Pass Deluxe: October Ultra Box',22.99,10,5],
+    'go-pass-fall-deluxe': ['GO Pass Deluxe: Fall Marathon',7.99,0,1],
+    'go-pass-fall-deluxe-6': ['GO Pass Deluxe: Fall Marathon + 6 Ranks',10.99,6,2],
+    'go-pass-fall-ultrabox': ['GO Pass Deluxe: Fall Marathon + 6 Ranks Ultra Box',13.99,6,5],
+    'wild-area-2026-global-ultra-box': ['Pokémon GO Wild Area 2026: Global Ultra Ticket Box',17.99,0,3]
+  };
+  for (const [id,[name,aud,ranks,passes]] of Object.entries(expected)) {
+    const observed=records.filter(p=>p.product===id && p.region==='AU' && p.currency==='AUD');
+    assert.ok(observed.length>0,id+' remains in official AU history');
+    for (const p of observed) {
+      assert.equal(p.amount,aud,'original Australian observation must not be changed');
+      assert.equal(p.label,name);
+      assert.equal(p.disableRegionalEstimates,true);
+      assert.match(p.contentsSource,/^https:\/\/(?:pokemongo\.com|store\.pokemongo\.com)\//);
+      assert.ok(Array.isArray(p.contents));
+      assert.equal(p.contents.find(i=>i.item==='Bonus Ranks')?.quantity||0,ranks);
+      assert.equal(p.contents.find(i=>i.item==='Premium Battle Pass')?.quantity,passes);
+      assert.ok(p.contents.every(i=>Number.isSafeInteger(i.quantity)&&i.quantity>0));
+    }
+  }
+  const fall=records.find(p=>p.product==='go-pass-fall-ultrabox'&&p.region==='AU');
+  assert.equal(fall.contents.find(i=>i.item==='Egg Incubator').quantity,1);
+  assert.equal(fall.contents.find(i=>i.item==='Super Incubator').quantity,1);
+  const ticket=records.find(p=>p.product==='wild-area-2026-global-ultra-box'&&p.region==='AU');
+  assert.equal(ticket.contents.find(i=>i.item==='Max Particles').quantity,800);
+  assert.equal(ticket.contents.find(i=>i.item==='Pokémon GO Wild Area 2026: Global Ticket').quantity,1);
+  const rows=R.catalogue(records,OBS,NOW);
+  assert.equal(rows.filter(r=>Object.hasOwn(expected,r.product)).length,7,
+    'seven named historic AU offers appear once each even where price history has multiple dates');
+  for (const row of rows.filter(r=>Object.hasOwn(expected,r.product)))
+    assert.equal(row.indonesia,null,'named historical item must not invent any Indonesian checkout estimate');
 });
