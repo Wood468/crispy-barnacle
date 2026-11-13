@@ -130,5 +130,15 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.equal(fallback?.className, 'sp-i-token');
   assert.equal(fallback?.textContent, 'PASS', 'a missing exact image becomes an honest type token');
 
+  const storeSource = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
+  const exactIcons = [...new Set([...storeSource.matchAll(/'(\/ico\/[A-Za-z0-9/_-]+\.webp)'/g)].map(match => match[1]))];
+  assert.ok(exactIcons.length >= 8, 'Store exact-art mapping should cover the verified asset catalogue');
+  for (const iconPath of exactIcons) {
+    const file = new URL('../public' + iconPath, import.meta.url);
+    assert.ok(fs.existsSync(file), 'no exact Store icon may point at an absent asset: ' + iconPath);
+    assert.ok(fs.statSync(file).size > 0, 'verified Store icon cannot be a zero-byte asset: ' + iconPath);
+  }
+
+
 
 });
