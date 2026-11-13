@@ -2796,7 +2796,24 @@ with sync_playwright() as p:
         # Cumulative layout shift of a cold Today load, summed over every shift (user input is not excluded: there is none). Measured un-throttled on purpose: the big
         # shifts (the footer jumping a screen when the agenda arrives, the freshness line and deadlines row growing, the date and tab bar filling in) happen at any speed, so
         # this is deterministic in CI. Batch 4 measured 0.62 (390px) and 1.09 (1280px) before the fix; Google's "good" threshold is 0.1. Throttled 20-run numbers are in docs/ROADMAP.md.
-        CLS_OBSERVER = """window.__cls=0;window.__clsShifts=[];new PerformanceObserver(l=>{
+        CLS_OBSERVER = """window.__cls=0;window.__clsShifts=[];
+        const watched=['#today-v1','#today-legacy','#today-top','#day-brief','.today-layout'];
+        const geometry=()=>Object.fromEntries(watched.map(sel=>{
+            const el=document.querySelector(sel),r=el?.getBoundingClientRect(),cs=el?getComputedStyle(el):null;
+            return [sel,el?{y:Math.round(r.y),height:Math.round(r.height),display:cs.display,hidden:el.hidden}:null];
+        }));
+        window.__clsGeometry=[];
+        const capture=(reason)=>{if(window.__clsGeometry.length<100)window.__clsGeometry.push({at:Math.round(performance.now()),reason,geometry:geometry()});};
+        document.addEventListener('DOMContentLoaded',()=>{
+            capture('dom-ready');
+            const targets=watched.map(sel=>document.querySelector(sel)).filter(Boolean);
+            const mo=new MutationObserver(()=>capture('mutation'));
+            targets.forEach(el=>mo.observe(el,{attributes:true,attributeFilter:['hidden','class','style','data-render-key','data-ready']}));
+            const ro=new ResizeObserver(()=>capture('resize'));
+            targets.forEach(el=>ro.observe(el));
+            requestAnimationFrame(()=>capture('first-frame'));
+        },{once:true});
+        new PerformanceObserver(l=>{
             for(const e of l.getEntries()){
                 window.__cls+=e.value;
                 if(window.__clsShifts.length>=30)continue;
@@ -2820,6 +2837,8 @@ with sync_playwright() as p:
                 cpg.wait_for_timeout(1500)
                 cls_val = cpg.evaluate("window.__cls")
                 shifts = cpg.evaluate("window.__clsShifts.slice().sort((a,b)=>b.value-a.value).slice(0,12)")
+                geometry = cpg.evaluate("window.__clsGeometry")
+                print('CLS_GEOMETRY %dpx #%d %s' % (cls_w, cls_sample, json.dumps(geometry, separators=(',', ':'))), flush=True)
                 print('CLS_SAMPLE %dpx #%d measured %.5f top_shifts %s' % (cls_w, cls_sample, cls_val, json.dumps(shifts, separators=(',', ':'))), flush=True)
                 check('Today cold load at %dpx sample %d has a cumulative layout shift under 0.1' % (cls_w, cls_sample), cls_val < 0.1, 'measured %.4f' % cls_val)
                 cpg.context.close()
