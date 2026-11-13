@@ -390,7 +390,7 @@ test('Store counters separate fresh listings from visible unconfirmed and archiv
     gone:[{name:'Previous Fixture Pass',lastSeen:'2026-10-12',goneAt:now}]};
   const data = {owner:true,prices,regional:[]};
   const root = {innerHTML:'',addEventListener(){},querySelector:()=>null};
-  const host = {parentNode:{insertBefore(){}}};
+  const host = {parentNode:{insertBefore(node){Object.assign(root,node);}}};
   const doc = {readyState:'complete',getElementById:id=>id==='evsource'?host:null,
     createElement:()=>root,addEventListener(){}};
   const win = {GORegionalPrices:R,fetch:async()=>({ok:true,json:async()=>snapshot}),
