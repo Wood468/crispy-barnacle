@@ -65,6 +65,10 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.ok(!el.innerHTML.includes('Indonesia vs Australia'),
     'old legacy IDR summary must not repeat the regional price observations');
   assert.ok(el.innerHTML.includes('Not observed'), 'missing source prices should not look like zero or a calibration failure');
+  assert.match(el.innerHTML, /Recently listed offers appear in the main list; stable items with historical prices may also appear clearly marked unconfirmed\./,
+    'Store copy must not imply that every stable historical item is currently listed');
+  assert.doesNotMatch(el.innerHTML, /Only offers seen in the recent official Web Store snapshot appear in the main list/,
+    'avoid falsely claiming the main list contains only live observed SKUs');
   assert.ok(el.innerHTML.includes('data-sp-search'), 'search appears ahead of the product cards');
   assert.ok(el.innerHTML.includes('data-sp-coverage'), 'owner can inspect source completeness without another pricing panel');
   assert.match(el.innerHTML,/Official listings awaiting regional prices: 3/,
