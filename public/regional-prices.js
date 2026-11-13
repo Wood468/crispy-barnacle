@@ -142,16 +142,36 @@
     });
     return { flags: flags, ok: !flags.some(function (f) { return f.level === 'error' || f.level === 'stale'; }), checked: Object.keys(latest).length };
   }
-  /* Rows for the Store page: every AU catalogue item with the best Indonesian / Indian price known, verified or estimated. */
+  /* The Australian source records include some verified official Web Store
+     offers with historical IDs that predate the store-* importer. Their URLs
+     identify an official Web Store observation; a GO Hub event ticket is
+     NOT a Web Store product, even if its region and currency match. */
+  function sourcedAuWebOffer(p) {
+    if (!p || typeof p.product !== 'string' || !p.product.trim() ||
+        p.currency !== 'AUD' || p.region !== 'AU' || p.verified !== true ||
+        !(Number.isFinite(Number(p.amount)) && Number(p.amount) > 0)) return false;
+    if (/^store-/.test(p.product)) return true; // Existing verified Store catalogue.
+    try {
+      var url = new URL(p.url);
+      return url.protocol === 'https:' && url.hostname === 'store.pokemongo.com' &&
+        !url.username && !url.password && !url.port && url.pathname === '/' &&
+        !url.search && !url.hash;
+    } catch (_) { return false; }
+  }
+  /* Every verified AU Web Store SKU plus all regional-only observations;
+     do not misattribute off-site event tickets or guess missing product names. */
   function catalogue(prices, obs, now) {
     var latest = {}, all = {};
     (prices || []).forEach(function (p) {
-      if (!p || p.currency !== 'AUD' || p.region !== 'AU' || p.verified !== true || !(p.amount > 0) || !/^store-/.test(p.product)) return;
+      if (!sourcedAuWebOffer(p)) return;
       if (!latest[p.product] || String(p.observed) > String(latest[p.product].observed)) latest[p.product] = p;
     });
     Object.keys(latest).forEach(function (key) {
       var p = latest[key], label = p.label || key;
-      all[norm(label)] = { product: key, label: label, group: p.group || 'Other', aud: p.amount, observed: p.observed };
+      var group = p.group || (/^go-pass-|^wild-area-2026-global-ultra-box$/.test(key)
+        ? 'Passes & tickets' : 'Other');
+      all[norm(label)] = { product: key, label: label, group: group,
+        sourceIdOnly: !p.label, aud: p.amount, observed: p.observed };
     });
     (obs || []).forEach(function (o) {
       if (!usable(o) || !o.product) return;
@@ -160,7 +180,8 @@
     });
     return Object.keys(all).map(function (key) {
       var p = all[key], kind = kindOf(p.label);
-      return { product: p.product, label: p.label, group: p.group, kind: kind, aud: p.aud, observed: p.observed,
+      return { product: p.product, label: p.label, group: p.group, kind: kind,
+        sourceIdOnly: !!p.sourceIdOnly, aud: p.aud, observed: p.observed,
         india: reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now),
         indonesia: reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now) };
     });
