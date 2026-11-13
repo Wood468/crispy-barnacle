@@ -302,7 +302,7 @@
       + '<p class="sp-intro">' + (membership.stale
         ? 'Current official Store membership cannot be confirmed. Historical prices are kept below, not presented as live.'
         : 'Official Store products last observed ' + esc(checked) + '. Regional checkout prices are historical observations or clearly labelled estimates, never live quotes.')
-        + ' Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates.</p>'
+        + ' “Not observed” means no sourced price for that region. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates.</p>'
       + reviewPanel
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
