@@ -41,15 +41,25 @@ test('the real GO Pass rank renderer invokes species artwork for both Free and D
       + encodeURIComponent(item.name) + (item.name.startsWith('Dynamax ') ? '&dynamax=1' : '')
       + '" alt="">';
   }});
-  assert.equal(calls.filter(x => x.name === 'Dynamax Meltan').length, 3);
-  assert.match(html, /data-rank="45"/);
-  assert.match(html, /data-rank="100"/);
-  assert.equal((html.match(/src="\/api\/art\?n=Dynamax%20Meltan&dynamax=1"/g) || []).length, 3);
-  assert.match(html, /class="ue-lane ue-lane-free"/);
-  assert.match(html, /class="ue-lane ue-lane-deluxe"/);
-  assert.match(html, /data-cat="Pokémon"/);
-  assert.doesNotMatch(html, /ue-reward-icon">MAX<\/span>/, 'never replace a published species encounter with a MAX-only token');
-  assert.match(html, /Silver Bottle Cap/);
+  // The renderer also resolves rewards for the milestone carousel and
+  // published track legend; test visible rank rows, not callback counts.
+  assert.ok(calls.filter(x => x.name === 'Dynamax Meltan').length >= 3);
+  const rank45 = html.match(/<li class="ue-pass-rank" data-rank="45">([\s\S]*?)<\/li>/);
+  const rank100 = html.match(/<li class="ue-pass-rank" data-rank="100">([\s\S]*?)<\/li>/);
+  assert.ok(rank45 && rank100, 'both milestone ranks remain browsable');
+  const speciesUrl = /src="\/api\/art\?n=Dynamax%20Meltan&dynamax=1"/g;
+  assert.equal((rank45[1].match(speciesUrl) || []).length, 2,
+    'Rank 45 Free and Deluxe each render Meltan species art');
+  assert.equal((rank100[1].match(speciesUrl) || []).length, 1,
+    'Rank 100 Free shows Meltan while Deluxe contains Silver Bottle Cap');
+  for (const rank of [rank45[1], rank100[1]]) {
+    assert.match(rank, /class="ue-lane ue-lane-free"/);
+    assert.match(rank, /class="ue-lane ue-lane-deluxe"/);
+    assert.match(rank, /data-cat="Pokémon"/);
+    assert.doesNotMatch(rank, /ue-reward-icon">MAX<\/span>/,
+      'never replace a published species encounter with a MAX-only token');
+  }
+  assert.match(rank100[1], /Silver Bottle Cap/);
 });
 
 test('unknown species and malformed strings remain unchanged, and explicit reward types are never reinterpreted', () => {
