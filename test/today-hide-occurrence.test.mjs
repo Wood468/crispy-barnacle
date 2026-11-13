@@ -55,6 +55,10 @@ test('in-person Today rows expose the same occurrence actions as regular cards',
  const html=T.render(ctx);
  assert.equal((html.match(/data-t1-menu="venue:overseas"/g)||[]).length,2,
   'both current and upcoming regional cards expose the occurrence action menu');
+ assert.match(html,/data-id="venue:overseas" data-start="2026-11-13T10:00:00\.000Z"/,
+  'live in-person card carries its own exact start');
+ assert.match(html,/data-id="venue:overseas" data-start="2026-11-20T10:00:00\.000Z"/,
+  'next occurrence of the same regional ID is a distinct action target');
  assert.match(html,/International GO Event/);
  assert.doesNotMatch(html,/data-track|data-follow/);
 });
