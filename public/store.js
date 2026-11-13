@@ -46,8 +46,13 @@
     if (/\bpack\b/i.test(name)) return '▣';
     return '·';
   }
-  function icon(label) {
+  function icon(label, officialArt) {
     var token = kindToken(label);
+    // Only unique, exact-SKU images from the official current Store snapshot.
+    if (typeof officialArt === 'string' &&
+        /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()-]+\/w256\.webp$/i.test(officialArt)) {
+      return '<img class="sp-i sp-i-store" src="' + esc(officialArt) + '" alt="" width="28" height="28" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-sp-fallback="' + esc(token) + '">';
+    }
     for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) {
       return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-sp-fallback="' + esc(token || '·') + '">';
     }
@@ -248,10 +253,14 @@
        regional observation feed is empty, delayed or unavailable. */
     var obs = Array.isArray(data.regional) ? data.regional : [];
     var prices = Array.isArray(data.prices) ? data.prices : [];
-    var items = R.catalogue(prices, obs, undefined, window.GOStoreOfferIdentities);
-    if (!items.length) return '';
+    var allItems = R.catalogue(prices, obs, undefined, window.GOStoreOfferIdentities);
+    if (!allItems.length) return '';
+    var membership = data.currentStore === undefined
+      ? {current:allItems,historical:[],checkedAt:null,stale:false}
+      : R.currentCatalogue(allItems, data.currentStore, Date.now());
+    var items = membership.current, archived = membership.historical;
     var comparableOffers = verifiedOptionsHtml(obs);
-    var reviewPanel = coveragePanel(items, R);
+    var reviewPanel = coveragePanel(allItems, R);
     var sections = [
       { id: 'passes', label: 'Passes & tickets', open: true },
       { id: 'storage', label: 'Storage upgrades', open: true },
@@ -276,7 +285,7 @@
           : p.sourceIdOnly
             ? '<small class="sp-source-id-note">Official AU observation · exact SKU; item name not recorded</small>' : '';
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '">'
-        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span>'
+        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label, p.storeArt) + '<b>' + esc(p.label) + '</b></span>'
         + identityNote + '</header>'
         + '<div class="sp-market-grid">'
         + '<div class="sp-market sp-market-au"><span class="sp-market-label"><span aria-hidden="true">🇦🇺</span> Australia <small>Web</small></span>' + au + '</div>'
@@ -289,12 +298,20 @@
         + '<summary>' + esc(s.label) + ' <small>' + bySection[s.id].length + ' products</small></summary>'
         + '<div class="sp-group-items">' + bySection[s.id].map(productCard).join('') + '</div></details>';
     }).join('');
-    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + ' products · AU / ID / IN</small></summary>'
-      + '<p class="sp-intro">Dated Store observations, not live checkout quotes. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates. “Not observed” means no sourced price for that region.</p>'
+    var checked = membership.checkedAt ? when(membership.checkedAt.slice(0,10)) : '';
+    var archive = archived.length ? '<details class="sp-compare-more sp-archive" data-sp-archive>'
+      + '<summary>Historical price observations <small>' + archived.length + ' past or unconfirmed</small></summary>'
+      + '<p class="note">These are retained for pricing research, not confirmed for purchase today. Expand only when comparing previous offers.</p>'
+      + '<ul>' + archived.map(function (p) { return '<li>' + esc(p.label) + '</li>'; }).join('') + '</ul></details>' : '';
+    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + ' recently listed · AU / ID / IN</small></summary>'
+      + '<p class="sp-intro">' + (membership.stale
+        ? 'Current official Store membership cannot be confirmed. Historical prices are kept below, not presented as live.'
+        : 'Official Store products last observed ' + esc(checked) + '. Regional checkout prices are historical observations or clearly labelled estimates, never live quotes.')
+        + ' Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates.</p>'
       + reviewPanel
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
-      + '<div class="sp-catalogue">' + catalogue + '</div>'
+      + '<div class="sp-catalogue">' + catalogue + '</div>' + archive
       + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
       + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed cash price is named only when two or more channels share an explicit verified product SKU and currency. Estimated, recorded-only and ambiguous boxes cannot win; no result is a live checkout quote.</p>'
       + '<div data-sp-cheapest>' + comparableOffers + '</div></details>' : '') + '</details>';
@@ -303,6 +320,12 @@
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
     GOLIB.loadPrices().then(async function (d) {
       if (!d || !d.owner) return; /* Owner-only regional prices stay private. */
+      // Public current-SKU membership contains NO private prices.
+      // Fail closed if it is missing or stale; never resurrect retired passes.
+      try {
+        var response = await fetch('/store-current.json', {cache:'no-store'});
+        d.currentStore = response.ok ? await response.json() : {version:0,items:[]};
+      } catch (_) { d.currentStore = {version:0,items:[]}; }
       /* Render local observed prices immediately; an external FX request must
          never delay the Store, including when a provider hangs. */
       var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
