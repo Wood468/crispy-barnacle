@@ -127,8 +127,14 @@ with sync_playwright() as p:
         assert match.count() == 1, ('source-listed Silver Bottle Cap must point to published Rank 100', width)
         match.click()
         matched_rank = page.locator('#evd .ue-pass-rank[data-rank="100"]')
-        assert matched_rank.is_visible() and matched_rank.evaluate('(el) => document.activeElement === el'), (
-            'Reward search did not open and focus published Rank 100', width)
+        # Finder results target the selected source-backed REWARD, not merely
+        # its surrounding rank (which may contain multiple Free/Deluxe tiles).
+        matched_tile = matched_rank.locator('.ue-lane-deluxe .ue-pass-reward', has_text='Silver Bottle Cap').first
+        assert matched_rank.is_visible() and matched_tile.is_visible() and matched_tile.evaluate(
+            '(el) => document.activeElement === el'), (
+            'Reward search did not focus the actual Rank 100 Deluxe Silver Bottle Cap tile', width)
+        assert not matched_rank.evaluate('(el) => document.activeElement === el'), (
+            'Source-known reward finder should not focus only the surrounding rank', width)
         assert 'Opened Rank 100' in finder.locator('.ue-pass-find-status').inner_text()
         finder_input.fill('unpublished-item-never-listed')
         assert finder.locator('.ue-pass-find-results button').count() == 0, (
