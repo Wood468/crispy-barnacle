@@ -64,7 +64,10 @@ jobs:
         run: |
           node --test test/store-artwork-coverage.test.mjs
           node scripts/store-artwork-coverage.mjs /tmp/store-snapshot.json
+      # A manual dry-run must never publish the AU price importer’s local changes.
+      # Scheduled watches and explicitly live manual runs continue to save state.
       - name: Remember what was seen
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.dry_run == 'false' }}
         shell: bash
         run: |
           set -euo pipefail
