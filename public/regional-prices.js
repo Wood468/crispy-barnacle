@@ -161,29 +161,43 @@
   /* Every verified AU Web Store SKU plus all regional-only observations;
      do not misattribute off-site event tickets or guess missing product names. */
   function catalogue(prices, obs, now) {
-    var latest = {}, all = {};
+    var latest = {}, all = {}, auByLabel = {};
     (prices || []).forEach(function (p) {
       if (!sourcedAuWebOffer(p)) return;
       if (!latest[p.product] || String(p.observed) > String(latest[p.product].observed)) latest[p.product] = p;
     });
+    // The SKU, not the display label, is an Australian Store offer's identity.
+    // Two exact packs may legitimately share the same human-readable name.
     Object.keys(latest).forEach(function (key) {
-      var p = latest[key], label = p.label || key;
+      var p = latest[key], label = p.label || key, labelKey = norm(label);
       var group = p.group || (/^go-pass-|^wild-area-2026-global-ultra-box$/.test(key)
         ? 'Passes & tickets' : 'Other');
-      all[norm(label)] = { product: key, label: label, group: group,
+      var id = 'au:' + key;
+      all[id] = { product: key, label: label, group: group,
         sourceIdOnly: !p.label, aud: p.amount, observed: p.observed };
+      (auByLabel[labelKey] || (auByLabel[labelKey] = [])).push(id);
     });
     (obs || []).forEach(function (o) {
       if (!usable(o) || !o.product) return;
-      var key = norm(o.product);
-      if (!all[key]) all[key] = { product: o.id || o.product, label: o.product, group: o.kind || kindOf(o.product), aud: null, observed: o.observed };
+      var key = norm(o.product), owners = auByLabel[key] || [];
+      // A label is a safe region join only when exactly one AU SKU has it.
+      // Multiple matching SKUs leave the local offer separately attributable.
+      if (owners.length === 1) return;
+      var regionalId = 'regional:' + key;
+      if (!all[regionalId]) all[regionalId] = {
+        product: o.id || o.product, label: o.product,
+        group: o.kind || kindOf(o.product), aud: null, observed: o.observed,
+        regionalUnmatched: owners.length > 1
+      };
     });
     return Object.keys(all).map(function (key) {
       var p = all[key], kind = kindOf(p.label);
+      var ambiguous = p.aud != null && (auByLabel[norm(p.label)] || []).length > 1;
       return { product: p.product, label: p.label, group: p.group, kind: kind,
-        sourceIdOnly: !!p.sourceIdOnly, aud: p.aud, observed: p.observed,
-        india: reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now),
-        indonesia: reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now) };
+        sourceIdOnly: !!p.sourceIdOnly, ambiguousSku: ambiguous,
+        regionalUnmatched: !!p.regionalUnmatched, aud: p.aud, observed: p.observed,
+        india: ambiguous ? null : reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now),
+        indonesia: ambiguous ? null : reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now) };
     });
   }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
