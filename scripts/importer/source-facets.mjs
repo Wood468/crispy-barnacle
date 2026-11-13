@@ -175,6 +175,9 @@ export function extractEventSourceFacets(html,{sourceUrl}={}){
       for(const item of raw){
         const marker=/\*{1,4}$/.exec(item.trim())?.[0]||'';
         const benefit=item.replace(/\*+$/g,'').trim();
+        // The source's explanatory replacement sentence is evidence, not a
+        // fourth gameplay perk unless it specifies an actual quantified perk.
+        if(replacementEvidence===benefit&&!/\d/.test(benefit))continue;
         if(!isBenefit(benefit))continue;
         const k=slug(s.heading)+'|'+benefit.toLocaleLowerCase('en');
         if(seen.has(k))continue;seen.add(k);
