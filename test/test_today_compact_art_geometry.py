@@ -73,6 +73,20 @@ def test_real_today_renderer_geometry():
                 page.add_style_tag(content=CSS)
                 page.add_script_tag(content=(ROOT / "public" / "today-logic.js").read_text())
                 page.add_script_tag(content=(ROOT / "public" / "today.js").read_text())
+                page.evaluate("""(png) => {{
+                  const now = Date.UTC(2026,10,14,10), hour = 3600000;
+                  const minor = {id:'fixture-compact',name:'GO Wild Area: Global — long compact artwork containment fixture',
+                    kind:'spot',start:now+hour,end:now+2*hour,region:'Global',
+                    featured:[{name:'Fixture Pokémon'}],tags:[]};
+                  const major = {id:'fixture-major',name:'Minior Showers: Leonids — major card fixture',
+                    kind:'event',start:now+hour,end:now+48*hour,region:'Global',
+                    featured:[{name:'Minior'}],tags:[]};
+                  const ctx = {now,live:[],soon:[minor,major],week:[],regLive:[],regSoon:[],regWeek:[],
+                    boosts:{live:[],upcoming:[]},seasons:[],done:[],hidden:[],ending:[],
+                    kindOf:()=>['Event','#27a4b0'],overseas:()=>false,dayLabel:()=> 'Saturday',
+                    fallbackArt:()=>'',monArt:()=>'<span class="art-fb" style="width:150px;height:150px"><img class="art" src="'+png+'" alt="Featured Pokémon"><span class="form-chip">Special form</span></span>'};
+                  document.getElementById('today-root').innerHTML = GOTODAY.render(ctx);
+                }""", PNG)
                 # Wait for the renderer-inserted data-URI image to decode before measuring.
                 # Keep the actual image-visibility assertion below.
                 page.wait_for_function("""() => {
@@ -91,7 +105,7 @@ def test_real_today_renderer_geometry():
                     boosts:{live:[],upcoming:[]},seasons:[],done:[],hidden:[],ending:[],
                     kindOf:()=>['Event','#27a4b0'],overseas:()=>false,dayLabel:()=> 'Saturday',
                     fallbackArt:()=>'',monArt:()=>'<span class="art-fb" style="width:150px;height:150px"><img class="art" src="'+png+'" alt="Featured Pokémon"><span class="form-chip">Special form</span></span>'};
-                  document.getElementById('today-root').innerHTML = GOTODAY.render(ctx);
+
                   const compact = document.querySelector('[data-id="fixture-compact"]');
                   const majorCard = document.querySelector('[data-id="fixture-major"]');
                   const slot = compact && compact.querySelector('.t1-minor-art');
