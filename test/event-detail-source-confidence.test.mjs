@@ -172,3 +172,21 @@ test("official-source inference rejects non-HTTPS and credentialed URLs", () => 
     status: "community_reported", source: "Owner-supplied source" }),
     ["community_reported", "Owner-supplied source"], "explicit attribution remains authoritative");
 });
+
+test("cpRows safely handles missing or malformed rosters and renders properly", () => {
+  const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+  const line = dash.split("\n").find(l => l.includes("function cpRows(ev) {"));
+  assert.ok(line, "cpRows function exists");
+  const body = dash.slice(dash.indexOf("function cpRows(ev) {"));
+  const endIdx = body.indexOf("  /* ---------- kinds:");
+  assert.ok(endIdx >= 0, "cpRows extent found");
+  const cpRowsFn = new Function("hundoLabels", "esc", body.slice(0, endIdx) + "\n  return cpRows(ev);\n");
+  const hundo = (ev, f) => "<span>" + f.name + "</span>";
+  const esc = s => s;
+
+  assert.equal(cpRowsFn(hundo, esc, null), "");
+  assert.equal(cpRowsFn(hundo, esc, {}), "");
+  assert.equal(cpRowsFn(hundo, esc, { featured: null }), "");
+  assert.equal(cpRowsFn(hundo, esc, { featured: "not-an-array" }), "");
+  assert.equal(cpRowsFn(hundo, esc, { featured: [null, {}, { name: "Pikachu" }, { name: "Pikachu" }] }), '<div class="cp-rows"><div class="cp-row"><b>Catch CP</b><span>Pikachu</span></div></div>');
+});
