@@ -6,7 +6,7 @@ from pathlib import Path
 import os
 
 ROOT = Path(__file__).resolve().parents[1]
-CSS = (ROOT / "public/today.css").read_text() + "\n" + (ROOT / "public/ux-finish.css").read_text()
+CSS = "\n".join((ROOT / "public" / name).read_text() for name in ("styles.css", "dash.css", "today.css", "ux-finish.css"))
 PNG = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
 
 def test_compact_today_artwork_contained():
