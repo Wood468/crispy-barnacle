@@ -2,7 +2,7 @@
  "updated": "2026-11-13T19:00:43.802Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1570850191790313493",
    "title": "tr NOV 13 8PM Counter Kyurem Black",
    "image": "/infographics/g47ix/discord-1570850191790313493.png",
@@ -37,7 +37,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1570804591635857524",
    "title": "Duraludon",
    "image": "/infographics/g47ix/discord-1570804591635857524.webp",
