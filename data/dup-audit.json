@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T23:56:28.077Z",
+ "updated": "2026-11-14T06:45:36.155Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -29,25 +29,6 @@
  ],
  "same": [],
  "crossList": [
-  {
-   "keep": {
-    "id": "into",
-    "name": "Into the Wild",
-    "place": "",
-    "start": "2026-11-09",
-    "end": "2026-11-13",
-    "list": "curated"
-   },
-   "dupe": {
-    "id": "w-into-the-wild",
-    "name": "Into the Wild",
-    "place": "Play from anywhere",
-    "start": "2026-11-09",
-    "end": "2026-11-13",
-    "list": "world"
-   },
-   "why": "ruled by you"
-  },
   {
    "keep": {
     "id": "wag",
@@ -142,25 +123,6 @@
     "start": "2026-11-21",
     "end": "2026-11-21",
     "list": "curated"
-   },
-   "why": "dates fit and 1 shared word"
-  },
-  {
-   "a": {
-    "id": "into",
-    "name": "Into the Wild",
-    "place": "",
-    "start": "2026-11-09",
-    "end": "2026-11-13",
-    "list": "curated"
-   },
-   "b": {
-    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
-    "name": "GO Wild Area Gigantamax Machamp Power Up Timed Research",
-    "place": "",
-    "start": "2026-11-06",
-    "end": "2026-11-15",
-    "list": "world"
    },
    "why": "dates fit and 1 shared word"
   },

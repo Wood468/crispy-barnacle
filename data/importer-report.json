@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-13T23:56:27.285Z",
+ "runAt": "2026-11-14T06:45:35.136Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -556,13 +556,13 @@
    "error": ""
   },
   "hub": {
-   "listed": 9,
+   "listed": 0,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 104,
- "worldEvents": 70,
+ "worldEvents": 69,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -917,20 +917,6 @@
    "missingFrom": []
   },
   {
-   "event": "Minior Showers: Leonids",
-   "field": "bonuses",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Minior Showers: Leonids",
-   "field": "research",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
    "event": "Super Mega Raid Day",
    "field": "bonuses",
    "missingFrom": [
@@ -1142,13 +1128,13 @@
   "publication": "audit-only",
   "sourceId": "leekduck",
   "eligiblePages": 44,
-  "pagesWithFacets": 9,
+  "pagesWithFacets": 10,
   "duplicates": 0,
   "skippedLarge": 0,
   "counts": {
    "benefits": 69,
    "featuredMoves": 11,
-   "researchPrograms": 19,
+   "researchPrograms": 20,
    "unconfirmed": 1
   },
   "examples": [
@@ -1181,6 +1167,12 @@
     "benefitCount": 0,
     "featuredMoveCount": 0,
     "researchProgramCount": 2
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/minior-showers-leonids-2026/",
+    "benefitCount": 0,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 1
    },
    {
     "sourceUrl": "https://leekduck.com/events/november-communityday2026/",
@@ -1404,7 +1396,7 @@
     "events": 44,
     "benefits": 69,
     "featuredMoves": 11,
-    "researchPrograms": 19,
+    "researchPrograms": 20,
     "disputed": 0,
     "unconfirmed": 1,
     "warnings": 0

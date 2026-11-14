@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T23:56:27.278Z",
+ "updated": "2026-11-14T06:45:35.131Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-mon-jet-red-collaboration",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -99,7 +99,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-mon-go-partners-with-the-european-space-agency",
@@ -123,7 +123,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -304,7 +304,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
@@ -328,7 +328,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
@@ -392,7 +392,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-mon-go-stamp-rally-mexico-city",
@@ -412,7 +412,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-mexico-city-go-wild-area-2026",
@@ -446,7 +446,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
@@ -465,7 +465,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13",
+   "seen": "2026-11-14",
    "mode": "in-game"
   },
   {
@@ -485,7 +485,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -514,7 +514,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
@@ -558,7 +558,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
@@ -577,7 +577,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -596,27 +596,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
-  },
-  {
-   "id": "w-into-the-wild",
-   "name": "Into the Wild",
-   "place": "Play from anywhere",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-11-09",
-   "end": "2026-11-13",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/into-the-wild-2026/",
-     "auto": true
-    }
-   ],
-   "status": "single",
-   "seen": "2026-10-15"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon--2026-11-10",
@@ -635,7 +615,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-mon-run-30-new-taipei",
@@ -654,7 +634,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-gowildarea-global-osaka-gameplay-update",
@@ -793,7 +773,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-mon-run-30-malaysia",
@@ -812,7 +792,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-eternamax-eternatus-max-battles",
@@ -891,7 +871,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-mon-run-30-jakarta",
@@ -910,7 +890,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-december-communityday2026",
@@ -1009,7 +989,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-super-mega-raid-day-january",
@@ -1048,7 +1028,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-marik",
@@ -1067,7 +1047,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-january-communityday2027",
@@ -1106,7 +1086,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-max-battle-day-january",
@@ -1165,7 +1145,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-february-communityday2027",
@@ -1224,7 +1204,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
@@ -1262,7 +1242,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-pokemon-go-tour-2027-global",
@@ -1300,7 +1280,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   },
   {
    "id": "w-go-wild-area-stamp-rally-details",
@@ -1315,11 +1295,11 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-11-13"
+   "seen": "2026-11-14"
   }
  ]
 }

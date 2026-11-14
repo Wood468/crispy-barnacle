@@ -5686,8 +5686,8 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "f9e41f9e281716f7fbb8b4cbfb0fc4e0b6c797e51a23fb9412bc3b3d42f872f2",
-    "revision": 9,
+    "contentHash": "dc4c86e9868d160608f320ea51b80cbf49c4a0baa3f937b089a395191de0039e",
+    "revision": 10,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -5821,7 +5821,7 @@
       "start": "2026-11-16T10:00",
       "end": "2026-11-23T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
@@ -7468,7 +7468,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 162,
+    "revision": 164,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -11443,7 +11443,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "",
-   "location": "Play from anywhere",
+   "location": null,
    "image": "https://lh3.googleusercontent.com/xQzYXbxguNWaaSXG5thVM5x44Luvbb5Pi8rPlYSPIV6kePCzoS_5NWzlM0yzNGIVs1NzhXIPLcg2HKS0iuizGsHZUvSS_ZcemC5-i4My5yA",
    "notes": [
     "Crowned Sword Zacian and Crowned Shield Zamazenta in five-star raids, with Raid Hour at 6 pm on Nov 9 (Zacian) and Nov 10 (Zamazenta). Druddigon and Orthworm in three-star raids.",
@@ -12744,12 +12744,12 @@
     "info": [],
     "detailRefs": [],
     "legacyDates": {
-     "start": "2026-11-09",
-     "end": "2026-11-13"
+     "start": "2026-11-09T10:00",
+     "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "24a54028719e1d55436805e4b3b96eccdb1c0c8315f3366ddacee1ebebcb8376",
-    "revision": 30,
+    "contentHash": "e8fbda049b20a308b06f6f08aa27a3c190b4a24789da5c2392cd7f6caaeb5263",
+    "revision": 31,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -12969,7 +12969,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch a Dynamax Machop",
@@ -13005,7 +13005,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch a Dynamax Ralts",
@@ -13041,7 +13041,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -13095,7 +13095,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -13149,7 +13149,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win a Max Battle",
@@ -13189,7 +13189,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win a raid",
@@ -13234,7 +13234,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
@@ -22515,8 +22515,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "5e3dfa1fef511f47e456a1da1262c343ead8fad5caa05932f168cee91b489ac7",
-    "revision": 8,
+    "contentHash": "9b6436a01e4f6a6ee9887bf471b459e8272b0b1413a2765266a256ea0bcd6f3f",
+    "revision": 9,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -22612,7 +22612,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 5 Pokemon while in a Party",
@@ -22645,7 +22645,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 50 Pokemon",
@@ -22678,7 +22678,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 +2 ×2 Pinap Berry ×2 ×500 Stardust ×500",
@@ -25431,8 +25431,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "4af43e852662d3f15d266a0f9b6362a26a570b61a2810e02b4a2d0114013e3cf",
-    "revision": 15,
+    "contentHash": "b82e231fedb43896088b179836cf4a6ff72440ad1ef369aecbbfe48f5066c18e",
+    "revision": 16,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -25532,7 +25532,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -25567,7 +25567,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win 2 raids",
@@ -25606,7 +25606,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win a Max Battle",
@@ -25645,7 +25645,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -25676,7 +25676,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch a Hisuian Sliggoo",
@@ -25697,7 +25697,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Hatch an Egg",
@@ -25725,7 +25725,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -25760,7 +25760,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -25789,7 +25789,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Explore 2 km",
@@ -25812,7 +25812,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -25834,7 +25834,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Make an Excellent Throw",
@@ -25867,7 +25867,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
@@ -28442,7 +28442,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 177,
+    "revision": 179,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -34069,8 +34069,8 @@
      "end": "2026-10-24T23:59"
     },
     "imageReviewed": true,
-    "contentHash": "f8fcf267a2e4c7c91c49ebb37450c60568cda8f3a325ed82d802928bf4d0f7eb",
-    "revision": 7,
+    "contentHash": "42f17c9120d1c674fd3a49c5e1d24dd74f1f2dec4344998209eb90e3c0781365",
+    "revision": 8,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -34167,7 +34167,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34198,7 +34198,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Claim Reward!",
@@ -34229,7 +34229,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34260,7 +34260,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34291,7 +34291,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34322,7 +34322,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34353,7 +34353,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34384,7 +34384,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Free Timed Research is available during Minior Showers, rewarding a Star Piece and a total of 116,100 Stardust .",
@@ -34523,6 +34523,14 @@
     "fields": {
      "bonuses": [
       {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub",
+        "leekduck"
+       ],
+       "status": "corroborated"
+      },
+      {
        "text": "1000 Stardust for catching Minior",
        "sources": [
         "hub"
@@ -34565,13 +34573,6 @@
        "status": "single"
       },
       {
-       "text": "Claim Reward! | 1 × Star Piece",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Use a Star Piece | 7740 × Stardust",
        "sources": [
         "hub"
@@ -34584,6 +34585,20 @@
         "hub"
        ],
        "status": "single"
+      },
+      {
+       "text": "Event-exclusive Timed Research for very lucky Trainers",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "If Timed Research is added, tasks must be completed and all rewards claimed by November 19, 2026, at 11:59 p.m. local time .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "featured": [
@@ -34591,6 +34606,20 @@
        "text": "The second Minior to make their Pokémon GO debut during the Leonid Meteor Shower is ??? Core Minior.",
        "sources": [
         "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Minior (Yellow Core) will make its Pokémon GO debut during the Leonids meteor shower, beginning November 14, 2026, at 5:00 p.m. local time !",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Minior (Green Core) is reportedly also available in the wild during the Leonids.",
+       "sources": [
+        "leekduck"
        ],
        "status": "single"
       },
@@ -34613,14 +34642,15 @@
      "eggs": [],
      "research": [
       {
-       "text": "Task | Rewards",
+       "text": "Claim Reward! | 1 × Star Piece",
        "sources": [
-        "hub"
+        "hub",
+        "leekduck"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Claim Reward! | 1 × Star Piece",
+       "text": "Task | Rewards",
        "sources": [
         "hub"
        ],
@@ -34637,6 +34667,20 @@
        "text": "Rewards | 77,400 × Stardust",
        "sources": [
         "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "No Timed Research: There is currently no Timed Research during the Leonids. If Timed Research is added, it’s expected to be the same as during the Orionids, shown below.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Event-exclusive Timed Research",
+       "sources": [
+        "leekduck"
        ],
        "status": "single"
       }
@@ -34708,8 +34752,8 @@
      "end": "2026-11-19T23:59"
     },
     "imageReviewed": true,
-    "contentHash": "e0008945fe9a00b85e1c48c5d291d31adbba273397e16ee0c6c8d00f58bf7a40",
-    "revision": 9,
+    "contentHash": "2795349441220fca6146be65fd5f30fc6e3083536ad81b3430581282abd2d2e5",
+    "revision": 10,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -34717,6 +34761,14 @@
    "schedule": null,
    "activities": [],
    "bonuses": [
+    {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub",
+      "leekduck"
+     ],
+     "status": "corroborated"
+    },
     {
      "text": "1000 Stardust for catching Minior",
      "sources": [
@@ -34760,13 +34812,6 @@
      "status": "single"
     },
     {
-     "text": "Claim Reward! | 1 × Star Piece",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
      "text": "Use a Star Piece | 7740 × Stardust",
      "sources": [
       "hub"
@@ -34777,6 +34822,20 @@
      "text": "Rewards | 1000000 × Stardust",
      "sources": [
       "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Event-exclusive Timed Research for very lucky Trainers",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "If Timed Research is added, tasks must be completed and all rewards claimed by November 19, 2026, at 11:59 p.m. local time .",
+     "sources": [
+      "leekduck"
      ],
      "status": "single"
     }
@@ -34811,7 +34870,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34842,7 +34901,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Claim Reward!",
@@ -34873,7 +34932,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34904,7 +34963,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34935,7 +34994,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34966,7 +35025,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -34997,7 +35056,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Star Piece",
@@ -35028,17 +35087,18 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-13"
-    },
-    {
-     "text": "Task | Rewards",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub",
+      "leekduck"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Task | Rewards",
      "sources": [
       "hub"
      ],
@@ -35055,6 +35115,20 @@
      "text": "Rewards | 77,400 × Stardust",
      "sources": [
       "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "No Timed Research: There is currently no Timed Research during the Leonids. If Timed Research is added, it’s expected to be the same as during the Orionids, shown below.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Event-exclusive Timed Research",
+     "sources": [
+      "leekduck"
      ],
      "status": "single"
     }
@@ -40978,8 +41052,8 @@
      "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "91d07a79f50a834a368971d68ad338d039656fc0359a78e8075f1ccafa0d1795",
-    "revision": 14,
+    "contentHash": "7cfff65315ee88069de3d85243e4b0b1448520386e09760dc2ab2dd1c21d81f4",
+    "revision": 15,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -41138,7 +41212,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch a Dynamax Machop",
@@ -41174,7 +41248,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch a Dynamax Ralts",
@@ -41210,7 +41284,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -41264,7 +41338,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -41318,7 +41392,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win a Max Battle",
@@ -41358,7 +41432,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win a raid",
@@ -41403,7 +41477,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
@@ -49577,8 +49651,8 @@
      "end": "2026-11-15T18:00"
     },
     "imageReviewed": true,
-    "contentHash": "96bd30a478e1bc6e90ae770a0b85f5ba6a53565adf8227af5303cb991596b78c",
-    "revision": 3,
+    "contentHash": "8a2c8b3e2ce8287dd732c32cc36a1c486444a9bb77d35e5ff6146017862c0451",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "season"
@@ -49737,7 +49811,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch a Dynamax Machop",
@@ -49773,7 +49847,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch a Dynamax Ralts",
@@ -49809,7 +49883,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -49863,7 +49937,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -49917,7 +49991,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win a Max Battle",
@@ -49957,7 +50031,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win a raid",
@@ -50002,7 +50076,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
@@ -53084,8 +53158,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "72d9c59f1daa81ba8782dce9292bc7f42a4c7c4c638de57739dc61bf51ac2176",
-    "revision": 17,
+    "contentHash": "2dde15a47c4af24cbe4880a396d26715c91959862c9d2947d1327d94e725a0b1",
+    "revision": 18,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -53190,7 +53264,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -53233,7 +53307,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch a Hisuian Sliggoo",
@@ -53266,7 +53340,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Explore 2 km",
@@ -53301,7 +53375,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Hatch an Egg",
@@ -53341,7 +53415,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Make an Excellent Throw",
@@ -53377,7 +53451,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -53410,7 +53484,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -53457,7 +53531,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -53491,7 +53565,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -53532,7 +53606,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win 2 raids",
@@ -53575,7 +53649,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win a Max Battle",
@@ -53617,7 +53691,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
@@ -60127,7 +60201,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 154,
+    "revision": 156,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -61081,8 +61155,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "45ea43fc4253bbeec987a5a93086c84e5c053d3431838bd6639f869fa2534cd4",
-    "revision": 10,
+    "contentHash": "27e1e27abe5a298ce2780c3d1e955ae89344c2e849db0ad8f67a770bd1009509",
+    "revision": 11,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -61214,7 +61288,7 @@
       "start": "2026-11-16T10:00",
       "end": "2026-11-23T20:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
@@ -62864,7 +62938,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 162,
+    "revision": 164,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -70237,7 +70311,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 154,
+    "revision": 156,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -71770,14 +71844,21 @@
        "status": "single"
       },
       {
-       "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
+       "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
        "sources": [
         "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
+       "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
        "sources": [
         "leekduck"
        ],
@@ -71791,14 +71872,7 @@
        "status": "single"
       },
       {
-       "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
        "sources": [
         "leekduck"
        ],
@@ -71953,7 +72027,7 @@
        "status": "single"
       },
       {
-       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter mighty Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
+       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
        "sources": [
         "leekduck"
        ],
@@ -72004,7 +72078,7 @@
        "status": "single"
       },
       {
-       "text": "Completing the event Special Research also awards a new avatar pose .",
+       "text": "Completing the event Special Research also awards a new avatar pose , or Duraludon stickers if you already have the pose.",
        "sources": [
         "leekduck"
        ],
@@ -72025,7 +72099,7 @@
        "status": "single"
       },
       {
-       "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research. Steps are added below as they’re revealed.",
+       "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research.",
        "sources": [
         "leekduck"
        ],
@@ -72077,7 +72151,7 @@
        "status": "single"
       },
       {
-       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter mighty Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
+       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
        "sources": [
         "leekduck"
        ],
@@ -72094,8 +72168,8 @@
      "end": "2026-11-15T18:00"
     },
     "imageReviewed": true,
-    "contentHash": "37de0001fe4579151b8859a1a285010018518a3efc276d73d265f6a062fee3d6",
-    "revision": 18,
+    "contentHash": "cbdaa99030256b2975b39e56b75c717243bd6ce1f1ea883eb474a5b2c5f126b3",
+    "revision": 19,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -72185,7 +72259,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -72239,7 +72313,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 2 mighty Pokémon",
@@ -72297,7 +72371,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 2 mighty Pokémon",
@@ -72355,7 +72429,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 4 different species of Dragon‑type Pokémon",
@@ -72395,7 +72469,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 4 different species of Steel‑type Pokémon",
@@ -72435,7 +72509,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Hatch an Egg",
@@ -72482,7 +72556,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Hatch an Egg",
@@ -72529,7 +72603,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Make an Excellent Throw",
@@ -72565,7 +72639,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -72612,7 +72686,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -72659,7 +72733,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Spin 5 PokéStops or Gyms",
@@ -72705,7 +72779,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -72752,7 +72826,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -72799,7 +72873,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win 2 Max Battles",
@@ -72841,7 +72915,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win 2 raids",
@@ -72883,7 +72957,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon and other rewards. The tasks change with the rotating Habitat Hours.",
@@ -72921,14 +72995,21 @@
      "status": "single"
     },
     {
-     "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
+     "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
      "sources": [
       "leekduck"
      ],
      "status": "single"
     },
     {
-     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
+     "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
      "sources": [
       "leekduck"
      ],
@@ -72942,14 +73023,7 @@
      "status": "single"
     },
     {
-     "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
      "sources": [
       "leekduck"
      ],
@@ -73015,7 +73089,7 @@
      "status": "single"
     },
     {
-     "text": "Completing the event Special Research also awards a new avatar pose .",
+     "text": "Completing the event Special Research also awards a new avatar pose , or Duraludon stickers if you already have the pose.",
      "sources": [
       "leekduck"
      ],
@@ -73036,7 +73110,7 @@
      "status": "single"
     },
     {
-     "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research. Steps are added below as they’re revealed.",
+     "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research.",
      "sources": [
       "leekduck"
      ],
@@ -75813,14 +75887,21 @@
        "status": "single"
       },
       {
-       "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
+       "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
        "sources": [
         "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
+       "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
        "sources": [
         "leekduck"
        ],
@@ -75834,14 +75915,7 @@
        "status": "single"
       },
       {
-       "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
        "sources": [
         "leekduck"
        ],
@@ -75996,7 +76070,7 @@
        "status": "single"
       },
       {
-       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter mighty Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
+       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
        "sources": [
         "leekduck"
        ],
@@ -76047,7 +76121,7 @@
        "status": "single"
       },
       {
-       "text": "Completing the event Special Research also awards a new avatar pose .",
+       "text": "Completing the event Special Research also awards a new avatar pose , or Duraludon stickers if you already have the pose.",
        "sources": [
         "leekduck"
        ],
@@ -76068,7 +76142,7 @@
        "status": "single"
       },
       {
-       "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research. Steps are added below as they’re revealed.",
+       "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research.",
        "sources": [
         "leekduck"
        ],
@@ -76120,7 +76194,7 @@
        "status": "single"
       },
       {
-       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter mighty Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
+       "text": "Catch all eight Pokémon on Saturday, November 14 , before 6:00 p.m. local time to encounter Machamp wearing a modern jacket . Each one appears in the wild during the Steel or Dragon habitat hours.",
        "sources": [
         "leekduck"
        ],
@@ -76135,8 +76209,8 @@
      "end": "2026-11-15"
     },
     "imageReviewed": true,
-    "contentHash": "e87e435316a6082d9a3728ec1caf05448b4c2a999fd9bcb56b321e7fa17d99c4",
-    "revision": 20,
+    "contentHash": "bd194124ec1d067e048db15332a6fa891e1f1f3df866745b5c8b440491c18083",
+    "revision": 21,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -76226,7 +76300,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -76280,7 +76354,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 2 mighty Pokémon",
@@ -76338,7 +76412,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 2 mighty Pokémon",
@@ -76396,7 +76470,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 4 different species of Dragon‑type Pokémon",
@@ -76436,7 +76510,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Catch 4 different species of Steel‑type Pokémon",
@@ -76476,7 +76550,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Hatch an Egg",
@@ -76523,7 +76597,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Hatch an Egg",
@@ -76570,7 +76644,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Make an Excellent Throw",
@@ -76606,7 +76680,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -76653,7 +76727,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -76700,7 +76774,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Spin 5 PokéStops or Gyms",
@@ -76746,7 +76820,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -76793,7 +76867,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -76840,7 +76914,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win 2 Max Battles",
@@ -76882,7 +76956,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "task": "Win 2 raids",
@@ -76924,7 +76998,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-13"
+     "checkedAt": "2026-11-14"
     },
     {
      "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon and other rewards. The tasks change with the rotating Habitat Hours.",
@@ -76962,14 +77036,21 @@
      "status": "single"
     },
     {
-     "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
+     "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
      "sources": [
       "leekduck"
      ],
      "status": "single"
     },
     {
-     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
+     "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
      "sources": [
       "leekduck"
      ],
@@ -76983,14 +77064,7 @@
      "status": "single"
     },
     {
-     "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
      "sources": [
       "leekduck"
      ],
@@ -77056,7 +77130,7 @@
      "status": "single"
     },
     {
-     "text": "Completing the event Special Research also awards a new avatar pose .",
+     "text": "Completing the event Special Research also awards a new avatar pose , or Duraludon stickers if you already have the pose.",
      "sources": [
       "leekduck"
      ],
@@ -77077,7 +77151,7 @@
      "status": "single"
     },
     {
-     "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research. Steps are added below as they’re revealed.",
+     "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research.",
      "sources": [
       "leekduck"
      ],
@@ -79672,7 +79746,7 @@
   },
   {
    "collection": "world-events",
-   "records": 65
+   "records": 64
   },
   {
    "collection": "regional-events",
