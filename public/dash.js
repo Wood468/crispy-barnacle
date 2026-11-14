@@ -2180,22 +2180,33 @@ function renderHomeBrief(t) {
      event titles, place and overlapping dates. Name-only, fuzzy city-only or
      hidden/Done source records must never erase an overseas in-person event. */
   function t1SameRegionalOccurrence(r, ev) {
-    if (!r || !ev || !r.name || !ev.name || !r.place || !ev.region) return false;
-    var keyOf = window.GODEDUPE && window.GODEDUPE.titleKey;
+    if (!r || !ev || !r.name || !ev.name || !r.place) return false;
     function norm(v) { return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
-    var rn = keyOf ? keyOf(r.name) : norm(r.name);
-    var en = keyOf ? keyOf(ev.name) : norm(ev.name);
-    if (!rn || rn !== en) return false;
-    // Compare complete first place component, never first word (London != Los Angeles).
-    var cityR = norm(t1PlaceKey(r.place)), cityE = norm(t1PlaceKey(ev.region));
-    if (!cityR || !cityE || cityR !== cityE) return false;
-    // Same city names in different countries are not evidence of one occurrence.
-    function country(v) { var parts = String(v || '').split(','); return parts.length < 2 ? '' : norm(parts.slice(1).join(',').split('(')[0]); }
-    var cr = country(r.place), ce = country(ev.region);
-    if (cr && ce && cr !== ce) return false;
     var rs = +r.start, re = +r.end, es = +ev.start, ee = +ev.end;
-    return Number.isFinite(rs) && Number.isFinite(re) && Number.isFinite(es) &&
-      Number.isFinite(ee) && rs < re && es < ee && rs < ee && es < re;
+    if (!(Number.isFinite(rs) && Number.isFinite(re) && Number.isFinite(es) &&
+      Number.isFinite(ee) && rs < re && es < ee)) return false;
+    // Compare complete first place component; never just its first word.
+    var cityR = norm(t1PlaceKey(r.place)), cityE = norm(t1PlaceKey(ev.region));
+    if (!cityR) return false;
+    var dedupe = window.GODEDUPE, titleOf = dedupe && dedupe.titleKey;
+    var rn = titleOf ? titleOf(r.name) : norm(r.name);
+    var en = titleOf ? titleOf(ev.name) : norm(ev.name);
+    if (ev.region) {
+      if (!rn || rn !== en || !cityE || cityR !== cityE) return false;
+      // An otherwise equal title/city in different countries is not one stop.
+      function country(v) { var parts = String(v || '').split(','); return parts.length < 2 ? '' : norm(parts.slice(1).join(',').split('(')[0]); }
+      var cr = country(r.place), ce = country(ev.region);
+      if (cr && ce && cr !== ce) return false;
+      return rs < ee && es < re;
+    }
+    // Some official/Leek Duck copies supply no EV.region but explicitly name
+    // the same city in their titles (e.g. Night Out 2026 - London).
+    // Require the complete city and the existing strict source-dedupe verdict;
+    // a generic similarly titled EV cannot hide a separate regional stop.
+    if ((' ' + norm(ev.name) + ' ').indexOf(' ' + cityR + ' ') < 0) return false;
+    return !!dedupe && typeof dedupe.same === 'function' &&
+      dedupe.same({ name: r.name, place: r.place, start: r.start, end: r.end },
+        { name: ev.name, place: '', start: ev.start, end: ev.end }).verdict === 'same';
   }
   function t1Ctx(t) {
     var done = t1Done(), hide = t1Hidden(), tn = +t, soonEnd = tn + 864e5, weekEnd = tn + 7 * 864e5;
