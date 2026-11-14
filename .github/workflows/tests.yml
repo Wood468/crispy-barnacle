@@ -361,3 +361,16 @@ jobs:
           name: production-gopass-visibility
           path: /tmp/gopass-live-check
           if-no-files-found: ignore
+
+  security_preview_760:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Validate live preview HTTP headers and mobile browser
+        env:
+          PREVIEW: https://security-static-html-headers-752-go-field-notes.dylmwood.workers.dev
+        run: |
+          python3 -m pip install playwright==1.58.0
+          python3 -m playwright install --with-deps chromium
+          python3 test/security_preview_760.py

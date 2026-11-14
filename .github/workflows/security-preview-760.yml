@@ -1,0 +1,83 @@
+name: Security preview HTTP and browser acceptance (PR 760)
+on:
+  push:
+    branches: [test/security-preview-http-760]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      PREVIEW: https://security-static-html-headers-752-go-field-notes.dylmwood.workers.dev
+    steps:
+      - name: Verify actual preview HTML response security headers
+        shell: bash
+        run: |
+          set -euo pipefail
+          for path in / /index.html; do
+            echo "Checking ${PREVIEW}${path}"
+            headers="$(mktemp)"
+            status="$(curl --fail --silent --show-error --location --max-time 25 --output /dev/null --dump-header "$headers" --write-out '%{http_code}' "${PREVIEW}${path}")"
+            test "$status" = 200
+            python3 - "$headers" <<'PY'
+          import sys
+          from pathlib import Path
+          raw = Path(sys.argv[1]).read_text().lower()
+          blocks = [block for block in raw.replace("\r", "").split("\n\n") if block.strip()]
+          lines = blocks[-1].splitlines()
+          headers = {}
+          for line in lines[1:]:
+              if ":" in line:
+                  key, value = line.split(":", 1)
+                  headers[key.strip()] = value.strip()
+          expected = {
+              "x-frame-options": "deny",
+              "x-content-type-options": "nosniff",
+              "referrer-policy": "strict-origin-when-cross-origin",
+              "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=()",
+              "strict-transport-security": "max-age=31536000",
+          }
+          for key, value in expected.items():
+              assert headers.get(key) == value, f"{key}: expected {value!r}, got {headers.get(key)!r}"
+          csp = headers.get("content-security-policy", "")
+          for directive in ("default-src 'self'", "script-src 'self'", "object-src 'none'", "frame-ancestors 'none'", "base-uri 'self'", "connect-src 'self'"):
+              assert directive in csp, f"Missing CSP directive: {directive}"
+          assert "'unsafe-eval'" not in csp
+          assert "script-src 'self' 'unsafe-inline'" not in csp
+          print("PASS: six effective security headers, narrow CSP, status 200")
+          PY
+          done
+      - name: Install isolated browser test dependencies
+        run: |
+          python3 -m pip install playwright==1.58.0
+          python3 -m playwright install --with-deps chromium
+      - name: Browser smoke preview without private credentials
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os
+          from playwright.sync_api import sync_playwright
+          url = os.environ["PREVIEW"]
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              page = browser.new_page(viewport={"width": 390, "height": 844}, device_scale_factor=3)
+              errors = []
+              page.on("pageerror", lambda error: errors.append(str(error)))
+              response = page.goto(url + "/", wait_until="domcontentloaded", timeout=45000)
+              assert response is not None and response.status == 200
+              page.wait_for_timeout(3500)
+              assert page.locator("body").is_visible()
+              assert page.locator("body").inner_text().strip(), "Empty app body"
+              assert not errors, f"Uncaught page errors: {errors[:5]}"
+              assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 2"), "390px overflow"
+              manifest = page.locator('link[rel="manifest"]').first
+              assert manifest.count() > 0, "Missing PWA manifest link"
+              manifest_url = manifest.get_attribute("href")
+              assert manifest_url, "Empty manifest URL"
+              manifest_response = page.request.get(manifest_url if manifest_url.startswith("http") else url + "/" + manifest_url.lstrip("/"))
+              assert manifest_response.status == 200, f"Manifest status {manifest_response.status}"
+              print("PASS: mobile 390px HTML, body, no page errors/overflow, manifest reachable")
+              browser.close()
+          PY
