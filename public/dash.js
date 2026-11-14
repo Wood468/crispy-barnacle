@@ -2176,6 +2176,27 @@ function renderHomeBrief(t) {
   }
   function t1Overseas(place) { return !!place && !/australia|melbourne|victoria|sydney|brisbane|perth|adelaide/i.test(place); }
   function t1PlaceKey(place) { return String(place || '').toLowerCase().split(/[,(]/)[0].trim(); }
+  /* Two listings are the same *visible* Today occurrence only with matching
+     event titles, place and overlapping dates. Name-only, fuzzy city-only or
+     hidden/Done source records must never erase an overseas in-person event. */
+  function t1SameRegionalOccurrence(r, ev) {
+    if (!r || !ev || !r.name || !ev.name || !r.place || !ev.region) return false;
+    var keyOf = window.GODEDUPE && window.GODEDUPE.titleKey;
+    function norm(v) { return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+    var rn = keyOf ? keyOf(r.name) : norm(r.name);
+    var en = keyOf ? keyOf(ev.name) : norm(ev.name);
+    if (!rn || rn !== en) return false;
+    // Compare complete first place component, never first word (London != Los Angeles).
+    var cityR = norm(t1PlaceKey(r.place)), cityE = norm(t1PlaceKey(ev.region));
+    if (!cityR || !cityE || cityR !== cityE) return false;
+    // Same city names in different countries are not evidence of one occurrence.
+    function country(v) { var parts = String(v || '').split(','); return parts.length < 2 ? '' : norm(parts.slice(1).join(',').split('(')[0]); }
+    var cr = country(r.place), ce = country(ev.region);
+    if (cr && ce && cr !== ce) return false;
+    var rs = +r.start, re = +r.end, es = +ev.start, ee = +ev.end;
+    return Number.isFinite(rs) && Number.isFinite(re) && Number.isFinite(es) &&
+      Number.isFinite(ee) && rs < re && es < ee && rs < ee && es < re;
+  }
   function t1Ctx(t) {
     var done = t1Done(), hide = t1Hidden(), tn = +t, soonEnd = tn + 864e5, weekEnd = tn + 7 * 864e5;
     function visible(ev) { return announced(ev) && !ev.long && !isHidden(ev.id) && !kindHidden(ev.kind); }
@@ -2190,18 +2211,11 @@ function renderHomeBrief(t) {
       if (ph === 'live') live.push(ev); else if (ev.start <= soonEnd) soon.push(ev); else if (ev.start <= weekEnd) week.push(ev);
     });
     soon.sort(function (a, b) { return a.start - b.start; }); week.sort(function (a, b) { return a.start - b.start; });
-    var evPlaces = EV.filter(function (ev) { return ev.region && (phase(ev, t) !== 'ended') && !/^global$/i.test(ev.region); });
-    function normT(v) { return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
-    function distinct(v) { return normT(v).split(' ').filter(function (w, i, a) { return w.length >= 4 && a.indexOf(w) === i && !/^(pokemon|events?|the|with|from|this|that|2026|2027)$/.test(w); }); }
-    var evNames = Object.create(null); EV.forEach(function (ev) { if (phase(ev, t) !== 'ended') evNames[normT(ev.name)] = 1; });
     function covered(r) {
-      if (evNames[normT(r.name)] || /worldwide|anywhere|global|in the game/i.test(String(r.place || '') + ' ' + String(r.area || ''))) return true;
-      /* Same real-world occurrence reported by two sources: two or more distinctive words (the place counts) in common and overlapping dates.
-         Night Out London and Night Out Los Angeles share only "night", so they stay separate. */
-      var rw = distinct(r.name + ' ' + (r.place || ''));
-      if (EV.some(function (ev) { if (!(+ev.start <= +r.end + 864e5 && +ev.end >= +r.start - 864e5) || phase(ev, t) === 'ended') return false; var ew = distinct(ev.name + ' ' + (ev.region || '')); return rw.filter(function (w) { return ew.indexOf(w) >= 0; }).length >= 2; })) return true;
-      var key = t1PlaceKey(r.place); if (!key) return false;
-      return evPlaces.some(function (ev) { return ev.start <= r.end && ev.end >= r.start && String(ev.region).toLowerCase().indexOf(key.split(' ')[0]) >= 0; });
+      if (/worldwide|anywhere|global|in the game/i.test(String(r.place || '') + ' ' + String(r.area || ''))) return true;
+      // Only a card actually shown in the main Today feed may replace its
+      // identical regional listing; hidden/Done/long/unannounced EV may not.
+      return live.concat(soon, week).some(function (ev) { return t1SameRegionalOccurrence(r, ev); });
     }
     var regLive = [], regSoon = [], regWeek = [];
     regList().forEach(function (r) {
