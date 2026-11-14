@@ -138,10 +138,10 @@ test('London event aliases without a region never hide Los Angeles or a second c
   assert.deepEqual(ids(elsewhere.regLive), ['regional-la']);
   const later = actualToday([fixture],[regional({
     id:'regional-london-later',name:'Pokémon Night Out events in Pokémon GO!: London',
-    place:'London, UK',start:new Date('2026-11-15T12:00:00Z'),
-    end:new Date('2026-11-15T16:00:00Z')
+    place:'London, UK',start:new Date('2026-11-15T20:00:00Z'),
+    end:new Date('2026-11-15T23:00:00Z')
   })]);
-  assert.deepEqual(ids(later.regSoon), ['regional-london-later'],
+  assert.deepEqual(ids(later.regWeek), ['regional-london-later'],
     'distant same-title sessions are not silently deduplicated');
 });
 
