@@ -13,8 +13,8 @@
       "title": "traiols",
       "publishedAt": "2026-11-14T07:30:24.720000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1565048046226505760/traiols.png?ex=6af93cd3&is=6af7eb53&hm=4185dede5c03d95b12fc10c68eaba196340a9737b3c7fbc3dac65a7c80928f51&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "eis ee ue @ a ag sa local time ™y Sty i we) i , ug a 4 lL am - 8:00 pm rey Dvnama~x T tied oo | ee yy All Dynamax Pokémon * that have appeared in Pokémon GO may appear hazy iN 7 | Max Battle in Max Battles. If you’re Oy you might get Special background \\ Cc hariza rd 21 ETERNATUS 19 NOV NOV RETURNS Spotlight Hour 2x Catch Candy ‘Nevember 21, 11:00.am -2:00 pm You can't catch it, you'll get Candy and Candy XL More Power Spots than 7T> Max Particle usual will be active and Te ) collection limit Y will refresh more frequently. N- willincrease. AR Event-themed SS Pokémon 4 The Remote Raid limit 8x Max Particles rz) will increase to 30. coll from Power Spots A chance to receive Max Particles Any Pokémon* that has previously when catching event-themed Pokémon in the wild or after Max Battles. appeared in Dynamax Max Battles may appear in the wild. Won't work with the Explorer Gadget or a GO Plus. co DELUXE i. WS ——— — copass ® free —_ — An encounter with Eternatus ——I -——4 Additional encounters with 2 2 (or candy if you already have it) even more event-themed Dynamax e SAF. - Encounters with event-themed Dynamax — Pokémon with a Special Background! oN “a \"es Pokémon with a Special Background SS Even more Eternatus Candy and Candy XL - Eternatus Candy and Candy XL Silver Pinap Berries Jae revels - Rare Candy, Stardust AND MORE ne ty ay XL AND MORE PF ae ZA aN eo one ~ Trainers who claim the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass",
       "eventMatch": {
@@ -62,7 +62,12 @@
         "posted around the event"
       ],
       "matchScore": 4,
-      "stagedPath": "/infographics/g47ix/discord-1571064747267203145.webp"
+      "stagedPath": "/infographics/g47ix/discord-1571064747267203145.webp",
+      "publishedEvent": "leekduck:dynamax-trails-2026",
+      "publishedEvents": [
+        "leekduck:dynamax-trails-2026"
+      ],
+      "publishedTargets": []
     },
     {
       "id": "discord:1570910396871745627",
@@ -71,15 +76,17 @@
       "title": "Counter 3 machamp",
       "publishedAt": "2026-11-13T21:17:04.718000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570906146879836160/Counter_3_machamp.png?ex=6af8cbdb&is=6af77a5b&hm=86b62ee4bfd798fa48b3c9f2e52baddcc299c2fa54e90a0004f14d31632790c3&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "mm 14-15NOV Modern Jacket 1+ ~ MACHAMP ~~ f- é 19707 CP ~~ “One arm alone can move mountains. Using all four arms, ____this Pokémon fires off awesome punches.” —— = a et eee a: — as Weakness + € @ Spec im Back ee ‘Z =) Y as \\ Difficulty: 1+ trainers needed Pw 44 , 1746 CP %we2183 CP Boost & Cloudy @ Psycho Cut @ Psycho Cut @ Air Slash @ Future Sight+ @ Psystrike [5 @ Dragon ad G ' va | ~~ Be = bl @ Wing Attack @ ZenHea id bu} @ Confusion @ Brave Bird+ @ Psycho Bo@st @ Psychic (5 <¥ Mi sa &® bs a: @ Air Slash @ Air Slash SS @ Psycho Cut @ Drill Peck+ @ Dragon Ascent [5 @ Psystrike [5 a e- =, (4 Follow for more: Remember to use proper counters, Party Play K wt and Zacian’s Adventure Effect if needed. SH) GA7IX © BX | g47ix.pro s",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1570910396871745627.png"
+      "stagedPath": "/infographics/g47ix/discord-1570910396871745627.png",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1570850191790313493",
@@ -205,15 +212,17 @@
       "title": "Checklist",
       "publishedAt": "2026-11-13T12:08:59.067000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570767927190224997/Checklist.png?ex=6af84b21&is=6af6f9a1&hm=4649183c19067573f130b4fe9aeaa26dc5e817ea928d67301b08f69d8c122b45&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "YEW RN Ke 7X Sy Die KN www. 47x pro WUsv Ba og SeT | ow cocoeet COE Li ARIAS iqes af (A ur a us y 5” ¥) a ~ a rae ey rigs Lehe Ras c G a 1a 1, bo 4 ae ‘an @ Poy ~ Fk to 1} $' AL & thevat Te tt (er ( HL® « RRB Boa oye Fk ee rae Follow for more G47|X (fF) iG) ax i) Qo",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1570772464454205525.png"
+      "stagedPath": "/infographics/g47ix/discord-1570772464454205525.png",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1570729091731292201",
