@@ -47,7 +47,7 @@ function cacheControl(pathname) {
 }
 
 test("only stable WebP artwork receives a one-day browser cache", () => {
-  assert.deepEqual([...rules.keys()].sort(), [...expected.keys()].sort());
+  assert.deepEqual([...rules.keys()].filter(pattern => rules.get(pattern).some(value => /^cache-control:/i.test(value))).sort(), [...expected.keys()].sort());
   for (const [pattern, value] of expected) {
     assert.deepEqual(rules.get(pattern), [value], pattern);
   }
@@ -78,4 +78,52 @@ test("mutable entry, code, styles, manifests and public JSON keep default revali
   ]) {
     assert.equal(cacheControl(pathname), null, pathname);
   }
+});
+
+
+test("static HTML receives narrow security headers without changing asset cache rules", () => {
+  const homepage = rules.get("/");
+  assert.ok(homepage, "homepage security rule required");
+  assert.deepEqual(rules.get("/index.html"), homepage, "HTML aliases must share the same policy");
+  const headers = new Map(homepage.map(line => {
+    const separator = line.indexOf(":");
+    assert.ok(separator > 0, "valid header syntax");
+    return [line.slice(0, separator).toLowerCase(), line.slice(separator + 1).trim()];
+  }));
+  assert.equal(headers.size, homepage.length, "duplicate security-header names must be rejected");
+  const expectedSecurityHeaders = new Map([
+    ["x-frame-options", "DENY"],
+    ["x-content-type-options", "nosniff"],
+    ["referrer-policy", "strict-origin-when-cross-origin"],
+    ["permissions-policy", "camera=(), microphone=(), geolocation=(), payment=()"],
+    ["strict-transport-security", "max-age=31536000"]
+  ]);
+  for (const [name, value] of expectedSecurityHeaders) {
+    assert.equal(headers.get(name), value, name);
+  }
+  assert.equal(headers.size, expectedSecurityHeaders.size + 1, "only the expected HTML security headers");
+  const csp = headers.get("content-security-policy");
+  assert.ok(csp, "static homepage must receive CSP");
+  assert.match(csp, /script-src 'self'/);
+  assert.match(csp, /object-src 'none'/);
+  assert.match(csp, /frame-ancestors 'none'/);
+  assert.match(csp, /connect-src 'self' https:\/\/open\.er-api\.com\/v6\/latest\/AUD/);
+  assert.doesNotMatch(csp, /script-src[^;]*'unsafe-inline'|https:\/\/\*/);
+  for (const directive of ["default-src 'self'", "base-uri 'self'", "form-action 'self'", "manifest-src 'self'", "worker-src 'self'"]) {
+    assert.ok(csp.split(";").map(value => value.trim()).includes(directive), directive);
+  }
+  assert.doesNotMatch(csp, /'unsafe-eval'|script-src[^;]*'unsafe-inline'/);
+  assert.equal(csp.split(";").map(value => value.trim()).filter(Boolean).length,
+    new Set(csp.split(";").map(value => value.trim().split(/\s+/)[0]).filter(Boolean)).size,
+    "CSP directives must not be duplicated");
+  assert.equal(headers.has("cache-control"), false, "HTML must retain default revalidation");
+  for (const path of ["/app.js", "/dash.css", "/world-events.json", "/api/events"]) {
+    assert.equal([...rules.keys()].filter(pattern => matches(pattern, path)).length, 0, path);
+  }
+});
+
+test("malformed header patterns and orphan header lines fail closed", () => {
+  assert.throws(() => parseRules("X-Frame-Options: DENY"), /unexpected header pattern/);
+  assert.throws(() => parseRules("  X-Frame-Options: DENY"), /header value must follow a pattern/);
+  assert.throws(() => parseRules("/\n  X-Frame-Options: DENY\n/\n  X-Frame-Options: DENY"), /duplicate header pattern/);
 });

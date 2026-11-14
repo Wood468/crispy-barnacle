@@ -1,3 +1,23 @@
+# Static HTML is served directly by Cloudflare assets, not Worker middleware.
+# Keep this policy aligned with SECURITY_HEADERS in src/worker.js and IMAGE_CSP_HOSTS in src/image-policy.js.
+# Only HTML receives this CSP; API routes retain Worker-applied headers.
+
+/
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://play.pokemonshowdown.com https://archives.bulbagarden.net https://static.pokebattler.com https://leekduck.com https://cdn.leekduck.com https://lh3.googleusercontent.com https://storage.googleapis.com; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Strict-Transport-Security: max-age=31536000
+
+/index.html
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://play.pokemonshowdown.com https://archives.bulbagarden.net https://static.pokebattler.com https://leekduck.com https://cdn.leekduck.com https://lh3.googleusercontent.com https://storage.googleapis.com; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Strict-Transport-Security: max-age=31536000
+
 # These image paths are stable identifiers, not content-hashed filenames.
 # Use a short browser TTL for repeat visits; do not mark them immutable because a
 # replacement image may be published at the same path in a later release.
