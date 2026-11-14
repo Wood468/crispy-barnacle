@@ -87,9 +87,11 @@ export function diffStore(prev, snap, nowIso) {
   const previousCount = Object.keys(old).length;
   const incomingKeys = new Set(incoming.map(key).filter(Boolean));
   const matchedCount = Object.keys(old).filter(k => incomingKeys.has(k)).length;
-  const incomplete = previousCount >= 10 &&
-    incomingKeys.size < Math.ceil(previousCount * 0.5) &&
-    matchedCount < Math.ceil(previousCount * 0.5);
+  // Missing SKUs are not proof of retirement unless the producer supplies
+  // explicit trustworthy completeness evidence. A size threshold can falsely
+  // retire products from a partially rendered storefront (35→20 or 9→3).
+  const missingCount = previousCount - matchedCount;
+  const incomplete = missingCount > 0 && snap.completeness?.verified !== true;
   if (incomplete) {
     return {
       state: { ...prev, updated: nowIso },
@@ -125,7 +127,7 @@ export function diffStore(prev, snap, nowIso) {
   const keep = Object.entries(history).sort((a, b) => String(b[1].goneAt).localeCompare(String(a[1].goneAt))).slice(0, 150);
   const watchStart = (prev && prev.watchStart) || (prev && prev.items ? Object.values(prev.items).map(o => o.firstSeen).sort()[0] : nowIso);
   return {
-    state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso, currency: cur || base },
+    state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso, currency: cur || base, ...(prev?.lastPublishedAt ? { lastPublishedAt: prev.lastPublishedAt } : {}) },
     added, changed, gone, first: !prev || !prev.items, reset
   };
 }
