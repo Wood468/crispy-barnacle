@@ -122,6 +122,93 @@ def test_real_today_renderer_geometry():
         finally:
             browser.close()
 
+
+def test_hidden_done_restore_rows_geometry():
+    """Real Today renderer: long in-person names, metadata, and distinct Restore controls.
+
+    Cover the regressions in #761 in Chromium and WebKit at every supported
+    phone width. A text-only/CSS-selector assertion can pass even if the
+    on-screen event label collides with its venue or Restore control.
+    """
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as playwright:
+        engine = playwright.webkit if os.getenv("TODAY_ART_WEBKIT_ONLY") else playwright.chromium
+        browser = engine.launch()
+        try:
+            for width in (320, 360, 390, 430):
+                page = browser.new_page(viewport={"width": width, "height": 800}, device_scale_factor=2)
+                page.set_content(
+                    '<!doctype html><html><head><meta name="viewport" '
+                    'content="width=device-width,initial-scale=1"></head>'
+                    '<body style="margin:0;background:#0c1119;color:white">'
+                    '<main id="tab-now" style="padding:12px">'
+                    '<div class="t1" id="today-root"></div></main></body></html>'
+                )
+                page.add_style_tag(content=CSS)
+                page.add_script_tag(content=(ROOT / "public" / "today-logic.js").read_text())
+                page.add_script_tag(content=(ROOT / "public" / "today.js").read_text())
+                page.evaluate("""() => {
+                  const name = 'Pokémon GO City Safari — A deliberately long, fully translated ' +
+                    'international event name for Osaka, Sendai/Tohoku and Mexico City';
+                  const when = 'In person · Osaka, Japan · Overseas · Saturday, 14 November 2026';
+                  const now = Date.UTC(2026, 10, 14, 10);
+                  const ctx = {
+                    now, live:[], soon:[], week:[], regLive:[], regSoon:[], regWeek:[],
+                    boosts:{live:[],upcoming:[]}, seasons:[], ending:[],
+                    hidden:[{key:'osaka@2026-11-14T00:00:00.000Z',name,when}],
+                    done:[{key:'sendai@2026-11-14T00:00:00.000Z',name,when}],
+                    kindOf:()=>['In person','#27a4b0'], overseas:()=>true,
+                    dayLabel:()=> 'Saturday', fallbackArt:()=>'', monArt:()=>''
+                  };
+                  document.querySelector('#today-root').innerHTML = GOTODAY.render(ctx);
+                }""")
+                result = page.evaluate("""() => {
+                  const rows = [
+                    document.querySelector('.t1-hidden .t1-done-list li'),
+                    document.querySelector('.t1-done:not(.t1-hidden) .t1-done-list li')
+                  ];
+                  const rect = el => el.getBoundingClientRect();
+                  return {
+                    noPageOverflow: document.documentElement.scrollWidth <= innerWidth + 1,
+                    noTracking: !document.querySelector('#today-root [data-track], #today-root [data-follow]'),
+                    rowCount: rows.filter(Boolean).length,
+                    rows: rows.filter(Boolean).map((li, i) => {
+                      const label = li.querySelector(':scope > span:first-child');
+                      const secondary = label && label.querySelector('small');
+                      const button = li.querySelector('button.t1-restore');
+                      if (!label || !secondary || !button || !label.firstChild) return {valid:false};
+                      const title = document.createRange();
+                      title.selectNode(label.firstChild);
+                      const tr = title.getBoundingClientRect(), mr = rect(secondary);
+                      const lr = rect(label), br = rect(button), rr = rect(li);
+                      return {
+                        valid: true,
+                        titleBeforeMetadata: tr.bottom <= mr.top + 1,
+                        metadataOwnLine: getComputedStyle(label).display === 'grid' &&
+                          getComputedStyle(secondary).display === 'block',
+                        labelClearOfButton: lr.right <= br.left + 1,
+                        titleInsideLabel: tr.left >= lr.left - 1 && tr.right <= lr.right + 1,
+                        rowInsideViewport: rr.left >= -1 && rr.right <= innerWidth + 1,
+                        buttonInsideRow: br.left >= rr.left - 1 && br.right <= rr.right + 1,
+                        buttonTouchSized: br.width >= 44 && br.height >= 44,
+                        metadataPreserved: ['In person','Osaka, Japan','Overseas'].every(
+                          s => secondary.textContent.includes(s)),
+                        exactAction: i === 0
+                          ? !!button.getAttribute('data-t1-unhide')
+                          : !!button.getAttribute('data-t1-undo'),
+                        accessibleAction: button.getAttribute('aria-label')?.startsWith('Restore ')
+                      };
+                    })
+                  };
+                }""")
+                assert result["rowCount"] == 2 and result["noPageOverflow"] and result["noTracking"], (
+                    engine.name, width, result)
+                assert all(all(row.values()) for row in result["rows"]), (engine.name, width, result)
+                page.close()
+        finally:
+            browser.close()
+
 if __name__ == '__main__':
     test_compact_today_artwork_contained()
     test_real_today_renderer_geometry()
+    test_hidden_done_restore_rows_geometry()
