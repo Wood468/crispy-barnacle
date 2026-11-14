@@ -25,11 +25,11 @@ def test_compact_today_artwork_contained():
                       <div class="t1-minor-art"><span class="art-fb" style="width:150px;height:150px">
                         <img class="art" src="{PNG}" alt="Featured Pokémon"><span class="form-chip">Special form</span>
                       </span></div>
-                      <a class="t1-open" href="#"><strong class="t1-title">GO Wild Area: Global — A very long localized event title that must wrap</strong><small>Starts in 1h 33m</small></a>
+                      <a class="t1-open" href="#"><strong class="t1-title">A small activity — A very long localized title that must wrap</strong><small>Starts in 1h 33m</small></a>
                       <span aria-label="shiny">✦</span><button class="t1-more" type="button">⋯</button>
                     </article>
                     <article class="t1-card t1-major"><div class="t1-major-art" style="height:100px;background:#23326a"></div>
-                      <a class="t1-open" href="#">Minior Showers: Leonids</a></article>
+                      <a class="t1-open" href="#">A multi-feature flagship</a></article>
                     </div></section><section class="t1-sec"><h2>NEXT 7 DAYS</h2></section>
                     </div></main></body></html>""")
                     page.add_style_tag(content=CSS)
@@ -75,13 +75,15 @@ def test_real_today_renderer_geometry():
                 page.add_script_tag(content=(ROOT / "public" / "today.js").read_text())
                 page.evaluate("""(png) => {
                   const now = Date.UTC(2026,10,14,10), hour = 3600000;
-                  const minor = {id:'fixture-compact',name:'GO Wild Area: Global — long compact artwork containment fixture',
-                    kind:'spot',start:now+hour,end:now+2*hour,region:'Global',
-                    featured:[{name:'Fixture Pokémon'}],tags:[]};
-                  const major = {id:'fixture-major',name:'Minior Showers: Leonids — major card fixture',
-                    kind:'event',start:now+hour,end:now+48*hour,region:'Global',
-                    featured:[{name:'Minior'}],tags:[]};
-                  const ctx = {now,live:[],soon:[minor,major],week:[],regLive:[],regSoon:[],regWeek:[],
+                  // Real normalization: worldwide Wild Area is 'global'; multi-day
+                  // single-Pokémon activity remains compact even with a debut tag.
+                  const major = {id:'fixture-global',name:'GO Wild Area: Global',
+                    kind:'global',start:now-hour,end:now+48*hour,region:'Global',
+                    featured:[{name:'Toxtricity'}],tags:[]};
+                  const minor = {id:'fixture-minior',name:'Minior Showers: Leonids',
+                    kind:'event',start:now+hour,end:now+5*24*hour,region:'Global',
+                    featured:[{name:'Minior'}],tags:['Debut']};
+                  const ctx = {now,live:[major],soon:[minor],week:[],regLive:[],regSoon:[],regWeek:[],
                     boosts:{live:[],upcoming:[]},seasons:[],done:[],hidden:[],ending:[],
                     kindOf:()=>['Event','#27a4b0'],overseas:()=>false,dayLabel:()=> 'Saturday',
                     fallbackArt:()=>'',monArt:()=>'<span class="art-fb" style="width:150px;height:150px"><img class="art" src="'+png+'" alt="Featured Pokémon"><span class="form-chip">Special form</span></span>'};
@@ -90,12 +92,12 @@ def test_real_today_renderer_geometry():
                 # Wait for the renderer-inserted data-URI image to decode before measuring.
                 # Keep the actual image-visibility assertion below.
                 page.wait_for_function("""() => {
-                  const img = document.querySelector('[data-id="fixture-compact"] .t1-minor-art img');
+                  const img = document.querySelector('[data-id="fixture-minior"] .t1-minor-art img');
                   return !!img && img.complete && img.naturalWidth > 0;
                 }""", timeout=10000)
                 result = page.evaluate("""() => {
-                  const compact = document.querySelector('[data-id="fixture-compact"]');
-                  const majorCard = document.querySelector('[data-id="fixture-major"]');
+                  const compact = document.querySelector('[data-id="fixture-minior"]');
+                  const majorCard = document.querySelector('[data-id="fixture-global"]');
                   const slot = compact && compact.querySelector('.t1-minor-art');
                   const menu = compact && compact.querySelector('.t1-more');
                   const title = compact && compact.querySelector('.t1-title');
@@ -107,7 +109,11 @@ def test_real_today_renderer_geometry():
                     slotWithinCard:!!a&&a.left>=c.left-1&&a.right<=c.right+1&&a.top>=c.top-1&&a.bottom<=c.bottom+1,
                     slotContained:!!slot&&getComputedStyle(slot).overflow==='hidden',
                     imageVisible:!!slot&&!!slot.querySelector('img')&&slot.querySelector('img').naturalWidth>0,
-                    separated:!!majorCard&&c.bottom<=rect(majorCard).top+1,
+                    separated:!!majorCard&&rect(majorCard).bottom<=c.top+1,
+                    majorArtworkAboveCopy:!!majorCard&&!!majorCard.querySelector(':scope > .t1-major-art')&&
+                      rect(majorCard.querySelector(':scope > .t1-major-art')).bottom<=
+                      rect(majorCard.querySelector(':scope > .t1-open')).top+1,
+                    majorLargerThanMinor:!!majorCard&&rect(majorCard).height>c.height,
                     titleClear:!!title&&!!menu&&!overlap(rect(title),rect(menu)),
                     noOverflow:document.documentElement.scrollWidth<=innerWidth+1};
                 }""")
