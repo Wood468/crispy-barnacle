@@ -57,3 +57,12 @@ test("confirmed complete 35-to-34 observation may retire exactly one SKU", () =>
   assert.equal(d.gone.length,1);
   assert.equal(Object.keys(d.state.items).length,34);
 });
+
+
+test("unverified 35-to-34 absence cannot retire a SKU", () => {
+  const d = diffStore(previous,{items:Array.from({length:34},(_,n)=>item(n))},at);
+  assert.ok(d.held);
+  assert.equal(d.gone.length,0);
+  assert.equal(Object.keys(d.state.items).length,35);
+  assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
+});
