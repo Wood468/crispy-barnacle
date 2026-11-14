@@ -115,6 +115,36 @@ test('invalid EV dates and unknown EV region do not suppress a valid overseas ev
   }
 });
 
+test('same sourced London Night Out under aliased titles deduplicates despite missing EV region and a timezone gap', () => {
+  const ctx = actualToday(
+    [card({id:'leekduck:night-out-london', name:'Pokémon Night Out 2026 - London',
+      region:'', start:new Date('2026-11-14T18:00:00Z'),
+      end:new Date('2026-11-15T00:30:00Z')})],
+    [regional({id:'world:night-out-london', name:'Pokémon Night Out events in Pokémon GO!: London',
+      place:'London, UK', start:new Date('2026-11-14T11:00:00Z'),
+      end:new Date('2026-11-14T16:00:00Z')})]);
+  assert.deepEqual(ids(ctx.soon),['leekduck:night-out-london']);
+  assert.deepEqual(ids(ctx.regLive), [], 'two source copies of one London event render once');
+});
+
+test('London event aliases without a region never hide Los Angeles or a second calendar date', () => {
+  const fixture = card({id:'leekduck:night-out-london', name:'Pokémon Night Out 2026 - London',
+    region:'',start:new Date('2026-11-14T18:00:00Z'),
+    end:new Date('2026-11-15T00:30:00Z')});
+  const elsewhere = actualToday([fixture],[regional({
+    id:'regional-la',name:'Pokémon Night Out events in Pokémon GO!: Los Angeles',
+    place:'Los Angeles, USA'
+  })]);
+  assert.deepEqual(ids(elsewhere.regLive), ['regional-la']);
+  const later = actualToday([fixture],[regional({
+    id:'regional-london-later',name:'Pokémon Night Out events in Pokémon GO!: London',
+    place:'London, UK',start:new Date('2026-11-15T12:00:00Z'),
+    end:new Date('2026-11-15T16:00:00Z')
+  })]);
+  assert.deepEqual(ids(later.regSoon), ['regional-london-later'],
+    'distant same-title sessions are not silently deduplicated');
+});
+
 test('Today regional dedupe only considers displayed EV cards, never all source records', () => {
   assert.match(todayContextSource, /live\.concat\(soon,\s*week\)/);
   assert.doesNotMatch(todayContextSource, /evNames\[normT\(r\.name\)\]/);
