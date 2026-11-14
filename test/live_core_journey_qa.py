@@ -16,7 +16,7 @@ from playwright.sync_api import sync_playwright
 
 BASE = os.environ.get("GOFN_ART_QA_URL", "https://pogo.michaelpuff.com").rstrip("/")
 OUT = Path(os.environ.get("GOFN_CORE_QA_OUT", "artifacts/live-core-mobile"))
-WIDTHS = (360, 390, 430)
+WIDTHS = (320, 360, 390, 430)
 
 
 def screenshot(page, width: int, label: str, failures: list) -> None:
