@@ -6,7 +6,7 @@ import { applyLineCorrections } from '../scripts/importer/corrections.mjs';
 const corrections = JSON.parse(readFileSync(new URL('../data/line-corrections.json', import.meta.url), 'utf8')).lines;
 const details = JSON.parse(readFileSync(new URL('../public/event-details.json', import.meta.url), 'utf8')).events;
 
-test('a secondary-source line a stronger source does not confirm is rewritten, others untouched', () => {
+test('secondary-source raid wording normalizes to the verified both-day Shiny claim without altering other lines', () => {
   const events = { a: { fields: { raids: [{ text: corrections[0].match, sources: ['leekduck'], status: 'single' }, { text: 'Other line', sources: [] }] } } };
   assert.equal(applyLineCorrections(events, corrections), 1);
   assert.match(events.a.fields.raids[0].text, /both event days and may be Shiny/);
