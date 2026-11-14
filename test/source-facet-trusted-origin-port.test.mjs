@@ -30,7 +30,7 @@ const staged=sourceRefs=>({
 
 test('normalization rejects different-origin HTTPS ports from both trusted publishers',()=>{
   for(const [sourceId,base] of examples){
-    const poisoned=base.replace('://','://').replace('.com/','.com:8443/');
+    const poisoned=base.replace('.com/','.com:8443/');
     const output=normalizeEventSourceFacets('synthetic-event',[sourceRecord(sourceId,poisoned)]);
     assert.equal(output.benefits.length,0,sourceId+' port-based source impersonation');
     assert.ok(output.warnings.some(w=>w.reason==='source-mismatch'),sourceId+' rejected evidence');
