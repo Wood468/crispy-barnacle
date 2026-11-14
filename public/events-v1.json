@@ -7468,7 +7468,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 170,
+    "revision": 172,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -28442,7 +28442,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 185,
+    "revision": 187,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -34559,14 +34559,6 @@
     "fields": {
      "bonuses": [
       {
-       "text": "Claim Reward! | 1 × Star Piece",
-       "sources": [
-        "hub",
-        "leekduck"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "1000 Stardust for catching Minior",
        "sources": [
         "hub"
@@ -34609,6 +34601,13 @@
        "status": "single"
       },
       {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Use a Star Piece | 7740 × Stardust",
        "sources": [
         "hub"
@@ -34621,29 +34620,16 @@
         "hub"
        ],
        "status": "single"
-      },
-      {
-       "text": "Event-exclusive Timed Research for very lucky Trainers",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "If Timed Research is added, tasks must be completed and all rewards claimed by November 19, 2026, at 11:59 p.m. local time .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "featured": [
       {
-       "text": "The second Minior to make their Pokémon GO debut during the Leonid Meteor Shower is ??? Core Minior.",
+       "text": "The second Minior to make their Pokémon GO debut during the Leonid Meteor Shower is Yellow Core Minior.",
        "sources": [
-        "hub"
+        "hub",
+        "leekduck"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Minior (Yellow Core) will make its Pokémon GO debut during the Leonids meteor shower, beginning November 14, 2026, at 5:00 p.m. local time !",
@@ -34678,15 +34664,14 @@
      "eggs": [],
      "research": [
       {
-       "text": "Claim Reward! | 1 × Star Piece",
+       "text": "Task | Rewards",
        "sources": [
-        "hub",
-        "leekduck"
+        "hub"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
-       "text": "Task | Rewards",
+       "text": "Claim Reward! | 1 × Star Piece",
        "sources": [
         "hub"
        ],
@@ -34707,14 +34692,7 @@
        "status": "single"
       },
       {
-       "text": "No Timed Research: There is currently no Timed Research during the Leonids. If Timed Research is added, it’s expected to be the same as during the Orionids, shown below.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Event-exclusive Timed Research",
+       "text": "No Timed Research: There is no Timed Research during the Leonids. The Minior Shower Timed Research was only available during the Orionids , the introductory event for Minior Showers.",
        "sources": [
         "leekduck"
        ],
@@ -34788,8 +34766,8 @@
      "end": "2026-11-19T23:59"
     },
     "imageReviewed": true,
-    "contentHash": "2795349441220fca6146be65fd5f30fc6e3083536ad81b3430581282abd2d2e5",
-    "revision": 10,
+    "contentHash": "eea1b8992eee5f45b6586761231060f799583ad46368028d0b1dab8f3b75cad4",
+    "revision": 11,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -34797,14 +34775,6 @@
    "schedule": null,
    "activities": [],
    "bonuses": [
-    {
-     "text": "Claim Reward! | 1 × Star Piece",
-     "sources": [
-      "hub",
-      "leekduck"
-     ],
-     "status": "corroborated"
-    },
     {
      "text": "1000 Stardust for catching Minior",
      "sources": [
@@ -34848,6 +34818,13 @@
      "status": "single"
     },
     {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
      "text": "Use a Star Piece | 7740 × Stardust",
      "sources": [
       "hub"
@@ -34858,20 +34835,6 @@
      "text": "Rewards | 1000000 × Stardust",
      "sources": [
       "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Event-exclusive Timed Research for very lucky Trainers",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "If Timed Research is added, tasks must be completed and all rewards claimed by November 19, 2026, at 11:59 p.m. local time .",
-     "sources": [
-      "leekduck"
      ],
      "status": "single"
     }
@@ -35126,15 +35089,14 @@
      "checkedAt": "2026-11-14"
     },
     {
-     "text": "Claim Reward! | 1 × Star Piece",
+     "text": "Task | Rewards",
      "sources": [
-      "hub",
-      "leekduck"
+      "hub"
      ],
-     "status": "corroborated"
+     "status": "single"
     },
     {
-     "text": "Task | Rewards",
+     "text": "Claim Reward! | 1 × Star Piece",
      "sources": [
       "hub"
      ],
@@ -35155,14 +35117,7 @@
      "status": "single"
     },
     {
-     "text": "No Timed Research: There is currently no Timed Research during the Leonids. If Timed Research is added, it’s expected to be the same as during the Orionids, shown below.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Event-exclusive Timed Research",
+     "text": "No Timed Research: There is no Timed Research during the Leonids. The Minior Shower Timed Research was only available during the Orionids , the introductory event for Minior Showers.",
      "sources": [
       "leekduck"
      ],
@@ -60237,7 +60192,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 162,
+    "revision": 164,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -62974,7 +62929,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 170,
+    "revision": 172,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -70347,7 +70302,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 162,
+    "revision": 164,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -72400,6 +72355,13 @@
       },
       {
        "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The wild mighty Pokémon lineup changes each day. Mighty Pokémon reportedly appear slightly more often in the last 15 minutes of each event day, from 5:45 p.m. to 6:00 p.m. local time.",
        "sources": [
         "leekduck"
        ],
@@ -76443,6 +76405,13 @@
       },
       {
        "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The wild mighty Pokémon lineup changes each day. Mighty Pokémon reportedly appear slightly more often in the last 15 minutes of each event day, from 5:45 p.m. to 6:00 p.m. local time.",
        "sources": [
         "leekduck"
        ],
