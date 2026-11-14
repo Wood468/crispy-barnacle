@@ -2201,16 +2201,19 @@ function renderHomeBrief(t) {
     }
     // Some official/Leek Duck copies supply no EV.region but explicitly name
     // the same city in their titles (e.g. Night Out 2026 - London).
-    // Require the complete city and the existing strict source-dedupe verdict;
+    // Require complete city + canonical title tokens; never fuzzy words alone.
     // a generic similarly titled EV cannot hide a separate regional stop.
     if ((' ' + norm(ev.name) + ' ').indexOf(' ' + cityR + ' ') < 0) return false;
     // Day-level sources may differ by hours across zones, but widely separated
     // times are insufficient evidence of one real-world occurrence.
     var gap = Math.max(0, Math.max(rs, es) - Math.min(re, ee));
     if (gap > 12 * 3600e3) return false;
-    return !!dedupe && typeof dedupe.same === 'function' &&
-      dedupe.same({ name: r.name, place: r.place, start: r.start, end: r.end },
-        { name: ev.name, place: '', start: ev.start, end: ev.end }).verdict === 'same';
+    if (!dedupe || typeof dedupe.tokens !== 'function') return false;
+    var ra = Object.keys(dedupe.tokens(r.name)).sort();
+    var ea = Object.keys(dedupe.tokens(ev.name)).sort();
+    // Require the same *complete* distinctive title tokens. Fuzzy similarity
+    // can hide a different activity even when the city and day also match.
+    return ra.length >= 2 && ra.join('|') === ea.join('|');
   }
   function t1Ctx(t) {
     var done = t1Done(), hide = t1Hidden(), tn = +t, soonEnd = tn + 864e5, weekEnd = tn + 7 * 864e5;
