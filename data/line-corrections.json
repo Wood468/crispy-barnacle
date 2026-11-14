@@ -1,9 +1,3 @@
 {
-  "lines": [
-    {
-      "match": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
-      "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
-      "reason": "The official GO Wild Area: Global page marks Modern Jacket Machamp as Shiny-eligible in three-star raids; its published event schedule and Leek Duck confirm availability on both days (https://pokemongo.com/gowildarea/global)."
-    }
-  ]
+  "lines": []
 }
