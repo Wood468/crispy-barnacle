@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
+from live_banner_readiness import wait_for_today_banner_art
 
 BASE = os.environ.get("GOFN_ART_QA_URL", "https://pogo.michaelpuff.com").rstrip("/")
 OUT = Path(os.environ.get("GOFN_CORE_QA_OUT", "artifacts/live-core-mobile"))
@@ -58,7 +59,10 @@ def inspect(page, width: int, failures: list) -> dict:
         "#today-v1 .ue-mon-controls"
     ).count() == 0, f"{width}px: forbidden tracking controls on Today"
     no_overflow(page, width, "Today")
-    row["screens"]["today"] = {"cards": cards, "overview_tiles": 3}
+    # A ready Today DOM does not mean its async official banner has decoded.
+    # Do not produce a misleading blank 320px acceptance screenshot.
+    art = wait_for_today_banner_art(page, width)
+    row["screens"]["today"] = {"cards": cards, "overview_tiles": 3, "banner_art": art}
     screenshot(page, width, "today", failures)
 
     # The primary touch navigation must remain reachable and named on iPhone.
