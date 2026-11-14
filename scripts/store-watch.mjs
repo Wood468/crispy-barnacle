@@ -55,7 +55,33 @@ export function dominantCurrency(prices) {
   return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
 }
 
+export function validateStoreObservation(snap) {
+  if (!Array.isArray(snap?.items) || snap.items.length < 3) return "empty-or-short-snapshot";
+  const seen = new Set();
+  const currencies = new Set();
+  for (const i of snap.items) {
+    if (!i || typeof i !== "object" || typeof i.name !== "string" || !i.name.trim() ||
+        typeof i.price !== "string" || !i.price.trim() ||
+        typeof i.section !== "string" || !i.section.trim() ||
+        (typeof i.href !== "string" && typeof i.href !== "undefined")) return "invalid-sku";
+    const k = key(i);
+    if (!k || seen.has(k)) return "duplicate-sku";
+    seen.add(k);
+    const currency = currencyOf(i.price);
+    if (!currency) return "missing-currency";
+    currencies.add(currency);
+  }
+  if (currencies.size !== 1) return "mixed-currency";
+  return null;
+}
+
 export function diffStore(prev, snap, nowIso) {
+  const invalid = validateStoreObservation(snap);
+  if (invalid) return {
+    state: { ...(prev || {}), updated: nowIso },
+    added: [], changed: [], gone: [], first: false,
+    held: { reason: invalid }
+  };
   const old = (prev && prev.items) || {};
   const base = prev && prev.items
     ? (prev.currency || dominantCurrency(Object.values(prev.items).map(o => o.price)))
