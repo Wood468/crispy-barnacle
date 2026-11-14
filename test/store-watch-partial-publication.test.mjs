@@ -66,3 +66,20 @@ test("unverified 35-to-34 absence cannot retire a SKU", () => {
   assert.equal(Object.keys(d.state.items).length,35);
   assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
 });
+
+for (const [label, items] of [
+  ["empty", []],
+  ["two-item", [item(0),item(1)]],
+  ["duplicate SKU", [item(0),item(0),item(2)]],
+  ["invalid item", [item(0),{...item(1),price:""},item(2)]],
+  ["missing section", [item(0),{...item(1),section:""},item(2)]],
+  ["mixed currencies", [item(0),{...item(1),price:"US$1.00"},item(2)]]
+]) {
+  test(`untrusted ${label} scrape cannot retire or publish listings`, () => {
+    const d = diffStore(previous, {items}, at);
+    assert.ok(d.held, "invalid observation must be held");
+    assert.equal(d.gone.length,0);
+    assert.equal(Object.keys(d.state.items).length,35);
+    assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
+  });
+}
