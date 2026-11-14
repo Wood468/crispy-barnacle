@@ -80,6 +80,24 @@ export function diffStore(prev, snap, nowIso) {
     }
   }
 
+  // A partially rendered storefront is not evidence that previously listed SKUs
+  // disappeared. Preserve the last complete observation and its publication
+  // timestamp rather than emitting false retirement events.
+  const incoming = Array.isArray(snap.items) ? snap.items : [];
+  const previousCount = Object.keys(old).length;
+  const incomingKeys = new Set(incoming.map(key).filter(Boolean));
+  const matchedCount = Object.keys(old).filter(k => incomingKeys.has(k)).length;
+  const incomplete = previousCount >= 10 &&
+    incomingKeys.size < Math.ceil(previousCount * 0.5) &&
+    matchedCount < Math.ceil(previousCount * 0.5);
+  if (incomplete) {
+    return {
+      state: { ...prev, updated: nowIso },
+      added: [], changed: [], gone: [], first: false,
+      held: { reason: "incomplete-snapshot", previousCount, incomingCount: incomingKeys.size }
+    };
+  }
+
   const next = {}, added = [], changed = [], gone = [];
   for (const i of snap.items) {
     const k = key(i), o = old[k];
@@ -189,7 +207,7 @@ async function main() {
     }
   }
   if (d.held) {
-    console.log("Store is showing " + d.held.cur + " prices instead of " + d.held.base + "; ignoring this reading (no alerts, saved prices kept).");
+    console.log(d.held.reason === "incomplete-snapshot" ? "Store snapshot incomplete; retaining prior listings without removals." : "Store is showing " + d.held.cur + " prices instead of " + d.held.base + "; ignoring this reading (no alerts, saved prices kept).");
     if (d.held.isNew && token && chat && process.env.DRY_RUN !== "true") {
       await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", {
         method: "POST",
