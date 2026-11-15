@@ -273,9 +273,15 @@ export function preserveGoPassRows(out, old, byEvent) {
 //     RETENTION_CONFIRM_DAYS before `now`, and the source is still fully read and
 //     showing no research ("none"). A source with status "ok" parsed fine and
 //     simply no longer lists the task, so it is an ordinary removal.
-//   * Report reasons: unfetched, incomplete, none-unconfirmed (retained); removal-confirmed
-//     (persisted 7-day "none"), source-ok-removed (source parsed "ok" without the task),
-//     event-ended, window-mismatch, name-mismatch (dropped).
+//   * An EXPLICIT denial is positive evidence and needs no wait: a fully read, non-truncated
+//     page that is this event's own page (its detail id or link) whose research section says
+//     "No Timed Research ..." (researchParse.explicitNone) confirms removal immediately, provided
+//     every source of the task is ok, itself a denial, or "none" with researchKeywords === false
+//     (no Timed/Special/Field Research or Task wording on the fully read page; a parser miss has it). Other sources supplying tasks never reach
+//     here (merged research would not be empty).
+//   * Report reasons: unfetched, incomplete, none-unconfirmed (retained); source-denies
+//     (explicit denial), removal-confirmed (persisted 7-day "none"), source-ok-removed (source
+//     parsed "ok" without the task), event-ended, window-mismatch, name-mismatch (dropped).
 //   * Once the event has ended (stamped task window end or current event end is
 //     before today) nothing is carried: stale research is pointless.
 // Only tasks with an explicit source URL are eligible; a stamped id, name or window
@@ -292,6 +298,14 @@ function taskBelongsTo(task, id, now, event) {
   const w = task.eventWindow;
   return !w || !event || (samePlace(day(w.start), day(event.start)) && samePlace(day(w.end), day(event.end))) ? "" : "window-mismatch";
 }
+// Is `source` this event's own write-up (its stable detail id, or its link)? A shared page never denies an event it merely covers.
+function ownsPage(event, source) {
+  if (!event || !source?.url) return false;
+  const url = normUrl(source.url);
+  if ([event.link, event.sourceUrl].some(link => link && normUrl(link) === url)) return true;
+  const detailId = pageDetailId({ source: source.id, url: source.url });
+  return !!detailId && Array.isArray(event.detailIds) && event.detailIds.includes(detailId);
+}
 export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt = new Date().toISOString(), report = [] } = {}) {
   const today = day(runAt);
   for (const [id, group] of byEvent) {
@@ -299,20 +313,23 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt =
     if (!now || !before || (now.researchTasks || []).length) continue;
     const backed = (before.researchTasks || []).filter(task => task && typeof task === "object" && Array.isArray(task.sourceRefs) && task.sourceRefs.some(ref => /^https:\/\//.test(ref.url || "")));
     if (!backed.length) continue;
-    const health = new Map(), sources = [];
+    const health = new Map(), sources = []; let denied = false;
     for (const r of group.results) {
       const url = normUrl(r.source?.url || "");
       if (!url) continue;
       const p = r.fields?.researchParse, status = p?.status ?? null, truncated = !!p?.truncated;
-      sources.push({ url: r.source.url, status, truncated, candidateRows: p?.candidateRows ?? null, headings: p?.headings ?? null, table: p?.table ?? null, ...(typeof p?.sample === "string" ? { sample: p.sample.slice(0, 600) } : {}) });
-      // ok: parsed. none: fully read, nothing recognised. anything else (incl. truncated): incomplete.
-      const kind = truncated ? "incomplete" : status === "ok" ? "ok" : status === "none" ? "none" : "incomplete";
-      const prior = health.get(url);
-      health.set(url, prior === "incomplete" || kind === "incomplete" ? "incomplete" : prior === "none" || kind === "none" ? "none" : "ok");
+      const ownDenial = p?.explicitNone === true && status === "explicit-none" && !truncated && ownsPage(group.event, r.source);
+      if (ownDenial) denied = true;
+      sources.push({ url: r.source.url, status, truncated, candidateRows: p?.candidateRows ?? null, headings: p?.headings ?? null, table: p?.table ?? null, ...(p?.explicitNone === true ? { explicitNone: true } : {}), ...(p?.researchKeywords === false ? { researchKeywords: false } : {}), ...(typeof p?.sample === "string" ? { sample: p.sample.slice(0, 600) } : {}) });
+      // ok: parsed. none: fully read, nothing recognised (also a denial on a page that is not this event's own). denied: own page says there is none. anything else (incl. truncated): incomplete.
+      const kind = truncated ? "incomplete" : status === "ok" ? "ok" : status === "none" && p?.researchKeywords === false ? "none-clean" : status === "none" || (status === "explicit-none" && !ownDenial) ? "none" : ownDenial ? "denied" : "incomplete";
+      const prior = health.get(url), rank = ["ok", "denied", "none-clean", "none", "incomplete"];
+      health.set(url, prior && rank.indexOf(prior) > rank.indexOf(kind) ? prior : kind);
     }
     const firstRetained = Date.parse(before.researchRetainedAt || "");
     const confirmed = Number.isFinite(firstRetained) && Date.parse(runAt) - firstRetained >= RETENTION_CONFIRM_DAYS * 864e5;
     const entry = { id, name: before.name ?? now.name, oldTasks: backed.length, retained: false, reason: "source-ok-removed", sources };
+    let deniedDrop = false;
     const filtered = new Set(); // why tasks were dropped before health was consulted
     const seen = new Set();
     let incomplete = false, unconfirmed = false, confirmedNone = false;
@@ -321,8 +338,12 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt =
       if (mismatch) { filtered.add(mismatch); return false; }
       const end = [day(task.eventWindow?.end), day(group.event?.end)].filter(Boolean);
       if (end.some(value => value < today)) { filtered.add("event-ended"); return false; }
-      const kinds = task.sourceRefs.filter(ref => /^https:\/\//.test(ref.url || "")).map(ref => health.get(normUrl(ref.url)));
+      const rawKinds = task.sourceRefs.filter(ref => /^https:\/\//.test(ref.url || "")).map(ref => health.get(normUrl(ref.url)));
+      const kinds = rawKinds.map(k => k === "none-clean" ? "none" : k);
       // undefined = not fetched this run (outage): unknown, no parse warning.
+      // Explicit denial by the event's own page, with every source of the task fetched and readable: removal is confirmed now.
+      // Every other source must be positively healthy: parsed ok, itself a denial, or "none" with no research wording anywhere on the page (a parser miss would still show "Timed Research"/"Task").
+      if (denied && rawKinds.every(k => k === "ok" || k === "denied" || k === "none-clean")) { deniedDrop = true; return false; }
       const doubtful = kinds.some(k => k === "incomplete"), pending = kinds.some(k => k === "none") && !confirmed;
       if (!kinds.some(k => k === undefined) && !doubtful && !pending) { if (kinds.includes("none")) confirmedNone = true; return false; }
       const key = JSON.stringify([task.category, task.task, task.rewards, task.occurrence || 1]);
@@ -340,7 +361,7 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt =
         now.researchRetainedAt = before.researchRetainedAt || runAt; // when retention BEGAN
       } else if (before.researchRetainedAt) now.researchRetainedAt = before.researchRetainedAt;
     } else {
-      entry.reason = ["event-ended", "window-mismatch", "name-mismatch"].find(r => filtered.has(r)) || (confirmedNone ? "removal-confirmed" : "source-ok-removed");
+      entry.reason = ["event-ended", "window-mismatch", "name-mismatch"].find(r => filtered.has(r)) || (deniedDrop ? "source-denies" : confirmedNone ? "removal-confirmed" : "source-ok-removed");
     }
     report.push(entry);
     console.log(`research-retention ${id}: ${entry.retained ? "retained" : "dropped"} ${carried.length}/${entry.oldTasks} (${entry.reason}) sources=${sources.map(s => s.status + (s.truncated ? "+trunc" : "")).join(",") || "none"}`);

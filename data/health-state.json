@@ -1,6 +1,6 @@
 {
  "alerted": [
-  "event-importer.yml",
+  "discord_sync.yml",
   "ai-heartbeat-event-check",
   "ai-heartbeat-pipeline",
   "ai-heartbeat-shiny"
