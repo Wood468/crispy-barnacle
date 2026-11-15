@@ -92,3 +92,16 @@ test('owner Store shows one AUD placeholder before each local price without wait
   assert.match(el.innerHTML,/Rp 76,000/,'original IDR price remains visible');
   assert.match(el.innerHTML,/₹/,'original INR price remains visible');
 });
+
+test('converted A$ leads visually; local price stays prominent when no conversion is shown', () => {
+  const css = fs.readFileSync(new URL('../public/dash.css', import.meta.url), 'utf8');
+  const aud = css.match(/\.storep-regional \.sp-aud-equivalent\{([^}]*)\}/)[1];
+  assert.match(aud, /font-weight:750/, 'A$ line is bold');
+  assert.doesNotMatch(aud, /font-weight:400/);
+  assert.match(css, /\.sp-aud-equivalent:empty\{display:none\}/, 'pending FX hides the empty A$ node');
+  const local = css.match(/\.storep-regional \.sp-aud-equivalent:not\(:empty\)\+\.sp-local-price\{([^}]*)\}/);
+  assert.ok(local, 'local price is demoted only next to a non-empty A$ line');
+  assert.match(local[1], /font-weight:400/);
+  const base = css.match(/\.storep-regional \.sp-local-price\{([^}]*)\}/)[1];
+  assert.match(base, /font-weight:750/, 'native/estimate/no-FX local prices stay bold by default');
+});

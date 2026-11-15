@@ -185,6 +185,10 @@ with sync_playwright() as p:
                         local: local?.textContent.trim() || null,
                         audBeforeLocal: !!aud && !!local &&
                             !!(aud.compareDocumentPosition(local) & Node.DOCUMENT_POSITION_FOLLOWING),
+                        audWeight: aud ? +getComputedStyle(aud).fontWeight : null,
+                        audSize: aud ? parseFloat(getComputedStyle(aud).fontSize) : null,
+                        localWeight: local ? +getComputedStyle(local).fontWeight : null,
+                        localSize: local ? parseFloat(getComputedStyle(local).fontSize) : null,
                         localOnlyAriaLabel: c.hasAttribute('aria-label'),
                         fxProvenance: aud?.querySelector('.sp-aud-source')?.textContent.trim() || null,
                         estimateMarks: c.querySelectorAll('.sp-est-mark').length,
@@ -234,9 +238,13 @@ with sync_playwright() as p:
         assert india["local"] and "439" in india["local"] and "₹" in india["local"], f"{width}px INR local: {india}"
         for market in (indonesia, india):
             assert market["audBeforeLocal"], f"{width}px AUD must precede local checkout price: {market}"
+            assert market["audWeight"] >= 700 and market["localWeight"] <= 400, f"{width}px converted A$ must be the bold line, local the light one: {market}"
+            assert market["audSize"] > market["localSize"], f"{width}px converted A$ must be larger than the local line: {market}"
             assert not market["localOnlyAriaLabel"], f"{width}px parent label masks AUD for VoiceOver: {market}"
             assert market["fxProvenance"] is None, f"{width}px FX provenance is tooltip-only: {market}"
             assert market["estimateMarks"] == 0, f"{width}px observed value must not carry est.: {market}"
+        au = metrics["markets"][0]
+        assert au["aud"] is None and au["localWeight"] >= 700, f"{width}px native A$ price stays bold: {au}"
         assert indonesia["olderMarks"] == 0, f"{width}px verified ID price must be unmarked: {indonesia}"
         assert india["olderMarks"] == 1, f"{width}px recorded IN price needs the older marker: {india}"
         assert metrics["footVisible"] and metrics["foot"].startswith("Prices are dated observations, not live checkout quotes."), f"{width}px footer: {metrics['foot']}"

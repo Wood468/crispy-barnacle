@@ -2315,8 +2315,10 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .storep-regional .sp-price{min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:var(--space-1);border-radius:var(--radius-sm);background:var(--color-canvas);text-align:center;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .storep-regional .sp-flag{font-size:1rem;line-height:1.2}
 .storep-regional .sp-local-price{font-size:clamp(.69rem,2.9vw,.89rem);font-weight:750;line-height:1.3}
-.storep-regional .sp-aud-equivalent{font-size:var(--type-caption-compact);font-weight:400;line-height:1.25;color:var(--color-text-muted)}
+.storep-regional .sp-aud-equivalent{font-size:clamp(.69rem,2.9vw,.89rem);font-weight:750;line-height:1.3;color:var(--color-text)}
 .storep-regional .sp-aud-equivalent:empty{display:none}
+/* The converted A$ amount leads; the local-currency amount becomes the small secondary line only while an A$ value is actually shown. With no conversion (AU native, estimates, FX pending) the local price stays the prominent value. */
+.storep-regional .sp-aud-equivalent:not(:empty)+.sp-local-price{font-size:var(--type-caption-compact);font-weight:400;line-height:1.25;color:var(--color-text-muted)}
 .storep-regional .sp-none{color:var(--color-text-muted);font-size:1rem;line-height:1.3}
 .storep-regional .sp-est-mark{font-size:var(--type-caption-compact);font-weight:700;font-style:italic;color:var(--color-text-muted)}
 .storep-regional .sp-results{font:600 var(--type-overline) var(--font-body);color:var(--color-text-muted);margin:var(--space-2) 0}
