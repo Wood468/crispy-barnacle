@@ -215,7 +215,9 @@ test("later run: a source that supplies tasks again republishes them, denial or 
 test("P1-B: researchKeywords is computed on the fully read body", () => {
   assert.equal(hubNone().fields.researchParse.researchKeywords, false);
   assert.equal(extractFields("<main><div>Timed Research is described here</div></main>").researchParse.researchKeywords, true);
-  assert.equal(extractFields("<main><div>Claim Task</div></main>").researchParse.researchKeywords, true);
+  assert.equal(extractFields("<main><div>Task | Rewards</div></main>").researchParse.researchKeywords, true);
+  assert.equal(extractFields("<main><table><tr><th>Task</th><th>Rewards</th></tr></table></main>").researchParse.researchKeywords, true);
+  assert.equal(extractFields("<main><div>Claim Task</div></main>").researchParse.researchKeywords, false, "the bare word Task is not evidence");
   assert.equal(extractFields("<main><script>var a='Timed Research Task'</script><p>Bonuses</p></main>").researchParse.researchKeywords, false);
 });
 
@@ -225,7 +227,54 @@ test("P1-B: a Hub 'none' that still shows research wording is a possible parser 
   const { got, report } = run([miss, duckDenies()]);
   assert.equal(got.researchTasks.length, 8);
   assert.equal(report[0].reason, report[0].sources.find(s => s.url === HUB).status === "none" ? "none-unconfirmed" : "incomplete");
-  assert.equal(report[0].sources.find(s => s.url === HUB).researchKeywords, undefined);
+  const hubSrc = report[0].sources.find(s => s.url === HUB);
+  assert.equal(hubSrc.researchKeywords, true);
+  assert.equal(hubSrc.blockedBy, "source-keywords");
+  assert.deepEqual(report[0].blockedBy, ["source-keywords"]);
+  const duck = report[0].sources.find(s => s.url === LD);
+  assert.deepEqual([duck.explicitNone, duck.ownsPage], [true, true]);
+});
+
+// Live regression: Hub's body has no research, but its menu, related posts and footer say "Field Research Tasks", "Special Research" and "Task".
+const hubBoilerplate = () => `<html><body><header class="site-header"><nav><a>Events</a><a>Field Research Tasks</a><a>Special Research</a></nav></header>
+<main><div class="sidebar widget"><span>Task list</span><p>Timed Research guide</p></div><article><h1>Minior Showers: Leonid (November 2026)</h1><h2>Event Bonuses</h2><ul><li>Extra Stardust for catching Minior</li></ul>
+<div class="related-posts"><span>Related</span><a>Special Research: Task list and rewards</a></div><section id="comments"><p>Great Timed Research tips</p></section></article></main>
+<aside><p>Top Field Research Tasks</p></aside><footer><p>Task Rewards Timed Research</p></footer></body></html>`;
+
+test("keywords ignore nav, header, footer, aside, sidebar, related posts and comments", () => {
+  const f = extractFields(hubBoilerplate());
+  assert.equal(f.researchParse.status, "none");
+  assert.equal(f.researchParse.researchKeywords, false);
+  // the same words inside the article body are evidence
+  const inBody = hubBoilerplate().replace("<ul><li>Extra", "<p>Special Research is mentioned.</p><ul><li>Extra");
+  assert.equal(extractFields(inBody).researchParse.researchKeywords, true);
+});
+
+test("live regression: boilerplate-only wording on Hub no longer blocks the denial", () => {
+  const { got, report } = run([res(hubRef, hubBoilerplate()), duckDenies()]);
+  assert.equal(got.researchTasks.length, 0);
+  assert.equal(report[0].reason, "source-denies");
+  assert.equal(report[0].blockedBy, undefined);
+  const hub = report[0].sources.find(s => s.url === HUB), duck = report[0].sources.find(s => s.url === LD);
+  assert.equal(hub.researchKeywords, false);
+  assert.deepEqual([duck.explicitNone, duck.ownsPage, duck.researchKeywords], [true, true, true]);
+});
+
+test("report names the guard that blocked an immediate removal", () => {
+  const roundup = { id: "leekduck", name: "Leek Duck", trust: "community", url: "https://leekduck.com/events/meteor-showers-roundup-2026/" };
+  let r = run([hubNone(), res(roundup, load("leekduck-leonids-no-research"))]).report[0];
+  assert.deepEqual(r.blockedBy, ["not-own-page"]);
+  assert.equal(r.sources.find(s => s.url === roundup.url).ownsPage, false);
+  r = run([duckDenies(), { source: hubRef, fields: { researchParse: { status: "incomplete" } } }]).report[0];
+  assert.deepEqual(r.blockedBy, ["source-incomplete"]);
+  r = run([duckDenies()]).report[0];
+  assert.deepEqual(r.blockedBy, ["source-unfetched"]);
+  r = run([duckDenies(), { source: hubRef, fields: { researchParse: { status: "none" } } }]).report[0];
+  assert.deepEqual(r.blockedBy, ["keywords-unknown"]);
+  // without any explicit denial the report shape is the old one
+  r = run([hubNone()]).report[0];
+  assert.equal("blockedBy" in r, false);
+  assert.deepEqual(Object.keys(r.sources[0]).sort(), ["candidateRows", "headings", "researchKeywords", "status", "table", "truncated", "url"]);
 });
 
 test("P1-B: a clean Hub 'none' plus the denial removes, and the report records the evidence", () => {
