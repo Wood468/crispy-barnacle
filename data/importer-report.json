@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-15T11:59:30.488Z",
+ "runAt": "2026-11-15T13:04:02.061Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -566,7 +566,42 @@
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
- "researchRetention": [],
+ "researchRetention": [
+  {
+   "id": "into",
+   "name": "Into the Wild",
+   "oldTasks": 7,
+   "retained": true,
+   "reason": "event-ended-kept",
+   "sources": [
+    {
+     "url": "https://pokemongo.com/news/into-the-wild-2026/",
+     "status": "incomplete",
+     "truncated": false,
+     "candidateRows": 0,
+     "headings": 2,
+     "table": false
+    },
+    {
+     "url": "https://pokemongo.com/news/get-ready-for-gowildarea-2026/",
+     "status": "incomplete",
+     "truncated": false,
+     "candidateRows": 0,
+     "headings": 1,
+     "table": false
+    },
+    {
+     "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/",
+     "status": "none",
+     "truncated": false,
+     "candidateRows": 0,
+     "headings": 0,
+     "table": false,
+     "researchKeywords": false
+    }
+   ]
+  }
+ ],
  "unmatchedPages": [
   {
    "source": "official",
