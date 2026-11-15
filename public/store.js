@@ -3,10 +3,9 @@
 (function () {
   'use strict';
   var esc = window.GOLIB.esc;
-  /* Picture for each item: the game's own item art where I have it, the site's own icons otherwise. */
   /* Only exact, checked item artwork. A PokéCoin is not XP, an Incubator
      is not an Egg, and a Star Piece is not a Stardust icon. When no exact
-     asset exists, an honest category token is preferable to a wrong picture. */
+     asset exists the card simply has no image. */
   var ICO = [
     [/^max potions?(?:\s*[×x]\s*\d+)?$/i, '/ico/i/max-potion.webp'],
     [/^max revives?(?:\s*[×x]\s*\d+)?$/i, '/ico/i/max-revive.webp'],
@@ -17,41 +16,13 @@
     [/^elite charged tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-charged-tm.webp'],
     [/^raid pass(?:es)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/raidpass.webp']
   ];
-  /* Neutral type symbols are not in-game item art: never substitute a
-     different item image. Every future SKU has a visible honest fallback. */
-  function kindToken(label) {
-    var name = String(label || '');
-    if (/^max potions?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'POT';
-    if (/^max revives?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'REV';
-    if (/^golden razz berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'RAZZ';
-    if (/^silver pinap berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'PIN';
-    if (/^incense(?:\s*[×x]\s*[1-9]\d*)?$/i.test(name)) return 'INS';
-    if (/pok[eé]coins?/i.test(name)) return '◎';
-    if (/storage|item bag|bag upgrade|capacity/i.test(name)) return '↑';
-    if (/^go[- ]pass|monthly.*pass|(?:event|admission).*ticket/i.test(name)) return 'PASS';
-    if (/\s\+\s/.test(name) || /\b(?:boxes?|bundles?)\b/i.test(name)) return '▣';
-    if (/^(?:remote )?raid pass(?:es)?(?:\s*[×x]\s*\d+)?$|^premium battle pass(?:es)?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'PASS';
-    if (/^elite (?:fast|charged) tm(?:s)?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'TM';
-    if (/lucky eggs?/i.test(name)) return 'LE';
-    if (/star pieces?/i.test(name)) return 'SP';
-    if (/super incubator/i.test(name)) return 'SINC';
-    if (/incubator/i.test(name)) return 'INC';
-    if (/max particle/i.test(name)) return 'MP';
-    if (/max mushrooms?/i.test(name)) return 'MM';
-    if (/link charge/i.test(name)) return 'LC';
-    if (/poffin/i.test(name)) return 'PF';
-    if (/rare candy xl/i.test(name)) return 'XL';
-    if (/rare candy/i.test(name)) return 'RC';
-    if (/pok[eé] balls?/i.test(name)) return 'BALL';
-    if (/\bpack\b/i.test(name)) return '▣';
-    return '·';
-  }
-  function icon(label, sourceImage) {
-    var token = kindToken(label);
+  /* Exact local art only (same-origin /ico/**). With no exact asset there is no image slot at all:
+     never a letter tile, a glyph, or a picture borrowed from another item. */
+  function icon(label) {
     for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) {
-      return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-sp-fallback="' + esc(token || '·') + '">';
+      return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="' + esc(label) + '" width="40" height="40" loading="lazy" decoding="async">';
     }
-    return '<span class="sp-i-token" aria-hidden="true" data-sp-art="category-token">' + esc(token) + '</span>';
+    return '';
   }
   function priority(p) {
     var label = String(p.label || ''), group = String(p.group || ''), kind = String(p.kind || '');
@@ -86,38 +57,35 @@
     return String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   }
   function when(iso) { var d = new Date(iso + 'T00:00:00Z'); return isNaN(d) ? String(iso) : d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); }
-  function chan(p) { var R = window.GORegionalPrices; return R.REGIONS[p.region] + ' ' + R.CHANNELS[p.channel]; }
-  /* The approximate AUD reference goes ABOVE the local checkout currency. */
+  /* The approximate A$ reference goes ABOVE the native amount. It is an empty node until a fresh
+     reference rate is available (hidden by CSS while empty); exchange-rate provenance lives in its title only.
+     Modelled estimates are ranges, so they carry no A$ line. */
   function audPlaceholder(p, quotes) {
     var FX = window.GOStoreFX;
-    var amount = FX && FX.display ? FX.display(p.basis === 'estimate'
-      ? { currency: p.currency, min: p.min, max: p.max }
-      : { currency: p.currency, amount: p.amount }, quotes) : null;
-    var min = p.basis === 'estimate' ? p.min : p.amount;
-    var attrs = ' data-sp-aud-currency="' + esc(p.currency) + '" data-sp-aud-min="' + esc(min) + '"';
-    if (p.basis === 'estimate') attrs += ' data-sp-aud-max="' + esc(p.max) + '"';
-    var title = amount ? 'Reference exchange rate: ' + amount.source + ', ' + amount.observed + '; not a checkout price'
-      : 'Australian dollar reference conversion not available';
-    return '<strong class="sp-aud-equivalent"' + attrs + ' title="' + esc(title) + '">'
-      + esc(amount ? amount.text : 'A$ rate unavailable') + '</strong>';
+    var amount = FX && FX.display ? FX.display({ currency: p.currency, amount: p.amount }, quotes) : null;
+    var attrs = ' data-sp-aud-currency="' + esc(p.currency) + '" data-sp-aud-min="' + esc(p.amount) + '"';
+    var title = amount ? 'Reference exchange rate: ' + amount.source + ', ' + amount.observed + '; not a checkout price' : '';
+    return '<strong class="sp-aud-equivalent"' + attrs + (title ? ' title="' + esc(title) + '"' : '') + '>'
+      + esc(amount ? amount.text : '') + '</strong>';
   }
-  /* Exact observed local prices are preserved, and estimates retain ranges. */
-  function priceCell(p, quotes) {
-    var R = window.GORegionalPrices;
-    if (!p) return '<span class="sp-regional-value sp-none" title="No sourced price observed for this region and channel">—<span class="sr-only">Not observed</span></span>';
-    if (p.basis === 'estimate') {
-      return '<span class="sp-regional-value sp-est">' + audPlaceholder(p, quotes)
-        + '<b class="sp-local-price">Estimate ' + esc(R.fmt(p.min, p.currency) + '–' + R.fmt(p.max, p.currency)) + '</b>'
-        + '<small>' + esc(p.confidence) + ' confidence · not a checkout price</small>'
-        + '<small class="sp-basis">' + esc('Based on ' + p.basisText + ' · ' + chan(p)) + '</small></span>';
+  var REGION_TITLE = { AU: 'Australia · Web Store', ID: 'Indonesia · Web Store', IN: 'India · in-app shop' };
+  var REGION_NAME = { AU: 'Australia', ID: 'Indonesia', IN: 'India' };
+  var FLAG = { AU: '🇦🇺', ID: '🇮🇩', IN: '🇮🇳' };
+  function priceCell(region, p, quotes) {
+    var R = window.GORegionalPrices, body, extra = '';
+    if (!p) body = '<span class="sp-none" title="No sourced price">—<span class="sr-only">No price</span></span>';
+    else if (p.basis === 'estimate') {
+      /* The one honesty marker: only a modelled value carries "est." */
+      extra = ' data-sp-basis="estimate"';
+      body = '<b class="sp-local-price"><span class="sp-est-mark" title="Estimate, not a checkout price"><span aria-hidden="true">est.</span><span class="sr-only">Estimated </span></span> '
+        + esc(R.fmt(p.min, p.currency) + '–' + Number(p.max).toLocaleString('en-AU', { maximumFractionDigits: 0 })) + '</b>';
+    } else {
+      /* VoiceOver reads the A$ reference before the original local price; no local-only aria-label masks it. */
+      body = (p.currency === 'AUD' ? '' : audPlaceholder(p, quotes)) + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>';
     }
-    var state = p.basis === 'verified' ? 'Verified' : 'Recorded · not re-checked';
-    /* VoiceOver must read the AUD reference before the original local price.
-       A local-only parent aria-label would mask both the AUD and FX provenance. */
-    return '<span class="sp-regional-value sp-ver">'
-      + audPlaceholder(p, quotes)
-      + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>'
-      + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
+    return '<div class="sp-price' + (p && p.basis === 'estimate' ? ' sp-est' : '') + '" data-sp-region="' + region + '"' + extra
+      + ' title="' + esc(REGION_TITLE[region]) + '"><span class="sp-flag" aria-hidden="true">' + FLAG[region]
+      + '</span><span class="sr-only">' + REGION_NAME[region] + '</span>' + body + '</div>';
   }
   /* A source-verified channel ledger for EVERY known regional product.
      Only claim a cheapest option when two or more channels share an explicit
@@ -180,27 +148,6 @@
         + '</span><span class="sp-regional-value"><b>' + esc(status) + '</b><small>'
         + esc(observedText + '. Not a live checkout quote.') + '</small></span></div>';
     }).join('');
-  }
-  /* Only source-attributed contents, not a guessed bundle breakdown or
-     evidence that an expired pass is available for checkout today. */
-  function offerContents(p) {
-    var items = Array.isArray(p.contents) ? p.contents.filter(function (entry) {
-      return entry && typeof entry.item === 'string' && entry.item.trim()
-        && Number.isSafeInteger(entry.quantity) && entry.quantity > 0;
-    }) : [];
-    if (!items.length) return '';
-    var source = String(p.contentsSource || '');
-    var safe = /^https:\/\/pokemongo\.com\/news\/[a-z0-9-]+$/i.test(source)
-      || /^https:\/\/store\.pokemongo\.com\/\?country_code=US&game_client=iOS$/.test(source);
-    return '<details class="sp-offer-contents">'
-      + '<summary>Included in the published offer <small>Official description</small></summary>'
-      + '<ul>' + items.map(function (entry) {
-        return '<li>' + esc(entry.item) + ' ×' + entry.quantity + '</li>';
-      }).join('') + '</ul>'
-      + (safe ? '<p class="note"><a href="' + esc(source)
-        + '" target="_blank" rel="noopener noreferrer">Official offer description</a></p>' : '')
-      + '<p class="note">Published contents are not proof this historical offer is still for sale.</p>'
-      + '</details>';
   }
   function coveragePanel(items, R) {
     var data = R.coverage(items);
@@ -279,60 +226,38 @@
         earlier.push(p);
       else bySection[category].push(p);
     });
-    var visibleItems = sections.reduce(function (all, section) { return all.concat(bySection[section.id]); }, []);
-    var listedCount = snapshot ? visibleItems.filter(function (p) { return p.sourceOffer.status === 'listed'; }).length : 0;
-    var unconfirmedCount = snapshot ? visibleItems.filter(function (p) { return p.sourceOffer.status !== 'listed'; }).length : 0;
     function productCard(p) {
-      var au = p.aud > 0
-        ? '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.aud, 'AUD')) + '</b><small>Verified · ' + esc(when(p.observed)) + '</small></span>'
-        : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">—<span class="sr-only">Not observed</span></span>';
       var search = storeSearchKey(p.label + ' ' + p.product + ' ' + p.group + ' ' + priority(p));
       var evidence = p.sourceOffer;
-      var sourceNote = evidence
-        ? '<small class="sp-source-id-note">' + esc(evidence.status === 'listed'
-          ? 'Seen in official Store snapshot · ' + when(String(evidence.lastSeen).slice(0,10)) + ' · regional prices are dated observations'
-          : evidence.status === 'archived'
-            ? 'Previous offer · ' + evidence.note + (evidence.goneAt ? ' · ' + when(evidence.goneAt.slice(0,10)) : '')
-            : evidence.note + ' · regional prices are historical/modelled, not live checkout quotes')
-          + '</small>' : '';
-      var identityNote = p.unpricedOfficial
-        ? '<small class="sp-source-id-note">Official published product · no matched AU / ID / IN checkout observation · regional availability not verified</small>'
-        : p.ambiguousSku
-        ? '<small class="sp-source-id-note">Distinct official SKU: ' + esc(p.product) + ' · other-region price cannot be matched safely</small>'
-        : p.regionalUnmatched
-          ? '<small class="sp-source-id-note">Regional observation · no exact AU SKU pairing established</small>'
-          : p.sourceIdOnly
-            ? '<small class="sp-source-id-note">Official AU observation · exact SKU; item name not recorded</small>' : '';
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '"'
         + (evidence ? ' data-sp-listing="' + esc(evidence.status) + '"' : '') + '>'
-        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label, evidence && evidence.image) + '<b>' + esc(p.label) + '</b></span>'
-        + sourceNote + identityNote + '</header>'
-        + '<div class="sp-market-grid">'
-        + '<div class="sp-market sp-market-au"><span class="sp-market-label"><span aria-hidden="true">🇦🇺</span> Australia <small>Web</small></span>' + au + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label"><span aria-hidden="true">🇮🇩</span> Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label"><span aria-hidden="true">🇮🇳</span> India <small>in-app</small></span>' + priceCell(p.india, data.audQuotes) + '</div>'
-        + '</div>' + offerContents(p) + '</article>';
+        + '<div class="sp-line">' + icon(p.label) + '<b class="sp-name">' + esc(p.label) + '</b></div>'
+        + '<div class="sp-prices">'
+        + priceCell('AU', p.aud > 0 ? { basis: 'verified', currency: 'AUD', amount: p.aud } : null, data.audQuotes)
+        + priceCell('ID', p.indonesia, data.audQuotes)
+        + priceCell('IN', p.india, data.audQuotes)
+        + '</div></article>';
     }
     var catalogue = sections.filter(function (s) { return bySection[s.id].length; }).map(function (s) {
       return '<details class="sp-group" data-sp-group="' + s.id + '" data-sp-default-open="' + (s.open ? 'yes' : 'no') + '"' + (s.open ? ' open' : '') + '>'
-        + '<summary>' + esc(s.label) + ' <small>' + bySection[s.id].length + ' products</small></summary>'
+        + '<summary>' + esc(s.label) + ' <small>' + bySection[s.id].length + '</small></summary>'
         + '<div class="sp-group-items">' + bySection[s.id].map(productCard).join('') + '</div></details>';
     }).join('');
     if (snapshot && earlier.length) {
       catalogue += '<details class="sp-group sp-history" data-sp-group="earlier" data-sp-default-open="no">'
-        + '<summary>Previous / unconfirmed offers <small>' + earlier.length + ' entries · not confirmed on sale</small></summary>'
-        + '<p class="sp-intro">These are retained for comparison, not offered as live checkout products. Missing from one regional snapshot is not proof of global retirement.</p>'
+        + '<summary>Earlier offers <small>' + earlier.length + '</small></summary>'
         + '<div class="sp-group-items">' + earlier.map(productCard).join('') + '</div></details>';
     }
-    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + (snapshot ? listedCount + ' recently listed · ' + unconfirmedCount + ' visible unconfirmed · ' + earlier.length + ' previous/unconfirmed' : items.length + ' historical price records') + '</small></summary>'
-      + '<p class="sp-intro">Recently listed offers appear in the main list; stable items with historical prices may also appear clearly marked unconfirmed. Earlier observations remain searchable under Previous / unconfirmed offers. Store availability varies by region, purchase channel and account. Dated prices are not live checkout quotes. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates. “Not observed” means no sourced price for that region.</p>'
-      + reviewPanel
-      + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
-      + '<p class="sp-results" data-sp-results aria-live="polite">' + (snapshot ? listedCount + ' recently listed · ' + unconfirmedCount + ' visible unconfirmed · ' + earlier.length + ' previous/unconfirmed' : items.length + ' priced products · snapshot unavailable') + '</p>'
-      + '<div class="sp-catalogue">' + catalogue + '</div>'
-      + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
+    /* The data-review material (coverage checklist, channel comparison) is owner-only and collapsed
+       behind one quiet row at the bottom: it adds no text to the default view. */
+    var review = reviewPanel + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
       + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed cash price is named only when two or more channels share an explicit verified product SKU and currency. Estimated, recorded-only and ambiguous boxes cannot win; no result is a live checkout quote.</p>'
-      + '<div data-sp-cheapest>' + comparableOffers + '</div></details>' : '') + '</details>';
+      + '<div data-sp-cheapest>' + comparableOffers + '</div></details>' : '');
+    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + '</small></summary>'
+      + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
+      + '<p class="sp-results" data-sp-results aria-live="polite"></p>'
+      + '<div class="sp-catalogue">' + catalogue + '</div>'
+      + '<details class="sp-compare-more sp-review"><summary>Data review</summary>' + review + '</details></details>';
   }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
@@ -375,10 +300,6 @@
             node.textContent = converted.text;
             node.setAttribute('title', 'Approximate AUD reference · ' + converted.source
               + ' · ' + converted.observed + ' · not a checkout price');
-            var note = document.createElement('small');
-            note.className = 'sp-aud-source';
-            note.textContent = 'FX · ' + when(converted.observed);
-            node.appendChild(note);
           });
         }).catch(function () { /* Keep original regional prices visible. */ });
       }
@@ -398,16 +319,10 @@
         var result = el.querySelector('[data-sp-results]');
         if (result) result.textContent = shown + (shown === 1 ? ' product' : ' products') + ' shown';
       });
-      /* Capture an exact-asset load failure and substitute an honest token.
-         Never leave a broken image or substitute an unrelated product image. */
+      /* A failed exact-asset load removes the image: no broken-image box, no placeholder tile, no substitute picture. */
       if (el.addEventListener) el.addEventListener('error', function (event) {
         var bad = event.target;
-        if (!bad || !bad.matches || !bad.matches('img.sp-i')) return;
-        var fallback = document.createElement('span');
-        fallback.className = 'sp-i-token';
-        fallback.setAttribute('aria-hidden', 'true');
-        fallback.textContent = bad.getAttribute('data-sp-fallback') || '·';
-        bad.replaceWith(fallback);
+        if (bad && bad.matches && bad.matches('img.sp-i')) bad.remove();
       }, true);
 
     }).catch(function () { });

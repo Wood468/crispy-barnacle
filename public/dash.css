@@ -855,8 +855,6 @@ img.art.is-shiny{outline:2px solid var(--color-accent);outline-offset:2px;border
 .genchips small{opacity:.7}
 .dexhow summary{font-size:var(--type-button)}
 #dgen{display:none}
-.sp-n{display:flex;align-items:center;gap:var(--space-2)}
-.sp-i{width:28px;height:28px;object-fit:contain;flex:none}
 
 /* Shadow Pokémon: purple smoke drifting up around the head, drawn behind the sprite */
 .art[alt^="Shadow "],.shadow-art .art{background-image:radial-gradient(closest-side,rgba(142,64,230,.9),rgba(142,64,230,0)),radial-gradient(closest-side,rgba(110,44,200,.85),rgba(110,44,200,0)),radial-gradient(closest-side,rgba(160,84,240,.8),rgba(160,84,240,0));background-repeat:no-repeat;background-size:42% 34%,34% 28%,28% 24%;background-position:24% 6%,52% 0%,76% 8%;filter:drop-shadow(0 0 4px rgba(70,28,140,.65));animation:shsmoke 3.2s ease-in-out infinite}
@@ -2204,8 +2202,6 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .storep-regional .sp-regional-row>.sp-n:first-child,.storep-regional .sp-regional-row>.sp-a{font-weight:700;overflow-wrap:anywhere}
 .storep-regional .sp-regional-row>.sp-a small,.storep-regional .sp-regional-value small{display:block;font-weight:400;color:var(--color-text-muted);font-size:var(--type-overline);overflow-wrap:anywhere}
 .storep-regional .sp-regional-value{color:var(--color-text);text-decoration:none;font-variant-numeric:tabular-nums;font-size:var(--type-meta);overflow-wrap:anywhere}
-.storep-regional .sp-est{border-left:3px solid var(--color-warning,#c98a00);padding-left:var(--space-2)}
-.storep-regional .sp-est>b{text-transform:uppercase;letter-spacing:.04em;font-size:var(--type-overline)}
 .storep-regional .sp-none{color:var(--color-text-muted)}
 .storep-regional .sp-coins{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin:var(--space-2) 0}
 .storep-regional .sp-coins input{min-height:44px;width:8rem;font:inherit;padding:0 var(--space-2)}
@@ -2214,7 +2210,6 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .storep-regional{padding:var(--space-3);border-radius:var(--radius-card)}
 .storep-regional>summary{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);min-height:44px;font-size:1rem}
 .storep-regional>summary small{font-size:var(--type-caption);letter-spacing:0}
-.storep-regional .sp-intro{font-size:var(--type-meta);line-height:1.45;color:var(--color-text-muted);margin:var(--space-2) 0 var(--space-3)}
 .storep-regional .sp-search{display:grid;gap:var(--space-1);font-size:var(--type-meta);font-weight:650;margin:var(--space-2) 0}
 .storep-regional .sp-search input{width:100%;min-width:0;min-height:44px;padding:var(--space-2) var(--space-3);border-radius:var(--radius-control);border:1px solid var(--color-border);background:var(--color-canvas);color:var(--color-text);font:inherit}
 .storep-regional .sp-search input:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
@@ -2222,32 +2217,10 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .storep-regional .sp-catalogue{display:grid;gap:var(--space-2)}
 .storep-regional .sp-product{border:1px solid var(--color-border);border-radius:var(--radius-card);background:var(--color-surface-raised);padding:var(--space-3);min-width:0}
 .storep-regional .sp-product[hidden]{display:none}
-.storep-regional .sp-product-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--space-2);margin:0 0 var(--space-2)}
-.storep-regional .sp-product-name{display:inline-flex;align-items:center;gap:var(--space-2);min-width:0;flex:1 1 140px;line-height:1.28}
-.storep-regional .sp-product-name b{font-size:var(--type-body-emphasis);overflow-wrap:anywhere}
-.storep-regional .sp-product-group{color:var(--color-text-muted);font-size:var(--type-overline);line-height:1.35;max-width:100%;text-align:right}
-.storep-regional .sp-market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2)}
-.storep-regional .sp-market{display:grid;align-content:start;gap:var(--space-1);min-width:0;border:1px solid var(--color-border);background:var(--color-canvas);border-radius:var(--radius-md);padding:var(--space-2)}
-.storep-regional .sp-market-au{grid-column:1/-1;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
-.storep-regional .sp-market-label{font-size:.7rem;font-weight:750;line-height:1.3}
-.storep-regional .sp-market-label small{display:block;font-weight:450;color:var(--color-text-muted)}
-.storep-regional .sp-market .sp-regional-value{display:block;font-size:var(--type-meta);line-height:1.3;min-width:0}
-.storep-regional .sp-market .sp-regional-value>b{display:block;font-size:var(--type-body-emphasis);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.storep-regional .sp-market .sp-regional-value small{font-size:.64rem;line-height:1.4;margin-top:2px}
-.storep-regional .sp-market .sp-est{padding-left:var(--space-2)}
 .storep-regional .sp-compare-more{border-top:1px solid var(--color-border);margin-top:var(--space-4);padding-top:var(--space-2)}
 .storep-regional .sp-compare-more>summary{min-height:44px}
 .storep-regional .sp-compare-more>summary small{font-size:var(--type-overline)}
 /* At standard phone widths show all three regions together; keep two columns on narrow devices. */
-@media(min-width:390px) and (max-width:659px){
-  .storep-regional .sp-market-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-  .storep-regional .sp-market-au{grid-column:auto;grid-template-columns:minmax(0,1fr);align-items:start}
-  .storep-regional .sp-market{padding:7px 5px;overflow-wrap:anywhere}
-  .storep-regional .sp-market-label{font-size:.66rem}
-  .storep-regional .sp-market .sp-regional-value>b{font-size:var(--type-body-sm)}
-  .storep-regional .sp-market .sp-regional-value small{font-size:var(--type-caption-compact)}
-}
-@media(min-width:660px){.storep-regional .sp-market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.storep-regional .sp-market-au{grid-column:auto;grid-template-columns:minmax(0,1fr);align-items:start}}
 
 
 
@@ -2261,20 +2234,6 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .storep-regional .sp-group>summary:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
 .storep-regional .sp-group-items{display:grid;gap:var(--space-2);padding-top:var(--space-2)}
 .storep-regional .sp-product{padding:var(--space-2);border-radius:var(--radius-md)}
-.storep-regional .sp-product-head{gap:var(--space-1);margin-bottom:var(--space-2)}
-.storep-regional .sp-product-name{gap:var(--space-2);flex-basis:170px}
-.storep-regional .sp-product-name b{font-size:var(--type-body-sm);line-height:1.3}
-.storep-regional .sp-product-group{font-size:var(--type-caption-compact)}
-.storep-regional .sp-market{gap:2px}
-.storep-regional .sp-market .sp-regional-value small{line-height:1.3;color:var(--color-text-muted)}
-.storep-regional .sp-i-token{flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-canvas);color:var(--color-text-body);font-size:.69rem;font-weight:850;line-height:1}
-.storep-regional .sp-i{flex:none;object-fit:contain;width:28px;height:28px}
-@media(min-width:390px) and (max-width:659px){
-  .storep-regional .sp-market-grid{gap:5px}
-  .storep-regional .sp-market{padding:6px}
-  .storep-regional .sp-market .sp-regional-value>b{font-size:.86rem}
-  .storep-regional .sp-market .sp-regional-value small{font-size:.65rem}
-}
 
 /* Raids and Max Battles polish: tier badge, CP, countdown, relationship chips, tiered Max roster. */
 .rc-tier{justify-self:start;width:fit-content;font-style:normal;display:inline-flex;align-items:center;min-height:20px;padding:0 var(--space-2);border-radius:var(--radius-pill);background:color-mix(in srgb,var(--color-text) 12%,transparent);color:var(--color-text);font-family:var(--font-body);font-weight:800;font-size:var(--type-label);line-height:1;letter-spacing:.04em}
@@ -2329,37 +2288,6 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
   font:800 .46rem/1.1 var(--font-body);letter-spacing:.01em;pointer-events:none
 }
 
-/* Store: one approximate AUD reference above the original local price. */
-.storep-regional .sp-aud-equivalent{display:block;min-width:0;line-height:1.28;color:var(--color-text-body);font-variant-numeric:tabular-nums;font-size:var(--type-body-sm);overflow-wrap:anywhere}
-.storep-regional .sp-aud-equivalent .sp-aud-source{display:block;font-size:var(--type-caption-compact);font-weight:400;color:var(--color-text-muted)}
-.storep-regional .sp-aud-equivalent+.sp-local-price{display:block;padding-top:3px;border-top:1px solid var(--color-border);margin-top:3px}
-
-/* Mobile Store QA: three tall equal-height country boxes created a 39-product
-   scroll marathon. Keep every country, dated price and unavailable state but
-   present them as short, individually sized comparison rows. */
-@media(max-width:659px){
-  .storep-regional .sp-product{padding:var(--space-2)}
-  .storep-regional .sp-product-head{margin-bottom:var(--space-1)}
-  .storep-regional .sp-market-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
-  .storep-regional .sp-market,
-  .storep-regional .sp-market-au{
-    display:grid;grid-column:auto;grid-template-columns:minmax(72px,86px) minmax(0,1fr);
-    align-items:start;gap:var(--space-2);padding:var(--space-2) 0;
-    border:0;border-radius:0;background:transparent;overflow-wrap:normal
-  }
-  .storep-regional .sp-market+.sp-market{border-top:1px solid var(--color-border)}
-  .storep-regional .sp-market-label{font-size:var(--type-meta);line-height:1.25}
-  .storep-regional .sp-market-label small{display:block;font-size:var(--type-caption-compact)}
-  .storep-regional .sp-market .sp-regional-value{min-width:0;line-height:1.25}
-  .storep-regional .sp-market .sp-regional-value>b{font-size:var(--type-body-sm)}
-  .storep-regional .sp-market .sp-regional-value small{font-size:var(--type-caption-compact);line-height:1.25}
-  .storep-regional .sp-market .sp-none{font-size:var(--type-caption);color:var(--color-text-muted)}
-  .storep-regional .sp-aud-equivalent{display:block;line-height:1.25}
-  .storep-regional .sp-aud-equivalent .sp-aud-source{display:inline;margin-left:var(--space-1)}
-  .storep-regional .sp-aud-equivalent+.sp-local-price{border:0;margin:0;padding:0}
-}
-
-
 /* Owner infographic approval: one exact source-backed raid boss, iPhone-safe. */
 .ig-boss-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2);padding:var(--space-3);border:1px solid var(--color-border,#343d51);border-radius:var(--radius-md);background:var(--color-surface-raised,#1c2330)}
 .ig-boss-controls label{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2);min-width:0;font-size:var(--type-body-sm);font-weight:700}
@@ -2378,18 +2306,22 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .igr-event-suggestions .igr-g{padding:0 var(--space-3) var(--space-3);gap:var(--space-2)}
 .igr-event-suggestions .igr-g .pill{box-sizing:border-box;width:100%;min-height:44px;font-size:var(--type-body-sm);overflow-wrap:anywhere}
 
-/* Sprint 2 owner-approved AUD-first three-country price comparison. */
-@media(max-width:659px){
-  .storep-regional .sp-market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-1)}
-  .storep-regional .sp-market,.storep-regional .sp-market-au{display:flex;flex-direction:column;grid-column:auto;min-width:0;align-items:stretch;gap:var(--space-1);padding:var(--space-2) var(--space-1);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface-raised);overflow-wrap:anywhere}
-  .storep-regional .sp-market+.sp-market{border-top:1px solid var(--color-border)}
-  .storep-regional .sp-market-label{display:flex;flex-direction:column;align-items:center;gap:var(--space-1);text-align:center;font-size:.7rem;line-height:1.25}
-  .storep-regional .sp-market-label small{display:block;font-size:.6rem;font-weight:650;color:var(--color-text-muted);line-height:1.15}
-  .storep-regional .sp-market .sp-regional-value{display:block;min-width:0;text-align:center;font-variant-numeric:tabular-nums}
-  .storep-regional .sp-market .sp-regional-value>b,.storep-regional .sp-market .sp-aud-equivalent{font-size:clamp(.69rem,2.9vw,.89rem);font-weight:800;line-height:1.3;overflow-wrap:anywhere}
-  .storep-regional .sp-market .sp-regional-value small{display:block;font-size:var(--type-caption-compact);line-height:1.25;color:var(--color-text-muted);overflow-wrap:anywhere}
-  .storep-regional .sp-market .sp-regional-value .sp-local-price{font-size:.69rem;font-weight:600;color:var(--color-text-muted);line-height:1.3;overflow-wrap:anywhere}
-  .storep-regional .sp-aud-equivalent .sp-aud-source{display:block;font-size:var(--type-caption-compact);line-height:1.25;overflow-wrap:anywhere}
-  .storep-regional .sp-aud-equivalent+.sp-local-price{border:0;margin:var(--space-1) 0 0;padding:0}
-  .storep-regional .sp-market .sp-none{display:flex;align-items:center;justify-content:center;min-height:30px;font-size:1rem}
-}
+/* Store minimal card: image (only when an exact one exists), name, then one compact row of AU / ID / IN prices. */
+.storep-regional .sp-product{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2);min-width:0;padding:var(--space-2);border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-raised)}
+.storep-regional .sp-line{display:flex;align-items:center;gap:var(--space-2);min-width:0}
+.storep-regional .sp-i{flex:none;width:40px;height:40px;object-fit:contain}
+.storep-regional .sp-name{min-width:0;font-size:var(--type-body-sm);line-height:1.3;overflow-wrap:anywhere}
+.storep-regional .sp-prices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-1)}
+.storep-regional .sp-price{min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:var(--space-1);border-radius:var(--radius-sm);background:var(--color-canvas);text-align:center;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.storep-regional .sp-flag{font-size:1rem;line-height:1.2}
+.storep-regional .sp-local-price{font-size:clamp(.69rem,2.9vw,.89rem);font-weight:750;line-height:1.3}
+.storep-regional .sp-aud-equivalent{font-size:var(--type-caption-compact);font-weight:400;line-height:1.25;color:var(--color-text-muted)}
+.storep-regional .sp-aud-equivalent:empty{display:none}
+.storep-regional .sp-none{color:var(--color-text-muted);font-size:1rem;line-height:1.3}
+.storep-regional .sp-est-mark{font-size:var(--type-caption-compact);font-weight:700;font-style:italic;color:var(--color-text-muted)}
+.storep-regional .sp-results{font:600 var(--type-overline) var(--font-body);color:var(--color-text-muted);margin:var(--space-2) 0}
+.storep-regional .sp-results:empty{display:none}
+.storep-regional .sp-review{margin-top:var(--space-3)}
+.storep-regional .sp-review>summary{color:var(--color-text-muted);font-size:var(--type-meta);cursor:pointer}
+.storep-regional .sp-review>summary:focus-visible,.storep-regional .sp-compare-more>summary:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.storep-regional .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
