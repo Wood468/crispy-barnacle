@@ -274,12 +274,14 @@
     var current = snapshot.items.filter(matching);
     var past = snapshot.gone.filter(matching);
     var row = current.length === 1 ? current[0] : past.length === 1 ? past[0] : null;
-    var artwork = null; /* Publisher images are review candidates, not approved runtime artwork. */
-    /* Exact publisher image URLs remain in the read-only snapshot solely for
-       the existing asset-approval workflow; never promote them to runtime. */
+    /* Owner-approved (15 Nov 2026): the Store card may show the snapshot image of the ONE current
+       offer whose official display name matches exactly, and only if the URL passes sourceArt().
+       Archived/removed or ambiguous matches never carry an image. */
+    var artwork = current.length === 1 && sourceArt(current[0].image) ? current[0].image : null;
     if (current.length !== 1) {
       /* An old removal record is not proof of today's availability. Only a
          fresh source snapshot may classify a missing offer as removed. */
+      artwork = null;
       if (past.length === 1 && sourceFresh) {
         var goneTime = Date.parse(row.goneAt || '');
         if (Number.isFinite(goneTime) && goneTime <= checkTime)
@@ -296,9 +298,12 @@
       return {status:'unconfirmed',image:artwork,lastSeen:row.lastSeen||null,goneAt:null,endAt:row.endsAt||null,note:'Store observation is stale'};
     return {status:'listed',image:artwork,lastSeen:row.lastSeen,goneAt:null,endAt:row.endsAt||null,note:'Seen in the latest Store snapshot; checkout availability may differ'};
   }
+  /* Strict allow-list for Niantic Store item images: https, exact host, no port/userinfo/query/fragment,
+     the sku_assets path, a plain slug (no dot-only or traversal segment) and a length cap. */
   function sourceArt(url) {
-    return typeof url === 'string' &&
-      /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()\-]+\/w(?:64|128|256|512)\.webp$/i.test(url);
+    return typeof url === 'string' && url.length <= 300 &&
+      /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/(?!\.+\/)[a-z0-9_.%()\-]+\/w(?:64|128|256|512)\.webp$/i.test(url) &&
+      !/%2e|%2f|%5c/i.test(url);
   }
   /* Owner-only audit of source coverage, not a live checkout or a price
      prediction. Keep absent, modelled and recorded prices distinguishable. */

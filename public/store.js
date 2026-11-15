@@ -24,6 +24,13 @@
     }
     return '';
   }
+  /* Owner-approved (15 Nov 2026): Niantic's own image for the exactly matched snapshot offer. regional-prices
+     sourceOffer() has already validated the URL with sourceArt(); it is re-checked here before use. */
+  function remoteIcon(p) {
+    var art = p && p.sourceOffer && p.sourceOffer.image, R = window.GORegionalPrices;
+    if (!art || !R || !R.sourceArt || !R.sourceArt(art)) return '';
+    return '<img class="sp-i" src="' + esc(art) + '" alt="' + esc(p.label) + '" width="40" height="40" loading="lazy" decoding="async" referrerpolicy="no-referrer">';
+  }
   function priority(p) {
     var label = String(p.label || ''), group = String(p.group || ''), kind = String(p.kind || '');
     if (/ticket|event.pass|monthly.pass|go pass/i.test(label + ' ' + group + ' ' + kind)) return 'passes';
@@ -257,7 +264,7 @@
       var evidence = p.sourceOffer;
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '"'
         + (evidence ? ' data-sp-listing="' + esc(evidence.status) + '"' : '') + '>'
-        + '<div class="sp-line">' + icon(p.label) + '<b class="sp-name">' + esc(p.label) + '</b>'
+        + '<div class="sp-line">' + (icon(p.label) || remoteIcon(p)) + '<b class="sp-name">' + esc(p.label) + '</b>'
         + (p.tag ? '<small class="sp-tag">' + esc(p.tag) + '</small>' : '')
         + (unconfirmed ? '<span class="sp-unconf" data-sp-unconfirmed><span aria-hidden="true">?</span><span class="sr-only">Availability not confirmed</span></span>' : '') + '</div>'
         + '<div class="sp-prices">'

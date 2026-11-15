@@ -47,10 +47,10 @@ test('official item image observations are strict publisher references, never ap
   assert.ok(!ids.has('pokecoin'),'pack art cannot be represented as a universal coin icon');
 });
 
-test('publisher image references cannot silently enter the Store or browser CSP',()=>{
+test('publisher review references are not hard-coded in the Store; runtime images come only from the validated live snapshot (CSP host owner-approved 15 Nov 2026)',()=>{
   const store=readFileSync(new URL('../public/store.js',import.meta.url),'utf8');
   const csp=readFileSync(new URL('../src/image-policy.js',import.meta.url),'utf8');
   for(const entry of data.entries)
     assert.ok(!store.includes(entry.publisherImageUrl),'unapproved asset used by Store: '+entry.id);
-  assert.ok(!csp.includes(CDN),'source review alone must not silently broaden image CSP');
+  assert.equal(csp.split(CDN).length-1,1,'the owner-approved host appears exactly once in the image policy');
 });
