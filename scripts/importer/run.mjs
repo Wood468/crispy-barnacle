@@ -313,14 +313,17 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt =
     if (!now || !before || (now.researchTasks || []).length) continue;
     const backed = (before.researchTasks || []).filter(task => task && typeof task === "object" && Array.isArray(task.sourceRefs) && task.sourceRefs.some(ref => /^https:\/\//.test(ref.url || "")));
     if (!backed.length) continue;
-    const health = new Map(), sources = []; let denied = false;
+    const health = new Map(), sources = [], srcByUrl = new Map(); let denied = false;
+    const anyExplicit = group.results.some(r => r.fields?.researchParse?.explicitNone === true);
     for (const r of group.results) {
       const url = normUrl(r.source?.url || "");
       if (!url) continue;
       const p = r.fields?.researchParse, status = p?.status ?? null, truncated = !!p?.truncated;
       const ownDenial = p?.explicitNone === true && status === "explicit-none" && !truncated && ownsPage(group.event, r.source);
       if (ownDenial) denied = true;
-      sources.push({ url: r.source.url, status, truncated, candidateRows: p?.candidateRows ?? null, headings: p?.headings ?? null, table: p?.table ?? null, ...(p?.explicitNone === true ? { explicitNone: true } : {}), ...(p?.researchKeywords === false ? { researchKeywords: false } : {}), ...(typeof p?.sample === "string" ? { sample: p.sample.slice(0, 600) } : {}) });
+      // Keys appear only when they explain a denial: researchKeywords as a boolean when false or when any source denied; ownsPage on denying sources.
+      const src = { url: r.source.url, status, truncated, candidateRows: p?.candidateRows ?? null, headings: p?.headings ?? null, table: p?.table ?? null, ...(p?.explicitNone === true ? { explicitNone: true, ownsPage: ownsPage(group.event, r.source) } : {}), ...(typeof p?.researchKeywords === "boolean" && (p.researchKeywords === false || anyExplicit) ? { researchKeywords: p.researchKeywords } : {}), ...(typeof p?.sample === "string" ? { sample: p.sample.slice(0, 600) } : {}) };
+      sources.push(src); srcByUrl.set(url, { src, keywords: p?.researchKeywords });
       // ok: parsed. none: fully read, nothing recognised (also a denial on a page that is not this event's own). denied: own page says there is none. anything else (incl. truncated): incomplete.
       const kind = truncated ? "incomplete" : status === "ok" ? "ok" : status === "none" && p?.researchKeywords === false ? "none-clean" : status === "none" || (status === "explicit-none" && !ownDenial) ? "none" : ownDenial ? "denied" : "incomplete";
       const prior = health.get(url), rank = ["ok", "denied", "none-clean", "none", "incomplete"];
@@ -344,6 +347,17 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt =
       // Explicit denial by the event's own page, with every source of the task fetched and readable: removal is confirmed now.
       // Every other source must be positively healthy: parsed ok, itself a denial, or "none" with no research wording anywhere on the page (a parser miss would still show "Timed Research"/"Task").
       if (denied && rawKinds.every(k => k === "ok" || k === "denied" || k === "none-clean")) { deniedDrop = true; return false; }
+      // Say exactly which guard kept the task when a source denied the research (first retained task only).
+      if (anyExplicit && !entry.blockedBy) {
+        const why = [];
+        if (!denied) why.push(group.results.some(r => r.fields?.researchParse?.truncated && r.fields?.researchParse?.explicitNone) ? "denial-truncated" : "not-own-page");
+        else task.sourceRefs.filter(ref => /^https:\/\//.test(ref.url || "")).forEach(ref => {
+          const u = normUrl(ref.url), k = health.get(u), meta = srcByUrl.get(u);
+          const w = k === undefined ? "source-unfetched" : k === "incomplete" ? "source-incomplete" : k === "none" ? (meta?.keywords === true ? "source-keywords" : "keywords-unknown") : "";
+          if (w) { why.push(w); if (meta) meta.src.blockedBy = w; }
+        });
+        entry.blockedBy = [...new Set(why)];
+      }
       const doubtful = kinds.some(k => k === "incomplete"), pending = kinds.some(k => k === "none") && !confirmed;
       if (!kinds.some(k => k === undefined) && !doubtful && !pending) { if (kinds.includes("none")) confirmedNone = true; return false; }
       const key = JSON.stringify([task.category, task.task, task.rewards, task.occurrence || 1]);
