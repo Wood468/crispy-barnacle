@@ -281,9 +281,12 @@ export function preserveGoPassRows(out, old, byEvent) {
 //     here (merged research would not be empty).
 //   * Report reasons: unfetched, incomplete, none-unconfirmed (retained); source-denies
 //     (explicit denial), removal-confirmed (persisted 7-day "none"), source-ok-removed (source
-//     parsed "ok" without the task), event-ended, window-mismatch, name-mismatch (dropped).
+//     parsed "ok" without the task), window-mismatch, name-mismatch (dropped).
 //   * Once the event has ended (stamped task window end or current event end is
-//     before today) nothing is carried: stale research is pointless.
+//     before today) published research is KEPT when the sources are merely unreadable or absent
+//     (reason event-ended-kept: retained, no warning, no retention stamp), so a past event's detail
+//     page stays complete after its source falls off discovery. Never invents tasks; positive
+//     removal evidence (ok-removed, source-denies, confirmed none) still drops, ended or not.
 // Only tasks with an explicit source URL are eligible; a stamped id, name or window
 // date must match the current event, and unstamped legacy tasks are accepted (the
 // same-id old record already identifies the event); prose is never promoted.
@@ -335,12 +338,13 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt =
     let deniedDrop = false;
     const filtered = new Set(); // why tasks were dropped before health was consulted
     const seen = new Set();
-    let incomplete = false, unconfirmed = false, confirmedNone = false;
+    let incomplete = false, unconfirmed = false, confirmedNone = false, endedKept = false;
     const carried = backed.filter(task => {
       const mismatch = now.name !== before.name ? "name-mismatch" : taskBelongsTo(task, id, now, group.event);
       if (mismatch) { filtered.add(mismatch); return false; }
       const end = [day(task.eventWindow?.end), day(group.event?.end)].filter(Boolean);
-      if (end.some(value => value < today)) { filtered.add("event-ended"); return false; }
+      // An ended event keeps its published research (its detail page stays complete); healthy removal evidence below still drops it.
+      const ended = end.some(value => value < today);
       const rawKinds = task.sourceRefs.filter(ref => /^https:\/\//.test(ref.url || "")).map(ref => health.get(normUrl(ref.url)));
       const kinds = rawKinds.map(k => k === "none-clean" ? "none" : k);
       // undefined = not fetched this run (outage): unknown, no parse warning.
@@ -363,19 +367,19 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt =
       const key = JSON.stringify([task.category, task.task, task.rewards, task.occurrence || 1]);
       if (seen.has(key)) return false;
       seen.add(key);
-      if (doubtful) incomplete = true; else if (pending) unconfirmed = true;
+      if (ended) endedKept = true; else if (doubtful) incomplete = true; else if (pending) unconfirmed = true;
       return true;
     });
     if (carried.length) {
       now.researchTasks = carried;
       entry.retained = true;
-      entry.reason = incomplete ? "incomplete" : unconfirmed ? "none-unconfirmed" : "unfetched";
+      entry.reason = incomplete ? "incomplete" : unconfirmed ? "none-unconfirmed" : endedKept ? "event-ended-kept" : "unfetched";
       if (incomplete || unconfirmed) {
         now.researchParseWarning = "Research could not be confirmed this run; previously published research tasks were retained.";
         now.researchRetainedAt = before.researchRetainedAt || runAt; // when retention BEGAN
-      } else if (before.researchRetainedAt) now.researchRetainedAt = before.researchRetainedAt;
+      } else if (before.researchRetainedAt && !endedKept) now.researchRetainedAt = before.researchRetainedAt;
     } else {
-      entry.reason = ["event-ended", "window-mismatch", "name-mismatch"].find(r => filtered.has(r)) || (deniedDrop ? "source-denies" : confirmedNone ? "removal-confirmed" : "source-ok-removed");
+      entry.reason = ["window-mismatch", "name-mismatch"].find(r => filtered.has(r)) || (deniedDrop ? "source-denies" : confirmedNone ? "removal-confirmed" : "source-ok-removed");
     }
     report.push(entry);
     console.log(`research-retention ${id}: ${entry.retained ? "retained" : "dropped"} ${carried.length}/${entry.oldTasks} (${entry.reason}) sources=${sources.map(s => s.status + (s.truncated ? "+trunc" : "")).join(",") || "none"}`);

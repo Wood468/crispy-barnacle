@@ -31,7 +31,7 @@
   ]
  },
  "counts": {
-  "entries": 89,
+  "entries": 91,
   "visuallyConfirmed": 8
  },
  "entries": {
@@ -773,6 +773,26 @@
    "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
    "sha256": "28263eb1de359fd8ffe5fa8d8d23e8cce7e8f0f0d7e78057274037b88f3ed4a0",
    "bytes": 14098
+  },
+  "849|normal|costume|low-key-form|regular": {
+   "status": "approved",
+   "url": "/img/ext/849-l-43d01243.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "641cd4d011f61610ea2d75fd1d4bb1e10d4193b333d3a298e4865169b44f219b",
+   "bytes": 11899,
+   "label": "low key form"
+  },
+  "849|normal|costume|low-key-form|shiny": {
+   "status": "approved",
+   "url": "/img/ext/849-l-592c6fef.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "01be0bc7d999e70eb961f5c3101c5f1894a93472d72b8ba29a4bda2c952cec2d",
+   "bytes": 11525,
+   "label": "low key form"
   },
   "849|normal|gigantamax||regular": {
    "status": "approved",
