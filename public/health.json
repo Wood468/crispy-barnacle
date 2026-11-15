@@ -1,18 +1,18 @@
 {
- "updated": "2026-11-15T11:14:11.760Z",
+ "updated": "2026-11-15T17:51:11.961Z",
  "jobs": [
   {
    "id": "event-importer.yml",
    "name": "Event importer",
    "everyH": 1,
-   "lastSuccess": "2026-11-15T10:50:44.000Z",
-   "state": "fresh"
+   "lastSuccess": "2026-11-15T13:06:01.000Z",
+   "state": "stale"
   },
   {
    "id": "source-watch.yml",
    "name": "Source feed watcher",
    "everyH": 3,
-   "lastSuccess": "2026-11-15T06:32:39.000Z",
+   "lastSuccess": "2026-11-15T16:22:16.000Z",
    "state": "fresh"
   },
   {
@@ -33,14 +33,14 @@
    "id": "g47ix-infographics.yml",
    "name": "Infographic check",
    "everyH": 2,
-   "lastSuccess": "2026-11-15T08:41:58.000Z",
+   "lastSuccess": "2026-11-15T16:44:26.000Z",
    "state": "fresh"
   },
   {
    "id": "store-watch.yml",
    "name": "Store watcher",
    "everyH": 1,
-   "lastSuccess": "2026-11-15T10:55:46.000Z",
+   "lastSuccess": "2026-11-15T17:43:34.000Z",
    "state": "fresh"
   },
   {
@@ -61,8 +61,8 @@
    "id": "discord_sync.yml",
    "name": "Discord reader",
    "everyH": 2,
-   "lastSuccess": "2026-11-15T05:46:35.000Z",
-   "state": "stale"
+   "lastSuccess": "2026-11-15T13:44:28.000Z",
+   "state": "fresh"
   },
   {
    "id": "data-report.yml",
@@ -75,7 +75,7 @@
    "id": "worker-cron",
    "name": "Worker hourly jobs",
    "everyH": 1,
-   "lastSuccess": "2026-11-15T10:30:46.933Z",
+   "lastSuccess": "2026-11-15T17:30:48.124Z",
    "state": "fresh",
    "detail": "Discord forwarding: nothing new"
   },
