@@ -479,6 +479,18 @@ test("canonical Minior research retains sourced tasks across optional bonus trac
     const event = data.events.find(e => e.id === id), detail = details[id];
     assert.ok(event && detail, id);
     const tasks = detail.researchTasks || [];
+    if (id === "minior2" && tasks.length === 0) {
+      // Leek Duck's own Leonids page says "No Timed Research" (Hub carries none in its main content), so the source-denies rule may
+      // legitimately empty this event. That is accepted ONLY with evidence: the retention report must say so, or must show nothing was
+      // being retained (retention reports every event that had old tasks and an empty merge, so no entry means none were lost this run).
+      // Orionids ("minior") keeps the full invariant below.
+      const report = JSON.parse(readFileSync("data/importer-report.json", "utf8"));
+      const entry = (report.researchRetention || []).find(r => r.id === id);
+      if (entry) assert.deepEqual([entry.retained, entry.reason], [false, "source-denies"], id + ": research vanished without a source-denies report entry");
+      assert.equal(detail.researchParseWarning, undefined, id + ": an emptied event must not still claim its research was retained");
+      assert.equal(detail.researchRetainedAt, undefined, id + ": an emptied event must not carry a retention stamp");
+      continue;
+    }
     assert.ok(tasks.length >= 2, id + " must retain published research tasks");
     // GO Hub now publishes a regular track plus an optional bonus track.
     // A source refresh can legitimately add new task/reward variants, so the

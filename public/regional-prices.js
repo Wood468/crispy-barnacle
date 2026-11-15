@@ -226,6 +226,14 @@
         || !Array.isArray(offer.contents)) return;
       var key = 'source-only:' + offer.id;
       if (all[key]) return;
+      /* A verified AU Web price whose label is this offer's exact title IS the priced card for it:
+         adopt the publisher contents and do not add a second, unpriced duplicate. */
+      var priced = auByLabel[norm(offer.label)] || [];
+      if (priced.length === 1) {
+        var card = all[priced[0]];
+        if (!card.contents.length) { card.contents = offer.contents; card.contentsSource = offer.sourceUrl; }
+        return;
+      }
       all[key] = {product:offer.id,label:offer.label,group:offer.group || 'Passes & tickets',
         aud:null,observed:null,unpricedOfficial:true,contents:offer.contents,
         contentsSource:offer.sourceUrl};
