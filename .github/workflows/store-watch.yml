@@ -71,6 +71,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Private publication heartbeat: stamped into the commit that is about to be pushed, so it only persists if the
+          # push to main succeeds (a failed push fails the job and the stamp is discarded with the runner). It records
+          # publication to main, not Cloudflare deployment. Held/invalid/incomplete runs are not stamped.
+          node scripts/store-watch.mjs --stamp-publication
           git add -- data/store-state.json public/store-log.json public/store-current-snapshot.json public/prices.json 2>/dev/null || true
           node scripts/validate-public-data.mjs
           if git diff --cached --quiet; then exit 0; fi

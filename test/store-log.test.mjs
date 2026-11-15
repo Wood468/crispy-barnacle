@@ -1,13 +1,17 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { diffStore, storeLog } from "../scripts/store-watch.mjs";
+import { withEvidence } from "./store-evidence-fixture.mjs";
 test("store log: keeps when items appeared and left, and when watching began", () => {
   const a = { name: "Sandile Hatch Day Ultra Ticket Box", price: "$1.99", section: "LIMITED_TIME", href: "/en/x/sandile" }, b = { name: "Remote Raid Pass", price: "$2.99", section: "ITEMS", href: "/en/x/rrp" };
   // Observations need >=3 valid SKUs (validateStoreObservation); keep two stable fillers.
   const f1 = { name: "Filler One", price: "$0.99", section: "ITEMS", href: "/en/x/f1" }, f2 = { name: "Filler Two", price: "$0.99", section: "ITEMS", href: "/en/x/f2" };
   const d1 = diffStore(null, { items: [a, b, f1, f2] }, "2026-10-01T00:00:00Z");
   assert.equal(d1.state.watchStart, "2026-10-01T00:00:00Z");
-  const d2 = diffStore(d1.state, { items: [b, f1, f2], completeness: { verified: true } }, "2026-10-05T00:00:00Z");
+  // Removal needs complete producer evidence and a second consecutive complete scrape.
+  const d1b = diffStore(d1.state, withEvidence([b, f1, f2]), "2026-10-04T23:00:00Z");
+  assert.equal(d1b.held.reason, "awaiting-corroboration");
+  const d2 = diffStore(d1b.state, withEvidence([b, f1, f2]), "2026-10-05T00:00:00Z");
   assert.equal(d2.state.watchStart, "2026-10-01T00:00:00Z");
   assert.equal(d2.state.gone["/en/x/sandile"].goneAt, "2026-10-05T00:00:00Z");
   const log = storeLog(d2.state);

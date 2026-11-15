@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { diffStore, storeCurrentSnapshot } from "../scripts/store-watch.mjs";
+import { withEvidence } from "./store-evidence-fixture.mjs";
 
 const at = "2026-11-14T06:00:00.000Z";
 const item = n => ({
@@ -44,6 +45,16 @@ for (const [count, total] of [[18,35],[20,35],[3,9]]) {
     assert.equal(Object.keys(d.state.items).length,total);
     assert.equal(d.state.lastPublishedAt,old.lastPublishedAt);
   });
+  test(`complete-evidence ${total}-to-${count} drop is still held (large-drop) with no retirement`, () => {
+    const old = { ...previous, items: Object.fromEntries(Object.entries(previous.items).slice(0,total)) };
+    const snap = withEvidence(Array.from({length:count},(_,n)=>item(n)));
+    const d1 = diffStore(old, snap, at);
+    assert.equal(d1.held?.reason,"large-drop");
+    const d2 = diffStore(d1.state, snap, "2026-11-14T07:00:00.000Z");
+    assert.equal(d2.held?.reason,"large-drop","a second identical scrape does not unlock a large drop");
+    assert.equal(d2.gone.length,0);
+    assert.equal(Object.keys(d2.state.items).length,total);
+  });
 }
 
 test("successful unchanged observation preserves durable private publication stamp", () => {
@@ -52,12 +63,13 @@ test("successful unchanged observation preserves durable private publication sta
   assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
 });
 
-test("confirmed complete 35-to-34 observation may retire exactly one SKU", () => {
-  const d = diffStore(previous,{items:Array.from({length:34},(_,n)=>item(n)), completeness:{verified:true}},at);
-  assert.equal(d.gone.length,1);
-  assert.equal(Object.keys(d.state.items).length,34);
+test("complete evidence alone does not retire a SKU: first absence is held pending corroboration", () => {
+  const d = diffStore(previous,withEvidence(Array.from({length:34},(_,n)=>item(n))),at);
+  assert.equal(d.held?.reason,"awaiting-corroboration");
+  assert.equal(d.gone.length,0);
+  assert.equal(Object.keys(d.state.items).length,35);
+  assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
 });
-
 
 test("unverified 35-to-34 absence cannot retire a SKU", () => {
   const d = diffStore(previous,{items:Array.from({length:34},(_,n)=>item(n))},at);

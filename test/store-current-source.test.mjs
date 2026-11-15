@@ -143,3 +143,43 @@ test('publisher image candidates remain unapproved for runtime display', () => {
   assert.equal(IMAGE_CSP_HOSTS.some(origin => origin === 'https://assets.pgo.webstore.nianticlabs.com'),false);
   assert.equal(R.sourceOffer('GO Pass Deluxe: November', fixture, NOW).image,null);
 });
+
+/* Staleness boundaries use a fixed injected clock (the third argument), never Date.now(). */
+const CLOCK = Date.parse('2026-11-20T00:00:00Z');
+const DAYMS = 86400000;
+const snapAt = (updatedAgeMs, seenAgeMs) => ({version:1, updated:new Date(CLOCK-updatedAgeMs).toISOString(),
+  items:[row('Timed Pass', {lastSeen:new Date(CLOCK-seenAgeMs).toISOString()})], gone:[]});
+
+test('snapshot.updated freshness: day 6 and exactly 7 days are listed, just over 7 days is unconfirmed', () => {
+  assert.equal(R.sourceOffer('Timed Pass', snapAt(6*DAYMS, 0), CLOCK).status, 'listed');
+  assert.equal(R.sourceOffer('Timed Pass', snapAt(7*DAYMS, 0), CLOCK).status, 'listed');
+  const over = R.sourceOffer('Timed Pass', snapAt(7*DAYMS+1, 0), CLOCK);
+  assert.equal(over.status, 'unconfirmed');
+  assert.match(over.note, /needs refreshing/);
+});
+
+test('lastSeen freshness: day 6 and exactly 7 days are listed, just over 7 days is unconfirmed', () => {
+  assert.equal(R.sourceOffer('Timed Pass', snapAt(0, 6*DAYMS), CLOCK).status, 'listed');
+  assert.equal(R.sourceOffer('Timed Pass', snapAt(0, 7*DAYMS), CLOCK).status, 'listed');
+  const over = R.sourceOffer('Timed Pass', snapAt(0, 7*DAYMS+1), CLOCK);
+  assert.equal(over.status, 'unconfirmed');
+  assert.match(over.note, /stale/);
+});
+
+test('a snapshot or observation dated in the future never confirms a listing', () => {
+  assert.equal(R.sourceOffer('Timed Pass', snapAt(-1, 0), CLOCK).status, 'unconfirmed');
+  assert.equal(R.sourceOffer('Timed Pass', snapAt(0, -1), CLOCK).status, 'unconfirmed');
+});
+
+test('generic unmatched future offer stays visible, unpriced and unconfirmed (not November-specific)', () => {
+  const future = {id:'official:test-future-box', label:'Future Event Mystery Box', group:'Passes & tickets',
+    contents:[{item:'Mystery Item', quantity:1}], sourceUrl:'https://pokemongo.com/news/future-event-mystery-box',
+    sourceCheckedAt:'2026-11-19', regionAvailability:'unknown', noPriceObservation:true};
+  const rows = R.catalogue([], [], CLOCK, [future]);
+  const found = rows.find(x => x.label === 'Future Event Mystery Box');
+  assert.ok(found, 'unmatched offer is not dropped');
+  assert.equal(found.unpricedOfficial, true);
+  assert.ok(!found.aud, 'no invented AU price');
+  assert.ok(!found.indonesia && !found.india, 'no regional price or estimate without a matching comparable');
+  assert.equal(R.sourceOffer('Future Event Mystery Box', fixture, CLOCK).status, 'unconfirmed');
+});
