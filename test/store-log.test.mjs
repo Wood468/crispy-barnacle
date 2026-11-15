@@ -3,14 +3,16 @@ import assert from "node:assert/strict";
 import { diffStore, storeLog } from "../scripts/store-watch.mjs";
 test("store log: keeps when items appeared and left, and when watching began", () => {
   const a = { name: "Sandile Hatch Day Ultra Ticket Box", price: "$1.99", section: "LIMITED_TIME", href: "/en/x/sandile" }, b = { name: "Remote Raid Pass", price: "$2.99", section: "ITEMS", href: "/en/x/rrp" };
-  const d1 = diffStore(null, { items: [a, b] }, "2026-10-01T00:00:00Z");
+  // Observations need >=3 valid SKUs (validateStoreObservation); keep two stable fillers.
+  const f1 = { name: "Filler One", price: "$0.99", section: "ITEMS", href: "/en/x/f1" }, f2 = { name: "Filler Two", price: "$0.99", section: "ITEMS", href: "/en/x/f2" };
+  const d1 = diffStore(null, { items: [a, b, f1, f2] }, "2026-10-01T00:00:00Z");
   assert.equal(d1.state.watchStart, "2026-10-01T00:00:00Z");
-  const d2 = diffStore(d1.state, { items: [b] }, "2026-10-05T00:00:00Z");
+  const d2 = diffStore(d1.state, { items: [b, f1, f2], completeness: { verified: true } }, "2026-10-05T00:00:00Z");
   assert.equal(d2.state.watchStart, "2026-10-01T00:00:00Z");
   assert.equal(d2.state.gone["/en/x/sandile"].goneAt, "2026-10-05T00:00:00Z");
   const log = storeLog(d2.state);
   assert.deepEqual(log.items.map(i => [i.name, i.goneAt]), [["Sandile Hatch Day Ultra Ticket Box", "2026-10-05T00:00:00Z"]]);
-  const d3 = diffStore(d2.state, { items: [a, b] }, "2026-10-06T00:00:00Z");
+  const d3 = diffStore(d2.state, { items: [a, b, f1, f2] }, "2026-10-06T00:00:00Z");
   assert.equal(d3.state.gone["/en/x/sandile"], undefined);
   assert.equal(d3.state.items["/en/x/sandile"].firstSeen, "2026-10-06T00:00:00Z");
 });
@@ -33,11 +35,12 @@ test("countdown: turns the store's rounded 'N hours left' into an end time that 
 });
 test("store log: carries the item's store link and estimated end", () => {
   const a = { name: "Sandile Hatch Day Ultra Ticket Box", price: "$1.99", section: "LIMITED_TIME", href: "/purchase/item/web-sandile-hatch-day-ultra", left: "2 days left" };
-  const d = diffStore(null, { items: [a] }, "2026-10-01T00:00:00.000Z");
+  const fill = [1, 2].map(n => ({ name: "Filler " + n, price: "$0.99", section: "ITEMS", href: "/purchase/item/filler-" + n }));
+  const d = diffStore(null, { items: [a, ...fill] }, "2026-10-01T00:00:00.000Z");
   const row = storeLog(d.state).items[0];
   assert.equal(row.href, "/purchase/item/web-sandile-hatch-day-ultra");
   assert.equal(row.endsAt, "2026-10-03T00:00:00.000Z");
-  const d2 = diffStore(d.state, { items: [{ ...a, left: "1 day left" }] }, "2026-10-02T00:00:00.000Z");
+  const d2 = diffStore(d.state, { items: [{ ...a, left: "1 day left" }, ...fill] }, "2026-10-02T00:00:00.000Z");
   assert.equal(storeLog(d2.state).items[0].endsAt, "2026-10-03T00:00:00.000Z", "stable while readings agree");
 });
 
@@ -109,12 +112,14 @@ test("store watch: an old state without a currency field still detects a flip", 
   assert.equal(d2.held.base, "$");
 });
 
-test("store watch: one item in another currency is ignored while real changes still alert", () => {
+test("store watch: one item in another currency holds the whole observation (mixed-currency) and keeps saved prices", () => {
   const d1 = diffStore(null, { items: currencyFixture("$") }, "2026-10-25T00:00:00Z");
   const items = currencyFixture("$");
   items[1].price = "CA$20.99";
   items[0].price = "$8.99";
   const d2 = diffStore(d1.state, { items }, "2026-10-25T01:00:00Z");
-  assert.deepEqual(d2.changed.map(i => i.name), ["Remote Raid Pass"]);
+  assert.equal(d2.held?.reason, "mixed-currency");
+  assert.deepEqual(d2.changed, []);
   assert.equal(d2.state.items["/purchase/item/pass"].price, "$14.99");
+  assert.equal(d2.state.items["/purchase/item/rrp"].price, "$9.99");
 });
