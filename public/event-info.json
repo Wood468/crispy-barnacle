@@ -1287,6 +1287,12 @@
           "url": "/infographics/g47ix/discord-1568019569581494334.webp",
           "source": "G47IX",
           "alt": "Dynamax Trails infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1571064747267203145.webp",
+          "source": "G47IX",
+          "alt": "Dynamax Trails infographic"
         }
       ],
       "start": "2026-11-16",
@@ -1688,6 +1694,32 @@
           "label": "Raid boss guide · G47IX",
           "source": "G47IX",
           "alt": "Dialga"
+        }
+      ]
+    },
+    {
+      "pokemonId": "884",
+      "formId": "gmax",
+      "battleMode": "gigantamax",
+      "infographics": [
+        {
+          "url": "/infographics/g47ix/discord-1570804591635857524.webp",
+          "label": "Raid boss guide · G47IX",
+          "source": "G47IX",
+          "alt": "Duraludon"
+        }
+      ]
+    },
+    {
+      "pokemonId": "646",
+      "formId": "black",
+      "battleMode": "normal",
+      "infographics": [
+        {
+          "url": "/infographics/g47ix/discord-1570850191790313493.png",
+          "label": "Raid boss guide · G47IX",
+          "source": "G47IX",
+          "alt": "tr NOV 13 8PM Counter Kyurem Black"
         }
       ]
     }

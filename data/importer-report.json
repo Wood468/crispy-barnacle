@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-13T18:08:31.502Z",
+ "runAt": "2026-11-15T07:05:32.213Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -22,13 +22,6 @@
     "name": "Orionids Meteor Shower: Minior Debut",
     "sources": [
      "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
-    ]
-   },
-   {
-    "id": "leekduck:zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026",
-    "name": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) in 5-star Raid Battles",
-    "sources": [
-     "https://leekduck.com/events/zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026/"
     ]
    },
    {
@@ -246,6 +239,13 @@
     "name": "Minior Showers: Southern Delta Aquariids 2027",
     "sources": [
      "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026",
+    "name": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) in 5-star Raid Battles",
+    "sources": [
+     "https://leekduck.com/events/zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026/"
     ]
    },
    {
@@ -556,7 +556,7 @@
    "error": ""
   },
   "hub": {
-   "listed": 9,
+   "listed": 1,
    "error": ""
   }
  },
@@ -565,6 +565,33 @@
  "worldEvents": 70,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
+ ],
+ "researchRetention": [
+  {
+   "id": "minior2",
+   "name": "Minior Showers: Leonids",
+   "oldTasks": 8,
+   "retained": true,
+   "reason": "none-unconfirmed",
+   "sources": [
+    {
+     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/",
+     "status": "none",
+     "truncated": false,
+     "candidateRows": 0,
+     "headings": 0,
+     "table": false
+    },
+    {
+     "url": "https://leekduck.com/events/minior-showers-leonids-2026/",
+     "status": "incomplete",
+     "truncated": false,
+     "candidateRows": 0,
+     "headings": 1,
+     "table": false
+    }
+   ]
+  }
  ],
  "unmatchedPages": [
   {
@@ -661,6 +688,11 @@
    "source": "official",
    "title": "Explore by starlight during meteor showers for a chance to encounter Minior! — Pokémon GO",
    "url": "https://pokemongo.com/news/minior-meteor-showers-2026/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) in 5-star Raid Battles",
+   "url": "https://leekduck.com/events/zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026/"
   }
  ],
  "intl": {
@@ -689,7 +721,7 @@
    "error": ""
   },
   "es_mx": {
-   "listed": 27,
+   "listed": 28,
    "error": ""
   },
   "it": {
@@ -927,7 +959,7 @@
    "event": "Minior Showers: Leonids",
    "field": "research",
    "missingFrom": [
-    "leekduck"
+    "hub"
    ]
   },
   {
@@ -1134,7 +1166,9 @@
    ]
   }
  ],
- "errors": [],
+ "errors": [
+  "https://leekduck.com/events/dynamax-trails-2026/: GO Pass parser: GO Pass source exceeds the 512 KiB safety limit"
+ ],
  "sourceFacetStaging": {
   "schemaVersion": 1,
   "publication": "audit-only",
@@ -1146,7 +1180,7 @@
   "counts": {
    "benefits": 69,
    "featuredMoves": 11,
-   "researchPrograms": 17,
+   "researchPrograms": 19,
    "unconfirmed": 1
   },
   "examples": [
@@ -1172,7 +1206,7 @@
     "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
     "benefitCount": 19,
     "featuredMoveCount": 7,
-    "researchProgramCount": 2
+    "researchProgramCount": 4
    },
    {
     "sourceUrl": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/",
@@ -1209,12 +1243,17 @@
   "canonicalLinks": {
    "publication": "staging-only",
    "eligiblePages": 44,
-   "linkedPages": 44,
-   "unlinkedPages": 0,
+   "linkedPages": 43,
+   "unlinkedPages": 1,
    "ambiguousPages": 0,
    "duplicatePages": 0,
    "rejectedPages": 0,
-   "unlinkedExamples": [],
+   "unlinkedExamples": [
+    {
+     "sourceUrl": "https://leekduck.com/events/into-the-wild-2026",
+     "expectedAlias": "leekduck:into-the-wild-2026"
+    }
+   ],
    "ambiguousExamples": [],
    "linkedExamples": [
     {
@@ -1297,15 +1336,6 @@
      "benefits": 0,
      "featuredMoves": 0,
      "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:into-the-wild-2026",
-     "sourceUrls": [
-      "https://leekduck.com/events/into-the-wild-2026/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 4,
-     "researchPrograms": 1
     },
     {
      "eventId": "leekduck:january-communityday2027",
@@ -1396,13 +1426,22 @@
      "benefits": 0,
      "featuredMoves": 0,
      "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:minior-showers-southern-delta-aquariids-2027",
+     "sourceUrls": [
+      "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
     }
    ],
    "normalizedCounts": {
-    "events": 44,
+    "events": 43,
     "benefits": 69,
-    "featuredMoves": 11,
-    "researchPrograms": 17,
+    "featuredMoves": 7,
+    "researchPrograms": 18,
     "disputed": 0,
     "unconfirmed": 1,
     "warnings": 0

@@ -183,7 +183,13 @@ test('card types: majors, raids and minor rows', () => {
   const t = (kind, name, span = 36e5, featuredCount = 0) => L.cardType({ kind, name, span, featuredCount });
   assert.equal(t('cd', 'Pawniard Community Day', 3 * 36e5), 'major');
   assert.equal(t('person', 'GO Wild Area: Sendai', 2 * 864e5), 'major');
+  assert.equal(t('global', 'GO Wild Area: Global', 2 * 864e5, 1), 'major');
+  assert.equal(t('global', 'GO Tour: Global', 2 * 864e5, 0), 'major');
   assert.equal(t('event', 'Into the Wild', 4 * 864e5, 3), 'major');
+  assert.equal(t('event', 'Two-feature celebration', 2 * 36e5, 2), 'major');
+  assert.equal(t('event', 'Minior Showers: Leonids', 5 * 864e5, 1), 'minor');
+  assert.equal(t('event', 'Long-running single reward', 8 * 864e5, 0), 'minor');
+  assert.equal(t('debut', 'One-Pokémon debut', 4 * 864e5, 1), 'minor');
   assert.equal(t('raid', 'Giratina (Altered Forme) in 5-star Raid Battles', 4 * 864e5), 'raid');
   assert.equal(t('raid', 'Cresselia Raid Hour'), 'raid');
   assert.equal(t('max', 'Max Monday: Pokémon to be announced', 15 * 36e5), 'raid');

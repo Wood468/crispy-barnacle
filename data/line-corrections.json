@@ -1,9 +1,3 @@
 {
-  "lines": [
-    {
-      "match": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
-      "reason": "pokemongo.com/en/gowildarea/global lists the raid but shows no Shiny note; data.json already says Shiny is not confirmed."
-    }
-  ]
+  "lines": []
 }

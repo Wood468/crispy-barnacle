@@ -7,14 +7,143 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1571091552682512514",
+      "source": "discord",
+      "creator": "",
+      "title": "Palkia",
+      "publishedAt": "2026-11-14T09:16:55.629000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1571087391920357486/tr_DMax_Palkia_counters_v2.png?ex=6af974a7&is=6af82327&hm=f0865d030faa99ee0f3e998a01d270577587371605e494443f606e7bdaedd3a3&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Ge; 2 cxD oS if Special Background Chance an () > | f | xX /4 2 Ne 4 PALKIA ~~ \\ ( 4 \" ' ™/ ———_—_ ey = @ 2280 cp pase cc Cay Wil (Wigs) Fe. on )(¢ \\(& \\f ‘\\f \\(8 v ld lz vin q a, DO =! ong iy & = pa ‘, J © METAL CLAW © Pounp @© water GUN @ Water GUN @ PSYWAVE @ PSYWAVE Cpe) oe CORRS 44, yee es ao e @ Ne? Ns A ir) ve 9 oy Mi \\\\t A Z Cs a Pol IV (l au a ) ® DRAGONTAIL © METAL CLAW ® DR. BREATH ® DR. BREATH @ CHARM @ CHARM Use this Switch to Unlock Upgrade its For extra help, Tank (ra this Pokémon Max Spirit Max Attack and use Zacian’s to build to take and heal your use it as your H or Eternatus’s energy resisted hits y teammates q Damage Dealer — Adventure Effect Set the right Fast Move because, the type of your Dynamax Swipe to get Keep tapping to = a: =. Max Move depends on your Fast Move é) energy bubbles help your teammates (this doesn’t apply for GMax) 07°\" You can leave and rejoin a Max Battle Follow for more G47|X £) @®X@ www.g47ix.pro RJ toreroll for a different boss moveset.",
+      "eventMatch": {
+        "eventId": "leekduck:max-battle-day-december-2026",
+        "eventTitle": "Max Battle Day",
+        "score": 0.525,
+        "confidence": "medium",
+        "matchedTerms": [
+          "max",
+          "battle"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:max-battle-day-december-2026",
+            "eventTitle": "Max Battle Day",
+            "score": 0.525
+          },
+          {
+            "eventId": "leekduck:max-battle-day-january-2027",
+            "eventTitle": "Max Battle Day",
+            "score": 0.525
+          },
+          {
+            "eventId": "leekduck:max-mondays-2026-11-16",
+            "eventTitle": "Max Monday: Pokémon to be announced",
+            "score": 0.476
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (medium).",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1571091552682512514.webp"
+    },
+    {
+      "id": "discord:1571064747267203145",
+      "source": "discord",
+      "creator": "",
+      "title": "traiols",
+      "publishedAt": "2026-11-14T07:30:24.720000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1565048046226505760/traiols.png?ex=6af93cd3&is=6af7eb53&hm=4185dede5c03d95b12fc10c68eaba196340a9737b3c7fbc3dac65a7c80928f51&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "eis ee ue @ a ag sa local time ™y Sty i we) i , ug a 4 lL am - 8:00 pm rey Dvnama~x T tied oo | ee yy All Dynamax Pokémon * that have appeared in Pokémon GO may appear hazy iN 7 | Max Battle in Max Battles. If you’re Oy you might get Special background \\ Cc hariza rd 21 ETERNATUS 19 NOV NOV RETURNS Spotlight Hour 2x Catch Candy ‘Nevember 21, 11:00.am -2:00 pm You can't catch it, you'll get Candy and Candy XL More Power Spots than 7T> Max Particle usual will be active and Te ) collection limit Y will refresh more frequently. N- willincrease. AR Event-themed SS Pokémon 4 The Remote Raid limit 8x Max Particles rz) will increase to 30. coll from Power Spots A chance to receive Max Particles Any Pokémon* that has previously when catching event-themed Pokémon in the wild or after Max Battles. appeared in Dynamax Max Battles may appear in the wild. Won't work with the Explorer Gadget or a GO Plus. co DELUXE i. WS ——— — copass ® free —_ — An encounter with Eternatus ——I -——4 Additional encounters with 2 2 (or candy if you already have it) even more event-themed Dynamax e SAF. - Encounters with event-themed Dynamax — Pokémon with a Special Background! oN “a \"es Pokémon with a Special Background SS Even more Eternatus Candy and Candy XL - Eternatus Candy and Candy XL Silver Pinap Berries Jae revels - Rare Candy, Stardust AND MORE ne ty ay XL AND MORE PF ae ZA aN eo one ~ Trainers who claim the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.81,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "raid",
+          "hour",
+          "nov",
+          "dynamax",
+          "max",
+          "battles",
+          "pass",
+          "remote",
+          "limit",
+          "poke",
+          "mon"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.81
+          },
+          {
+            "eventId": "eternamax",
+            "eventTitle": "Eternamax Eternatus Returns",
+            "score": 0.556
+          },
+          {
+            "eventId": "leekduck:pokemonspotlighthour2026-11-26",
+            "eventTitle": "Noibat Spotlight Hour",
+            "score": 0.524
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Creator not set. Set the DISCORD_CREATOR variable to credit the right person.",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 4,
+      "stagedPath": "/infographics/g47ix/discord-1571064747267203145.webp",
+      "publishedEvent": "leekduck:dynamax-trails-2026",
+      "publishedEvents": [
+        "leekduck:dynamax-trails-2026"
+      ],
+      "publishedTargets": []
+    },
+    {
+      "id": "discord:1570910396871745627",
+      "source": "discord",
+      "creator": "",
+      "title": "Counter 3 machamp",
+      "publishedAt": "2026-11-13T21:17:04.718000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570906146879836160/Counter_3_machamp.png?ex=6af8cbdb&is=6af77a5b&hm=86b62ee4bfd798fa48b3c9f2e52baddcc299c2fa54e90a0004f14d31632790c3&",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "mm 14-15NOV Modern Jacket 1+ ~ MACHAMP ~~ f- é 19707 CP ~~ “One arm alone can move mountains. Using all four arms, ____this Pokémon fires off awesome punches.” —— = a et eee a: — as Weakness + € @ Spec im Back ee ‘Z =) Y as \\ Difficulty: 1+ trainers needed Pw 44 , 1746 CP %we2183 CP Boost & Cloudy @ Psycho Cut @ Psycho Cut @ Air Slash @ Future Sight+ @ Psystrike [5 @ Dragon ad G ' va | ~~ Be = bl @ Wing Attack @ ZenHea id bu} @ Confusion @ Brave Bird+ @ Psycho Bo@st @ Psychic (5 <¥ Mi sa &® bs a: @ Air Slash @ Air Slash SS @ Psycho Cut @ Drill Peck+ @ Dragon Ascent [5 @ Psystrike [5 a e- =, (4 Follow for more: Remember to use proper counters, Party Play K wt and Zacian’s Adventure Effect if needed. SH) GA7IX © BX | g47ix.pro s",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1570910396871745627.png",
+      "publishedEvents": [],
+      "publishedTargets": []
+    },
+    {
       "id": "discord:1570850191790313493",
       "source": "discord",
       "creator": "",
       "title": "tr NOV 13 8PM Counter Kyurem Black",
       "publishedAt": "2026-11-13T17:17:50.708000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570845723690537211/tr_NOV_13_8PM_Counter_Kyurem_Black.png?ex=6af89395&is=6af74215&hm=bfb310c5a7732aa76078cb1647875a4a264de86d8068a681cab07160a190f78e&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "a ME ow ee i 15 NOV | aN is Bk #646 £eau ta Pa _ 56009 CP a) “Kg jenerates a powerful, freezing energy inside itself, but — y its body became frozen when the energy leaked out.” UZ Po = ae. eo er >. ca “@< Weakness @ @ @ @ © a oN Ze | Fusion energy will be available. Special Difficulty: 2+ trainers needed Ss i = Background You can get around 80-170 energy per raid Si 4 Chance t+ y Avo Sw4d 2042 CPwe 2553 CP Boost 1 & Windy Snow Wel VAX @ Counter 6 DragonTail =~ © Metal Claw @ Force Palm 2 Na @ Dynamic Punch+ [) Dynamax Cannon ia © Behemoth Bash (a @ Aura Sphere l= VA Z ® TT (\" Ua vy © Me © Metal Claw % @ Counter road @ Low Kick > Sar yy © Behemoth Blad © Sunsteel Strike~ @ Aura sphere doy @ Secret Sword = © Metal Claw & 4 = ® Roar of Time an Ob ak z Remember to use proper counters, Party Play Follow for more: and Zacian’s Adventure Effect if needed. ae GA7IX @@ @ X @ | g47ix.pro",
       "eventMatch": {
@@ -54,7 +183,17 @@
         "posted around the event"
       ],
       "matchScore": 5,
-      "stagedPath": "/infographics/g47ix/discord-1570850191790313493.png"
+      "stagedPath": "/infographics/g47ix/discord-1570850191790313493.png",
+      "publishedEvent": "",
+      "publishedEvents": [],
+      "publishedTargets": [
+        {
+          "type": "raid-boss",
+          "pokemonId": "646",
+          "formId": "black",
+          "battleMode": "normal"
+        }
+      ]
     },
     {
       "id": "discord:1570804591635857524",
@@ -63,8 +202,8 @@
       "title": "Duraludon",
       "publishedAt": "2026-11-13T14:16:38.784000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570800455343415448/tr_NOV_13_3PM_POLAND_GMax_Duraludon_counters_v2.png?ex=6af8696c&is=6af717ec&hm=5d3d88961f8875693501b6eacfe057ee3d9ad025d960705a225278318f3c611b&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "pel Special e L wa ASE, Background ay Chance ay erst Vn YT ee ©) am? LV gi 1 K DURALUDON iy bel VA GIG A 4 @ 1753 cp ae O® V4 i Me be ex (oc a. =\\(& \\ c ‘ - a 8 \"\\ a ) ‘eo ‘N \\p iy ; ~~ A eh vif al On ed © METAL CLAW © Pounp @ Lock-on @ Fury curren @ SAND ATTACK © METAL cLAw 5. See ys Rey PheTED $28 4 aC st) ay, ») @. ° “ 0 > SJ a a=) t\\% = Wwe es Mig, 606 (a) COUNTER @ MUD SHOT (a) COUNTER @ mup sLap @ LOW KICK (a Low KICK Use this Switch to Unlock Tank Upgrade its For extra help, la this Pokémon Max Spirit Max Attack and use Zacian’s to build to take y and heal your use it as your H or Eternatus’s energy resisted hits teammates q Damage Dealer — Adventure Effect / Set the right Fast Move because, the type of your Dynamax Swipe to get Keep tapping to Max Move depends on your Fast Move D energy bubbles help your teammates fx (this doesn’t apply for GMax) « 07°\" You can leave and rejoin a Max Battle Follow formore G47|X Cf) @®X@ www.g47ix.pro RJ to reroll for a different boss moveset.",
       "eventMatch": {
@@ -101,7 +240,17 @@
         "picture text names the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1570804591635857524.webp"
+      "stagedPath": "/infographics/g47ix/discord-1570804591635857524.webp",
+      "publishedEvent": "",
+      "publishedEvents": [],
+      "publishedTargets": [
+        {
+          "type": "raid-boss",
+          "pokemonId": "884",
+          "formId": "gmax",
+          "battleMode": "gigantamax"
+        }
+      ]
     },
     {
       "id": "discord:1570772464454205525",
@@ -110,15 +259,17 @@
       "title": "Checklist",
       "publishedAt": "2026-11-13T12:08:59.067000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570767927190224997/Checklist.png?ex=6af84b21&is=6af6f9a1&hm=4649183c19067573f130b4fe9aeaa26dc5e817ea928d67301b08f69d8c122b45&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "YEW RN Ke 7X Sy Die KN www. 47x pro WUsv Ba og SeT | ow cocoeet COE Li ARIAS iqes af (A ur a us y 5” ¥) a ~ a rae ey rigs Lehe Ras c G a 1a 1, bo 4 ae ‘an @ Poy ~ Fk to 1} $' AL & thevat Te tt (er ( HL® « RRB Boa oye Fk ee rae Follow for more G47|X (fF) iG) ax i) Qo",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1570772464454205525.png"
+      "stagedPath": "/infographics/g47ix/discord-1570772464454205525.png",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1570729091731292201",

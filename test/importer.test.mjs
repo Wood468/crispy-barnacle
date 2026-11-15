@@ -497,7 +497,10 @@ test("canonical Minior research retains sourced tasks across optional bonus trac
   }
 });
 
-test("a research snapshot survives only when its source was not fetched and no new tasks replaced it", () => {
+// Contract: a fetched page with a missing or unhealthy research diagnostic is "unknown" and
+// retains the snapshot; a fully read page showing no research only removes it once that absence persisted 7+ days.
+// Full coverage lives in importer-research-retention.test.mjs.
+test("a research snapshot survives unless a fully healthy source parse proves it removed, and no new tasks replaced it", () => {
   const hub = {id:"hub",url:"https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"};
   const task = {task:"Use a Star Piece",category:"timed",rewards:[{name:"Stardust",quantity:7740}],sourceRefs:[hub],checkedAt:"2026-11-11"};
   const before={minior2:{name:"Minior Showers: Leonids",researchTasks:[task]}};
@@ -505,7 +508,13 @@ test("a research snapshot survives only when its source was not fetched and no n
   const missing=new Map([["minior2",{results:[{source:{url:"https://leekduck.com/events/minior-showers-leonids-2026/"}}]}]]);
   assert.deepEqual(preserveUnfetchedResearchTasks(blank(),before,missing).minior2.researchTasks,[task]);
   const fetched=new Map([["minior2",{results:[{source:hub}]}]]);
-  assert.deepEqual(preserveUnfetchedResearchTasks(blank(),before,fetched).minior2.researchTasks,[]);
+  assert.deepEqual(preserveUnfetchedResearchTasks(blank(),before,fetched).minior2.researchTasks,[task],"fetched without a health diagnostic is unknown, so retained");
+  const healthy=new Map([["minior2",{results:[{source:hub,fields:{researchParse:{status:"none"}}}]}]]);
+  assert.deepEqual(preserveUnfetchedResearchTasks(blank(),before,healthy,{now:"2026-11-15T00:00:00Z"}).minior2.researchTasks,[task],"absence of recognised research is unknown on first sight, so retained");
+  const persisted={minior2:{...before.minior2,researchRetainedAt:"2026-11-01T00:00:00Z"}};
+  assert.deepEqual(preserveUnfetchedResearchTasks(blank(),persisted,healthy,{now:"2026-11-15T00:00:00Z"}).minior2.researchTasks,[],"absence that persisted 7+ days after retention began is confirmed removal");
+  const incomplete=new Map([["minior2",{results:[{source:hub,fields:{researchParse:{status:"incomplete"}}}]}]]);
+  assert.deepEqual(preserveUnfetchedResearchTasks(blank(),before,incomplete).minior2.researchTasks,[task]);
   const fresh=blank();fresh.minior2.researchTasks=[{task:"Changed official task"}];
   assert.deepEqual(preserveUnfetchedResearchTasks(fresh,before,missing).minior2.researchTasks,[{task:"Changed official task"}]);
   assert.deepEqual(preserveUnfetchedResearchTasks({minior2:{name:"Unrelated Event",researchTasks:[]}},before,missing).minior2.researchTasks,[]);
