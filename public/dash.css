@@ -42,7 +42,7 @@ body{background:radial-gradient(1200px 520px at 50% -140px,color-mix(in srgb,var
 .empty{color:var(--color-text-muted);padding:14px 2px}
 
 /* environment banner (preview builds only) */
-.envbar{position:sticky;top:0;z-index:30;margin:0 -16px 10px;padding:calc(8px + env(safe-area-inset-top,0px)) 16px 8px;text-align:center;background:var(--color-warning-banner);color:var(--color-on-warning);border-bottom:3px solid var(--color-warning-banner-border);display:grid;gap:1px}
+.envbar{position:sticky;top:var(--safe-top,0px);z-index:30;margin:0 -16px 10px;padding:8px 16px;text-align:center;background:var(--color-warning-banner);color:var(--color-on-warning);border-bottom:3px solid var(--color-warning-banner-border);display:grid;gap:1px}
 .envbar[hidden]{display:none}.envbar b{font-weight:800;letter-spacing:.04em}.envbar span,.netbar b,.netbar span{font-size:var(--type-label);font-weight:600}
 
 /* sub-navigation: a segmented control that scrolls sideways if it must */
@@ -229,7 +229,7 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 
 /* event detail */
 .more{min-height:44px;padding:0 14px;border-radius:var(--radius-md);border:1.5px solid var(--border-subtle);background:transparent;color:var(--color-text);font:600 var(--type-button) inherit;cursor:pointer}
-.evd{position:fixed;inset:0;z-index:40;background:var(--color-canvas);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.evd{position:fixed;inset:var(--safe-top,0px) 0 0 0;z-index:40;background:var(--color-canvas);overflow-y:auto;-webkit-overflow-scrolling:touch}
 .evd[hidden]{display:none}
 .evd-in{max-width:42rem;margin:0 auto;padding:var(--space-3) var(--space-4) 56px;display:grid;gap:var(--space-3)}
 .evd-bar{display:flex;align-items:center;justify-content:space-between}
@@ -848,7 +848,7 @@ img.art.is-shiny{outline:2px solid var(--color-accent);outline-offset:2px;border
 .evd-grp .chips em{font-style:normal;padding:3px 10px;border-radius:var(--radius-pill);background:var(--color-surface-raised);font-size:.86rem}
 
 /* Dex: search, filters and generation chips stay in view while you scroll the list */
-.dexbar{position:sticky;top:0;z-index:5;display:grid;gap:var(--space-2);padding:var(--space-2) 0;background:var(--color-canvas)}
+.dexbar{position:sticky;top:var(--safe-top,0px);z-index:5;display:grid;gap:var(--space-2);padding:var(--space-2) 0;background:var(--color-canvas)}
 .genchips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
 .genchips::-webkit-scrollbar{display:none}
 .genchips .fchip{flex:none;white-space:nowrap}
