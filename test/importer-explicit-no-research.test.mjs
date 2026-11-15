@@ -25,7 +25,7 @@ for (const text of [
   "There will be no timed research tasks.",
   "Timed Research: none"
 ]) {
-  test("denial wording variant: " + text.replace(/<[^>]+>/g, ""), () => {
+  test("denial wording variant: " + text.slice(0, 40), () => {
     for (const heading of ["Research", "Timed Research", "Special Research"]) {
       const f = extractFields(page(heading, "<p>" + text + "</p>"));
       assert.equal(f.researchParse.explicitNone, true, heading);
