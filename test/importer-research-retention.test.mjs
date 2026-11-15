@@ -110,20 +110,46 @@ test("(e3) under 7 days keeps the ORIGINAL retention start; a retained stamp is 
   assert.deepEqual(run(blank(), old, group([cut])).researchTasks, published());
 });
 
-test("(e4) once the event has ended stale research is not carried, whatever the diagnostic", () => {
+test("(e4) DELIBERATE CONTRACT CHANGE: once the event has ended its published research is kept, without a warning or stamp", () => {
+  // Previously reason "event-ended" dropped everything. That wiped Into the Wild's seven tasks once its Leek Duck page left discovery,
+  // so an ended event's detail page lost its research. Ended events now keep what was published unless a source positively removes it.
   const later = "2026-11-21T00:00:00.000Z";
   for (const r of [res(HUB, gridHtml), noResearch(), res(DUCK, page("<p>x</p>"))]) {
     const report = [];
     const got = run(blank(), before(), group([r]), { now: later, report });
-    assert.deepEqual(got.researchTasks, []);
-    assert.equal(report[0].reason, "event-ended");
-    assert.equal(report[0].retained, false);
+    assert.deepEqual(got.researchTasks, published());
+    assert.equal(report[0].reason, "event-ended-kept");
+    assert.equal(report[0].retained, true);
+    assert.equal(got.researchParseWarning, undefined, "no parse warning for an ended event");
+    assert.equal(got.researchRetainedAt, undefined, "no retention stamp for an ended event");
   }
   // the current event end alone is enough when tasks are unstamped
   const unstamped = published().map(({ eventWindow, ...t }) => t);
-  assert.deepEqual(run(blank(), before(unstamped), group([res(HUB, gridHtml)]), { now: later }).researchTasks, []);
+  assert.deepEqual(run(blank(), before(unstamped), group([res(HUB, gridHtml)]), { now: later }).researchTasks, unstamped);
+  // positive removal evidence still drops an ended event: a source that parsed ok without the tasks, or a persisted clean none
+  const okRemoved = []; assert.deepEqual(run(blank(), before(), group([{ source: HUB, fields: { researchParse: { status: "ok" } } }]), { now: later, report: okRemoved }).researchTasks, []);
+  assert.equal(okRemoved[0].reason, "source-ok-removed");
+  const confirmed = []; assert.deepEqual(run(blank(), before(published(), { researchRetainedAt: ago(30) }), group([noResearch()]), { now: later, report: confirmed }).researchTasks, []);
+  assert.equal(confirmed[0].reason, "removal-confirmed");
+  // a different event name or window is never carried, ended or not
+  assert.deepEqual(run(blank("Different Event"), before(), group([res(HUB, gridHtml)]), { now: later }).researchTasks, []);
   // the last day itself is still the event
   assert.equal(run(blank(), before(), group([res(HUB, gridHtml)]), { now: "2026-11-19T22:00:00.000Z" }).researchTasks.length, 3);
+});
+
+test("(e5) Into the Wild scenario: ended event, Leek Duck source absent from the group, official pages incomplete or none", () => {
+  const OFFICIAL = { id: "official", name: "Pokémon GO", trust: "official", url: "https://pokemongo.com/news/into-the-wild-2026/" };
+  const STAMP = { id: "official", name: "Pokémon GO", trust: "official", url: "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/" };
+  const duckRef = { id: "leekduck", name: "Leek Duck", trust: "community", url: DUCK.url };
+  const tasks = published().map(t => ({ ...t, sourceRefs: [duckRef] }));
+  const results = [res(OFFICIAL, gridHtml), { source: STAMP, fields: { researchParse: { status: "none", researchKeywords: false } } }];
+  const report = [];
+  const got = run(blank(), before(tasks), group(results), { now: "2026-11-21T00:00:00.000Z", report });
+  assert.deepEqual(got.researchTasks, tasks);
+  assert.deepEqual([report[0].retained, report[0].reason], [true, "event-ended-kept"]);
+  // ...and stays that way on every later hourly run
+  const again = run(blank(), before(got.researchTasks), group(results), { now: "2026-11-22T00:00:00.000Z" });
+  assert.deepEqual(again.researchTasks, tasks);
 });
 
 test("(f) other id, name or window never receives these tasks", () => {
