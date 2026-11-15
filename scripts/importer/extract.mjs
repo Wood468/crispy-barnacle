@@ -35,13 +35,16 @@ const NO_RESEARCH = new RegExp("^(?:" + DENY + "\\s*:\\s*)?" + DENY + "(?:\\s+(?
 const QUALIFIER = /\b(?:first|second|last|week|weeks|weekend|until|before|after|if|except|unless|ticket|tickets|required|needed|only|yet|bonus|paid|premium|then|but|and|or)\b/i;
 const strictDenial = text => { const m = NO_RESEARCH.exec(text.trim()); return !!m && !(m[1] && QUALIFIER.test(m[1])); };
 // Clarifying sentences may follow ("The Minior Shower Timed Research only ran during the Orionids ..."), but never availability or qualifier language.
-const TRAILING_BAN = /\b(?:available|on sale|tickets?|bonus(?:es)?|paid|premium|special research|field research|will|starting|from (?:mon|tues|wednes|thurs|fri|satur|sun)day|if|unless|except|but|however|also|additional|extra|yet|coming|soon)\b/i;
+const TRAILING_BAN = /\b(?:on sale|tickets?|bonus(?:es)?|paid|premium|special research|field research|will|starting|from (?:mon|tues|wednes|thurs|fri|satur|sun)day|if|unless|except|but|however|also|additional|extra|yet|coming|soon)\b/i;
+// "was only available during the Orionids" is history; "available" alone, or with this event, is a claim about now.
+const PAST = /\b(?:was|were|had been|ran|previously|earlier)\b/i, AVAILABLE_NOW = /\b(?:now|today|this event|with this|during the leonids)\b/i;
+const trailingOk = x => x.length <= 200 && !TRAILING_BAN.test(x) && (!/\bavailable\b/i.test(x) || (PAST.test(x) && !AVAILABLE_NOW.test(x)));
 function isDenial(text) {
   const t = text.trim(), label = new RegExp("^" + DENY + "\\s*:\\s*", "i").exec(t), head = label ? label[0] : "", rest = t.slice(head.length);
   if (!rest) return strictDenial(t);
   const sentences = (rest.match(/[^.!]+(?:[.!]+|$)/g) || []).map(x => x.trim()).filter(Boolean);
   if (!sentences.length || sentences.length > 3) return false;
-  return strictDenial(head + sentences[0]) && sentences.slice(1).every(x => x.length <= 200 && !TRAILING_BAN.test(x));
+  return strictDenial(head + sentences[0]) && sentences.slice(1).every(trailingOk);
 }
 const RANKLABEL = /^(?:tier\s*\d+\W*)?\(?rank\s*(\d+)\)?\W*(?:bonus(?:es)?|milestone)?\W*$|^tier\s*\d+\s*bonus\s*starting at rank\s*(\d+)\W*$/i;
 const trim = s => s.replace(/^[•·\-–\s]+/, "").replace(/\s+/g, " ").trim();
@@ -366,7 +369,7 @@ function structureSample(html) {
   if (at < 0) at = clean.search(/\btask\b/i);
   if (at < 0) return null;
   const outline = src => src.replace(/<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>|([^<]+)/g, (_, close, tag, attrs, text) => {
-    if (text !== undefined) { const t = flat(decode(text)).slice(0, 60); return t ? t + " " : ""; }
+    if (text !== undefined) { const t = flat(decode(text)).slice(0, 160); return t ? t + " " : ""; }
     if (close) return "</" + tag.toLowerCase() + ">";
     const keep = ["class", "id", "alt"].map(n => { const v = attr(attrs || "", n).slice(0, 50).replace(/["<>]/g, ""); return v ? " " + n + '="' + v + '"' : ""; }).join("");
     return "<" + tag.toLowerCase() + keep + ">";

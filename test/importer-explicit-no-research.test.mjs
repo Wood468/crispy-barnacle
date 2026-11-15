@@ -54,7 +54,11 @@ test("trailing clarification sentences: short and free of availability language 
   const ok = "<strong>No Timed Research: </strong>There is no Timed Research during the Leonids. The Minior Shower Timed Research only ran during the <a href=\"/x/\">Orionids</a>, the introductory event.";
   assert.equal(extractFields(page("Research", "<p>" + ok + "</p>")).researchParse.explicitNone, true);
   const first = "<strong>No Timed Research: </strong>There is no Timed Research during the Leonids.";
+  const past = "<strong>No Timed Research: </strong>There is no Timed Research during the Leonids. The Minior Shower Timed Research was only available during the <a href=\"/events/minior-showers-orionids-2026/\">Orionids</a>, the introductory event for Minior Showers.";
+  assert.equal(extractFields(page("Research", "<p>" + past + "</p>")).researchParse.explicitNone, true);
   for (const tail of [
+    " Timed Research is available during the Leonids.", " It was available but will return.", " Field Research tasks are available.",
+    " Timed Research was available and is available now.", " It was available during this event.", " It was available during the Leonids.",
     " Special Research is available with a ticket.", " But Field Research tasks are available.", " Bonuses start Saturday.",
     " Rewards will arrive soon.", " However, nothing else.", " A. B. C. D.", " " + "Long sentence ".repeat(20) + "."
   ]) assert.equal(extractFields(page("Research", "<p>" + first + tail + "</p>")).researchParse.explicitNone, undefined, tail);
@@ -237,4 +241,11 @@ test("P1-B: a clean Hub 'none' plus the denial removes, and the report records t
 test("P1-B: a source that is ok but lists no tasks does not block a denial", () => {
   const okEmpty = { source: hubRef, fields: { researchParse: { status: "ok", parsedTasks: 0 } } };
   assert.equal(run([okEmpty, duckDenies()]).report[0].reason, "source-denies");
+});
+
+test("sample keeps up to 160 characters per text node within the 600 cap", () => {
+  const sentence = "The Minior Shower Timed Research is described in a very long sentence that keeps going to reveal the real wording of the page. ".repeat(1);
+  const f = extractFields("<main><div class=\"a\"><span>Timed Research</span><p>" + sentence + "</p></div></main>");
+  assert.ok(f.researchParse.sample.includes(sentence.trim().slice(0, 125)), f.researchParse.sample);
+  assert.ok(f.researchParse.sample.length <= 600);
 });
