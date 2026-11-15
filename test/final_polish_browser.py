@@ -214,6 +214,16 @@ with sync_playwright() as p:
         page.wait_for_timeout(300)
         dex = page.evaluate("(()=>{const b=document.querySelector('.dexbar');return b?getComputedStyle(b).top:null})()")
         check(f'{width}: sticky Pokedex bar sits below the mask', dex in (None, '47px'), dex)
+        # Event detail is a fixed full-screen overlay with its own sticky bar and "Starts in" status chip: both must start below the mask.
+        page.evaluate("GODETAIL.open('cur:wag')")
+        page.wait_for_selector('#evd .evd-bar', state='visible', timeout=30000)
+        page.wait_for_timeout(300)
+        evd = page.evaluate("(()=>{const o=document.getElementById('evd').getBoundingClientRect(),b=document.querySelector('#evd .evd-bar').getBoundingClientRect();return {o:o.top,b:b.top}})()")
+        check(f'{width}: event detail overlay and its sticky bar start below the mask', evd['o'] >= 47 and evd['b'] >= 47, evd)
+        page.evaluate("document.getElementById('evd').scrollTop = 600")
+        page.wait_for_timeout(200)
+        evd2 = page.evaluate("document.querySelector('#evd .evd-bar').getBoundingClientRect().top")
+        check(f'{width}: scrolled event detail bar stays below the mask', evd2 >= 47 and evd2 < 60, evd2)
         page.context.close()
 
     browser.close()
