@@ -6472,7 +6472,327 @@
      "missingFrom": []
     }
    ],
-   "researchTasks": [],
+   "researchTasks": [
+    {
+     "task": "Catch 10 Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Horsea",
+       "cpMin": 418,
+       "cpMax": 452
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Aron",
+       "cpMin": 522,
+       "cpMax": 560
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Skrelp",
+       "cpMin": 421,
+       "cpMax": 455
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Magnemite",
+       "cpMin": 544,
+       "cpMax": 583
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Catch a Dynamax Machop",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Machop Candy",
+       "quantity": 25
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 5000
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Catch a Dynamax Ralts",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Ralts Candy",
+       "quantity": 25
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 5000
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Power up Dragon‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Bagon",
+       "cpMin": 459,
+       "cpMax": 495
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Skrelp",
+       "cpMin": 421,
+       "cpMax": 455
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Dratini",
+       "cpMin": 397,
+       "cpMax": 430
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Horsea",
+       "cpMin": 418,
+       "cpMax": 452
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Power up Steel‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Aron",
+       "cpMin": 522,
+       "cpMax": 560
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Magnemite",
+       "cpMin": 544,
+       "cpMax": 583
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Togedemaru",
+       "cpMin": 876,
+       "cpMax": 926
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Galarian Meowth",
+       "cpMin": 409,
+       "cpMax": 443
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Win a Max Battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Bagon",
+       "cpMin": 459,
+       "cpMax": 495
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Mawile",
+       "cpMin": 658,
+       "cpMax": 700
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Win a raid",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Dratini",
+       "cpMin": 397,
+       "cpMax": 430
+      },
+      {
+       "type": "item",
+       "name": "Rare Candy",
+       "quantity": 2
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Scyther",
+       "cpMin": 1104,
+       "cpMax": 1160
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    }
+   ],
    "pokemon": [
     {
      "key": "379:dynamax:none",
