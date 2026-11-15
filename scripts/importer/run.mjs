@@ -262,8 +262,9 @@ export function preserveGoPassRows(out, old, byEvent) {
 // either not fetched this run (outage) or fetched but not positively healthy:
 // extractFields().researchParse is "ok"/"none" only for a fully read page, so a
 // missing, "incomplete" or truncated diagnostic means unknown, and unknown retains.
-// Only tasks with an explicit source URL, stamped for this same event (id, name,
-// window), are eligible; prose is never promoted.
+// Only tasks with an explicit source URL are eligible; a stamped id, name or
+// window must match the current event, and unstamped legacy tasks are accepted
+// (the same-id old record already identifies the event); prose is never promoted.
 const samePlace = (a, b) => !a || !b || a === b;
 function taskBelongsTo(task, id, now, event) {
   if (!samePlace(task.eventId, id) || !samePlace(task.eventName, now.name)) return false;

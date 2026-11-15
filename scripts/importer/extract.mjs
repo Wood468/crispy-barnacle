@@ -114,7 +114,7 @@ function parseResearchTask(line, category, declaredNames) {
 }
 
 const TASK_VERB = /^(?:catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i;
-// The importer caps a fetched page at this many characters (discover.mjs get()).
+// Must equal the slice(0, 900000) in discover.mjs get(), the importer's page cap (a test pins the two together).
 const PAGE_CAP = 900000;
 // A line that looks like a task row (task verb, then a cell or REWARD marker), whether or not it parsed.
 const looksLikeTaskRow = text => { const t = trim(String(text || "")); return TASK_VERB.test(t) && (/\s\|\s/.test(t) || /\breward/i.test(t)); };
@@ -127,7 +127,7 @@ export function extractFields(html, options={}) {
   let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0, researchKind = "research", researchTable = false;
   // Extraction health for research: a fetched page that shows a research
   // section but yields no tasks is a parse failure, not an event with no research.
-  const health = { headings: 0, table: false, candidateRows: 0 };
+  const health = { headings: 0, table: false, candidateRows: 0 }; let unparsedRows = 0;
   for (const l of lines) {
     // "Tier 2 – Rank 25" style labels: remember the rank so the bonus lines under it say which rank unlocks them.
     const rm = RANKLABEL.exec(l.text);
@@ -170,12 +170,13 @@ export function extractFields(html, options={}) {
     // Only explicit table rows imply multiple identical claimable tasks.
     // Repeated prose outside a task/reward table is often publisher duplication.
     if (/^task\s*\|\s*(?:possible\s+)?rewards?$/i.test(l.text)) { researchTable = true; health.table = true; }
-    if (looksLikeTaskRow(l.text)) health.candidateRows++;
     if (cur) add(cur, l.text);
     // Explicit task + reward rows can appear beneath event, raid or general
     // headings. Parse only self-contained rows with a recognizable task verb
     // and reward, never infer a reward from surrounding descriptive prose.
     const task = parseResearchTask(l.text, cur === "research" ? researchKind : "research", declaredNames);
+    // Task-like rows only count inside a research section or task table; prose elsewhere is not evidence.
+    if ((cur === "research" || researchTable) && looksLikeTaskRow(l.text)) { health.candidateRows++; if (!task) unparsedRows++; }
     if (task) {
       // A published task/reward TABLE may list the *same* task five times in
       // one stage (Minior Showers). An identical row still means another
@@ -215,11 +216,11 @@ export function extractFields(html, options={}) {
       out.goPassParseError = error instanceof Error ? error.message : String(error);
     }
   }
-  const truncated = typeof html === "string" && (html.length >= PAGE_CAP || (/<body\b/i.test(html) && !/<\/body\s*>/i.test(html)));
+  const truncated = typeof html === "string" && (html.length >= PAGE_CAP || (/<body\b/i.test(html) && !/<\/body\s*>/i.test(html) && !/<\/html\s*>/i.test(html)));
   const parsedTasks = out.researchTasks.length;
   const seenResearch = health.headings > 0 || health.table || health.candidateRows > 0;
   // ok: tasks parsed. incomplete: research seen (or page cut off) but nothing parsed. none: a fully read page with no research.
-  out.researchParse = { status: truncated ? "incomplete" : parsedTasks ? "ok" : seenResearch ? "incomplete" : "none", ...health, parsedTasks, truncated, lines: lines.length };
+  out.researchParse = { status: truncated ? "incomplete" : parsedTasks && !unparsedRows ? "ok" : parsedTasks || seenResearch ? "incomplete" : "none", ...health, parsedTasks, truncated, lines: lines.length };
   return out;
 }
 export function hasContent(fields) { return FIELDS.some(f => fields[f] && fields[f].length); }

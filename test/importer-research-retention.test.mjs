@@ -1,4 +1,5 @@
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 import { extractFields } from "../scripts/importer/extract.mjs";
 import { mergeSources } from "../scripts/importer/compare.mjs";
@@ -84,7 +85,7 @@ test("(f) other id, name or window never receives these tasks", () => {
   assert.deepEqual(run(blank(), none, g).researchTasks, []);
 });
 
-test("(g) one healthy and one incomplete source: only the unproven source's tasks survive, bonus tracks and provenance intact", () => {
+test("(g) tasks cited only by the incomplete source survive; bonus-track categories, occurrences, provenance kept and no duplicates", () => {
   const duckTask = T("Spin 5 PokéStops", 500, "Stardust", { sources: ["leekduck"], sourceRefs: [{ id: "leekduck", name: "Leek Duck", trust: "community", url: DUCK.url }] });
   const old = before([...published(), duckTask]);
   const healthyDuck = res(DUCK, page("<h2>Bonuses</h2><ul><li>2× Catch XP all event</li></ul>"));
@@ -122,4 +123,45 @@ test("(h) extractFields health diagnostic cases", () => {
   assert.equal(extractFields([]).researchParse.status, "none");
   // the array fields are unchanged and the diagnostic is not an array field
   assert.deepEqual(extractFields([line("Bonuses", "h")]).researchTasks, []);
+});
+
+test("(i) a partially parsed research table is incomplete, not ok", () => {
+  const mixed = extractFields(table([["Claim Reward!", "1 × Star Piece"], ["Use a Star Piece", "Mystery reward"]]));
+  assert.equal(mixed.researchParse.parsedTasks, 1);
+  assert.equal(mixed.researchParse.status, "incomplete");
+  assert.deepEqual(run(blank(), before(), group([{ source: HUB, fields: mixed }])).researchTasks.length, 3, "unparsed published tasks survive only via retention when merged is empty");
+});
+
+test("(i2) legitimately repeated identical task rows still count as ok", () => {
+  const five = extractFields(table(Array.from({ length: 5 }, () => ["Use a Star Piece", "7740 × Stardust"])));
+  assert.equal(five.researchParse.status, "ok");
+  assert.equal(five.researchTasks.length, 5);
+});
+
+test("(j) task-like prose outside a research section does not make a page incomplete", () => {
+  const f = extractFields([line("Park visit", "h"), line("Walk 2 km to earn a reward at the park.")]);
+  assert.equal(f.researchParse.status, "none");
+  assert.equal(f.researchParse.candidateRows, 0);
+  const inside = extractFields([line("Field Research", "h"), line("Walk 2 km to earn a reward at the park.")]);
+  assert.equal(inside.researchParse.status, "incomplete");
+});
+
+test("(k) the page cap mirrored in extract.mjs still matches discover.mjs", () => {
+  assert.match(readFileSync(new URL("../scripts/importer/discover.mjs", import.meta.url), "utf8"), /slice\(0,\s*900000\)/);
+});
+
+test("(l) truncation heuristic: </html> proves completeness, a mid-table cut does not", () => {
+  const noBodyClose = "<html><body><main><h2>Bonuses</h2><ul><li>2× Catch XP all event</li></ul></main></html>";
+  const f = extractFields(noBodyClose);
+  assert.equal(f.researchParse.truncated, false);
+  assert.equal(f.researchParse.status, "none");
+  const cut = "<html><body><main><h2>Field Research</h2><table><tr><td>Task</td><td>Rewards</td></tr><tr><td>Claim Rew";
+  assert.equal(extractFields(cut).researchParse.truncated, true);
+  assert.equal(extractFields(cut).researchParse.status, "incomplete");
+});
+
+test("(m) an unfetched source plus another source with only bonuses retains without a parse warning", () => {
+  const got = run(blank(), before(), group([res(DUCK, page("<h2>Bonuses</h2><ul><li>2× Catch XP all event</li></ul>"))]));
+  assert.equal(got.researchTasks.length, 3);
+  assert.equal(got.researchParseWarning, undefined);
 });
