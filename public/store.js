@@ -81,9 +81,14 @@
         + esc(R.fmt(p.min, p.currency) + '–' + Number(p.max).toLocaleString('en-AU', { maximumFractionDigits: 0 })) + '</b>';
     } else {
       /* VoiceOver reads the A$ reference before the original local price; no local-only aria-label masks it. */
-      body = (p.currency === 'AUD' ? '' : audPlaceholder(p, quotes)) + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>';
+      /* Recorded (not re-checked) prices are dimmed and carry a tiny "~"; only a verified price is unmarked. */
+      var older = p.basis !== 'verified';
+      if (older) extra = ' data-sp-basis="recorded"';
+      body = (p.currency === 'AUD' ? '' : audPlaceholder(p, quotes))
+        + '<b class="sp-local-price">' + (older ? '<span class="sp-older-mark"><span aria-hidden="true">~</span><span class="sr-only">Older price </span></span>' : '')
+        + esc(R.fmt(p.amount, p.currency)) + '</b>';
     }
-    return '<div class="sp-price' + (p && p.basis === 'estimate' ? ' sp-est' : '') + '" data-sp-region="' + region + '"' + extra
+    return '<div class="sp-price' + (p && p.basis === 'estimate' ? ' sp-est' : p && p.basis !== 'verified' ? ' sp-older' : '') + '" data-sp-region="' + region + '"' + extra
       + ' title="' + esc(REGION_TITLE[region]) + '"><span class="sp-flag" aria-hidden="true">' + FLAG[region]
       + '</span><span class="sr-only">' + REGION_NAME[region] + '</span>' + body + '</div>';
   }
@@ -226,12 +231,35 @@
         earlier.push(p);
       else bySection[category].push(p);
     });
-    function productCard(p) {
+    /* Same-name cards inside one section get a tiny disambiguator (no sentences): the lone priced
+       region ("AU only") when that tells them apart, otherwise "Option N". */
+    function tagDuplicates(list) {
+      var byName = {};
+      list.forEach(function (p) { var k = String(p.label).trim().toLowerCase(); (byName[k] || (byName[k] = [])).push(p); });
+      Object.keys(byName).forEach(function (k) {
+        var set = byName[k]; if (set.length < 2) return;
+        var tags = set.map(function (p) {
+          var have = [p.aud > 0 ? 'AU' : '', p.indonesia ? 'ID' : '', p.india ? 'IN' : ''].filter(Boolean);
+          return have.length === 1 ? have[0] + ' only' : '';
+        });
+        var n = 0;
+        set.forEach(function (p, i) {
+          var unique = tags[i] && tags.filter(function (t) { return t === tags[i]; }).length === 1;
+          p.tag = unique ? tags[i] : 'Option ' + (++n);
+        });
+      });
+    }
+    sections.forEach(function (s) { tagDuplicates(bySection[s.id]); });
+    tagDuplicates(earlier);
+    function productCard(p, inMain) {
+      var unconfirmed = inMain && p.sourceOffer && p.sourceOffer.status !== 'listed';
       var search = storeSearchKey(p.label + ' ' + p.product + ' ' + p.group + ' ' + priority(p));
       var evidence = p.sourceOffer;
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '"'
         + (evidence ? ' data-sp-listing="' + esc(evidence.status) + '"' : '') + '>'
-        + '<div class="sp-line">' + icon(p.label) + '<b class="sp-name">' + esc(p.label) + '</b></div>'
+        + '<div class="sp-line">' + icon(p.label) + '<b class="sp-name">' + esc(p.label) + '</b>'
+        + (p.tag ? '<small class="sp-tag">' + esc(p.tag) + '</small>' : '')
+        + (unconfirmed ? '<span class="sp-unconf" data-sp-unconfirmed><span aria-hidden="true">?</span><span class="sr-only">Availability not confirmed</span></span>' : '') + '</div>'
         + '<div class="sp-prices">'
         + priceCell('AU', p.aud > 0 ? { basis: 'verified', currency: 'AUD', amount: p.aud } : null, data.audQuotes)
         + priceCell('ID', p.indonesia, data.audQuotes)
@@ -241,23 +269,25 @@
     var catalogue = sections.filter(function (s) { return bySection[s.id].length; }).map(function (s) {
       return '<details class="sp-group" data-sp-group="' + s.id + '" data-sp-default-open="' + (s.open ? 'yes' : 'no') + '"' + (s.open ? ' open' : '') + '>'
         + '<summary>' + esc(s.label) + ' <small>' + bySection[s.id].length + '</small></summary>'
-        + '<div class="sp-group-items">' + bySection[s.id].map(productCard).join('') + '</div></details>';
+        + '<div class="sp-group-items">' + bySection[s.id].map(function (p) { return productCard(p, true); }).join('') + '</div></details>';
     }).join('');
     if (snapshot && earlier.length) {
       catalogue += '<details class="sp-group sp-history" data-sp-group="earlier" data-sp-default-open="no">'
         + '<summary>Earlier offers <small>' + earlier.length + '</small></summary>'
-        + '<div class="sp-group-items">' + earlier.map(productCard).join('') + '</div></details>';
+        + '<div class="sp-group-items">' + earlier.map(function (p) { return productCard(p, false); }).join('') + '</div></details>';
     }
     /* The data-review material (coverage checklist, channel comparison) is owner-only and collapsed
        behind one quiet row at the bottom: it adds no text to the default view. */
-    var review = reviewPanel + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
+    var legend = '<p class="sp-legend" data-sp-legend><span aria-hidden="true">~</span> older price, recorded and not re-checked · est. modelled estimate · ? availability not confirmed · — no sourced price</p>';
+    var review = legend + reviewPanel + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
       + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed cash price is named only when two or more channels share an explicit verified product SKU and currency. Estimated, recorded-only and ambiguous boxes cannot win; no result is a live checkout quote.</p>'
       + '<div data-sp-cheapest>' + comparableOffers + '</div></details>' : '');
     return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + '</small></summary>'
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite"></p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
-      + '<details class="sp-compare-more sp-review"><summary>Data review</summary>' + review + '</details></details>';
+      + '<details class="sp-compare-more sp-review"><summary>Data review</summary>' + review + '</details>'
+      + '<p class="sp-foot" data-sp-foot>Prices are dated observations, not live checkout quotes. <span aria-hidden="true">~</span> older · est. estimate · ? unconfirmed</p></details>';
   }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;

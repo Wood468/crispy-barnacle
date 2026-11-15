@@ -27,6 +27,7 @@ async function render({ prices, regional = [], snapshot = null, owner = true }) 
     addEventListener: (name, fn) => { handlers[name] = fn; } };
   const host = { parentNode: { insertBefore: (n) => { Object.assign(el, n); } } };
   const data = { owner, prices, regional };
+  if (snapshot) data.storeSnapshot = snapshot; /* the vm sandbox has no timers, so the fetch race is bypassed */
   const win = { GORegionalPrices: R,
     GOStoreOfferIdentities: require('../public/store-offer-identities.js'),
     fetch: url => url === '/store-current-snapshot.json'
@@ -106,7 +107,9 @@ test('cards show only name and region prices; none of the removed provenance tex
   assert.ok(cards.length >= 4, 'cards rendered');
   for (const card of cards) for (const bad of FORBIDDEN)
     assert.doesNotMatch(card, bad, 'forbidden text ' + bad + ' in card: ' + text(card));
-  const defaultView = html.replace(/<details class="sp-compare-more sp-review"[\s\S]*<\/details>\s*<\/details>\s*$/, '');
+  const defaultView = html.replace(/<details class="sp-compare-more sp-review"[\s\S]*?<\/details>\s*<p class="sp-foot"[\s\S]*?<\/p>/, '');
+  assert.equal((html.match(/data-sp-foot/g) || []).length, 1, 'one short footer line');
+  assert.match(html, /<p class="sp-foot" data-sp-foot>Prices are dated observations, not live checkout quotes\./);
   for (const bad of FORBIDDEN) assert.doesNotMatch(defaultView, bad, 'forbidden text on default view: ' + bad);
   assert.doesNotMatch(html, /class="sp-intro"|sp-source-id-note|sp-offer-contents|sp-product-group/);
   assert.doesNotMatch(defaultView, /regional prices are/i);
@@ -170,4 +173,73 @@ test('minimal card CSS keeps 44px summaries, no horizontal overflow rules and no
   assert.match(block, /object-fit:contain/);
   assert.match(block, /\.sp-none/);
   assert.match(block, /\.sp-results:empty\{display:none\}/);
+});
+
+
+/* ---- honesty states (no per-card sentences) ---- */
+const rcell = (card, r) => card.match(new RegExp('<div class="sp-price[^"]*" data-sp-region="' + r + '"[\\s\\S]*?</div>'))[0];
+const idObs = (id, product, status, amount = 76000, extra = {}) => ({ id, product, kind: 'item', region: 'ID', channel: 'web',
+  currency: 'IDR', amount, observed: '2026-11-09', source: 'f', status, ...extra });
+
+test('recorded (not re-checked) prices carry the older marker; verified prices stay unmarked', async () => {
+  const { cards, html } = await render({ prices: [au('store-a', 'Verified Thing', 3.99), au('store-b', 'Recorded Thing', 4.99)],
+    regional: [idObs('v', 'Verified Thing', 'verified', 76000), idObs('r', 'Recorded Thing', 'recorded', 90000)] });
+  const ver = rcell(named(cards, 'Verified Thing'), 'ID'), rec = rcell(named(cards, 'Recorded Thing'), 'ID');
+  assert.doesNotMatch(ver, /sp-older/);
+  assert.match(ver, /Rp 76,000/);
+  assert.match(rec, /sp-older/);
+  assert.match(rec, /data-sp-basis="recorded"/);
+  assert.match(rec, /<span class="sp-older-mark"><span aria-hidden="true">~<\/span><span class="sr-only">Older price <\/span><\/span>Rp 90,000/);
+  assert.doesNotMatch(rcell(named(cards, 'Recorded Thing'), 'AU'), /sp-older/, 'AU verified price unmarked');
+  assert.equal((html.match(/data-sp-legend/g) || []).length, 1, 'legend line present once');
+  assert.ok(html.indexOf('data-sp-legend') > html.indexOf('class="sp-review"') || html.indexOf('data-sp-legend') > html.indexOf('sp-review'),
+    'legend lives in the Data review row');
+  for (const bad of [/Verified · /, /Recorded · not re-checked/, /FX · /, /Based on /]) assert.doesNotMatch(html, bad);
+});
+
+test('unconfirmed items are marked in the main list; passes and boxes still move to Earlier offers', async () => {
+  const now = new Date().toISOString();
+  const prices = [au('store-listed', 'Listed Item', 2.99), au('store-bag', 'Item Bag Upgrade', 3.99, 'Storage'),
+    au('store-coin', '600 PokéCoins', 4.99, 'PokéCoins'), au('store-pass', 'Unconfirmed Pass', 9.99, 'Tickets')];
+  const snapshot = { version: 1, updated: now, items: [{ name: 'Listed Item', lastSeen: now }], gone: [] };
+  const { html, cards } = await render({ prices, snapshot });
+  const mainPart = html.split('data-sp-group="earlier"')[0];
+  const earlierPart = html.split('data-sp-group="earlier"')[1] || '';
+  assert.ok(earlierPart.includes('Unconfirmed Pass'), 'unconfirmed pass goes to Earlier offers as before');
+  assert.ok(mainPart.includes('Item Bag Upgrade') && mainPart.includes('600 PokéCoins'));
+  assert.match(named(cards, 'Item Bag Upgrade'), /data-sp-unconfirmed/);
+  assert.match(named(cards, '600 PokéCoins'), /data-sp-unconfirmed/);
+  assert.doesNotMatch(named(cards, 'Listed Item'), /data-sp-unconfirmed/, 'a freshly listed item is unmarked');
+  assert.doesNotMatch(earlierPart.slice(0, earlierPart.indexOf('Unconfirmed Pass') + 400), /data-sp-unconfirmed/,
+    'cards already under Earlier offers are not double-marked');
+});
+
+test('with no snapshot nothing is presented as current: every main-list card is marked', async () => {
+  const { cards } = await render({ prices: [au('store-a', 'Thing A', 1.99), au('store-b', 'Thing B', 2.99)] });
+  for (const n of ['Thing A', 'Thing B']) assert.match(named(cards, n), /data-sp-unconfirmed/);
+});
+
+test('identical names within a section get a tiny disambiguator, unique names do not', async () => {
+  const prices = [au('store-raid-day-a', 'Raid Day Box', 9.99, 'Boxes'), au('store-raid-day-b', 'Raid Day Box', 14.99, 'Boxes'),
+    au('store-solo', 'Solo Box', 5.99, 'Boxes')];
+  const regional = [{ id: 'id-raid-day', product: 'Raid Day Box', kind: 'bundle', region: 'ID', channel: 'web',
+    currency: 'IDR', amount: 50000, observed: '2026-11-09', source: 'f', status: 'verified' }];
+  const { cards } = await render({ prices, regional });
+  const raid = cards.filter(c => c.includes('>Raid Day Box</b>'));
+  assert.equal(raid.length, 3);
+  const tags = raid.map(c => (c.match(/<small class="sp-tag">([^<]+)<\/small>/) || [])[1]);
+  assert.ok(tags.every(Boolean), 'every colliding card is tagged: ' + tags);
+  assert.equal(new Set(tags).size, 3, 'tags tell the cards apart: ' + tags);
+  assert.ok(tags.includes('ID only'), 'the regional-only card says ID only');
+  assert.ok(tags.some(t => /^Option \d$/.test(t)), 'two AU-only cards fall back to numbered options');
+  assert.doesNotMatch(named(cards, 'Solo Box'), /sp-tag/);
+});
+
+test('a single priced region distinguishes same-name cards without numbering', async () => {
+  const prices = [au('store-x', 'Twin Box', 9.99, 'Boxes')];
+  const regional = [{ id: 'id-twin', product: 'Twin Box', kind: 'bundle', region: 'ID', channel: 'web',
+    currency: 'IDR', amount: 50000, observed: '2026-11-09', source: 'f', status: 'verified' }];
+  const { cards } = await render({ prices, regional });
+  const twins = cards.filter(c => c.includes('>Twin Box</b>'));
+  assert.deepEqual(twins.map(c => c.match(/sp-tag">([^<]+)</)[1]).sort(), ['AU only', 'ID only']);
 });

@@ -2325,3 +2325,9 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .storep-regional .sp-review>summary{color:var(--color-text-muted);font-size:var(--type-meta);cursor:pointer}
 .storep-regional .sp-review>summary:focus-visible,.storep-regional .sp-compare-more>summary:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
 .storep-regional .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.storep-regional .sp-older .sp-local-price,.storep-regional .sp-older .sp-aud-equivalent{opacity:.72}
+.storep-regional .sp-older-mark{margin-right:2px;color:var(--color-text-muted);font-weight:700}
+.storep-regional .sp-tag{flex:none;padding:0 var(--space-1);border:1px solid var(--color-border);border-radius:var(--radius-pill);font-size:var(--type-caption-compact);color:var(--color-text-muted);white-space:nowrap}
+.storep-regional .sp-unconf{flex:none;margin-left:auto;color:var(--color-text-muted);font-size:var(--type-caption-compact);font-weight:700}
+.storep-regional .sp-product[data-sp-listing="unconfirmed"] .sp-name{opacity:.85}
+.storep-regional .sp-legend,.storep-regional .sp-foot{margin:var(--space-2) 0 0;font-size:var(--type-caption-compact);line-height:1.4;color:var(--color-text-muted)}

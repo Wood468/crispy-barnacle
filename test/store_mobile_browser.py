@@ -93,7 +93,7 @@ with sync_playwright() as p:
                 document.body.appendChild(host);
             }
         }""", FIXTURE)
-        page.add_script_tag(url="/store.js?v=20261115a-minimal")
+        page.add_script_tag(url="/store.js?v=20261115b-minimal")
         # Wait for attachment first: the product may live in a collapsed category.
         target = ".storep-regional [data-sp-name*='synthetic test ticket']"
         page.wait_for_selector(target, state="attached")
@@ -186,7 +186,8 @@ with sync_playwright() as p:
                             !!(aud.compareDocumentPosition(local) & Node.DOCUMENT_POSITION_FOLLOWING),
                         localOnlyAriaLabel: c.hasAttribute('aria-label'),
                         fxProvenance: aud?.querySelector('.sp-aud-source')?.textContent.trim() || null,
-                        estimateMarks: c.querySelectorAll('.sp-est-mark').length
+                        estimateMarks: c.querySelectorAll('.sp-est-mark').length,
+                        olderMarks: c.querySelectorAll('.sp-older-mark').length
                     };
                 }),
                 image: img ? {src: img.getAttribute('src'), alt: img.alt, loading: img.loading,
@@ -195,6 +196,9 @@ with sync_playwright() as p:
                     beforeName: !!(img.compareDocumentPosition(potion.querySelector('.sp-name')) & Node.DOCUMENT_POSITION_FOLLOWING)} : null,
                 unmappedImages: unmapped ? unmapped.querySelectorAll('img,.sp-i-token').length : -1,
                 clipped,
+                foot: document.querySelector('.storep-regional [data-sp-foot]')?.innerText || null,
+                footVisible: !!document.querySelector('.storep-regional [data-sp-foot]')?.getClientRects().length,
+                legendCount: document.querySelectorAll('.storep-regional [data-sp-legend]').length,
                 shortSummaries: summaries.filter(x => x.getBoundingClientRect().height < 43.5).map(x => x.textContent.trim())
             };
         }""", target)
@@ -232,6 +236,10 @@ with sync_playwright() as p:
             assert not market["localOnlyAriaLabel"], f"{width}px parent label masks AUD for VoiceOver: {market}"
             assert market["fxProvenance"] is None, f"{width}px FX provenance is tooltip-only: {market}"
             assert market["estimateMarks"] == 0, f"{width}px observed value must not carry est.: {market}"
+        assert indonesia["olderMarks"] == 0, f"{width}px verified ID price must be unmarked: {indonesia}"
+        assert india["olderMarks"] == 1, f"{width}px recorded IN price needs the older marker: {india}"
+        assert metrics["footVisible"] and metrics["foot"].startswith("Prices are dated observations, not live checkout quotes."), f"{width}px footer: {metrics['foot']}"
+        assert metrics["legendCount"] == 1, f"{width}px legend must exist once: {metrics['legendCount']}"
         print(f"PASS Store synthetic owner layout {width}px: {json.dumps(metrics)}", flush=True)
         context.close()
     browser.close()
