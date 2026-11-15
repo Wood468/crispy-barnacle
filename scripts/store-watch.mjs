@@ -55,23 +55,27 @@ export function dominantCurrency(prices) {
   return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
 }
 
+/* Catalogue presence (name, section, link, images, end time) does not depend on price, and the page legitimately shows
+   cards with no currency symbol (PokeCoin-priced cards render a bare number, free cards may render text or nothing).
+   So a missing price/currency is NOT invalid. Only the items that DO carry a currency symbol take part in the
+   whole-store checks: two different symbols still hold the observation (mixed-currency), and the dominant-currency
+   flip hold in diffStore is unchanged. Items without a currency never change a saved price (see diffStore). */
 export function validateStoreObservation(snap) {
   if (!Array.isArray(snap?.items) || snap.items.length < 3) return "empty-or-short-snapshot";
   const seen = new Set();
   const currencies = new Set();
   for (const i of snap.items) {
     if (!i || typeof i !== "object" || typeof i.name !== "string" || !i.name.trim() ||
-        typeof i.price !== "string" || !i.price.trim() ||
+        (typeof i.price !== "string" && i.price != null) ||
         typeof i.section !== "string" || !i.section.trim() ||
         (typeof i.href !== "string" && typeof i.href !== "undefined")) return "invalid-sku";
     const k = key(i);
     if (!k || seen.has(k)) return "duplicate-sku";
     seen.add(k);
     const currency = currencyOf(i.price);
-    if (!currency) return "missing-currency";
-    currencies.add(currency);
+    if (currency) currencies.add(currency);
   }
-  if (currencies.size !== 1) return "mixed-currency";
+  if (currencies.size > 1) return "mixed-currency";
   return null;
 }
 
@@ -107,7 +111,7 @@ export function diffStore(prev, snap, nowIso) {
   if (invalid) return {
     state: { ...(prev || {}), updated: nowIso, lastObservation: { at: nowIso, status: "held", reason: invalid } },
     added: [], changed: [], gone: [], first: false,
-    held: { reason: invalid }
+    held: { reason: invalid, previousCount: Object.keys((prev && prev.items) || {}).length, incomingCount: Array.isArray(snap?.items) ? snap.items.length : 0 }
   };
   const old = (prev && prev.items) || {};
   const base = prev && prev.items
@@ -172,11 +176,14 @@ export function diffStore(prev, snap, nowIso) {
     const oldCurrency = o ? currencyOf(o.price) : "";
     const newCurrency = currencyOf(i.price);
     const mixed = !!o && !reset && !!oldCurrency && !!newCurrency && oldCurrency !== newCurrency;
+    // A reading with no currency (bare coin number, "Free", blank) carries no AU price evidence: keep the saved price.
+    const np = typeof i.price === "string" ? i.price : "";
+    const keepOld = mixed || (!!o && !!oldCurrency && !newCurrency);
     next[k] = {
       name: i.name,
       // Preserve official snapshot imagery; never infer a product image from its label.
       images: imageUrls(i).length ? imageUrls(i) : (o?.images || []),
-      price: mixed ? o.price : i.price,
+      price: keepOld ? o.price : np,
       section: i.section,
       tag: i.tag,
       limit: i.limit,
@@ -185,7 +192,7 @@ export function diffStore(prev, snap, nowIso) {
       endsAt: endsAtFrom(i.left, nowIso, o && o.endsAt)
     };
     if (!o) added.push(i);
-    else if (!mixed && !reset && o.price !== i.price) changed.push({ ...i, was: o.price });
+    else if (!keepOld && !reset && o.price !== np) changed.push({ ...i, was: o.price });
   }
   const history = { ...((prev && prev.gone) || {}) };
   for (const [k, o] of Object.entries(old)) if (!next[k]) { gone.push(o); history[k] = { ...o, goneAt: nowIso }; }
@@ -222,7 +229,7 @@ export function buildMessages(d) {
   const out = [];
   const card = (i, head) => {
     const k = kindOf(i.name, i.section), slug = slugOf(i);
-    const lines = [k.emoji + " " + head + " · " + k.label, "", "✨ " + i.name, "💰 " + i.price + (i.was ? "  (was " + i.was + ")" : "")];
+    const lines = [k.emoji + " " + head + " · " + k.label, "", "✨ " + i.name, "💰 " + (i.price || "price not shown") + (i.was ? "  (was " + i.was + ")" : "")];
     if (limited(i)) lines.push("⏳ Limited time only");
     if (i.limit) lines.push("🔒 " + i.limit.replace(/^Can only be purchased /, "Limit: ").replace(/\.$/, ""));
     return { text: lines.join("\n"), photo: (i.imgs && (i.imgs[1] || i.imgs[0])) || "", slug, url: STORE + (i.href || "/") };
@@ -297,7 +304,8 @@ async function main() {
     }
   }
   if (d.held) {
-    console.log(d.held.reason === "incomplete-snapshot" || d.held.reason === "awaiting-corroboration" || d.held.reason === "large-drop" ? "Store snapshot held (" + d.held.reason + "); retaining prior listings without removals." : d.held.cur === undefined ? "Store observation invalid (" + d.held.reason + "); retaining prior listings." : "Store is showing " + d.held.cur + " prices instead of " + d.held.base + "; ignoring this reading (no alerts, saved prices kept).");
+    const counts = d.held.incomingCount === undefined ? "" : " [items=" + d.held.incomingCount + ", previous=" + d.held.previousCount + "]";
+    console.log(d.held.reason === "incomplete-snapshot" || d.held.reason === "awaiting-corroboration" || d.held.reason === "large-drop" ? "Store snapshot held (" + d.held.reason + (d.held.evidence ? ": " + d.held.evidence : "") + ")" + counts + "; retaining prior listings without removals." : d.held.cur === undefined ? "Store observation invalid (" + d.held.reason + ")" + counts + "; retaining prior listings." : "Store is showing " + d.held.cur + " prices instead of " + d.held.base + "; ignoring this reading (no alerts, saved prices kept).");
     if (d.held.isNew && token && chat && process.env.DRY_RUN !== "true") {
       await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", {
         method: "POST",
