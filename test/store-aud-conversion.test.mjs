@@ -60,24 +60,23 @@ test('owner Store shows one AUD placeholder before each local price without wait
   assert.doesNotMatch(el.innerHTML,/sp-aud-reference/);
   assert.doesNotMatch(el.innerHTML,/undefined|NaN/);
   // Some catalogue products legitimately have no Indonesian observation.
-  // Assert against the specific sourced market cell, not the first product.
-  const idCells = [...el.innerHTML.matchAll(/(?:<span aria-hidden="true">🇮🇩<\/span> )?Indonesia <small>Web<\/small><\/span>([\s\S]*?)<\/div>/g)]
-    .map(match => match[1]);
-  const pricedCell = idCells.find(cell => cell.includes('Rp 76,000'));
-  assert.ok(pricedCell, 'expected an observed Indonesian market cell');
-  assert.doesNotMatch(pricedCell, /<span class="sp-regional-value sp-ver" aria-label=/,
-    'VoiceOver must not conceal AUD reference behind local-only parent label');
+  // Assert against the specific sourced region cell, not the first product.
+  const cells = region => [...el.innerHTML.matchAll(new RegExp('<div class="sp-price[^"]*" data-sp-region="'+region+'"[\\s\\S]*?</div>','g'))].map(m => m[0]);
+  const pricedCell = cells('ID').find(cell => cell.includes('Rp 76,000'));
+  assert.ok(pricedCell, 'expected an observed Indonesian price cell');
+  assert.doesNotMatch(pricedCell, /aria-label=/,
+    'VoiceOver must not conceal AUD reference behind a local-only parent label');
   assert.equal((pricedCell.match(/class="sp-aud-equivalent"/g)||[]).length,1);
   assert.ok(pricedCell.indexOf('class="sp-aud-equivalent"')<pricedCell.indexOf('class="sp-local-price"'),
     'AUD placeholder precedes the visible local-price element (not its aria-label)');
-  assert.match(pricedCell,/A\$ rate unavailable/);
-  assert.ok(idCells.some(cell => cell.includes('Not observed')),
-    'unobserved regional prices remain explicitly labelled');
-  const inCells=[...el.innerHTML.matchAll(/(?:<span aria-hidden="true">🇮🇳<\/span> )?India <small>in-app<\/small><\/span>([\s\S]*?)<\/div>/g)].map(x=>x[1]);
-  const inPriced=inCells.find(x=>x.includes('₹'));
+  assert.doesNotMatch(pricedCell,/rate unavailable/,'no sentence while the reference rate is pending; the node is just empty');
+  assert.match(pricedCell,/<strong class="sp-aud-equivalent"[^>]*><\/strong>/);
+  assert.ok(cells('ID').some(cell => cell.includes('class="sp-none"')),
+    'unobserved regional prices are a quiet dash');
+  assert.doesNotMatch(el.innerHTML,/Not observed/);
+  const inPriced=cells('IN').find(x=>x.includes('₹'));
   assert.ok(inPriced,'expected an observed Indian local price');
-  assert.doesNotMatch(inPriced,/<span class="sp-regional-value sp-ver" aria-label=/,
-    'INR local-only label cannot mask AUD conversion');
+  assert.doesNotMatch(inPriced,/aria-label=/,'INR local-only label cannot mask AUD conversion');
   assert.ok(inPriced.indexOf('class="sp-aud-equivalent"')<inPriced.indexOf('class="sp-local-price"'),
     'India also reads its AUD reference before local INR amount');
   resolveFx({ok:true,json:async()=>({result:'success',base_code:'AUD',
@@ -86,9 +85,9 @@ test('owner Store shows one AUD placeholder before each local price without wait
   assert.match(idAud.textContent,/≈ A\$6\.91/,'fresh IDR FX fills the AUD reference');
   assert.match(inAud.textContent,/≈ A\$7\.32/,'fresh INR FX fills the AUD reference');
   for (const node of [idAud,inAud]) {
-    assert.equal(node.notes.length,1,'one dated FX source note per regional price');
-    assert.equal(node.notes[0].textContent,'FX · 12 Nov 2026');
-    assert.match(node.attrs.title,/Approximate AUD reference/);
+    assert.equal(node.notes.length,0,'no visible FX provenance line: the source and date live in the tooltip');
+    assert.match(node.attrs.title,/Approximate AUD reference.*12 Nov|Approximate AUD reference/);
+    assert.doesNotMatch(node.textContent,/FX ·/);
   }
   assert.match(el.innerHTML,/Rp 76,000/,'original IDR price remains visible');
   assert.match(el.innerHTML,/₹/,'original INR price remains visible');
