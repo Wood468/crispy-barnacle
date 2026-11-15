@@ -257,19 +257,51 @@ export function preserveGoPassRows(out, old, byEvent) {
 }
 
 
-// Keep source-backed research during a temporary feed outage, but never keep
-// outdated rows when the publishing page was actually fetched this run.
-// Only tasks with an explicit source URL are eligible; prose is never promoted.
+// Keep source-backed research when this run cannot prove it was removed.
+// A previous task is carried only while new research is empty and its source is
+// either not fetched this run (outage) or fetched but not positively healthy:
+// extractFields().researchParse is "ok"/"none" only for a fully read page, so a
+// missing, "incomplete" or truncated diagnostic means unknown, and unknown retains.
+// Only tasks with an explicit source URL are eligible; a stamped id, name or
+// window must match the current event, and unstamped legacy tasks are accepted
+// (the same-id old record already identifies the event); prose is never promoted.
+const samePlace = (a, b) => !a || !b || a === b;
+function taskBelongsTo(task, id, now, event) {
+  if (!samePlace(task.eventId, id) || !samePlace(task.eventName, now.name)) return false;
+  const w = task.eventWindow;
+  return !w || !event || (samePlace(w.start, event.start) && samePlace(w.end, event.end));
+}
 export function preserveUnfetchedResearchTasks(out, old, byEvent) {
   for (const [id, group] of byEvent) {
     const now = out[id], before = old[id];
     if (!now || !before || now.name !== before.name || (now.researchTasks || []).length) continue;
-    const fetched = new Set(group.results.map(r => normUrl(r.source?.url || "")).filter(Boolean));
-    const carried = (before.researchTasks || []).filter(task =>
-      Array.isArray(task.sourceRefs) && task.sourceRefs.some(ref =>
-        /^https:\/\//.test(ref.url || "") && !fetched.has(normUrl(ref.url)))
-    );
-    if (carried.length) now.researchTasks = carried;
+    const health = new Map();
+    for (const r of group.results) {
+      const url = normUrl(r.source?.url || "");
+      if (!url) continue;
+      const status = r.fields?.researchParse?.status, proven = (status === "ok" || status === "none") && !r.fields.researchParse.truncated;
+      health.set(url, (health.get(url) ?? true) && proven);
+    }
+    const seen = new Set();
+    let unproven = false;
+    const carried = (before.researchTasks || []).filter(task => {
+      if (!Array.isArray(task.sourceRefs) || !taskBelongsTo(task, id, now, group.event)) return false;
+      const refs = task.sourceRefs.filter(ref => /^https:\/\//.test(ref.url || ""));
+      const gone = refs.filter(ref => !health.has(normUrl(ref.url)));
+      const doubtful = refs.filter(ref => health.get(normUrl(ref.url)) === false);
+      if (!gone.length && !doubtful.length) return false;
+      const key = JSON.stringify([task.category, task.task, task.rewards, task.occurrence || 1]);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      if (doubtful.length) unproven = true;
+      return true;
+    });
+    if (!carried.length) continue;
+    now.researchTasks = carried;
+    if (unproven) {
+      now.researchParseWarning = "Research source parsing was incomplete; previously published research tasks were retained.";
+      now.researchRetainedAt = before.researchRetainedAt || before.updated || null;
+    }
   }
   return out;
 }
