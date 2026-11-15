@@ -27,6 +27,25 @@ const LINE = [
   // In-person events give their times as "Event time: 6:00 p.m. to 10:30 p.m. GMT" or "Doors open: 6:00 p.m. PDT": keep those lines so the digest and reminders can convert them.
   ["dates", /\b(doors open|show starts|event time|start time)\b.*\d\s?[ap]\.?m\.?/i]
 ];
+// An explicit denial that opens a research section's text: "No Timed Research: There is no Timed Research during ...".
+// Anchored at the start of the line, so prose elsewhere ("... no research is needed") never counts.
+const RES = "(?:(?:timed|special|field|event)\\s+)?research(?:\\s+tasks?)?", DENY = "(?:no|there\\s+(?:is|are|will\\s+be)\\s+no)\\s+" + RES;
+const NO_RESEARCH = new RegExp("^(?:" + DENY + "\\s*:\\s*)?" + DENY + "(?:\\s+(?:during|in|for|with)\\s+(?:the|this)\\s+([\\w'’&-]+(?:\\s+[\\w'’&-]+){0,5}))?\\s*[.!]?$|^(?:timed|special|field|event)\\s+research\\s*:\\s*none\\s*\\.?$", "i");
+// Words that turn a denial into a qualified one ("No Timed Research during the first week", "... for ticket holders").
+const QUALIFIER = /\b(?:first|second|last|week|weeks|weekend|until|before|after|if|except|unless|ticket|tickets|required|needed|only|yet|bonus|paid|premium|then|but|and|or)\b/i;
+const strictDenial = text => { const m = NO_RESEARCH.exec(text.trim()); return !!m && !(m[1] && QUALIFIER.test(m[1])); };
+// Clarifying sentences may follow ("The Minior Shower Timed Research only ran during the Orionids ..."), but never availability or qualifier language.
+const TRAILING_BAN = /\b(?:on sale|tickets?|bonus(?:es)?|paid|premium|special research|field research|will|starting|from (?:mon|tues|wednes|thurs|fri|satur|sun)day|if|unless|except|but|however|also|additional|extra|yet|coming|soon)\b/i;
+// "was only available during the Orionids" is history; "available" alone, or with this event, is a claim about now.
+const PAST = /\b(?:was|were|had been|ran|previously|earlier)\b/i, AVAILABLE_NOW = /\b(?:now|today|this event|with this|during the leonids)\b/i;
+const trailingOk = x => x.length <= 200 && !TRAILING_BAN.test(x) && (!/\bavailable\b/i.test(x) || (PAST.test(x) && !AVAILABLE_NOW.test(x)));
+function isDenial(text) {
+  const t = text.trim(), label = new RegExp("^" + DENY + "\\s*:\\s*", "i").exec(t), head = label ? label[0] : "", rest = t.slice(head.length);
+  if (!rest) return strictDenial(t);
+  const sentences = (rest.match(/[^.!]+(?:[.!]+|$)/g) || []).map(x => x.trim()).filter(Boolean);
+  if (!sentences.length || sentences.length > 3) return false;
+  return strictDenial(head + sentences[0]) && sentences.slice(1).every(trailingOk);
+}
 const RANKLABEL = /^(?:tier\s*\d+\W*)?\(?rank\s*(\d+)\)?\W*(?:bonus(?:es)?|milestone)?\W*$|^tier\s*\d+\s*bonus\s*starting at rank\s*(\d+)\W*$/i;
 const trim = s => s.replace(/^[•·\-–\s]+/, "").replace(/\s+/g, " ").trim();
 const NOISE = /^(share|read more|related|advertisement|sign up|follow us|comments?|learn more|and even more|keep an eye out|tier \d|rank \d+\s*$)|and even more goodies|learn more about|^\*/i;
@@ -123,7 +142,7 @@ function extractFromLines(html, options, lines, { skipPass = false } = {}) {
   const declaredNames=researchRewardNames(options);
   const out = Object.fromEntries(FIELDS.map(f => [f, []])); out.researchTasks = [];
   const add = (f, s) => { s = trim(s); if (keep(s) && !out[f].includes(s) && out[f].filter(x => /^rank \d+/i.test(x) === /^rank \d+/i.test(s)).length < (/^rank \d+/i.test(s) ? 110 : 14)) out[f].push(s); };
-  let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0, researchKind = "research", researchTable = false;
+  let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0, researchKind = "research", researchTable = false, denial = false, deniedSections = 0;
   // Extraction health for research: a fetched page that shows a research
   // section but yields no tasks is a parse failure, not an event with no research.
   const health = { headings: 0, table: false, candidateRows: 0 }; let unparsedRows = 0;
@@ -159,6 +178,8 @@ function extractFromLines(html, options, lines, { skipPass = false } = {}) {
       if (++taken > 6 || /https?:|last update|categories|editor in chief/i.test(l.text)) { rank = 0; continue; } add("bonuses", `Rank ${rank}${deluxe ? " Deluxe" : ""}: ${l.text}`); continue; }
     if (l.t === "h") {
       rank = 0; deluxe = false; headSeen = l.text; researchTable = false;
+      if (cur === "research" && denial) deniedSections++;
+      denial = false;
       const hit = HEAD.find(([, re]) => re.test(l.text));
       cur = hit ? hit[0] : null;
       if (cur === "research") health.headings++;
@@ -169,6 +190,7 @@ function extractFromLines(html, options, lines, { skipPass = false } = {}) {
     // Only explicit table rows imply multiple identical claimable tasks.
     // Repeated prose outside a task/reward table is often publisher duplication.
     if (/^task\s*\|\s*(?:possible\s+)?rewards?$/i.test(l.text)) { researchTable = true; health.table = true; }
+    if (cur === "research" && l.t !== "h" && l.text.length <= 600 && isDenial(l.text)) denial = true;
     if (cur) add(cur, l.text);
     // Explicit task + reward rows can appear beneath event, raid or general
     // headings. Parse only self-contained rows with a recognizable task verb
@@ -219,7 +241,11 @@ function extractFromLines(html, options, lines, { skipPass = false } = {}) {
   const parsedTasks = out.researchTasks.length;
   const seenResearch = health.headings > 0 || health.table || health.candidateRows > 0;
   // ok: tasks parsed. incomplete: research seen (or page cut off) but nothing parsed. none: a fully read page with no research.
-  out.researchParse = { status: truncated ? "incomplete" : parsedTasks && !unparsedRows ? "ok" : parsedTasks || seenResearch ? "incomplete" : "none", ...health, parsedTasks, truncated, lines: lines.length };
+  // explicit-none: a fully read page whose research section says there is none, with no task rows, table or candidate rows anywhere.
+  if (cur === "research" && denial) deniedSections++;
+  // Every research-labelled section on the page must deny; one section that does not (tasks, unparsed cells, no statement) keeps it from counting.
+  const explicitNone = deniedSections > 0 && deniedSections === health.headings && !truncated && !parsedTasks && !unparsedRows && !health.table && !health.candidateRows;
+  out.researchParse = { status: truncated ? "incomplete" : explicitNone ? "explicit-none" : parsedTasks && !unparsedRows ? "ok" : parsedTasks || seenResearch ? "incomplete" : "none", ...health, parsedTasks, truncated, lines: lines.length, ...(explicitNone ? { explicitNone: true } : {}) };
   return out;
 }
 
@@ -343,7 +369,7 @@ function structureSample(html) {
   if (at < 0) at = clean.search(/\btask\b/i);
   if (at < 0) return null;
   const outline = src => src.replace(/<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>|([^<]+)/g, (_, close, tag, attrs, text) => {
-    if (text !== undefined) { const t = flat(decode(text)).slice(0, 60); return t ? t + " " : ""; }
+    if (text !== undefined) { const t = flat(decode(text)).slice(0, 160); return t ? t + " " : ""; }
     if (close) return "</" + tag.toLowerCase() + ">";
     const keep = ["class", "id", "alt"].map(n => { const v = attr(attrs || "", n).slice(0, 50).replace(/["<>]/g, ""); return v ? " " + n + '="' + v + '"' : ""; }).join("");
     return "<" + tag.toLowerCase() + keep + ">";
@@ -372,7 +398,13 @@ export function extractFields(html, options = {}) {
       }
     } catch { out.researchParse.tolerantError = true; }
   }
-  if (out.researchParse.status !== "ok" && /timed research|\btask\b/i.test(html)) {
+  // A denial next to a task-like table cell, or one the tolerant pass could not double-check, is not a denial.
+  if (out.researchParse.explicitNone && (out.researchParse.tolerantError || /<t[dh]\b[^>]*>(?:\s*<[^>]+>)*\s*tasks?\s*</i.test(stripInert(html)))) {
+    delete out.researchParse.explicitNone; out.researchParse.status = "incomplete";
+  }
+  // Positive evidence for "none": the fully read body has no research wording at all. A parser miss still shows it.
+  out.researchParse.researchKeywords = /(?:timed|special|field)\s+research|\btasks?\b/i.test(decode(stripInert(html).replace(/<[^>]*>/g, " ")));
+  if (out.researchParse.status !== "ok" && !out.researchParse.explicitNone && /timed research|\btask\b/i.test(html)) {
     try { const sample = structureSample(html); if (sample) out.researchParse.sample = sample; } catch { out.researchParse.tolerantError = true; }
   }
   return out;
