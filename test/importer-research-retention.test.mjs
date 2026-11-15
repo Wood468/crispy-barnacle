@@ -126,6 +126,102 @@ test("(e4) once the event has ended stale research is not carried, whatever the 
   assert.equal(run(blank(), before(), group([res(HUB, gridHtml)]), { now: "2026-11-19T22:00:00.000Z" }).researchTasks.length, 3);
 });
 
+test("(f) other id, name or window never receives these tasks", () => {
+  const g = group([res(HUB, gridHtml)]);
+  assert.deepEqual(run(blank("Different Event"), before(), g).researchTasks, []);
+  assert.deepEqual(run(blank(), before(), group([res(HUB, gridHtml)], { start: "2026-12-01T17:00", end: "2026-12-05T23:59" })).researchTasks, [], "changed window");
+  assert.deepEqual(run(blank(), before(published().map(t => ({ ...t, eventId: "ev2" }))), g).researchTasks, [], "stamped for another id");
+  assert.deepEqual(run(blank(), before(published().map(t => ({ ...t, eventName: "Sample Showers 2" }))), g).researchTasks, [], "stamped for another name");
+  const mixed = [...published(), T("Foreign", 1, "Star Piece", { eventId: "ev2" })];
+  assert.equal(run(blank(), before(mixed), g).researchTasks.length, 3);
+  const none = { other: { name: "Sample Showers", researchTasks: published() } };
+  assert.deepEqual(run(blank(), none, g).researchTasks, []);
+});
+
+test("(g) tasks cited only by the incomplete source survive; bonus-track categories, occurrences, provenance kept and no duplicates", () => {
+  const duckTask = T("Spin 5 PokéStops", 500, "Stardust", { sources: ["leekduck"], sourceRefs: [{ id: "leekduck", name: "Leek Duck", trust: "community", url: DUCK.url }] });
+  const healthyDuck = res(DUCK, page("<h2>Bonuses</h2><ul><li>2× Catch XP all event</li></ul>"));
+  // Contract change: a "none" source is unknown on first sight, so its task is retained too...
+  assert.equal(run(blank(), before([...published(), duckTask]), group([healthyDuck, res(HUB, gridHtml)])).researchTasks.length, 4);
+  // ...and only once that absence has persisted 7+ days is the Duck-only task dropped.
+  const old = before([...published(), duckTask], { researchRetainedAt: ago(8) });
+  const got = run(blank(), old, group([healthyDuck, res(HUB, gridHtml)]));
+  assert.deepEqual(got.researchTasks, published());
+  assert.deepEqual(got.researchTasks.map(t => t.category), ["research", "research", "timed"]);
+  assert.ok(got.researchTasks.every(t => t.sourceRefs.length === 1 && t.sourceRefs[0].id === "hub"));
+  // duplicates in the stored snapshot are not multiplied
+  const dup = run(blank(), before([...published(), ...published()]), group([res(HUB, gridHtml)]));
+  assert.equal(dup.researchTasks.length, 3);
+  // identical tasks corroborated by two sources stay single entries
+  const both = published().map(t => ({ ...t, sources: ["hub", "leekduck"], sourceRefs: [...t.sourceRefs, { id: "leekduck", name: "Leek Duck", trust: "community", url: DUCK.url }] }));
+  const b = run(blank(), before(both), group([healthyDuck, res(HUB, gridHtml)]));
+  assert.equal(b.researchTasks.length, 3);
+  assert.ok(b.researchTasks.every(t => t.sourceRefs.length === 2));
+  // the merge step itself never sees the diagnostic
+  const merged = mergeSources([res(HUB, gridHtml)]);
+  assert.equal("researchParse" in merged.fields, false);
+});
+
+test("(h) extractFields health diagnostic cases", () => {
+  const ok = extractFields(table([["Claim Reward!", "1 × Star Piece"], ["Use a Star Piece", "7740 × Stardust"]]));
+  assert.deepEqual([ok.researchParse.status, ok.researchParse.parsedTasks, ok.researchParse.table], ["ok", 2, true]);
+  const noRows = extractFields([line("Field Research", "h"), line("Task | Rewards")]);
+  assert.equal(noRows.researchParse.status, "incomplete");
+  assert.equal(noRows.researchParse.headings, 1);
+  const unparsable = extractFields([line("Field Research", "h"), line("Task | Rewards"), line("Catch 5 Pokémon | Mystery reward")]);
+  assert.equal(unparsable.researchParse.status, "incomplete");
+  const headingOnly = extractFields([line("Timed Research", "h"), line("Details are coming soon for this event.")]);
+  assert.equal(headingOnly.researchParse.status, "incomplete");
+  const none = extractFields([line("Bonuses", "h"), line("2× Catch XP during the event")]);
+  assert.deepEqual([none.researchParse.status, none.researchParse.headings, none.researchParse.candidateRows], ["none", 0, 0]);
+  const rowsOutsideHeading = extractFields([line("Event details", "h"), line("Claim Reward! | 1 × Star Piece")]);
+  assert.equal(rowsOutsideHeading.researchParse.status, "ok");
+  assert.equal(extractFields([]).researchParse.status, "none");
+  // the array fields are unchanged and the diagnostic is not an array field
+  assert.deepEqual(extractFields([line("Bonuses", "h")]).researchTasks, []);
+});
+
+test("(i) a partially parsed research table is incomplete, not ok", () => {
+  const mixed = extractFields(table([["Claim Reward!", "1 × Star Piece"], ["Use a Star Piece", "Mystery reward"]]));
+  assert.equal(mixed.researchParse.parsedTasks, 1);
+  assert.equal(mixed.researchParse.status, "incomplete");
+  assert.deepEqual(run(blank(), before(), group([{ source: HUB, fields: mixed }])).researchTasks.length, 3, "unparsed published tasks survive only via retention when merged is empty");
+});
+
+test("(i2) legitimately repeated identical task rows still count as ok", () => {
+  const five = extractFields(table(Array.from({ length: 5 }, () => ["Use a Star Piece", "7740 × Stardust"])));
+  assert.equal(five.researchParse.status, "ok");
+  assert.equal(five.researchTasks.length, 5);
+});
+
+test("(j) task-like prose outside a research section does not make a page incomplete", () => {
+  const f = extractFields([line("Park visit", "h"), line("Walk 2 km to earn a reward at the park.")]);
+  assert.equal(f.researchParse.status, "none");
+  assert.equal(f.researchParse.candidateRows, 0);
+  const inside = extractFields([line("Field Research", "h"), line("Walk 2 km to earn a reward at the park.")]);
+  assert.equal(inside.researchParse.status, "incomplete");
+});
+
+test("(k) the page cap mirrored in extract.mjs still matches discover.mjs", () => {
+  assert.match(readFileSync(new URL("../scripts/importer/discover.mjs", import.meta.url), "utf8"), /slice\(0,\s*900000\)/);
+});
+
+test("(l) truncation heuristic: </html> proves completeness, a mid-table cut does not", () => {
+  const noBodyClose = "<html><body><main><h2>Bonuses</h2><ul><li>2× Catch XP all event</li></ul></main></html>";
+  const f = extractFields(noBodyClose);
+  assert.equal(f.researchParse.truncated, false);
+  assert.equal(f.researchParse.status, "none");
+  const cut = "<html><body><main><h2>Field Research</h2><table><tr><td>Task</td><td>Rewards</td></tr><tr><td>Claim Rew";
+  assert.equal(extractFields(cut).researchParse.truncated, true);
+  assert.equal(extractFields(cut).researchParse.status, "incomplete");
+});
+
+test("(m) an unfetched source plus another source with only bonuses retains without a parse warning", () => {
+  const got = run(blank(), before(), group([res(DUCK, page("<h2>Bonuses</h2><ul><li>2× Catch XP all event</li></ul>"))]));
+  assert.equal(got.researchTasks.length, 3);
+  assert.equal(got.researchParseWarning, undefined);
+});
+
 test("(f2) window comparison uses calendar dates, not raw strings", () => {
   const g = group([res(HUB, gridHtml)]);
   const formats = [
@@ -181,4 +277,41 @@ test("(o) research in an unrecognised Hub structure is retained end-to-end, then
   const report = [];
   assert.deepEqual(run(blank(), stamped, group([res(HUB, odd)], LONG), { now: at(7), report }).researchTasks, []);
   assert.equal(report[0].reason, "removal-confirmed");
+});
+
+test("(p) id-stamped-for-another-event is name-mismatch; one task cited by two sources is carried once", () => {
+  const report = [];
+  assert.deepEqual(run(blank(), before(published().map(t => ({ ...t, eventId: "ev2" }))), group([res(HUB, gridHtml)]), { report }).researchTasks, []);
+  assert.equal(report[0].reason, "name-mismatch");
+  const both = published().map(t => ({ ...t, sourceRefs: [...t.sourceRefs, { id: "leekduck", name: "Leek Duck", trust: "community", url: DUCK.url }] }));
+  const got = run(blank(), before([...both, ...both]), group([res(HUB, gridHtml), res(DUCK, gridHtml)]));
+  assert.equal(got.researchTasks.length, 3);
+});
+
+test("(q) malformed old task entries are ignored, never thrown on", () => {
+  const messy = [null, undefined, 7, "x", [], ...published()];
+  const got = run(blank(), before(messy), group([res(HUB, gridHtml)]));
+  assert.deepEqual(got.researchTasks, published());
+  assert.equal(run(blank(), before([null, "x"]), group([res(HUB, gridHtml)])).researchTasks.length, 0);
+});
+
+test("(r) a fully parsed source that no longer lists the task reports source-ok-removed, not removal-confirmed", () => {
+  const report = [];
+  const ok = { source: HUB, fields: { researchParse: { status: "ok", truncated: false } } };
+  assert.deepEqual(run(blank(), before(), group([ok]), { report }).researchTasks, []);
+  assert.equal(report[0].reason, "source-ok-removed");
+});
+
+test("(s) the public warning is neutral and accurate for both incomplete and fully-read none pages", () => {
+  for (const r of [res(HUB, gridHtml), noResearch()]) {
+    const w = run(blank(), before(), group([r])).researchParseWarning;
+    assert.match(w, /could not be confirmed/i);
+    assert.doesNotMatch(w, /parsing was incomplete/i);
+  }
+});
+
+test("(t) known risk: an ongoing event with end \"\" never trips event-ended, so incomplete research is retained with no time ceiling", () => {
+  const open = { start: "2026-11-14T17:00", end: "" };
+  const stale = before(published().map(({ eventWindow, ...t }) => t), { researchRetainedAt: ago(400) });
+  assert.equal(run(blank(), stale, group([res(HUB, gridHtml)], open), { now: "2027-06-01T00:00:00.000Z" }).researchTasks.length, 3, "retained, no time expiry (documented behaviour, not an approved policy)");
 });
