@@ -1362,7 +1362,7 @@
             return cell('5★',name,{s:slot.date+'T00:00',e:slot.date+'T23:59',five:name});
           }).join('');
           var maxRows=(slot.max||[]).map(function(name){
-            return '<div class="rw-max-pokemon" data-max-boss="'+esc(name)+'">'+monArt({kind:'max',tags:[],name:''},{name:name.replace(/^(?:Dynamax|Gigantamax)\s+/i,'')},'ea')+'<div class="rw-max-txt"><b>'+esc(name)+'</b><small>Event Max Battle</small></div></div>';
+            return '<div class="rw-max-pokemon" data-max-boss="'+esc(name)+'">'+monArt({kind:'max',tags:[],name:''},{name:name},'ea')+'<div class="rw-max-txt"><b>'+esc(name)+'</b><small>Event Max Battle</small></div></div>';
           }).join('');
           body+='<div class="rw-raid rw-event-day" data-event-raid-day="'+esc(slot.date)+'"><span class="rw-label">'+esc(event.t)+' · '+esc(fmtD(start))+'</span>'+
             '<p class="rw-window">Event-specific schedule · local date</p><div class="rw-rel">'+eventLink(event.t)+'</div>'+source+
