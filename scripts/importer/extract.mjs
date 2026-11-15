@@ -33,7 +33,16 @@ const RES = "(?:(?:timed|special|field|event)\\s+)?research(?:\\s+tasks?)?", DEN
 const NO_RESEARCH = new RegExp("^(?:" + DENY + "\\s*:\\s*)?" + DENY + "(?:\\s+(?:during|in|for|with)\\s+(?:the|this)\\s+([\\w'’&-]+(?:\\s+[\\w'’&-]+){0,5}))?\\s*[.!]?$|^(?:timed|special|field|event)\\s+research\\s*:\\s*none\\s*\\.?$", "i");
 // Words that turn a denial into a qualified one ("No Timed Research during the first week", "... for ticket holders").
 const QUALIFIER = /\b(?:first|second|last|week|weeks|weekend|until|before|after|if|except|unless|ticket|tickets|required|needed|only|yet|bonus|paid|premium|then|but|and|or)\b/i;
-const isDenial = text => { const m = NO_RESEARCH.exec(text.trim()); return !!m && !(m[1] && QUALIFIER.test(m[1])); };
+const strictDenial = text => { const m = NO_RESEARCH.exec(text.trim()); return !!m && !(m[1] && QUALIFIER.test(m[1])); };
+// Clarifying sentences may follow ("The Minior Shower Timed Research only ran during the Orionids ..."), but never availability or qualifier language.
+const TRAILING_BAN = /\b(?:available|on sale|tickets?|bonus(?:es)?|paid|premium|special research|field research|will|starting|from (?:mon|tues|wednes|thurs|fri|satur|sun)day|if|unless|except|but|however|also|additional|extra|yet|coming|soon)\b/i;
+function isDenial(text) {
+  const t = text.trim(), label = new RegExp("^" + DENY + "\\s*:\\s*", "i").exec(t), head = label ? label[0] : "", rest = t.slice(head.length);
+  if (!rest) return strictDenial(t);
+  const sentences = (rest.match(/[^.!]+(?:[.!]+|$)/g) || []).map(x => x.trim()).filter(Boolean);
+  if (!sentences.length || sentences.length > 3) return false;
+  return strictDenial(head + sentences[0]) && sentences.slice(1).every(x => x.length <= 200 && !TRAILING_BAN.test(x));
+}
 const RANKLABEL = /^(?:tier\s*\d+\W*)?\(?rank\s*(\d+)\)?\W*(?:bonus(?:es)?|milestone)?\W*$|^tier\s*\d+\s*bonus\s*starting at rank\s*(\d+)\W*$/i;
 const trim = s => s.replace(/^[•·\-–\s]+/, "").replace(/\s+/g, " ").trim();
 const NOISE = /^(share|read more|related|advertisement|sign up|follow us|comments?|learn more|and even more|keep an eye out|tier \d|rank \d+\s*$)|and even more goodies|learn more about|^\*/i;
@@ -178,7 +187,7 @@ function extractFromLines(html, options, lines, { skipPass = false } = {}) {
     // Only explicit table rows imply multiple identical claimable tasks.
     // Repeated prose outside a task/reward table is often publisher duplication.
     if (/^task\s*\|\s*(?:possible\s+)?rewards?$/i.test(l.text)) { researchTable = true; health.table = true; }
-    if (cur === "research" && l.t !== "h" && l.text.length <= 200 && isDenial(l.text)) denial = true;
+    if (cur === "research" && l.t !== "h" && l.text.length <= 600 && isDenial(l.text)) denial = true;
     if (cur) add(cur, l.text);
     // Explicit task + reward rows can appear beneath event, raid or general
     // headings. Parse only self-contained rows with a recognizable task verb

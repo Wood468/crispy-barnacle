@@ -43,6 +43,26 @@ test("negatives: denial text outside a research section, as mid-sentence prose, 
   assert.equal(extractFields(page("Research", "<p>Details: there is no timed research this time.</p>")).researchParse.explicitNone, undefined);
 });
 
+test("real Leek Duck markup: bold label, denial sentence, then a past-tense clarification with a link", () => {
+  const f = extractFields(load("leekduck-leonids-no-research"));
+  assert.equal(f.researchParse.status, "explicit-none");
+  assert.equal(f.researchParse.explicitNone, true);
+  assert.equal(f.researchParse.headings, 1);
+});
+
+test("trailing clarification sentences: short and free of availability language only", () => {
+  const ok = "<strong>No Timed Research: </strong>There is no Timed Research during the Leonids. The Minior Shower Timed Research only ran during the <a href=\"/x/\">Orionids</a>, the introductory event.";
+  assert.equal(extractFields(page("Research", "<p>" + ok + "</p>")).researchParse.explicitNone, true);
+  const first = "<strong>No Timed Research: </strong>There is no Timed Research during the Leonids.";
+  for (const tail of [
+    " Special Research is available with a ticket.", " But Field Research tasks are available.", " Bonuses start Saturday.",
+    " Rewards will arrive soon.", " However, nothing else.", " A. B. C. D.", " " + "Long sentence ".repeat(20) + "."
+  ]) assert.equal(extractFields(page("Research", "<p>" + first + tail + "</p>")).researchParse.explicitNone, undefined, tail);
+  assert.equal(extractFields(page("Research", "<p>There is no Timed Research during the Leonids. Special Research is available with a ticket.</p>")).researchParse.explicitNone, undefined);
+  assert.equal(extractFields(page("Research", "<p>There is no Timed Research during the Leonids, but Field Research tasks are available.</p>")).researchParse.explicitNone, undefined);
+  assert.equal(extractFields(page("Research", "<p>No Timed Research during the first week. It only ran before.</p>")).researchParse.explicitNone, undefined);
+});
+
 test("P1-A: qualified or partial denials are not denials", () => {
   for (const text of [
     "No Timed Research during the first week.", "No Timed Research for ticket holders.", "No Timed Research until Saturday.",
