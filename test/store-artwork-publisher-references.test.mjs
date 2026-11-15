@@ -52,5 +52,5 @@ test('publisher review references are not hard-coded in the Store; runtime image
   const csp=readFileSync(new URL('../src/image-policy.js',import.meta.url),'utf8');
   for(const entry of data.entries)
     assert.ok(!store.includes(entry.publisherImageUrl),'unapproved asset used by Store: '+entry.id);
-  assert.equal(csp.split(CDN).length-1,1,'the owner-approved host appears exactly once in the image policy');
+  assert.equal(csp.match(/"https:\/\/assets\.pgo\.webstore\.nianticlabs\.com"/g).length,1,'the owner-approved host appears exactly once in the image policy');
 });
