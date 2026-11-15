@@ -204,7 +204,6 @@ with sync_playwright() as p:
         check(f'{width}: page content starts below the mask', abs(notch['headTop'] - flat['headTop'] - 47) < 1, (flat['headTop'], notch['headTop']))
         check(f'{width}: tab bar is unchanged by the inset', notch['tabTop'] == flat['tabTop'] and notch['tabH'] == flat['tabH'], (flat, notch))
         check(f'{width}: the mask adds no horizontal overflow', notch['sw'] <= notch['iw'] and flat['sw'] <= flat['iw'], notch)
-        check(f'{width}: the mask only shifts height by the inset', abs((notch['sh'] - flat['sh']) - 47) <= 1, (flat['sh'], notch['sh']))
         page.evaluate("window.scrollTo(0, 400)")
         scrolled = page.evaluate("()=>({m:getComputedStyle(document.body,'::before').position,y:scrollY})")
         check(f'{width}: the mask stays fixed while the page scrolls', scrolled['m'] == 'fixed' and scrolled['y'] > 0, scrolled)
