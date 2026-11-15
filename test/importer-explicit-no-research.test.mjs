@@ -19,8 +19,9 @@ test("the Leek Duck Leonids denial is recorded as explicitNone with its own stat
 for (const text of [
   "<strong>No Timed Research: </strong>There is no Timed Research during the Leonids.",
   "No research during this event.",
-  "No special research is available with this event.",
-  "No field research tasks this time.",
+  "No special research with this event.",
+  "No field research tasks.",
+  "No Timed Research during the Leonids Minior Showers event",
   "There are no Field Research tasks for this event.",
   "There will be no timed research tasks.",
   "Timed Research: none"
@@ -40,6 +41,38 @@ test("negatives: denial text outside a research section, as mid-sentence prose, 
   assert.equal(extractFields(page("Research", "<p>Trainers should know there is no research required to join. Rewards follow.</p>")).researchParse.explicitNone, undefined);
   assert.equal(extractFields(page("Research", "<p>No special research is required to catch Minior.</p>")).researchParse.explicitNone, undefined);
   assert.equal(extractFields(page("Research", "<p>Details: there is no timed research this time.</p>")).researchParse.explicitNone, undefined);
+});
+
+test("P1-A: qualified or partial denials are not denials", () => {
+  for (const text of [
+    "No Timed Research during the first week.", "No Timed Research for ticket holders.", "No Timed Research until Saturday.",
+    "No research tickets are required.", "No special research tasks yet.", "No Timed Research: There is no Timed Research during the first week of the event.",
+    "No Timed Research, but Special Research is available.", "There is no Timed Research during the event and a bonus track follows.",
+    "No Timed Research during the event. Special Research is on sale."
+  ]) assert.equal(extractFields(page("Research", "<p>" + text + "</p>")).researchParse.explicitNone, undefined, text);
+});
+
+test("P1-A: a denial beside unparsed task cells or a task table keeps main's status", () => {
+  const cells = "<div class=\"row\"><div>Claim Reward!</div><div>1 × Star Piece</div></div>";
+  const mixed = extractFields(page("Timed Research", "<p>No Timed Research during the event.</p>" + cells));
+  assert.equal(mixed.researchParse.status, "explicit-none", "bare cells with no Task header are not evidence by themselves");
+  const withTable = extractFields("<main><h2>Timed Research</h2><p>No Timed Research.</p><table><tr><th>Task</th><th>Rewards</th></tr><tr><td>Catch 5</td><td>Mystery</td></tr></table></main>");
+  assert.equal(withTable.researchParse.explicitNone, undefined);
+  assert.equal(withTable.researchParse.status, "incomplete");
+  const divHeader = extractFields("<main><h2>Timed Research</h2><p>No Timed Research.</p><div class=\"g\"><div>Task</div><div>Rewards</div></div><table><tr><td>Task</td><td>Rewards</td></tr></table></main>");
+  assert.equal(divHeader.researchParse.explicitNone, undefined);
+  assert.notEqual(divHeader.researchParse.status, "explicit-none");
+});
+
+test("P1-A: every research section must deny; a denial in a different sub-section does not speak for the event", () => {
+  const two = extractFields("<main><h2>Special Research</h2><p>No Special Research.</p><h2>Timed Research</h2><p>Details to follow.</p></main>");
+  assert.equal(two.researchParse.explicitNone, undefined);
+  assert.equal(two.researchParse.status, "incomplete");
+  const both = extractFields("<main><h2>Special Research</h2><p>No Special Research.</p><h2>Timed Research</h2><p>No Timed Research.</p></main>");
+  assert.equal(both.researchParse.explicitNone, true);
+  const later = extractFields("<main><h2>Research</h2><p>No Timed Research.</p><h2>Field Research</h2><table><tr><td>Task</td><td>Rewards</td></tr><tr><td>Claim Reward!</td><td>1 × Star Piece</td></tr></table></main>");
+  assert.equal(later.researchParse.explicitNone, undefined);
+  assert.equal(later.researchTasks.length, 1);
 });
 
 test("negative: tasks on the same page win; a denial beside a task table is not explicit", () => {
@@ -153,4 +186,35 @@ test("later run: a source that supplies tasks again republishes them, denial or 
   const f = extractFields(page("Minior Shower Timed Research (1/1)", "<table><tr><td>Task</td><td>Rewards</td></tr><tr><td>Claim Reward!</td><td>1 × Star Piece</td></tr></table>"));
   assert.equal(f.researchParse.status, "ok");
   assert.equal(f.researchParse.explicitNone, undefined);
+});
+
+test("P1-B: researchKeywords is computed on the fully read body", () => {
+  assert.equal(hubNone().fields.researchParse.researchKeywords, false);
+  assert.equal(extractFields("<main><div>Timed Research is described here</div></main>").researchParse.researchKeywords, true);
+  assert.equal(extractFields("<main><div>Claim Task</div></main>").researchParse.researchKeywords, true);
+  assert.equal(extractFields("<main><script>var a='Timed Research Task'</script><p>Bonuses</p></main>").researchParse.researchKeywords, false);
+});
+
+test("P1-B: a Hub 'none' that still shows research wording is a possible parser miss, so a denial cannot remove", () => {
+  const miss = res(hubRef, '<html><body><main><h1>Minior Showers</h1><div class="x"><div>Minior Shower Timed Research (1/1)</div><div>Claim Reward!</div></div></main></body></html>');
+  assert.equal(miss.fields.researchParse.researchKeywords, true);
+  const { got, report } = run([miss, duckDenies()]);
+  assert.equal(got.researchTasks.length, 8);
+  assert.equal(report[0].reason, report[0].sources.find(s => s.url === HUB).status === "none" ? "none-unconfirmed" : "incomplete");
+  assert.equal(report[0].sources.find(s => s.url === HUB).researchKeywords, undefined);
+});
+
+test("P1-B: a clean Hub 'none' plus the denial removes, and the report records the evidence", () => {
+  const { got, report } = run([hubNone(), duckDenies()]);
+  assert.equal(got.researchTasks.length, 0);
+  assert.equal(report[0].reason, "source-denies");
+  assert.equal(report[0].sources.find(s => s.url === HUB).researchKeywords, false);
+  // and the persisted-7-day rule still works without any denial for a clean none
+  const old = before({ researchRetainedAt: "2026-11-01T00:00:00Z" });
+  assert.equal(run([hubNone()], { old }).report[0].reason, "removal-confirmed");
+});
+
+test("P1-B: a source that is ok but lists no tasks does not block a denial", () => {
+  const okEmpty = { source: hubRef, fields: { researchParse: { status: "ok", parsedTasks: 0 } } };
+  assert.equal(run([okEmpty, duckDenies()]).report[0].reason, "source-denies");
 });
