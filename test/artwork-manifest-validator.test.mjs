@@ -9,7 +9,14 @@ const run = m => validateManifest(m, { dex, queue });
 const withEntry = (key, entry) => { const m = clone(); m.entries[key] = entry; m.counts.entries = Object.keys(m.entries).length; return m; };
 const any = (errors, re) => assert.ok(errors.some(e => re.test(e)), errors.join('\n') || 'no errors');
 
-test('the committed manifest (89 entries) is valid', () => { assert.equal(Object.keys(live.entries).length, 89); assert.deepEqual(run(live), []); });
+test('the committed manifest is valid and its declared count matches', () => {
+  // Count-agnostic: newly mirrored costumes add entries, but every entry must stay valid (checksummed, distinct shiny image, ...).
+  const n = Object.keys(live.entries).length;
+  assert.ok(n >= 89, 'the manifest never shrinks below the 89 entries it had when this check was written');
+  assert.equal(live.counts.entries, n, 'declared entry count matches the entries present');
+  assert.ok(Object.values(live.entries).every(e => /^[0-9a-f]{64}$/.test(e.sha256 || '')), 'every entry has a sha256');
+  assert.deepEqual(run(live), []);
+});
 test('a Shiny entry may not reuse the normal image or file', () => {
   const m = clone(), k = '25|normal|costume|sun-crown|shiny', n = '25|normal|costume|sun-crown|regular';
   m.entries[k] = { ...m.entries[k], sha256: m.entries[n].sha256, url: m.entries[n].url }; any(run(m), /reuses the normal image/);
