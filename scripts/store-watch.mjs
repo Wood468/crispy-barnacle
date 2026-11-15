@@ -55,7 +55,60 @@ export function dominantCurrency(prices) {
   return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
 }
 
+export function validateStoreObservation(snap) {
+  if (!Array.isArray(snap?.items) || snap.items.length < 3) return "empty-or-short-snapshot";
+  const seen = new Set();
+  const currencies = new Set();
+  for (const i of snap.items) {
+    if (!i || typeof i !== "object" || typeof i.name !== "string" || !i.name.trim() ||
+        typeof i.price !== "string" || !i.price.trim() ||
+        typeof i.section !== "string" || !i.section.trim() ||
+        (typeof i.href !== "string" && typeof i.href !== "undefined")) return "invalid-sku";
+    const k = key(i);
+    if (!k || seen.has(k)) return "duplicate-sku";
+    seen.add(k);
+    const currency = currencyOf(i.price);
+    if (!currency) return "missing-currency";
+    currencies.add(currency);
+  }
+  if (currencies.size !== 1) return "mixed-currency";
+  return null;
+}
+
+const LARGE_DROP_MIN = 3;
+const EVIDENCE_PRODUCER = "store_snapshot.py";
+/* Completeness is never taken from a flag. The producer (scripts/store_snapshot.py) emits an evidence block; it is
+   checked against the items actually observed. Evidence is "complete" only if the scrape scrolled until two
+   consecutive passes added nothing, every rendered card became a named item, and the per-section counts match the items.
+   Limitation: the storefront exposes no stated total, so this proves the scrape was stable and internally consistent,
+   not that the page hid nothing. */
+export function deriveCompleteness(snap) {
+  const e = snap && snap.completeness, items = snap && snap.items;
+  const no = reason => ({ complete: false, reason });
+  if (!e || typeof e !== "object" || Array.isArray(e) || !Array.isArray(items)) return no("no-evidence");
+  if (e.schema !== 1 || e.producer !== EVIDENCE_PRODUCER) return no("unsupported-evidence");
+  if (e.loadComplete !== true || !Number.isInteger(e.stablePasses) || e.stablePasses < 2) return no("load-not-stable");
+  if (!Array.isArray(e.sections) || !e.sections.length) return no("no-sections");
+  if (!Number.isInteger(e.cards) || e.cards !== items.length) return no("card-count-mismatch");
+  const tally = new Map();
+  for (const i of items) tally.set(i.section, (tally.get(i.section) || 0) + 1);
+  const seen = new Set();
+  for (const sct of e.sections) {
+    if (!sct || typeof sct.name !== "string" || !sct.name || seen.has(sct.name) || !Number.isInteger(sct.count) || sct.count < 0) return no("garbled-sections");
+    seen.add(sct.name);
+    if ((tally.get(sct.name) || 0) !== sct.count) return no("section-count-mismatch");
+  }
+  if (seen.size !== tally.size) return no("section-count-mismatch");
+  return { complete: true };
+}
+
 export function diffStore(prev, snap, nowIso) {
+  const invalid = validateStoreObservation(snap);
+  if (invalid) return {
+    state: { ...(prev || {}), updated: nowIso, lastObservation: { at: nowIso, status: "held", reason: invalid } },
+    added: [], changed: [], gone: [], first: false,
+    held: { reason: invalid }
+  };
   const old = (prev && prev.items) || {};
   const base = prev && prev.items
     ? (prev.currency || dominantCurrency(Object.values(prev.items).map(o => o.price)))
@@ -73,12 +126,45 @@ export function diffStore(prev, snap, nowIso) {
       reset = { from: base, to: cur };
     } else {
       return {
-        state: { ...prev, currency: base, currencyHold: hold, updated: nowIso },
+        state: { ...prev, currency: base, currencyHold: hold, updated: nowIso, lastObservation: { at: nowIso, status: "held", reason: "currency" } },
         added: [], changed: [], gone: [], first: false,
         held: { base, cur, since: hold.since, isNew: !previousHold || previousHold.currency !== cur }
       };
     }
   }
+
+  // A partially rendered storefront is not evidence that previously listed SKUs
+  // disappeared. Completeness is DERIVED here from producer evidence checked
+  // against the observed items; any caller-supplied `verified` flag is ignored.
+  const incoming = Array.isArray(snap.items) ? snap.items : [];
+  const incomingKeys = new Set(incoming.map(key).filter(Boolean));
+  const missing = Object.keys(old).filter(k => !incomingKeys.has(k));
+  const evidence = deriveCompleteness(snap);
+  const observed = (status, reason) => ({ at: nowIso, status, ...(reason ? { reason } : {}) });
+  const hold = (reason, extra = {}, patch = {}) => ({
+    state: { ...prev, updated: nowIso, lastObservation: observed("held", reason), ...patch },
+    added: [], changed: [], gone: [], first: false,
+    held: { reason, previousCount: Object.keys(old).length, incomingCount: incomingKeys.size, ...extra }
+  });
+  let pendingGone = { ...((prev && prev.pendingGone) || {}) };
+  if (missing.length) {
+    if (!evidence.complete) return hold("incomplete-snapshot", { evidence: evidence.reason });
+    // A large simultaneous drop is never accepted automatically, even with complete evidence.
+    if (missing.length > LARGE_DROP_MIN && missing.length * 4 >= Object.keys(old).length) return hold("large-drop");
+    // Retire only SKUs with independent corroboration: their own end date has passed,
+    // or an earlier COMPLETE scrape already found them absent (second consecutive complete scrape).
+    const uncorroborated = missing.filter(k => {
+      const end = Date.parse(old[k].endsAt || "");
+      return !((Number.isFinite(end) && end <= Date.parse(nowIso)) || pendingGone[k]);
+    });
+    if (uncorroborated.length) {
+      const pending = { ...pendingGone };
+      for (const k of uncorroborated) pending[k] = { firstAbsentAt: nowIso };
+      return hold("awaiting-corroboration", { pending: uncorroborated.length }, { pendingGone: pending });
+    }
+  }
+  for (const k of incomingKeys) delete pendingGone[k];
+  for (const k of missing) delete pendingGone[k]; // retired below
 
   const next = {}, added = [], changed = [], gone = [];
   for (const i of snap.items) {
@@ -107,12 +193,29 @@ export function diffStore(prev, snap, nowIso) {
   const keep = Object.entries(history).sort((a, b) => String(b[1].goneAt).localeCompare(String(a[1].goneAt))).slice(0, 150);
   const watchStart = (prev && prev.watchStart) || (prev && prev.items ? Object.values(prev.items).map(o => o.firstSeen).sort()[0] : nowIso);
   return {
-    state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso, currency: cur || base },
+    state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso, currency: cur || base,
+      ...(prev?.lastPublishedAt ? { lastPublishedAt: prev.lastPublishedAt } : {}),
+      ...(Object.keys(pendingGone).length ? { pendingGone } : {}),
+      lastObservation: observed(evidence.complete ? "complete" : "unverified", evidence.complete ? "" : evidence.reason) },
     added, changed, gone, first: !prev || !prev.items, reset
   };
 }
 
 // One message per item: { text, photo, slug, url }.
+/* Publication heartbeat (PRIVATE: data/store-state.json only, never in public/**).
+   Meaning: "a valid, complete observation from THIS run was committed and pushed to main". Called by the workflow
+   immediately before its commit, so the stamp only persists if the push succeeds. It also advances when the
+   catalogue is unchanged. Limitation: this proves publication to main, not deployment; the Cloudflare build that
+   deploys main is not observed here. Held, invalid, incomplete-evidence or stale (older than maxAgeMs) observations
+   never advance it. */
+export function stampPublication(state, nowIso, maxAgeMs = 30 * 60 * 1000) {
+  const o = state && state.lastObservation, at = Date.parse(o && o.at), now = Date.parse(nowIso);
+  if (!o || o.status !== "complete" || !Number.isFinite(at) || !Number.isFinite(now) || at > now || now - at > maxAgeMs) return state;
+  const last = Date.parse(state.lastPublishedAt || "");
+  if (Number.isFinite(last) && last >= at) return state;
+  return { ...state, lastPublishedAt: o.at };
+}
+
 export function buildMessages(d) {
   const limited = i => /limited/i.test(i.tag || "") || i.section === "LIMITED_TIME";
   const want = d.first ? d.added.filter(limited) : d.added;
@@ -136,6 +239,29 @@ export function storeLog(state) {
   return { watchStart: state.watchStart || null, updated: state.updated, items: items.filter(i => isTicketOrPass(i.name) || /box|bundle/i.test(i.name)) };
 }
 
+/* Public, price-free storefront evidence for the owner catalogue. Always
+   distinguish the current snapshot from retired listings; no owner checkout
+   prices, tokens, receipts or personalised account details may enter here. */
+export function storeCurrentSnapshot(state) {
+  const safeImage = url => typeof url === "string" &&
+    /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()\-]+\/w(?:64|128|256|512)\.webp$/i.test(url)
+    ? url : null;
+  const clean = (key, entry, retired) => ({
+    name: String(entry.name || "").slice(0, 160),
+    href: /^\/purchase\/item\/[a-z0-9_.-]+$/i.test(key) ? key : null,
+    image: safeImage((entry.images || [])[0]),
+    lastSeen: entry.lastSeen || null,
+    endsAt: entry.endsAt || null,
+    goneAt: retired ? entry.goneAt || null : null
+  });
+  return {
+    version: 1,
+    updated: state.updated || null,
+    items: Object.entries(state.items || {}).map(([k,v]) => clean(k,v,false)),
+    gone: Object.entries(state.gone || {}).map(([k,v]) => clean(k,v,true))
+  };
+}
+
 async function tg(token, method, body) {
   const r = await fetch("https://api.telegram.org/bot" + token + "/" + method, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
   return r.ok;
@@ -146,6 +272,11 @@ export async function send(m, token, chat) {
   return tg(token, "sendMessage", { chat_id: chat, text: m.text, reply_markup: markup, disable_web_page_preview: true });
 }
 async function main() {
+  if (process.argv[2] === "--stamp-publication") {
+    const st = await readJson(STATE, null);
+    if (st) await writeFile(STATE, JSON.stringify(stampPublication(st, new Date().toISOString()), null, 1) + "\n");
+    return;
+  }
   const snap = await readJson(process.argv[2], null);
   if (!snap || !snap.items || snap.items.length < 3) throw new Error("No usable snapshot");
   const prev = await readJson(STATE, null), now = new Date().toISOString();
@@ -166,7 +297,7 @@ async function main() {
     }
   }
   if (d.held) {
-    console.log("Store is showing " + d.held.cur + " prices instead of " + d.held.base + "; ignoring this reading (no alerts, saved prices kept).");
+    console.log(d.held.reason === "incomplete-snapshot" || d.held.reason === "awaiting-corroboration" || d.held.reason === "large-drop" ? "Store snapshot held (" + d.held.reason + "); retaining prior listings without removals." : d.held.cur === undefined ? "Store observation invalid (" + d.held.reason + "); retaining prior listings." : "Store is showing " + d.held.cur + " prices instead of " + d.held.base + "; ignoring this reading (no alerts, saved prices kept).");
     if (d.held.isNew && token && chat && process.env.DRY_RUN !== "true") {
       await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", {
         method: "POST",
@@ -194,6 +325,8 @@ async function main() {
   if (process.env.DRY_RUN !== "true") {
     await writeFile(STATE, JSON.stringify(d.state, null, 1) + "\n");
     await writeFile(process.env.STORE_LOG || "public/store-log.json", JSON.stringify(storeLog(d.state), null, 1) + "\n");
+    await writeFile(process.env.STORE_CURRENT_SNAPSHOT || "public/store-current-snapshot.json",
+      JSON.stringify(storeCurrentSnapshot(d.state), null, 1) + "\n");
   }
 }
 if (import.meta.url === "file://" + process.argv[1]) main().catch(e => { console.error(e.message); process.exit(1); });

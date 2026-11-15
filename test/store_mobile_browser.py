@@ -4,6 +4,7 @@ Run against the real static application served on localhost:8791. No owner API
 response, credentials or actual regional price data enter CI artifacts.
 """
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -15,7 +16,10 @@ FIXTURE = {
     "prices": [
         {"product": "store-synthetic-ticket", "label": "Synthetic Test Ticket",
          "group": "Tickets", "currency": "AUD", "amount": 9.99,
-         "region": "AU", "verified": True, "observed": "2026-11-01"}
+         "region": "AU", "verified": True, "observed": "2026-11-01"},
+        {"product": "store-synthetic-october-pass", "label": "GO Pass Deluxe: October",
+         "group": "Tickets", "currency": "AUD", "amount": 12.99,
+         "region": "AU", "verified": True, "observed": "2026-10-12"}
     ],
     "regional": [
         {"id": "synthetic-id-ticket", "product": "Synthetic Test Ticket",
@@ -28,6 +32,20 @@ FIXTURE = {
          "source": "synthetic-test-only", "status": "recorded"}
     ],
 }
+# Fixed product identities but a fresh synthetic observation timestamp so
+# future releases keep testing the same transition without relying on November
+# 2026 continuing to be on sale.
+SEEN = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+SOURCE_IMAGE = ("https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/"
+                "v1/sku_assets/bundle3.sprite.a-da6f21e79d79/w256.webp")
+def listing(name, retired=False):
+    return {"name": name, "image": SOURCE_IMAGE, "lastSeen": SEEN,
+            "endsAt": None, "goneAt": SEEN if retired else None}
+SOURCE_FIXTURE = {
+    "version": 1, "updated": SEEN,
+    "items": [listing("Synthetic Test Ticket"), listing("GO Pass Deluxe: November")],
+    "gone": [listing("GO Pass Deluxe: October", retired=True)]
+}
 with sync_playwright() as p:
     browser = p.chromium.launch()
     for width in (320, 390, 430):
@@ -35,6 +53,9 @@ with sync_playwright() as p:
                                       service_workers="block", locale="en-AU")
         page = context.new_page()
         page.route("**/api/**", lambda route: route.fulfill(status=404, body="{}"))
+        page.route("**/store-current-snapshot.json",
+                   lambda route: route.fulfill(status=200, content_type="application/json",
+                                               body=json.dumps(SOURCE_FIXTURE)))
         page.goto(BASE, wait_until="domcontentloaded")
         # The regional Store is rendered inside the Events timeline panel.
         # Activate that real app surface before checking visibility or layout.
@@ -58,10 +79,31 @@ with sync_playwright() as p:
                 document.body.appendChild(host);
             }
         }""", FIXTURE)
-        page.add_script_tag(url="/store.js?v=20261113q-store770a11y")
+        page.add_script_tag(url="/store.js?v=20261114a-source797")
         # Wait for attachment first: the product may live in a collapsed category.
         target = ".storep-regional [data-sp-name*='synthetic test ticket']"
         page.wait_for_selector(target, state="attached")
+        # The real price-free Store snapshot must separate retired exact offers
+        # from current official listings, and use their own Niantic SKU art.
+        listing = page.evaluate("""() => {
+            const cards = [...document.querySelectorAll('.sp-product')];
+            const october = cards.find(x => x.querySelector('.sp-product-name b')?.textContent === 'GO Pass Deluxe: October');
+            const november = cards.find(x => x.querySelector('.sp-product-name b')?.textContent === 'GO Pass Deluxe: November');
+            const octoberGroup = october?.closest('[data-sp-group]');
+            return {
+                octoberStatus: october?.getAttribute('data-sp-listing'),
+                octoberGroup: octoberGroup?.getAttribute('data-sp-group'),
+                novemberStatus: november?.getAttribute('data-sp-listing'),
+                novemberArt: november?.querySelector('img.sp-i')?.getAttribute('src') || null,
+                novemberSafeToken: !!november?.querySelector('.sp-i-token[data-sp-art="category-token"]')
+            };
+        }""")
+        assert listing["octoberStatus"] == "archived", f"{width}px expired October pass mixed with active offers: {listing}"
+        assert listing["octoberGroup"] == "earlier", f"{width}px October pass must be in previous offers: {listing}"
+        assert listing["novemberStatus"] == "listed", f"{width}px November official listing missing: {listing}"
+        assert listing["novemberArt"] is None, f"{width}px unapproved publisher image must not render: {listing}"
+        assert listing["novemberSafeToken"], f"{width}px missing safe fallback for pending artwork approval: {listing}"
+
         page.evaluate("""selector => {
             const card = document.querySelector(selector);
             if (!card) throw new Error("Synthetic Store fixture card was not rendered");

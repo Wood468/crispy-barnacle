@@ -46,7 +46,7 @@
     if (/\bpack\b/i.test(name)) return '▣';
     return '·';
   }
-  function icon(label) {
+  function icon(label, sourceImage) {
     var token = kindToken(label);
     for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) {
       return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-sp-fallback="' + esc(token || '·') + '">';
@@ -250,6 +250,13 @@
     var prices = Array.isArray(data.prices) ? data.prices : [];
     var items = R.catalogue(prices, obs, undefined, window.GOStoreOfferIdentities);
     if (!items.length) return '';
+    var snapshot = data.storeSnapshot && Array.isArray(data.storeSnapshot.items)
+      && Array.isArray(data.storeSnapshot.gone) ? data.storeSnapshot : null;
+    items.forEach(function (p) {
+      p.sourceOffer = R.sourceOffer(p.label, snapshot, undefined, {
+        ambiguousSku: !!(p.ambiguousSku || p.regionalUnmatched)
+      });
+    });
     var comparableOffers = verifiedOptionsHtml(obs);
     var reviewPanel = coveragePanel(items, R);
     var sections = [
@@ -259,14 +266,35 @@
       { id: 'boxes', label: 'Boxes & bundles', open: false },
       { id: 'items', label: 'Items & other', open: false }
     ];
-    var bySection = {};
+    var bySection = {}, earlier = [];
     sections.forEach(function (s) { bySection[s.id] = []; });
-    items.forEach(function (p) { bySection[priority(p)].push(p); });
+    items.forEach(function (p) {
+      var category = priority(p), status = p.sourceOffer.status;
+      /* A missing source does not remove the useful historical category list.
+         An explicit retirement always leaves the main list; uncertainty for
+         time-limited passes/boxes is separated, while stable items/coin/store
+         upgrades remain visible but clearly marked unconfirmed. */
+      if (snapshot && (status === 'archived' ||
+          (status === 'unconfirmed' && (category === 'passes' || category === 'boxes'))))
+        earlier.push(p);
+      else bySection[category].push(p);
+    });
+    var visibleItems = sections.reduce(function (all, section) { return all.concat(bySection[section.id]); }, []);
+    var listedCount = snapshot ? visibleItems.filter(function (p) { return p.sourceOffer.status === 'listed'; }).length : 0;
+    var unconfirmedCount = snapshot ? visibleItems.filter(function (p) { return p.sourceOffer.status !== 'listed'; }).length : 0;
     function productCard(p) {
       var au = p.aud > 0
         ? '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.aud, 'AUD')) + '</b><small>Verified · ' + esc(when(p.observed)) + '</small></span>'
         : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">—<span class="sr-only">Not observed</span></span>';
       var search = storeSearchKey(p.label + ' ' + p.product + ' ' + p.group + ' ' + priority(p));
+      var evidence = p.sourceOffer;
+      var sourceNote = evidence
+        ? '<small class="sp-source-id-note">' + esc(evidence.status === 'listed'
+          ? 'Seen in official Store snapshot · ' + when(String(evidence.lastSeen).slice(0,10)) + ' · regional prices are dated observations'
+          : evidence.status === 'archived'
+            ? 'Previous offer · ' + evidence.note + (evidence.goneAt ? ' · ' + when(evidence.goneAt.slice(0,10)) : '')
+            : evidence.note + ' · regional prices are historical/modelled, not live checkout quotes')
+          + '</small>' : '';
       var identityNote = p.unpricedOfficial
         ? '<small class="sp-source-id-note">Official published product · no matched AU / ID / IN checkout observation · regional availability not verified</small>'
         : p.ambiguousSku
@@ -275,9 +303,10 @@
           ? '<small class="sp-source-id-note">Regional observation · no exact AU SKU pairing established</small>'
           : p.sourceIdOnly
             ? '<small class="sp-source-id-note">Official AU observation · exact SKU; item name not recorded</small>' : '';
-      return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '">'
-        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span>'
-        + identityNote + '</header>'
+      return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '"'
+        + (evidence ? ' data-sp-listing="' + esc(evidence.status) + '"' : '') + '>'
+        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label, evidence && evidence.image) + '<b>' + esc(p.label) + '</b></span>'
+        + sourceNote + identityNote + '</header>'
         + '<div class="sp-market-grid">'
         + '<div class="sp-market sp-market-au"><span class="sp-market-label"><span aria-hidden="true">🇦🇺</span> Australia <small>Web</small></span>' + au + '</div>'
         + '<div class="sp-market"><span class="sp-market-label"><span aria-hidden="true">🇮🇩</span> Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
@@ -289,11 +318,17 @@
         + '<summary>' + esc(s.label) + ' <small>' + bySection[s.id].length + ' products</small></summary>'
         + '<div class="sp-group-items">' + bySection[s.id].map(productCard).join('') + '</div></details>';
     }).join('');
-    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + ' products · AU / ID / IN</small></summary>'
-      + '<p class="sp-intro">Dated Store observations, not live checkout quotes. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates. “Not observed” means no sourced price for that region.</p>'
+    if (snapshot && earlier.length) {
+      catalogue += '<details class="sp-group sp-history" data-sp-group="earlier" data-sp-default-open="no">'
+        + '<summary>Previous / unconfirmed offers <small>' + earlier.length + ' entries · not confirmed on sale</small></summary>'
+        + '<p class="sp-intro">These are retained for comparison, not offered as live checkout products. Missing from one regional snapshot is not proof of global retirement.</p>'
+        + '<div class="sp-group-items">' + earlier.map(productCard).join('') + '</div></details>';
+    }
+    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + (snapshot ? listedCount + ' recently listed · ' + unconfirmedCount + ' visible unconfirmed · ' + earlier.length + ' previous/unconfirmed' : items.length + ' historical price records') + '</small></summary>'
+      + '<p class="sp-intro">Recently listed offers appear in the main list; stable items with historical prices may also appear clearly marked unconfirmed. Earlier observations remain searchable under Previous / unconfirmed offers. Store availability varies by region, purchase channel and account. Dated prices are not live checkout quotes. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates. “Not observed” means no sourced price for that region.</p>'
       + reviewPanel
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
-      + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
+      + '<p class="sp-results" data-sp-results aria-live="polite">' + (snapshot ? listedCount + ' recently listed · ' + unconfirmedCount + ' visible unconfirmed · ' + earlier.length + ' previous/unconfirmed' : items.length + ' priced products · snapshot unavailable') + '</p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
       + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
       + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed cash price is named only when two or more channels share an explicit verified product SKU and currency. Estimated, recorded-only and ambiguous boxes cannot win; no result is a live checkout quote.</p>'
@@ -305,6 +340,20 @@
       if (!d || !d.owner) return; /* Owner-only regional prices stay private. */
       /* Render local observed prices immediately; an external FX request must
          never delay the Store, including when a provider hangs. */
+      if (typeof window.fetch === 'function') {
+        try {
+          var request = window.fetch('/store-current-snapshot.json', {cache:'no-store'})
+            .then(function (response) { return response && response.ok ? response.json() : null; })
+            .catch(function () { return null; });
+          var sourceSnapshot = await Promise.race([
+            request,
+            new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 1600); })
+          ]);
+          if (sourceSnapshot && sourceSnapshot.version === 1 &&
+              Array.isArray(sourceSnapshot.items) && Array.isArray(sourceSnapshot.gone))
+            d.storeSnapshot = sourceSnapshot;
+        } catch (_) { /* Never infer active stock from historical prices. */ }
+      }
       var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
