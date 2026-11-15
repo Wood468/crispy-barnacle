@@ -6417,8 +6417,8 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "1e05fe578382f7d08ec6cbf45a856f0575762fb21240ecd62d5885e2a9c25c5a",
-    "revision": 12,
+    "contentHash": "f7bc2c3405fcd91651f02558bea2566785b80beee1e2af9282ba4f658c604095",
+    "revision": 13,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -9729,6 +9729,19 @@
      "collectionName": "Dynamax Wooloo"
     },
     {
+     "key": "849:base:lowkeyform",
+     "speciesId": "849",
+     "formId": null,
+     "costumeId": "lowkeyform",
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Toxtricity",
+     "label": "low key form",
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Toxtricity (low key form)"
+    },
+    {
      "key": "850:base:none",
      "speciesId": "850",
      "formId": null,
@@ -10187,6 +10200,12 @@
      "access": "unknown"
     },
     {
+     "identityKey": "849:base:lowkeyform",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "850:dynamax:none",
      "method": "max",
      "activityId": "main",
@@ -10518,6 +10537,12 @@
     },
     {
      "identityKey": "831:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "849:base:lowkeyform",
      "method": "wild",
      "activityId": "main",
      "access": "unknown"
@@ -10862,6 +10887,12 @@
       "access": "unknown"
      },
      {
+      "identityKey": "849:base:lowkeyform",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "850:dynamax:none",
       "method": "max",
       "activityId": "main",
@@ -11200,6 +11231,12 @@
       "access": "unknown"
      },
      {
+      "identityKey": "849:base:lowkeyform",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "850:base:none",
       "method": "wild",
       "activityId": "main",
@@ -11331,7 +11368,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 186,
+    "revision": 188,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -31046,7 +31083,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 201,
+    "revision": 203,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -59863,7 +59900,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 178,
+    "revision": 180,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -61543,8 +61580,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "c66dcad1b162fea2f95457a5e29f412607075e50a8a522ffa60bfc7df3c1f046",
-    "revision": 13,
+    "contentHash": "e0aaf058ce894fab338f7fd8e711646ae9f9ed448f521f28b98cf283fb71d6aa",
+    "revision": 14,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -64859,6 +64896,19 @@
      "collectionName": "Dynamax Wooloo"
     },
     {
+     "key": "849:base:lowkeyform",
+     "speciesId": "849",
+     "formId": null,
+     "costumeId": "lowkeyform",
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Toxtricity",
+     "label": "low key form",
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Toxtricity (low key form)"
+    },
+    {
      "key": "850:base:none",
      "speciesId": "850",
      "formId": null,
@@ -65317,6 +65367,12 @@
      "access": "unknown"
     },
     {
+     "identityKey": "849:base:lowkeyform",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "850:dynamax:none",
      "method": "max",
      "activityId": "main",
@@ -65648,6 +65704,12 @@
     },
     {
      "identityKey": "831:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "849:base:lowkeyform",
      "method": "wild",
      "activityId": "main",
      "access": "unknown"
@@ -65992,6 +66054,12 @@
       "access": "unknown"
      },
      {
+      "identityKey": "849:base:lowkeyform",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "850:dynamax:none",
       "method": "max",
       "activityId": "main",
@@ -66330,6 +66398,12 @@
       "access": "unknown"
      },
      {
+      "identityKey": "849:base:lowkeyform",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "850:base:none",
       "method": "wild",
       "activityId": "main",
@@ -66458,7 +66532,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 186,
+    "revision": 188,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -73831,7 +73905,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 178,
+    "revision": 180,
     "amended": true,
     "native": false,
     "collection": "world-events"

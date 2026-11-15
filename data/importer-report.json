@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-15T11:57:42.737Z",
+ "runAt": "2026-11-15T11:59:30.488Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -566,71 +566,7 @@
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
- "researchRetention": [
-  {
-   "id": "into",
-   "name": "Into the Wild",
-   "oldTasks": 7,
-   "retained": false,
-   "reason": "event-ended",
-   "sources": [
-    {
-     "url": "https://pokemongo.com/news/into-the-wild-2026/",
-     "status": "incomplete",
-     "truncated": false,
-     "candidateRows": 0,
-     "headings": 2,
-     "table": false
-    },
-    {
-     "url": "https://pokemongo.com/news/get-ready-for-gowildarea-2026/",
-     "status": "incomplete",
-     "truncated": false,
-     "candidateRows": 0,
-     "headings": 1,
-     "table": false
-    },
-    {
-     "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/",
-     "status": "none",
-     "truncated": false,
-     "candidateRows": 0,
-     "headings": 0,
-     "table": false,
-     "researchKeywords": false
-    }
-   ]
-  },
-  {
-   "id": "minior2",
-   "name": "Minior Showers: Leonids",
-   "oldTasks": 8,
-   "retained": false,
-   "reason": "source-denies",
-   "sources": [
-    {
-     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/",
-     "status": "none",
-     "truncated": false,
-     "candidateRows": 0,
-     "headings": 0,
-     "table": false,
-     "researchKeywords": false
-    },
-    {
-     "url": "https://leekduck.com/events/minior-showers-leonids-2026/",
-     "status": "explicit-none",
-     "truncated": false,
-     "candidateRows": 0,
-     "headings": 1,
-     "table": false,
-     "explicitNone": true,
-     "ownsPage": true,
-     "researchKeywords": true
-    }
-   ]
-  }
- ],
+ "researchRetention": [],
  "unmatchedPages": [
   {
    "source": "official",
