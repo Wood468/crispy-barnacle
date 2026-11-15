@@ -24,7 +24,7 @@ const sourceProof=refs=>{
     if(!r||typeof r.sourceId!=='string')return null;
     let url;
     try{url=new URL(r.url)}catch{return null}
-    if(url.protocol!=='https:'||url.username||url.password||!SOURCE_HOSTS[r.sourceId]?.includes(url.hostname))return null;
+    if(url.protocol!=='https:'||url.username||url.password||url.port||!SOURCE_HOSTS[r.sourceId]?.includes(url.hostname))return null;
     ids.add(r.sourceId);
   }
   return ids;
