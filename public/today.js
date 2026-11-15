@@ -100,9 +100,20 @@
      GOEVENTART.resolve accepts only an image proven for this event, year and place). No verified image: no slot at all, never a placeholder. */
   function minorBanner(ev) {
     var A = (typeof GOEVENTART !== 'undefined') ? GOEVENTART : null;
-    if (!A || !ev.img) return '';
-    var art = A.resolve({ name: ev.name, kind: ev.kind, region: ev.region || '', start: ev.start, end: ev.end }, [{ url: ev.img, pageUrl: ev.artPageUrl || ev.link || '' }]);
-    if (art.kind !== 'official' || !art.src) return '';
+    if (!A || typeof A.resolve !== 'function' || !ev.img) return '';
+    var page = ev.artPageUrl || ev.link || '';
+    var art = A.resolve({ name: ev.name, kind: ev.kind, region: ev.region || '', start: ev.start, end: ev.end }, [{ url: ev.img, pageUrl: page }]);
+    if (art.kind !== 'official' || !art.src || !art.provenance) return '';
+    /* Pokémon GO / Google-hosted images carry no event name in their address, so host alone proves nothing: they need a source page whose
+       address names this event (and does not name another year). Leek Duck and mirrored images are already checked against their own path. */
+    if (!/^https:\/\/cdn\.leekduck\.com\//i.test(art.src) && !/^\/img\/ext\//.test(art.src)) {
+      if (!/^https:\/\/(?:www\.)?(?:pokemongo\.com|leekduck\.com)\//i.test(page)) return '';
+      var slug = page.split(/[?#]/)[0].toLowerCase().replace(/[^a-z0-9]+/g, ' ');
+      var nameWords = String(ev.name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').split(' ').filter(function (w) { return w.length >= 4 && !/^(?:pokemon|event|events|battle|battles|day|days)$/.test(w); });
+      if (!nameWords.some(function (w) { return (' ' + slug + ' ').indexOf(' ' + w + ' ') >= 0 || slug.indexOf(w) >= 0; })) return '';
+      var years = (slug.match(/\b20\d{2}\b/g) || []), evYears = [new Date(+ev.start).getUTCFullYear(), new Date(+ev.end).getUTCFullYear()];
+      if (years.length && !years.every(function (y) { return evYears.indexOf(+y) >= 0; })) return '';
+    }
     return '<img class="t1-minor-banner" alt="" src="' + esc(art.src) + '" decoding="async" loading="lazy" data-err="rm" data-art-source="' + esc(art.provenance.source) + '" data-art-verified="' + esc(art.provenance.verifiedFor) + '">';
   }
   function cardMinor(ctx, ev, live) {

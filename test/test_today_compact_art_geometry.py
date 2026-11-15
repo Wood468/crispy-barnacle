@@ -226,7 +226,7 @@ def test_compact_card_without_featured_pokemon_has_banner_or_no_gap():
                     page.add_script_tag(content=(ROOT / "public" / f).read_text())
                 page.evaluate("""(png) => {
                   const now = Date.UTC(2026,10,15,10), h = 3600000;
-                  const mk = (id, img) => ({id, name:'Dynamax Trails '+id, kind:'event', start:new Date(now+h), end:new Date(now+7*24*h), region:'Global', featured:[], tags:[], img});
+                  const mk = (id, img) => ({id, name:'Dynamax Trails '+id, kind:'event', start:new Date(now+h), end:new Date(now+7*24*h), region:'Global', featured:[], tags:[], img, artPageUrl:'https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026'});
                   const ctx = {now, live:[], soon:[mk('art', png), mk('none', '')], week:[], regLive:[], regSoon:[], regWeek:[],
                     boosts:{live:[],upcoming:[]}, seasons:[], done:[], hidden:[], ending:[],
                     kindOf:()=>['Max Battle','#7c5cff'], overseas:()=>false, dayLabel:()=>'Mon', fallbackArt:()=>'', monArt:()=>''};
