@@ -17,6 +17,12 @@ FIXTURE = {
         {"product": "store-synthetic-ticket", "label": "Synthetic Test Ticket",
          "group": "Tickets", "currency": "AUD", "amount": 9.99,
          "region": "AU", "verified": True, "observed": "2026-11-01"},
+        {"product": "store-synthetic-max-potion", "label": "Max Potions x10",
+         "group": "Items", "currency": "AUD", "amount": 5.99,
+         "region": "AU", "verified": True, "observed": "2026-11-01"},
+        {"product": "store-synthetic-unmapped", "label": "Synthetic Unmapped Item",
+         "group": "Items", "currency": "AUD", "amount": 3.49,
+         "region": "AU", "verified": True, "observed": "2026-11-01"},
         {"product": "store-synthetic-october-pass", "label": "GO Pass Deluxe: October",
          "group": "Tickets", "currency": "AUD", "amount": 12.99,
          "region": "AU", "verified": True, "observed": "2026-10-12"}
@@ -29,7 +35,15 @@ FIXTURE = {
         {"id": "synthetic-in-ticket", "product": "Synthetic Test Ticket",
          "kind": "ticket", "region": "IN", "channel": "in-app",
          "currency": "INR", "amount": 439, "observed": "2026-11-01",
-         "source": "synthetic-test-only", "status": "recorded"}
+         "source": "synthetic-test-only", "status": "recorded"},
+        {"id": "synthetic-id-sept", "product": "GO Pass Deluxe: September",
+         "kind": "monthly-pass", "region": "ID", "channel": "web",
+         "currency": "IDR", "amount": 76000, "observed": "2026-11-01",
+         "source": "synthetic-test-only", "status": "verified"},
+        {"id": "synthetic-in-sept", "product": "GO Pass Deluxe: September",
+         "kind": "monthly-pass", "region": "IN", "channel": "in-app",
+         "currency": "INR", "amount": 439, "observed": "2026-11-01",
+         "source": "synthetic-test-only", "status": "verified"}
     ],
 }
 # Fixed product identities but a fresh synthetic observation timestamp so
@@ -48,7 +62,7 @@ SOURCE_FIXTURE = {
 }
 with sync_playwright() as p:
     browser = p.chromium.launch()
-    for width in (320, 390, 430):
+    for width in (320, 360, 390, 430):
         context = browser.new_context(viewport={"width": width, "height": 844},
                                       service_workers="block", locale="en-AU")
         page = context.new_page()
@@ -79,7 +93,7 @@ with sync_playwright() as p:
                 document.body.appendChild(host);
             }
         }""", FIXTURE)
-        page.add_script_tag(url="/store.js?v=20261114a-source797")
+        page.add_script_tag(url="/store.js?v=20261115b-minimal")
         # Wait for attachment first: the product may live in a collapsed category.
         target = ".storep-regional [data-sp-name*='synthetic test ticket']"
         page.wait_for_selector(target, state="attached")
@@ -87,22 +101,26 @@ with sync_playwright() as p:
         # from current official listings, and use their own Niantic SKU art.
         listing = page.evaluate("""() => {
             const cards = [...document.querySelectorAll('.sp-product')];
-            const october = cards.find(x => x.querySelector('.sp-product-name b')?.textContent === 'GO Pass Deluxe: October');
-            const november = cards.find(x => x.querySelector('.sp-product-name b')?.textContent === 'GO Pass Deluxe: November');
+            const named = n => cards.find(x => x.querySelector('.sp-name')?.textContent === n);
+            const october = named('GO Pass Deluxe: October');
+            const november = named('GO Pass Deluxe: November');
             const octoberGroup = october?.closest('[data-sp-group]');
             return {
                 octoberStatus: october?.getAttribute('data-sp-listing'),
                 octoberGroup: octoberGroup?.getAttribute('data-sp-group'),
                 novemberStatus: november?.getAttribute('data-sp-listing'),
-                novemberArt: november?.querySelector('img.sp-i')?.getAttribute('src') || null,
-                novemberSafeToken: !!november?.querySelector('.sp-i-token[data-sp-art="category-token"]')
+                novemberArt: november?.querySelector('img')?.getAttribute('src') || null,
+                novemberTile: !!november?.querySelector('.sp-i-token,[data-sp-art],[data-sp-fallback]'),
+                novemberEstimate: november?.querySelectorAll('.sp-est-mark').length || 0,
+                novemberText: november?.innerText || ''
             };
         }""")
         assert listing["octoberStatus"] == "archived", f"{width}px expired October pass mixed with active offers: {listing}"
         assert listing["octoberGroup"] == "earlier", f"{width}px October pass must be in previous offers: {listing}"
         assert listing["novemberStatus"] == "listed", f"{width}px November official listing missing: {listing}"
         assert listing["novemberArt"] is None, f"{width}px unapproved publisher image must not render: {listing}"
-        assert listing["novemberSafeToken"], f"{width}px missing safe fallback for pending artwork approval: {listing}"
+        assert not listing["novemberTile"], f"{width}px placeholder tile must not render: {listing}"
+        assert listing["novemberEstimate"] == 2, f"{width}px modelled ID and IN values carry est.: {listing}"
 
         page.evaluate("""selector => {
             const card = document.querySelector(selector);
@@ -113,21 +131,41 @@ with sync_playwright() as p:
             }
             card.scrollIntoView({block: "center"});
         }""", target)
-        page.wait_for_selector(target + " .sp-market-grid", state="visible")
+        page.wait_for_selector(target + " .sp-prices", state="visible")
         page.wait_for_function("""selector => {
-            const cells = [...document.querySelector(selector).querySelectorAll('.sp-market')];
+            const cells = [...document.querySelector(selector).querySelectorAll('.sp-price')];
             return cells.length === 3 && cells.slice(1).every(cell =>
                 cell.querySelector('.sp-aud-equivalent')?.textContent.includes('≈ A$'));
         }""", arg=target)
+        # The exact-art card sits in a collapsed category and the image is lazy: open it, scroll to it and wait for the decode.
+        page.evaluate("""() => {
+            const potion = [...document.querySelectorAll('.sp-product')].find(x => x.querySelector('.sp-name')?.textContent === 'Max Potions x10');
+            for (let node = potion; node; node = node.parentElement) if (node instanceof HTMLDetailsElement) node.open = true;
+            potion.scrollIntoView({block: 'center'});
+        }""")
+        page.wait_for_function("""() => {
+            const img = [...document.querySelectorAll('.sp-product')].find(x => x.querySelector('.sp-name')?.textContent === 'Max Potions x10')?.querySelector('img.sp-i');
+            return !!img && img.complete && img.naturalWidth > 0;
+        }""")
+        page.evaluate("""selector => { const c = document.querySelector(selector); c.scrollIntoView({block: 'center'}); }""", target)
         metrics = page.evaluate("""selector => {
             const card = document.querySelector(selector);
             if (!card || !card.getClientRects().length) throw new Error("Synthetic Store card is not visible");
-            const grid = card.querySelector('.sp-market-grid');
-            const cells = [...grid.querySelectorAll(':scope > .sp-market')];
+            const grid = card.querySelector('.sp-prices');
+            const cells = [...grid.querySelectorAll(':scope > .sp-price')];
             const bounds = cells.map(c => {
                 const r = c.getBoundingClientRect();
                 return {left:r.left,right:r.right,width:r.width};
             });
+            const potion = [...document.querySelectorAll('.sp-product')].find(x => x.querySelector('.sp-name')?.textContent === 'Max Potions x10');
+            const unmapped = [...document.querySelectorAll('.sp-product')].find(x => x.querySelector('.sp-name')?.textContent === 'Synthetic Unmapped Item');
+            const img = potion?.querySelector('img.sp-i');
+            const imgBox = img && img.getBoundingClientRect();
+            const clipped = [...document.querySelectorAll('.storep-regional .sp-product *')].filter(n => {
+                const r = n.getBoundingClientRect();
+                return r.width > 0 && (r.right > window.innerWidth + 1 || r.left < -1);
+            }).length;
+            const summaries = [...document.querySelectorAll('.storep-regional summary')].filter(x => x.getClientRects().length);
             return {
                 viewport: window.innerWidth,
                 scrollWidth: document.documentElement.scrollWidth,
@@ -136,47 +174,72 @@ with sync_playwright() as p:
                 gridColumns: getComputedStyle(grid).gridTemplateColumns,
                 cellCount: cells.length,
                 bounds,
-                labels: cells.map(c => c.querySelector('.sp-market-label')?.textContent.trim()),
-                channelsVisible: cells.map(c => {
-                    const channel = c.querySelector('.sp-market-label small');
-                    return !!channel && getComputedStyle(channel).display !== 'none';
-                }),
+                cardText: card.innerText,
+                regions: cells.map(c => c.getAttribute('data-sp-region')),
                 markets: cells.map(c => {
                     const aud = c.querySelector('.sp-aud-equivalent');
                     const local = c.querySelector('.sp-local-price');
-                    const parent = c.querySelector('.sp-regional-value');
                     return {
                         aud: aud?.textContent.trim() || null,
                         local: local?.textContent.trim() || null,
                         audBeforeLocal: !!aud && !!local &&
                             !!(aud.compareDocumentPosition(local) & Node.DOCUMENT_POSITION_FOLLOWING),
-                        localOnlyAriaLabel: !!parent?.hasAttribute('aria-label'),
-                        fxProvenance: aud?.querySelector('.sp-aud-source')?.textContent.trim() || null
+                        localOnlyAriaLabel: c.hasAttribute('aria-label'),
+                        fxProvenance: aud?.querySelector('.sp-aud-source')?.textContent.trim() || null,
+                        estimateMarks: c.querySelectorAll('.sp-est-mark').length,
+                        olderMarks: c.querySelectorAll('.sp-older-mark').length
                     };
-                })
+                }),
+                image: img ? {src: img.getAttribute('src'), alt: img.alt, loading: img.loading,
+                    width: imgBox.width, height: imgBox.height, fit: getComputedStyle(img).objectFit,
+                    loaded: img.complete && img.naturalWidth > 0,
+                    beforeName: !!(img.compareDocumentPosition(potion.querySelector('.sp-name')) & Node.DOCUMENT_POSITION_FOLLOWING)} : null,
+                unmappedImages: unmapped ? unmapped.querySelectorAll('img,.sp-i-token').length : -1,
+                clipped,
+                foot: document.querySelector('.storep-regional [data-sp-foot]')?.innerText || null,
+                footVisible: !!document.querySelector('.storep-regional [data-sp-foot]')?.getClientRects().length,
+                legendCount: document.querySelectorAll('.storep-regional [data-sp-legend]').length,
+                shortSummaries: summaries.filter(x => x.getBoundingClientRect().height < 43.5).map(x => x.textContent.trim())
             };
         }""", target)
         (OUT / f"store-{width}.json").write_text(json.dumps(metrics, indent=2))
         page.screenshot(path=str(OUT / f"store-{width}.png"), full_page=True)
         assert metrics["scrollWidth"] <= width, f"{width}px document overflow: {metrics}"
         assert metrics["clientWidth"] <= width, f"{width}px client overflow: {metrics}"
+        assert metrics["clipped"] == 0, f"{width}px a card element overflows the viewport: {metrics}"
         assert metrics["cellCount"] == 3, f"{width}px expected three regions: {metrics}"
+        assert metrics["regions"] == ["AU", "ID", "IN"], f"{width}px region order: {metrics}"
         assert all(x["width"] > 0 for x in metrics["bounds"]), f"{width}px zero-width column"
         assert all(x["right"] <= width + 1 and x["left"] >= -1 for x in metrics["bounds"]), f"{width}px columns overflow"
         assert all(abs(metrics["bounds"][i]["left"] - metrics["bounds"][0]["left"]) > 1
                    for i in (1, 2)), f"{width}px columns stacked rather than aligned"
-        assert all(x in " ".join(metrics["labels"]) for x in ("Australia", "Indonesia", "India"))
-        assert all(metrics["channelsVisible"]), f"{width}px purchase channels must remain visible: {metrics}"
-        assert all(x in " ".join(metrics["labels"]) for x in ("Web", "in-app"))
+        assert not metrics["shortSummaries"], f"{width}px summary targets under 44px: {metrics['shortSummaries']}"
+        # Only the name and prices: none of the removed provenance text.
+        for banned in ("Verified", "Recorded", "FX ·", "Not observed", "last verified", "Seen in", "dated observations",
+                       "Official published", "not confirmed", "historical", "Based on", "Included in", "Official description",
+                       "confidence", "checkout price"):
+            assert banned.lower() not in metrics["cardText"].lower(), f"{width}px removed text '{banned}' on card: {metrics['cardText']}"
+        image = metrics["image"]
+        assert image, f"{width}px exact item art missing for Max Potions x10: {metrics}"
+        assert image["src"] == "/ico/i/max-potion.webp", f"{width}px image must be the exact same-origin asset: {image}"
+        assert image["alt"] == "Max Potions x10" and image["loading"] == "lazy", f"{width}px image attrs: {image}"
+        assert image["fit"] == "contain" and abs(image["width"] - 40) < 1 and abs(image["height"] - 40) < 1, f"{width}px image box: {image}"
+        assert image["loaded"] and image["beforeName"], f"{width}px image must load beside the name: {image}"
+        assert metrics["unmappedImages"] == 0, f"{width}px unmapped item must have no image slot or tile: {metrics}"
         indonesia, india = metrics["markets"][1:]
-        assert indonesia["aud"] == "≈ A$6.91FX · 12 Nov 2026", f"{width}px IDR reference: {indonesia}"
+        assert indonesia["aud"] == "≈ A$6.91", f"{width}px IDR reference: {indonesia}"
         assert indonesia["local"] == "Rp 76,000", f"{width}px original IDR price: {indonesia}"
-        assert india["aud"] == "≈ A$7.32FX · 12 Nov 2026", f"{width}px INR reference: {india}"
+        assert india["aud"] == "≈ A$7.32", f"{width}px INR reference: {india}"
         assert india["local"] and "439" in india["local"] and "₹" in india["local"], f"{width}px INR local: {india}"
         for market in (indonesia, india):
             assert market["audBeforeLocal"], f"{width}px AUD must precede local checkout price: {market}"
             assert not market["localOnlyAriaLabel"], f"{width}px parent label masks AUD for VoiceOver: {market}"
-            assert market["fxProvenance"] == "FX · 12 Nov 2026", f"{width}px dated FX provenance: {market}"
+            assert market["fxProvenance"] is None, f"{width}px FX provenance is tooltip-only: {market}"
+            assert market["estimateMarks"] == 0, f"{width}px observed value must not carry est.: {market}"
+        assert indonesia["olderMarks"] == 0, f"{width}px verified ID price must be unmarked: {indonesia}"
+        assert india["olderMarks"] == 1, f"{width}px recorded IN price needs the older marker: {india}"
+        assert metrics["footVisible"] and metrics["foot"].startswith("Prices are dated observations, not live checkout quotes."), f"{width}px footer: {metrics['foot']}"
+        assert metrics["legendCount"] == 1, f"{width}px legend must exist once: {metrics['legendCount']}"
         print(f"PASS Store synthetic owner layout {width}px: {json.dumps(metrics)}", flush=True)
         context.close()
     browser.close()

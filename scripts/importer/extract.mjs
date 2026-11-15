@@ -282,7 +282,7 @@ function parseDom(html) {
       continue;
     }
     if (["li", "p", "tr", "td", "th"].includes(tag) && top.tag === tag) { stack.pop(); open.set(tag, open.get(tag) - 1); }
-    const node = { tag, kids: [], cls: attr(m[3], "class") };
+    const node = { tag, kids: [], cls: attr(m[3], "class"), id: attr(m[3], "id") };
     stack[stack.length - 1].kids.push(node);
     if (!VOID.has(tag) && !/\/\s*$/.test(m[3])) {
       if (stack.length > MAX_DEPTH) throw new Error("dom-depth-limit");
@@ -379,6 +379,21 @@ function structureSample(html) {
   return (pre + post).replace(/\s+/g, " ").trim().slice(0, 600);
 }
 
+// Does the page's MAIN CONTENT carry research wording? Menus, headers, footers, sidebars, related posts and comments are
+// excluded, and the bare word "Task" is not evidence: a Timed/Special/Field Research phrase or a Task/Rewards header is.
+const BOILERPLATE = /(?:^|[\s_-])(?:related|comments?|respond|sidebar|widget|menu|share|sharing|breadcrumbs?|newsletter|promo|advert\w*|footer|header|navigation|nav|tags?|author|popular|trending|recent)(?:$|[\s_-])/i;
+function researchKeywords(html) {
+  const root = parseDom(html), first = n => { for (const k of n.kids || []) { if (!isEl(k)) continue; if (k.tag === "main" || k.tag === "article") return k; const f = first(k); if (f) return f; } return null; };
+  const parts = [], walk = n => {
+    if (n.text !== undefined) { parts.push(decode(n.text)); return; }
+    if (SKIP.has(n.tag) || n.tag === "header" || n.tag === "img" || BOILERPLATE.test(n.cls || "") || BOILERPLATE.test(n.id || "")) return;
+    for (const k of n.kids) walk(k);
+    if (BLOCK.has(n.tag)) parts.push(" | ");
+  };
+  for (const k of (first(root) || root).kids) walk(k);
+  return /(?:timed|special|field)\s+research|\btasks?\b[\s|]*\brewards?\b/i.test(parts.join(" "));
+}
+
 const taskKey = t => JSON.stringify([t.category, String(t.task).toLowerCase(), t.rewards, t.occurrence]);
 
 export function extractFields(html, options = {}) {
@@ -403,7 +418,7 @@ export function extractFields(html, options = {}) {
     delete out.researchParse.explicitNone; out.researchParse.status = "incomplete";
   }
   // Positive evidence for "none": the fully read body has no research wording at all. A parser miss still shows it.
-  out.researchParse.researchKeywords = /(?:timed|special|field)\s+research|\btasks?\b/i.test(decode(stripInert(html).replace(/<[^>]*>/g, " ")));
+  try { out.researchParse.researchKeywords = researchKeywords(html); } catch { /* unknown stays undefined: no immediate removal relies on it */ }
   if (out.researchParse.status !== "ok" && !out.researchParse.explicitNone && /timed research|\btask\b/i.test(html)) {
     try { const sample = structureSample(html); if (sample) out.researchParse.sample = sample; } catch { out.researchParse.tolerantError = true; }
   }
