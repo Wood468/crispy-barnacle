@@ -226,6 +226,43 @@ with sync_playwright() as p:
         check(f'{width}: scrolled event detail bar stays below the mask', evd2 >= 47 and evd2 < 60, evd2)
         page.context.close()
 
+    # Dynamic Island iPhone (390x844, ~59px inset): scrolled Today, Schedule and Battle content must never show
+    # through the status-bar band. Pixel check: the clip behind the clock is a single flat canvas colour.
+    ctx = browser.new_context(viewport={'width': 390, 'height': 844}, timezone_id='Australia/Sydney',
+                              service_workers='block', color_scheme='dark')
+    ctx.route('**/api/**', lambda r: r.fulfill(body='{"enabled":false,"events":[],"sources":[]}', content_type='application/json'))
+    ctx.route(re.compile(r'^https://fonts\.'), lambda r: r.fulfill(body='', content_type='text/css'))
+    page = ctx.new_page()
+    page.clock.install(time='2026-11-09T21:00:00+11:00')
+    page.goto(BASE + '/')
+    page.wait_for_function('!!window.GODASH')
+    page.wait_for_function('document.querySelector("#today-v1 .t1-card")', timeout=20000)
+    page.add_style_tag(content=':root{--safe-top:59px}')
+    decoder = ctx.new_page()
+    for tab in ('now', 'events', 'raids'):
+        page.evaluate(f"GO.showTab('{tab}')")
+        page.wait_for_selector(f'#tab-{tab}', state='visible')
+        for y in (0, 350, 1200):
+            page.evaluate(f"window.scrollTo(0, {y})")
+            page.wait_for_timeout(120)
+            png = page.screenshot(clip={'x': 0, 'y': 0, 'width': 390, 'height': 52})
+            import base64
+            off_pixels = decoder.evaluate("""async b64 => {
+                const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
+                const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+                const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+                const d = g.getImageData(0, 0, c.width, c.height).data;
+                // Engines may differ by a level or two (colour management, dithering): count pixels visibly off the first.
+                // Reference = the centre pixel (WebKit can render an odd edge pixel); a handful of edge outliers is tolerated.
+                const m = (Math.floor(c.height / 2) * c.width + Math.floor(c.width / 2)) * 4;
+                let off = 0;
+                for (let i = 0; i < d.length; i += 4)
+                    if (Math.max(Math.abs(d[i] - d[m]), Math.abs(d[i + 1] - d[m + 1]), Math.abs(d[i + 2] - d[m + 2])) > 6) off++;
+                return off > c.width * c.height * 0.005 ? off : 0;
+            }""", base64.b64encode(png).decode())
+            check(f'390x844 59px inset: {tab} tab at scroll {y} shows a flat opaque band behind the clock', off_pixels == 0, off_pixels)
+    ctx.close()
+
     browser.close()
 
 print('FAILED:', ', '.join(fails) if fails else 'none')
