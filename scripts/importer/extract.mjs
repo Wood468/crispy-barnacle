@@ -236,65 +236,76 @@ const SKIP = new Set(["script", "style", "noscript", "svg", "nav", "footer", "as
 const BLOCK = new Set(["div", "p", "ul", "ol", "li", "table", "thead", "tbody", "tfoot", "tr", "td", "th", "section", "article", "main", "figure", "figcaption", "blockquote", "dl", "dt", "dd", "h1", "h2", "h3", "h4", "h5", "h6"]);
 const attr = (src, name) => { const m = new RegExp("\\b" + name + "\\s*=\\s*(?:\"([^\"]*)\"|'([^']*)'|([^\\s>]+))", "i").exec(src); return m ? (m[1] ?? m[2] ?? m[3] ?? "") : ""; };
 
+const MAX_DEPTH = 200, MAX_NODES = 60000;
+// Drops scripts/styles/comments; an unclosed <script>/<style> swallows the rest of the document, as a browser would.
+const stripInert = html => String(html || "").replace(/<(script|style|noscript|svg|template)\b[\s\S]*?<\/\1\s*>/gi, " ").replace(/<!--[\s\S]*?-->/g, " ").replace(/<(?:script|style|noscript|svg|template)\b[\s\S]*$/i, " ");
+
 function parseDom(html) {
-  const cleaned = String(html || "").replace(/<(script|style|noscript|svg|template)\b[\s\S]*?<\/\1\s*>/gi, " ").replace(/<!--[\s\S]*?-->/g, " ");
-  const root = { tag: "#root", kids: [] }, stack = [root];
+  const cleaned = stripInert(html);
+  const root = { tag: "#root", kids: [] }, stack = [root], open = new Map();
   const re = /<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>|([^<]+|<)/g;
-  let m;
+  let m, nodes = 0;
   while ((m = re.exec(cleaned))) {
+    if (++nodes > MAX_NODES) throw new Error("dom-node-limit");
     const top = stack[stack.length - 1];
     if (m[4] !== undefined) { top.kids.push({ text: m[4] }); continue; }
     const tag = m[2].toLowerCase();
     if (m[1]) {
-      const at = stack.map(n => n.tag).lastIndexOf(tag);
-      if (at > 0) stack.length = at;
+      // O(1) unless elements really are closed: pops are paid for by the pushes.
+      if (open.get(tag) > 0) { while (stack[stack.length - 1].tag !== tag) { const x = stack.pop(); open.set(x.tag, open.get(x.tag) - 1); } stack.pop(); open.set(tag, open.get(tag) - 1); }
       continue;
     }
-    if (["li", "p", "tr", "td", "th"].includes(tag) && top.tag === tag) stack.pop();
-    const node = { tag, kids: [], cls: attr(m[3], "class"), alt: attr(m[3], "alt") };
+    if (["li", "p", "tr", "td", "th"].includes(tag) && top.tag === tag) { stack.pop(); open.set(tag, open.get(tag) - 1); }
+    const node = { tag, kids: [], cls: attr(m[3], "class") };
     stack[stack.length - 1].kids.push(node);
-    if (!VOID.has(tag) && !/\/\s*$/.test(m[3])) stack.push(node);
+    if (!VOID.has(tag) && !/\/\s*$/.test(m[3])) {
+      if (stack.length > MAX_DEPTH) throw new Error("dom-depth-limit");
+      stack.push(node); open.set(tag, (open.get(tag) || 0) + 1);
+    }
   }
   return root;
 }
 const isEl = n => !!n.tag;
-const hasBlock = n => (n.kids || []).some(k => isEl(k) && (BLOCK.has(k.tag) || hasBlock(k)));
+const hasBlock = n => n.hb ?? (n.hb = (n.kids || []).some(k => isEl(k) && (BLOCK.has(k.tag) || hasBlock(k))));
 const textOf = n => n.text !== undefined ? decode(n.text) : SKIP.has(n.tag) || n.tag === "img" ? "" : (n.kids || []).map(textOf).join(BLOCK.has(n.tag) || n.tag === "br" ? " " : "");
-const flat = s => s.replace(/[\s\u00a0]+/g, " ").trim();
+const flat = s => s.replace(/[\s ]+/g, " ").trim();
 
 const HEADER_ROW = /^(?:research\s+)?tasks?\s*\|\s*(?:possible\s+)?rewards?$/i;
-// "Minior Shower Timed Research (1/1)", "Bonus Timed Research", "Special Research", "Field Research:" and similar short labels.
+// Only these anchored label forms open a research section: "Minior Shower Timed Research (1/1)", "Bonus Timed Research", "Special Research", "Field Research:".
 const RESEARCH_LABEL = /^(?:[^|.!?]{0,60}?\s)?(?:timed|special|field|event)\s+research(?:\s*[–—-]\s*[\w ]{1,20})?\s*(?:\(\s*\d+\s*\/\s*\d+\s*\))?\s*:?$/i;
-const QTY = /(?<![\w,.])(\d{1,3}(?:,\d{3})+|\d+)\s*(?:×\s*|x\s+)(?=\S)/iu;
-const isRewardCell = t => /^(?:\d{1,3}(?:,\d{3})+|\d+)\s*(?:×\s*|x\s+)\S/iu.test(t);
+const QTY_AT = /(?:\d{1,3}(?:,\d{3})+|\d+)\s*(?:×\s*|x\s+)\S/iu;
+const isRewardCell = t => new RegExp("^" + QTY_AT.source, "iu").test(t) && t.length <= 120 && !/[.!?]\s+\p{Lu}/u.test(t) &&
+  /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|incense|lure|egg|berry|star piece|encounter)\b/i.test(t);
+const hasQty = t => new RegExp("(?<![\\w,.])" + QTY_AT.source, "iu").test(t);
 const stripIconNoise = t => t.replace(/\s+(?:[\p{L}'’]+\s+){0,4}icons?$/iu, "").replace(/[\s:–—-]+$/, "").trim();
 
-// "Use a Star Piece [icon text] 7740× Stardust" -> "Use a Star Piece | 7740 × Stardust"; null when it is not a task row.
-function splitTaskRow(text) {
-  const m = QTY.exec(text);
-  if (!m) return null;
-  const task = stripIconNoise(text.slice(0, m.index).trim());
-  const rest = text.slice(m.index + m[0].length).trim();
-  if (!TASK_VERB.test(task) || task.length < 4 || QTY.test(task) || !rest) return null;
-  return task + " | " + m[1] + " × " + rest;
+// [task cell, ...noise cells, reward cell(s)] -> "Task | 7740 × Stardust"; null unless the split is structural and the reward is a known kind.
+function rowFromCells(cells) {
+  const task = stripIconNoise(cells[0] || "");
+  if (cells.length < 2 || task.length < 4 || !TASK_VERB.test(task) || hasQty(task) || /\b(?:all|every|each)\b.*\btasks?\b/i.test(task)) return null;
+  const first = cells.findIndex((c, i) => i > 0 && isRewardCell(c));
+  if (first < 0) return null;
+  return task + " | " + cells.slice(first).join(" ").replace(/^(\d[\d,]*)\s*[×x]\s*/i, "$1 × ");
 }
 
 function tolerantLines(html) {
   const out = [], st = { research: false, header: false };
-  const heading = text => { out.push({ t: "h", text }); st.research = /research|quest|task/i.test(text); st.header = false; };
-  const header = () => { out.push({ t: "p", text: "Task | Rewards" }); st.header = true; };
+  const heading = text => { out.push({ t: "h", text }); st.research = RESEARCH_LABEL.test(text); st.header = false; };
+  const header = () => { out.push({ t: "p", text: "Task | Rewards" }); st.header = st.research; };
   const row = line => { if (!st.header) header(); out.push({ t: "p", text: line }); };
+  const cellsOf = node => node.kids.filter(k => isEl(k) && !SKIP.has(k.tag)).map(k => flat(textOf(k))).filter(Boolean);
   const leaf = (node, tag) => {
     const text = flat(textOf(node));
     if (!text) return;
     if (/^h[1-6]$/.test(tag) || (text.length <= 90 && RESEARCH_LABEL.test(text))) return heading(text);
-    if (HEADER_ROW.test(text.replace(/\s+(?=rewards?$)/i, " | ")) && /^tasks?\s/i.test(text) && text.length < 40) return header();
-    // Row-per-line markup needs a research heading or a Task/Rewards header; plain paragraphs stay prose.
-    const split = (st.header || (st.research && tag === "li")) && splitTaskRow(text);
-    if (split) return row(split);
+    if (text.length < 40 && /^tasks?\s*\|?\s*(?:possible\s+)?rewards?$/i.test(text)) return header();
+    // A list item whose parts are separate elements ("<span>task</span> <span>reward</span>") is a row; a sentence is not.
+    if (tag === "li" && st.research) {
+      const parts = cellsOf(node), r = parts.length >= 2 && rowFromCells(parts);
+      if (r) return row(r);
+    }
     out.push({ t: tag === "li" ? "li" : "p", text });
   };
-  const cellsOf = node => node.kids.filter(k => isEl(k) && !SKIP.has(k.tag)).map(k => flat(textOf(k))).filter(Boolean);
   const walk = node => {
     let run = [];
     const flush = () => { const text = flat(run.map(textOf).join(" ")); run = []; if (text) leaf({ kids: [{ text }] }, "p"); };
@@ -304,20 +315,19 @@ function tolerantLines(html) {
       if (!BLOCK.has(k.tag)) { if (!hasBlock(k)) { run.push(k); continue; } flush(); walk(k); continue; }
       flush();
       if (k.tag === "tr") {
-        const cells = cellsOf(k), joined = cells.join(" | ");
+        const cells = cellsOf(k), joined = cells.join(" | "), r = st.research && rowFromCells(cells);
         if (HEADER_ROW.test(joined)) header();
-        else if ((st.research || st.header) && cells.length >= 2 && TASK_VERB.test(cells[0]) && splitTaskRow(cells.join(" "))) row(splitTaskRow(cells.join(" ")));
+        else if (r) row(r);
         else if (joined) out.push({ t: "p", text: joined });
       } else if (/^h[1-6]$/.test(k.tag) || !hasBlock(k)) leaf(k, k.tag);
       else {
-        // A container of 2-4 leaf blocks is a div/ul grid row: [task, (icon text), reward]. Only inside a Task/Rewards table.
+        // A container of 2-4 leaf blocks is a div/ul grid row. Only inside a Task/Rewards table (header seen).
         const blocks = k.kids.filter(c => isEl(c) && !SKIP.has(c.tag)), cells = cellsOf(k);
         const grid = blocks.length >= 2 && blocks.length <= 4 && blocks.length === cells.length && blocks.every(c => BLOCK.has(c.tag) && !hasBlock(c)) && k.kids.every(c => isEl(c) || !flat(textOf(c)));
+        const r = grid && st.research && st.header && rowFromCells(cells);
         if (grid && HEADER_ROW.test(cells.join(" | "))) header();
-        else if (grid && st.header && TASK_VERB.test(cells[0]) && !QTY.test(cells[0]) && isRewardCell(cells[cells.length - 1])) {
-          const first = cells.findIndex((c, i) => i > 0 && isRewardCell(c));
-          row(cells[0] + " | " + cells.slice(first).join(" "));
-        } else walk(k);
+        else if (r) row(r);
+        else walk(k);
       }
     }
     flush();
@@ -328,7 +338,7 @@ function tolerantLines(html) {
 
 // A bounded, attribute-free outline of the markup around the first "Timed Research"/"Task" so the next run reveals the real structure.
 function structureSample(html) {
-  const clean = String(html || "").replace(/<(script|style|noscript|svg|template)\b[\s\S]*?<\/\1\s*>/gi, " ").replace(/<!--[\s\S]*?-->/g, " ");
+  const clean = stripInert(html);
   let at = clean.search(/timed research/i);
   if (at < 0) at = clean.search(/\btask\b/i);
   if (at < 0) return null;
@@ -343,26 +353,27 @@ function structureSample(html) {
   return (pre + post).replace(/\s+/g, " ").trim().slice(0, 600);
 }
 
+const taskKey = t => JSON.stringify([t.category, String(t.task).toLowerCase(), t.rewards, t.occurrence]);
+
 export function extractFields(html, options = {}) {
   const lines = Array.isArray(html) ? html : htmlToLines(html);
   const out = extractFromLines(html, options, lines);
   if (typeof html !== "string") return out;
-  const mentions = /research|\btask\b/i.test(html);
-  if (mentions) {
-    const tolerant = extractFromLines(html, options, tolerantLines(html), { skipPass: true });
-    // Adopt only a strictly better reading: more tasks, or the same tasks under headings the first pass could not see
-    // (those carry the right track and occurrence). Anything the first pass already reads fully is left alone.
-    const better = tolerant.researchTasks.length > out.researchTasks.length ||
-      (out.researchTasks.length > 0 && tolerant.researchTasks.length === out.researchTasks.length && tolerant.researchParse.headings > out.researchParse.headings);
-    if (better) {
-      out.researchTasks = tolerant.researchTasks;
-      for (const line of tolerant.research) if (!out.research.includes(line) && out.research.length < 14) out.research.push(line);
-      out.researchParse = { ...tolerant.researchParse, lines: out.researchParse.lines, via: "tolerant" };
-    }
+  // A first-pass "ok" is never revisited. Otherwise the tolerant pass may replace the research output only if it
+  // keeps every task the first pass already parsed (same task, category, occurrence, rewards) and adds more.
+  if (out.researchParse.status !== "ok" && /research|\btask\b/i.test(html)) {
+    try {
+      const tolerant = extractFromLines(html, options, tolerantLines(html), { skipPass: true });
+      const have = new Set(tolerant.researchTasks.map(taskKey));
+      if (tolerant.researchTasks.length > out.researchTasks.length && out.researchTasks.every(t => have.has(taskKey(t)))) {
+        out.researchTasks = tolerant.researchTasks;
+        for (const line of tolerant.research) if (!out.research.includes(line) && out.research.length < 14) out.research.push(line);
+        out.researchParse = { ...tolerant.researchParse, lines: out.researchParse.lines, via: "tolerant" };
+      }
+    } catch { out.researchParse.tolerantError = true; }
   }
   if (out.researchParse.status !== "ok" && /timed research|\btask\b/i.test(html)) {
-    const sample = structureSample(html);
-    if (sample) out.researchParse.sample = sample;
+    try { const sample = structureSample(html); if (sample) out.researchParse.sample = sample; } catch { out.researchParse.tolerantError = true; }
   }
   return out;
 }
