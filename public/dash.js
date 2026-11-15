@@ -307,10 +307,45 @@
         Number.isFinite(+a.start) && Number.isFinite(+b.start) &&
         Math.abs(+a.start - +b.start) <= 36 * 36e5;
     }
+    /* Same recurring format, same place, same time, plus proof it is the same instalment. "Pawniard Community Day" (live) and "November
+       Community Day" (curated) share no title key, article or two-word overlap, yet are one event. All of these must hold:
+       1. both titles name the SAME recurring format (Community Day, Community Day Classic, Spotlight Hour, Raid Hour, ...) and any set event kinds agree;
+       2. same place (global/empty counts as one place; two cities or an in-person record never merge, so regional occurrences stay distinct);
+       3. start and end each within 6 hours;
+       4. evidence of the instalment: a shared distinctive word (a featured Pokémon, or a Pokémon in one title that the other card features),
+          or one title names a month that is the month both cards start in. The format words alone are never enough. */
+    var FORMATS = ['community day classic', 'community day', 'spotlight hour', 'raid hour', 'raid day', 'hatch day', 'max monday', 'max battle day'];
+    var MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+    var NOT_SPECIES = { mega: 1, primal: 1, shadow: 1, alolan: 1, galarian: 1, hisuian: 1, paldean: 1, gigantamax: 1, dynamax: 1, shiny: 1, costume: 1, costumed: 1, form: 1, forme: 1, classic: 1 };
+    function formatOf(t) { var k = ' ' + key(t) + ' '; for (var i = 0; i < FORMATS.length; i++) if (k.indexOf(' ' + FORMATS[i] + ' ') >= 0) return FORMATS[i]; return ''; }
+    function placeOf(e) { var r = key(e.region); return /^(global|worldwide|world)?$/.test(r) ? '' : r; }
+    function monthIn(t) { var k = ' ' + key(t) + ' '; for (var i = 0; i < MONTHS.length; i++) if (k.indexOf(' ' + MONTHS[i] + ' ') >= 0) return i; return -1; }
+    function distinct(o) { var r = {}; for (var w in o) if (!NOT_SPECIES[w] && MONTHS.indexOf(w) < 0) r[w] = 1; return r; }
+    function featuredWords(e) {
+      var o = {}; (e.featured || []).forEach(function (f) { if (f && f.name && f.role !== 'shiny_form') { var fw = words(f.name); for (var w in fw) o[w] = 1; } });
+      return distinct(o);
+    }
+    function shares(x, y) { for (var w in x) if (y[w]) return true; return false; }
+    function sameFormat(a, b) {
+      var fa = formatOf(a.name);
+      if (!fa || fa !== formatOf(b.name)) return false;
+      if (a.kind && b.kind && a.kind !== b.kind) return false;
+      if (a.kind === 'person' || b.kind === 'person' || a.attendance === 'in-person' || b.attendance === 'in-person') return false;
+      if (placeOf(a) !== placeOf(b)) return false;
+      if (!(Number.isFinite(+a.start) && Number.isFinite(+b.start) && Number.isFinite(+a.end) && Number.isFinite(+b.end))) return false;
+      if (Math.abs(+a.start - +b.start) > 6 * 36e5 || Math.abs(+a.end - +b.end) > 6 * 36e5) return false;
+      var fwa = featuredWords(a), fwb = featuredWords(b), twa = distinct(words(a.name)), twb = distinct(words(b.name));
+      if (shares(fwa, fwb) || shares(fwa, twb) || shares(twa, fwb) || shares(twa, twb)) return true;
+      var ma = monthIn(a.name), mb = monthIn(b.name), m = ma >= 0 ? ma : mb;
+      return m >= 0 && (ma < 0 || mb < 0 || ma === mb) && new Date(+a.start).getMonth() === m && new Date(+b.start).getMonth() === m;
+    }
     curated.forEach(function(c) {
-      var match = -1;
+      var match = -1, viaFormat = false;
       for (var i = 0; i < out.length; i++) {
         if (!used[i] && similar(out[i], c)) { match = i; break; }
+      }
+      if (match < 0) for (var j = 0; j < out.length; j++) {
+        if (!used[j] && sameFormat(out[j], c)) { match = j; viaFormat = true; break; }
       }
       if (match < 0) { out.push(c); return; }
       used[match] = 1;
@@ -326,7 +361,11 @@
         });
       }
       /* Keep the fuller write-up's title when the curated card carries more detail. */
-      if ((c.featured || []).length > (liveEvent.featured || []).length) liveEvent.name = c.name;
+      if (viaFormat) {
+        /* A format-only match keeps whichever title names a featured Pokémon ("Pawniard Community Day" beats "November Community Day"). */
+        var fw = featuredWords({ featured: (liveEvent.featured || []).concat(c.featured || []) });
+        if (shares(distinct(words(c.name)), fw) && !shares(distinct(words(liveEvent.name)), fw)) liveEvent.name = c.name;
+      } else if ((c.featured || []).length > (liveEvent.featured || []).length) liveEvent.name = c.name;
       (liveEvent.featured || []).forEach(function(f) { seen[(f.name || '').toLowerCase()] = 1; });
       (c.featured || []).forEach(function(f) {
         var k = (f.name || '').toLowerCase();

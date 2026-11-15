@@ -96,11 +96,20 @@
       + '<span class="t1-count">' + CLOCK + cdSpan(ctx, live ? ev.end : ev.start, live) + '</span>'
       + '</button>' + menuButton(ev, ev.name) + '</article>';
   }
+  /* A compact card with no featured Pokémon shows the event's own verified banner (the same exact-image rule as the major card and Event Details:
+     GOEVENTART.resolve accepts only an image proven for this event, year and place). No verified image: no slot at all, never a placeholder. */
+  function minorBanner(ev) {
+    var A = (typeof GOEVENTART !== 'undefined') ? GOEVENTART : null;
+    if (!A || !ev.img) return '';
+    var art = A.resolve({ name: ev.name, kind: ev.kind, region: ev.region || '', start: ev.start, end: ev.end }, [{ url: ev.img, pageUrl: ev.artPageUrl || ev.link || '' }]);
+    if (art.kind !== 'official' || !art.src) return '';
+    return '<img class="t1-minor-banner" alt="" src="' + esc(art.src) + '" decoding="async" loading="lazy" data-err="rm" data-art-source="' + esc(art.provenance.source) + '" data-art-verified="' + esc(art.provenance.verifiedFor) + '">';
+  }
   function cardMinor(ctx, ev, live) {
     var k = ctx.kindOf(ev), mons = pokemonFor(ev, 1), cd = timeLine(ctx, ev, live);
-    var art = mons.length ? artFor(ctx, ev, mons[0], 'ea') : '';
-    return '<article class="t1-card t1-minor' + (live ? ' is-live' : '') + '" style="--k:' + k[1] + '"' + dataAttrs(ev) + '>'
-      + '<span class="t1-minor-art" aria-hidden="true">' + art + '</span>'
+    var art = mons.length ? artFor(ctx, ev, mons[0], 'ea') : minorBanner(ev);
+    return '<article class="t1-card t1-minor' + (live ? ' is-live' : '') + (art ? '' : ' t1-minor--noart') + '" style="--k:' + k[1] + '"' + dataAttrs(ev) + '>'
+      + (art ? '<span class="t1-minor-art" aria-hidden="true">' + art + '</span>' : '')
       + '<button type="button" class="t1-open" data-open="' + esc(ev.id) + '" aria-label="' + esc('Open ' + ev.name + '. ' + cd) + '">'
       + '<strong class="t1-title">' + esc(ev.name) + '</strong>'
       + '<span class="t1-sub">' + (ev.region && !/^global$/i.test(ev.region) ? esc(ev.region) + (ctx.overseas(ev) ? ' · Overseas' : '') + ' · ' : '') + esc(k[0]) + ' · ' + cdSpan(ctx, live ? ev.end : ev.start, live) + '</span>'
