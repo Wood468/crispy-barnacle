@@ -180,6 +180,42 @@ with sync_playwright() as p:
             err = page.evaluate("!document.getElementById('load-error').hidden")
             check(f'offline reload: {tab} tab renders cached content', n > 80 and not err, (n, err))
         ctx.close()
+
+    # iOS standalone status bar: an opaque, non-interactive top mask the height of the safe-area inset.
+    # Playwright cannot emulate env(safe-area-inset-top), so the notch is simulated by overriding the
+    # single --safe-top variable that styles.css derives from it (asserted from the stylesheet source).
+    for width in (320, 360, 390, 430):
+        page = open_page(ctx_for(browser, width))
+        css = page.evaluate("fetch('/styles.css?v=' + [...document.styleSheets].map(s => s.href || '').find(h => h.includes('/styles.css')).split('v=')[1]).then(r => r.text())")
+        check(f'{width}: --safe-top is derived from env(safe-area-inset-top)', 'safe-area-inset-top' in css and '--safe-top:env(safe-area-inset-top,0px)' in css)
+        probe = """()=>{const m=getComputedStyle(document.body,'::before'),r=document.querySelector('header.top').getBoundingClientRect(),
+            t=document.querySelector('nav.tabs').getBoundingClientRect();
+            return {pos:m.position,h:m.height,pe:m.pointerEvents,z:m.zIndex,bg:m.backgroundColor,content:m.content,
+              canvas:getComputedStyle(document.body).backgroundColor,headTop:r.top,tabTop:t.top,tabH:t.height,
+              sw:document.documentElement.scrollWidth,iw:innerWidth,sh:document.documentElement.scrollHeight}}"""
+        flat = page.evaluate(probe)
+        check(f'{width}: mask is fixed, pointer-events none, above tab bar (20) and below modals (60)',
+              flat['pos'] == 'fixed' and flat['pe'] == 'none' and flat['content'] != 'none' and 20 < int(flat['z']) < 60, flat)
+        check(f'{width}: mask uses the opaque app canvas colour', flat['bg'] == flat['canvas'] and flat['bg'].startswith('rgb('), flat)
+        check(f'{width}: no inset means a zero-height mask', flat['h'] == '0px', flat['h'])
+        page.add_style_tag(content=':root{--safe-top:47px}')
+        notch = page.evaluate(probe)
+        check(f'{width}: with a 47px inset the mask is 47px tall', notch['h'] == '47px', notch['h'])
+        check(f'{width}: page content starts below the mask', abs(notch['headTop'] - flat['headTop'] - 47) < 1, (flat['headTop'], notch['headTop']))
+        check(f'{width}: tab bar is unchanged by the inset', notch['tabTop'] == flat['tabTop'] and notch['tabH'] == flat['tabH'], (flat, notch))
+        check(f'{width}: the mask adds no horizontal overflow', notch['sw'] <= notch['iw'] and flat['sw'] <= flat['iw'], notch)
+        page.evaluate("window.scrollTo(0, 400)")
+        scrolled = page.evaluate("()=>({m:getComputedStyle(document.body,'::before').position,y:scrollY})")
+        check(f'{width}: the mask stays fixed while the page scrolls', scrolled['m'] == 'fixed' and scrolled['y'] > 0, scrolled)
+        # The page is not clickable-through-blocked: the mask must not capture taps in the status-bar band.
+        hit = page.evaluate("(()=>{const e=document.elementFromPoint(innerWidth/2,10);return e?e.tagName:''})()")
+        check(f'{width}: taps pass through the mask', hit != '', hit)
+        page.evaluate("GO.showTab('collect','dex')")
+        page.wait_for_timeout(300)
+        dex = page.evaluate("(()=>{const b=document.querySelector('.dexbar');return b?getComputedStyle(b).top:null})()")
+        check(f'{width}: sticky Pokedex bar sits below the mask', dex in (None, '47px'), dex)
+        page.context.close()
+
     browser.close()
 
 print('FAILED:', ', '.join(fails) if fails else 'none')
