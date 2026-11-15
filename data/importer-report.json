@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-15T10:50:31.304Z",
+ "runAt": "2026-11-15T11:17:56.503Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -584,12 +584,12 @@
     },
     {
      "url": "https://leekduck.com/events/minior-showers-leonids-2026/",
-     "status": "incomplete",
+     "status": "explicit-none",
      "truncated": false,
      "candidateRows": 0,
      "headings": 1,
      "table": false,
-     "sample": "ul><p>Minior encounters are more likely from <strong>5:00 p.m. to 9:00 p.m. local time each day </strong>. </p><h2 class=\"event-section-header research\" id=\"research\">Research <img></h2><p><strong>No Timed Research: </strong>There is no Timed Research during the Leonids. The Minior Sh <a>Orionids </a>, the introductory event for Minior Showers. </p><h2 class=\"event-section-header graphic\" id=\"graphic\">Graphic <img></h2><p><img alt=\"Graphic\"></p><section class=\"author-box\"><img class=\"author-img\" alt=\"Leek Duck\"><div class=\"author-desc\"><h2>Leek Duck </h2><p>Hey, I'm LeekDuck. I create Pokémon "
+     "explicitNone": true
     }
    ]
   }
