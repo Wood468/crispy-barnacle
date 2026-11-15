@@ -93,7 +93,7 @@ with sync_playwright() as p:
                 document.body.appendChild(host);
             }
         }""", FIXTURE)
-        page.add_script_tag(url="/store.js?v=20261115b-minimal")
+        page.add_script_tag(url="/store.js?v=20261115c-nianticimg")
         # Wait for attachment first: the product may live in a collapsed category.
         target = ".storep-regional [data-sp-name*='synthetic test ticket']"
         page.wait_for_selector(target, state="attached")
@@ -118,7 +118,8 @@ with sync_playwright() as p:
         assert listing["octoberStatus"] == "archived", f"{width}px expired October pass mixed with active offers: {listing}"
         assert listing["octoberGroup"] == "earlier", f"{width}px October pass must be in previous offers: {listing}"
         assert listing["novemberStatus"] == "listed", f"{width}px November official listing missing: {listing}"
-        assert listing["novemberArt"] is None, f"{width}px unapproved publisher image must not render: {listing}"
+        art = listing["novemberArt"]
+        assert art is None or art.startswith("https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/"), f"{width}px only the exact owner-approved Niantic image may render: {listing}"
         assert not listing["novemberTile"], f"{width}px placeholder tile must not render: {listing}"
         assert listing["novemberEstimate"] == 2, f"{width}px modelled ID and IN values carry est.: {listing}"
 
