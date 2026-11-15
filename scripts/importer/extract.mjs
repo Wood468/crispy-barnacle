@@ -1,5 +1,5 @@
 // Pulls the same fields out of any article: what a heading says it is about decides where the lines under it go.
-import { htmlToLines } from "./text.mjs";
+import { htmlToLines, decode } from "./text.mjs";
 import { extractLeekDuckGoPassRewards } from "./gopass.mjs";
 
 export const FIELDS = ["bonuses", "featured", "raids", "eggs", "research", "shiny", "moves", "costumes", "tickets", "dates"];
@@ -119,9 +119,8 @@ const PAGE_CAP = 900000;
 // A line that looks like a task row (task verb, then a cell or REWARD marker), whether or not it parsed.
 const looksLikeTaskRow = text => { const t = trim(String(text || "")); return TASK_VERB.test(t) && (/\s\|\s/.test(t) || /\breward/i.test(t)); };
 
-export function extractFields(html, options={}) {
+function extractFromLines(html, options, lines, { skipPass = false } = {}) {
   const declaredNames=researchRewardNames(options);
-  const lines = Array.isArray(html) ? html : htmlToLines(html);
   const out = Object.fromEntries(FIELDS.map(f => [f, []])); out.researchTasks = [];
   const add = (f, s) => { s = trim(s); if (keep(s) && !out[f].includes(s) && out[f].filter(x => /^rank \d+/i.test(x) === /^rank \d+/i.test(s)).length < (/^rank \d+/i.test(s) ? 110 : 14)) out[f].push(s); };
   let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0, researchKind = "research", researchTable = false;
@@ -196,7 +195,7 @@ export function extractFields(html, options={}) {
   // Leek Duck renders GO Pass ranks as nested divs, not table rows. Parse that
   // source-specific structure separately; malformed pass markup is reported but
   // does not discard the article's other successfully extracted details.
-  if (typeof html === "string" && html.includes("battle-pass-container")) {
+  if (!skipPass && typeof html === "string" && html.includes("battle-pass-container")) {
     try {
       const pass = extractLeekDuckGoPassRewards(html);
       if (pass) {
@@ -221,6 +220,161 @@ export function extractFields(html, options={}) {
   const seenResearch = health.headings > 0 || health.table || health.candidateRows > 0;
   // ok: tasks parsed. incomplete: research seen (or page cut off) but nothing parsed. none: a fully read page with no research.
   out.researchParse = { status: truncated ? "incomplete" : parsedTasks && !unparsedRows ? "ok" : parsedTasks || seenResearch ? "incomplete" : "none", ...health, parsedTasks, truncated, lines: lines.length };
+  return out;
+}
+
+// ---------------------------------------------------------------------------
+// Tolerant research pass. The first pass reads h1-h4/p/li/tr only, so a page
+// that renders headings as h5/h6 or bold paragraphs, or rows as div/ul grids,
+// yields no research at all. When the first pass does not fully succeed, this
+// second pass walks a small DOM and emits the same {t,text} lines, which then
+// go through the same task parser. It only replaces research output when it
+// parses MORE tasks than the first pass, and it never touches other fields.
+// ---------------------------------------------------------------------------
+const VOID = new Set(["br", "img", "hr", "input", "meta", "link", "source", "wbr", "col", "area", "base", "embed", "param", "track"]);
+const SKIP = new Set(["script", "style", "noscript", "svg", "nav", "footer", "aside", "form", "template", "iframe", "head"]);
+const BLOCK = new Set(["div", "p", "ul", "ol", "li", "table", "thead", "tbody", "tfoot", "tr", "td", "th", "section", "article", "main", "figure", "figcaption", "blockquote", "dl", "dt", "dd", "h1", "h2", "h3", "h4", "h5", "h6"]);
+const attr = (src, name) => { const m = new RegExp("\\b" + name + "\\s*=\\s*(?:\"([^\"]*)\"|'([^']*)'|([^\\s>]+))", "i").exec(src); return m ? (m[1] ?? m[2] ?? m[3] ?? "") : ""; };
+
+const MAX_DEPTH = 200, MAX_NODES = 60000;
+// Drops scripts/styles/comments; an unclosed <script>/<style> swallows the rest of the document, as a browser would.
+const stripInert = html => String(html || "").replace(/<(script|style|noscript|svg|template)\b[\s\S]*?<\/\1\s*>/gi, " ").replace(/<!--[\s\S]*?-->/g, " ").replace(/<(?:script|style|noscript|svg|template)\b[\s\S]*$/i, " ");
+
+function parseDom(html) {
+  const cleaned = stripInert(html);
+  const root = { tag: "#root", kids: [] }, stack = [root], open = new Map();
+  const re = /<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>|([^<]+|<)/g;
+  let m, nodes = 0;
+  while ((m = re.exec(cleaned))) {
+    if (++nodes > MAX_NODES) throw new Error("dom-node-limit");
+    const top = stack[stack.length - 1];
+    if (m[4] !== undefined) { top.kids.push({ text: m[4] }); continue; }
+    const tag = m[2].toLowerCase();
+    if (m[1]) {
+      // O(1) unless elements really are closed: pops are paid for by the pushes.
+      if (open.get(tag) > 0) { while (stack[stack.length - 1].tag !== tag) { const x = stack.pop(); open.set(x.tag, open.get(x.tag) - 1); } stack.pop(); open.set(tag, open.get(tag) - 1); }
+      continue;
+    }
+    if (["li", "p", "tr", "td", "th"].includes(tag) && top.tag === tag) { stack.pop(); open.set(tag, open.get(tag) - 1); }
+    const node = { tag, kids: [], cls: attr(m[3], "class") };
+    stack[stack.length - 1].kids.push(node);
+    if (!VOID.has(tag) && !/\/\s*$/.test(m[3])) {
+      if (stack.length > MAX_DEPTH) throw new Error("dom-depth-limit");
+      stack.push(node); open.set(tag, (open.get(tag) || 0) + 1);
+    }
+  }
+  return root;
+}
+const isEl = n => !!n.tag;
+const hasBlock = n => n.hb ?? (n.hb = (n.kids || []).some(k => isEl(k) && (BLOCK.has(k.tag) || hasBlock(k))));
+const textOf = n => n.text !== undefined ? decode(n.text) : SKIP.has(n.tag) || n.tag === "img" ? "" : (n.kids || []).map(textOf).join(BLOCK.has(n.tag) || n.tag === "br" ? " " : "");
+const flat = s => s.replace(/[\s ]+/g, " ").trim();
+
+const HEADER_ROW = /^(?:research\s+)?tasks?\s*\|\s*(?:possible\s+)?rewards?$/i;
+// Only these anchored label forms open a research section: "Minior Shower Timed Research (1/1)", "Bonus Timed Research", "Special Research", "Field Research:".
+const RESEARCH_LABEL = /^(?:[^|.!?]{0,60}?\s)?(?:timed|special|field|event)\s+research(?:\s*[–—-]\s*[\w ]{1,20})?\s*(?:\(\s*\d+\s*\/\s*\d+\s*\))?\s*:?$/i;
+const QTY_AT = /(?:\d{1,3}(?:,\d{3})+|\d+)\s*(?:×\s*|x\s+)\S/iu;
+const isRewardCell = t => new RegExp("^" + QTY_AT.source, "iu").test(t) && t.length <= 120 && !/[.!?]\s+\p{Lu}/u.test(t) &&
+  /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|incense|lure|egg|berry|star piece|encounter)\b/i.test(t);
+const hasQty = t => new RegExp("(?<![\\w,.])" + QTY_AT.source, "iu").test(t);
+const stripIconNoise = t => t.replace(/\s+(?:[\p{L}'’]+\s+){0,4}icons?$/iu, "").replace(/[\s:–—-]+$/, "").trim();
+
+// [task cell, ...noise cells, reward cell(s)] -> "Task | 7740 × Stardust"; null unless the split is structural and the reward is a known kind.
+function rowFromCells(cells) {
+  const task = stripIconNoise(cells[0] || "");
+  if (cells.length < 2 || task.length < 4 || !TASK_VERB.test(task) || hasQty(task) || /\b(?:all|every|each)\b.*\btasks?\b/i.test(task)) return null;
+  const first = cells.findIndex((c, i) => i > 0 && isRewardCell(c));
+  if (first < 0) return null;
+  return task + " | " + cells.slice(first).join(" ").replace(/^(\d[\d,]*)\s*[×x]\s*/i, "$1 × ");
+}
+
+function tolerantLines(html) {
+  const out = [], st = { research: false, header: false };
+  const heading = text => { out.push({ t: "h", text }); st.research = RESEARCH_LABEL.test(text); st.header = false; };
+  const header = () => { out.push({ t: "p", text: "Task | Rewards" }); st.header = st.research; };
+  const row = line => { if (!st.header) header(); out.push({ t: "p", text: line }); };
+  const cellsOf = node => node.kids.filter(k => isEl(k) && !SKIP.has(k.tag)).map(k => flat(textOf(k))).filter(Boolean);
+  const leaf = (node, tag) => {
+    const text = flat(textOf(node));
+    if (!text) return;
+    if (/^h[1-6]$/.test(tag) || (text.length <= 90 && RESEARCH_LABEL.test(text))) return heading(text);
+    if (text.length < 40 && /^tasks?\s*\|?\s*(?:possible\s+)?rewards?$/i.test(text)) return header();
+    // A list item whose parts are separate elements ("<span>task</span> <span>reward</span>") is a row; a sentence is not.
+    if (tag === "li" && st.research) {
+      const parts = cellsOf(node), r = parts.length >= 2 && rowFromCells(parts);
+      if (r) return row(r);
+    }
+    out.push({ t: tag === "li" ? "li" : "p", text });
+  };
+  const walk = node => {
+    let run = [];
+    const flush = () => { const text = flat(run.map(textOf).join(" ")); run = []; if (text) leaf({ kids: [{ text }] }, "p"); };
+    for (const k of node.kids) {
+      if (!isEl(k)) { run.push(k); continue; }
+      if (SKIP.has(k.tag)) continue;
+      if (!BLOCK.has(k.tag)) { if (!hasBlock(k)) { run.push(k); continue; } flush(); walk(k); continue; }
+      flush();
+      if (k.tag === "tr") {
+        const cells = cellsOf(k), joined = cells.join(" | "), r = st.research && rowFromCells(cells);
+        if (HEADER_ROW.test(joined)) header();
+        else if (r) row(r);
+        else if (joined) out.push({ t: "p", text: joined });
+      } else if (/^h[1-6]$/.test(k.tag) || !hasBlock(k)) leaf(k, k.tag);
+      else {
+        // A container of 2-4 leaf blocks is a div/ul grid row. Only inside a Task/Rewards table (header seen).
+        const blocks = k.kids.filter(c => isEl(c) && !SKIP.has(c.tag)), cells = cellsOf(k);
+        const grid = blocks.length >= 2 && blocks.length <= 4 && blocks.length === cells.length && blocks.every(c => BLOCK.has(c.tag) && !hasBlock(c)) && k.kids.every(c => isEl(c) || !flat(textOf(c)));
+        const r = grid && st.research && st.header && rowFromCells(cells);
+        if (grid && HEADER_ROW.test(cells.join(" | "))) header();
+        else if (r) row(r);
+        else walk(k);
+      }
+    }
+    flush();
+  };
+  walk(parseDom(html));
+  return out;
+}
+
+// A bounded, attribute-free outline of the markup around the first "Timed Research"/"Task" so the next run reveals the real structure.
+function structureSample(html) {
+  const clean = stripInert(html);
+  let at = clean.search(/timed research/i);
+  if (at < 0) at = clean.search(/\btask\b/i);
+  if (at < 0) return null;
+  const outline = src => src.replace(/<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>|([^<]+)/g, (_, close, tag, attrs, text) => {
+    if (text !== undefined) { const t = flat(decode(text)).slice(0, 60); return t ? t + " " : ""; }
+    if (close) return "</" + tag.toLowerCase() + ">";
+    const keep = ["class", "id", "alt"].map(n => { const v = attr(attrs || "", n).slice(0, 50).replace(/["<>]/g, ""); return v ? " " + n + '="' + v + '"' : ""; }).join("");
+    return "<" + tag.toLowerCase() + keep + ">";
+  });
+  let from = Math.max(0, at - 400); const lt = clean.indexOf("<", from); if (lt >= 0 && lt < at) from = lt;
+  const pre = outline(clean.slice(from, at)).slice(-200), post = outline(clean.slice(at, at + 4000));
+  return (pre + post).replace(/\s+/g, " ").trim().slice(0, 600);
+}
+
+const taskKey = t => JSON.stringify([t.category, String(t.task).toLowerCase(), t.rewards, t.occurrence]);
+
+export function extractFields(html, options = {}) {
+  const lines = Array.isArray(html) ? html : htmlToLines(html);
+  const out = extractFromLines(html, options, lines);
+  if (typeof html !== "string") return out;
+  // A first-pass "ok" is never revisited. Otherwise the tolerant pass may replace the research output only if it
+  // keeps every task the first pass already parsed (same task, category, occurrence, rewards) and adds more.
+  if (out.researchParse.status !== "ok" && /research|\btask\b/i.test(html)) {
+    try {
+      const tolerant = extractFromLines(html, options, tolerantLines(html), { skipPass: true });
+      const have = new Set(tolerant.researchTasks.map(taskKey));
+      if (tolerant.researchTasks.length > out.researchTasks.length && out.researchTasks.every(t => have.has(taskKey(t)))) {
+        out.researchTasks = tolerant.researchTasks;
+        for (const line of tolerant.research) if (!out.research.includes(line) && out.research.length < 14) out.research.push(line);
+        out.researchParse = { ...tolerant.researchParse, lines: out.researchParse.lines, via: "tolerant" };
+      }
+    } catch { out.researchParse.tolerantError = true; }
+  }
+  if (out.researchParse.status !== "ok" && /timed research|\btask\b/i.test(html)) {
+    try { const sample = structureSample(html); if (sample) out.researchParse.sample = sample; } catch { out.researchParse.tolerantError = true; }
+  }
   return out;
 }
 export function hasContent(fields) { return FIELDS.some(f => fields[f] && fields[f].length); }

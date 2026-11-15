@@ -304,7 +304,7 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt =
       const url = normUrl(r.source?.url || "");
       if (!url) continue;
       const p = r.fields?.researchParse, status = p?.status ?? null, truncated = !!p?.truncated;
-      sources.push({ url: r.source.url, status, truncated, candidateRows: p?.candidateRows ?? null, headings: p?.headings ?? null, table: p?.table ?? null });
+      sources.push({ url: r.source.url, status, truncated, candidateRows: p?.candidateRows ?? null, headings: p?.headings ?? null, table: p?.table ?? null, ...(typeof p?.sample === "string" ? { sample: p.sample.slice(0, 600) } : {}) });
       // ok: parsed. none: fully read, nothing recognised. anything else (incl. truncated): incomplete.
       const kind = truncated ? "incomplete" : status === "ok" ? "ok" : status === "none" ? "none" : "incomplete";
       const prior = health.get(url);
