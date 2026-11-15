@@ -23,7 +23,7 @@ test('CSP differs from the previous policy only by the one Niantic Store image h
   assert.equal(csp, BASELINE_CSP.replace('https://storage.googleapis.com;', 'https://storage.googleapis.com ' + HOST + ';'));
   assert.equal(csp.split(/[\s;]+/).filter(token => token === HOST).length, 1, 'host appears exactly once as a whole source token');
   const img = csp.split(';').map(x => x.trim()).find(x => x.startsWith('img-src '));
-  assert.ok(img.split(' ').includes(HOST));
+  assert.equal(img.split(' ').filter(token => token === HOST).length, 1, 'host is a whole source token in img-src');
   assert.equal(IMAGE_CSP_HOSTS.filter(h => h === HOST).length, 1);
   assert.ok(!/\*/.test(csp) && !/nianticlabs/.test(csp.replace(img, '')), 'no wildcard; host in no other directive');
 });
