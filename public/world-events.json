@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T11:33:24.987Z",
+ "updated": "2026-11-15T11:57:42.732Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -596,25 +596,6 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-15"
-  },
-  {
-   "id": "w-zacian-crowned-sword-and-zamazenta-crowned-shield-",
-   "name": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) in 5-star Raid Battles",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-11-09",
-   "end": "2026-11-13",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026/"
-    }
-   ],
-   "status": "single",
    "seen": "2026-11-15"
   },
   {
@@ -1314,7 +1295,7 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",

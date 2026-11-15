@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T11:33:27.900Z",
+ "updated": "2026-11-15T11:57:45.177Z",
  "pictures": {
   "pikachu|astronaut": "/img/ext/25-pikachu-astronaut-00a1fb21.png",
   "pikachu|marathon visor": "/img/ext/025-marathon-8cf5be7d.png",
@@ -16,7 +16,8 @@
   "drifblim|halloween mischief": "/img/ext/426-halloween2021-2b24aedc.png",
   "rowlet|halloween costume": "/img/ext/722-halloween-293d67e9.png",
   "gengar|spooky festival": "/img/ext/094-spooky-0bc8ee88.png",
-  "zubat|top hat": "/img/ext/041-tophat-ca5244bb.png"
+  "zubat|top hat": "/img/ext/041-tophat-ca5244bb.png",
+  "toxtricity|low key form": "/img/ext/849-l-43d01243.png"
  },
  "shiny": {
   "pikachu|marathon visor": "/img/ext/025-marathon-a1644171.png",
@@ -33,7 +34,8 @@
   "drifblim|halloween mischief": "/img/ext/426-halloween2021-83b9dd58.png",
   "rowlet|halloween costume": "/img/ext/722-halloween-31fd907e.png",
   "gengar|spooky festival": "/img/ext/094-spooky-ed20e663.png",
-  "zubat|top hat": "/img/ext/041-tophat-763a8377.png"
+  "zubat|top hat": "/img/ext/041-tophat-763a8377.png",
+  "toxtricity|low key form": "/img/ext/849-l-592c6fef.png"
  },
  "gmax": {
   "gigantamax duraludon": "/img/ext/884-gi-fc4c7ccd.png",
@@ -97,6 +99,7 @@
   "pikachu (sun crown)|sun crown (no dex number)",
   "pikachu (moon crown)|moon crown (no dex number)",
   "espeon (sun scarf)|sun scarf (no dex number)",
-  "umbreon (moon scarf)|moon scarf (no dex number)"
+  "umbreon (moon scarf)|moon scarf (no dex number)",
+  "toxtricity|amped form"
  ]
 }

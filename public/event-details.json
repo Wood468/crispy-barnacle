@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T11:33:24.993Z",
+ "updated": "2026-11-15T11:57:42.737Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
@@ -10,9 +10,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/YUIF2HkGZlw3tWumDXClx0cVYphD-ugVYTs5VBU5-ccb5o-1UWVTy8NYqJboA-fVPrmtncsb7Ql_6eebA8I-YyxFtIHO2yIiMwmb5qlg3JA",
     "checkedFor": "GO Wild Area: Global",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -2633,9 +2633,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/2H2wVXVBCkoOjc8Swmtz67KAxNbWQMwkqSezJmyAOFnzlfervIkFR-rJJ6nZfqWtZmG4eXJwD7-Is2-TdjJXH2q2nAPFAk8lj7Lz_5TWtTYo",
     "checkedFor": "GO Pass: November",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3585,9 +3585,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
     "checkedFor": "GO Wild Area: Sendai",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -5974,9 +5974,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/xQzYXbxguNWaaSXG5thVM5x44Luvbb5Pi8rPlYSPIV6kePCzoS_5NWzlM0yzNGIVs1NzhXIPLcg2HKS0iuizGsHZUvSS_ZcemC5-i4My5yA",
     "checkedFor": "Into the Wild",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -5995,12 +5995,6 @@
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/into-the-wild-2026/"
     }
    ],
    "fields": {
@@ -6036,67 +6030,44 @@
      {
       "text": "Reach Major Milestones on your GO Pass: Into the Wild to unlock the following bonuses.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      },
      {
       "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
-      "text": "Rank 25: Reach these ranks on GO Pass Deluxe: Into the Wild to unlock the following additional bonuses.",
+      "text": "Rank 1: Additional 5,000 XP from completed raids",
       "sources": [
-       "leekduck"
+       "official"
       ],
-      "status": "single"
+      "status": "official"
      },
      {
-      "text": "Rank 1 Deluxe: Major Milestone Bonus: Additional 5,000 XP awarded for successful raids",
+      "text": "Rank 2: 3/4 Max Particle cost for unlocking and powering up Max Moves",
       "sources": [
-       "leekduck"
+       "official"
       ],
-      "status": "single"
+      "status": "official"
      },
      {
-      "text": "Rank 2 Deluxe: Major Milestone Bonus: Reduced Max Particle cost to unlock and level up Max Moves",
+      "text": "Rank 3: 1 additional Candy awarded for completing raids",
       "sources": [
-       "leekduck"
+       "official"
       ],
-      "status": "single"
+      "status": "official"
      },
      {
-      "text": "Rank 3 Deluxe: Major Milestone Bonus: One additional Candy from raids",
+      "text": "Rank 3: 1 additional Candy XL awarded for completing raids (Trainers level 31+)",
       "sources": [
-       "leekduck"
+       "official"
       ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: Major Milestone Bonus: 1/2 Hatch Distance",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
+      "status": "official"
      }
     ],
     "featured": [
@@ -6110,8 +6081,7 @@
      {
       "text": "You may encounter event-themed Pokémon in the wild, including Magnemite*, Noibat*, Togedemaru*, and more!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -6125,80 +6095,58 @@
      {
       "text": "Encounter with Dynamax Meltan*",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "The GO Wild Area 2026 Tee (Purple) avatar item.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "Encounters with Dynamax Meltan*",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "The Duraludon Pants avatar item.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "Premium items, such as Incense, a Lucky Egg, and more!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "Galarian Meowth",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The free track includes:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
     "raids": [
      {
       "text": "The following Pokémon will make its Pokémon GO Dynamax debut in five-star Max Battles!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -6254,8 +6202,7 @@
      {
       "text": "Trainers will be able to earn Crowned Sword Energy or Crowned Shield Energy by defeating Crowned Sword Zacian or Crowned Shield Zamazenta in Raid Battles.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -6286,8 +6233,7 @@
      {
       "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -6301,32 +6247,28 @@
      {
       "text": "Attack: Battle alongside your trainee.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "Once you use your Silver Bottle Cap, you’ll have 365 days to complete your Hyper Training. It’s a long and challenging course, but once you complete it your trainee will be stronger than ever!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -6357,20 +6299,6 @@
        "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
     "shiny": [
@@ -6387,13 +6315,6 @@
        "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
     "moves": [
@@ -6459,782 +6380,23 @@
      {
       "text": "For US$19.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild + 10 Ranks to also automatically earn enough GO Points to reach Rank 10.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Win a raid 15 PTS",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 2: Free: Poké Ball ×10 | Deluxe: —",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 3: Free: Razz Berry ×3 | Deluxe: —",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 4: Free: Potion ×3 | Deluxe: Star Piece ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 5: Free: XP ×1000 | Deluxe: XP ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 6: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 7: Free: Magnemite | Deluxe: Magnemite Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 8: Free: Magnemite Candy ×5 | Deluxe: Magnemite Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 9: Free: XP ×1000 | Deluxe: Silver Pinap Berry ×3",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 10: Free: Stardust ×1000 | Deluxe: Golden Razz Berry ×3",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 12: Free: Noibat | Deluxe: Noibat Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 13: Free: Noibat Candy ×5 | Deluxe: Noibat Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 14: Free: Pinap Berry ×3 | Deluxe: Max Revive ×3",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 15: Free: Dynamax Ralts | Deluxe: Premium Battle Pass ×2",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 16: Free: Incense ×1 | Deluxe: Incense ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 17: Free: Togedemaru | Deluxe: Togedemaru Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 18: Free: Togedemaru Candy ×5 | Deluxe: Togedemaru Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 19: Free: Poffin ×1 | Deluxe: Lucky Egg ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 20: Free: XP ×1000 | Deluxe: Lure Module ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 21: Free: Stardust ×1000 | Deluxe: Star Piece ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 22: Free: Skrelp | Deluxe: Skrelp Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 23: Free: Skrelp Candy ×5 | Deluxe: Skrelp Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 24: Free: Lucky Egg ×1 | Deluxe: Max Potion ×3",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 26: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 27: Free: Pinap Berry ×10 | Deluxe: Fast TM ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 28: Free: Razz Berry ×10 | Deluxe: Charged TM ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 29: Free: Great Ball ×5 | Deluxe: Great Ball ×25",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 30: Free: Dynamax Machop | Deluxe: Max Mushroom ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 31: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 32: Free: Tinkatink | Deluxe: Tinkatink Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 33: Free: Tinkatink Candy ×5 | Deluxe: Tinkatink Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 34: Free: XP ×1000 | Deluxe: XP ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 35: Free: Poké Ball ×10 | Deluxe: Ultra Ball ×25",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 36: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 37: Free: Deino | Deluxe: Deino Candy ×5",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 38: Free: Deino Candy ×5 | Deluxe: Deino Candy XL ×3",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 39: Free: Fast TM ×1 | Deluxe: Lucky Egg ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 40: Free: Charged TM ×1 | Deluxe: Premium Battle Pass ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 41: Free: Super Potion ×3 | Deluxe: Max Potion ×5",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 42: Free: XP ×1000 | Deluxe: XP ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 43: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 44: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 45: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 46: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 47: Free: Dynamax Drilbur | Deluxe: Drilbur Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 48: Free: Drilbur Candy ×5 | Deluxe: Drilbur Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 49: Free: Pinap Berry ×5 | Deluxe: Star Piece ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 50: Free: Razz Berry ×5 | Deluxe: Fast TM ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 51: Free: Ultra Ball ×5 | Deluxe: Ultra Ball ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 52: Free: Dynamax Trapinch | Deluxe: Trapinch Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 53: Free: Trapinch Candy ×5 | Deluxe: Trapinch Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 54: Free: XP ×1000 | Deluxe: XP ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 55: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 56: Free: Revive ×3 | Deluxe: Charged TM ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 57: Free: Rare Candy ×1 | Deluxe: Rare Candy XL ×2",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 58: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 59: Free: Hyper Potion ×3 | Deluxe: Lure Module ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 60: Free: Max Mushroom ×1 | Deluxe: Duraludon Pants",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 61: Free: Dynamax Hatenna | Deluxe: Hatenna Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 62: Free: Hatenna Candy ×5 | Deluxe: Hatenna Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 63: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 64: Free: Poké Ball ×10 | Deluxe: Incense ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 65: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 66: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 67: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 68: Free: XP ×1000 | Deluxe: XP ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 69: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 70: Free: Poké Ball ×10 | Deluxe: Max Mushroom ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 71: Free: Metal Coat ×3 | Deluxe: Elite Fast TM ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 72: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 73: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 74: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 75: Free: Golden Lure Module ×1 | Deluxe: Machamp wearing a modern jacket",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 76: Free: Great Ball ×10 | Deluxe: Great Ball ×25",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 77: Free: Gimmighoul Candy ×5 | Deluxe: Gimmighoul Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 78: Free: Gimmighoul Candy ×5 | Deluxe: Gimmighoul Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 79: Free: Gimmighoul (Roaming Form) | Deluxe: Gimmighoul (Roaming Form)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 80: Free: Incense ×1 | Deluxe: Premium Battle Pass ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 81: Free: XP ×1000 | Deluxe: XP ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 82: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 83: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 84: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 85: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 86: Free: Razz Berry ×3 | Deluxe: Lure Module ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 87: Free: Pinap Berry ×3 | Deluxe: Premium Battle Pass ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 88: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 89: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 90: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 91: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 92: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 93: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 94: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 95: Free: Golden Razz Berry ×1 | Deluxe: Golden Razz Berry ×3",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 96: Free: Silver Pinap Berry ×1 | Deluxe: Silver Pinap Berry ×3",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 97: Free: Ultra Ball ×10 | Deluxe: Ultra Ball ×25",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 98: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 99: Free: Meltan Candy ×5 | Deluxe: Dynamax Meltan",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 100: Free: Dynamax Meltan | Deluxe: Silver Bottle Cap ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 600: Free: Stardust ×50 | Deluxe: Stardust ×100",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
     "dates": [
      {
       "text": "Monday, November 9, at 10:00 a.m. to Friday, November 13, 2026, at 8:00 p.m. local time",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -7248,8 +6410,7 @@
      {
       "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -7266,20 +6427,6 @@
        "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      },
      {
       "text": "Daily Raid Hour and Max Battle Hour: 6pm to 7pm local time, 2026-11-09 to 2026-11-13.",
@@ -7314,9 +6461,7 @@
     },
     {
      "field": "moves",
-     "missingFrom": [
-      "leekduck"
-     ]
+     "missingFrom": []
     },
     {
      "field": "tickets",
@@ -7327,432 +6472,8 @@
      "missingFrom": []
     }
    ],
-   "researchTasks": [
-    {
-     "task": "Catch 10 Pokémon",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Horsea",
-       "cpMin": 418,
-       "cpMax": 452
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Aron",
-       "cpMin": 522,
-       "cpMax": 560
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Skrelp",
-       "cpMin": 421,
-       "cpMax": 455
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Magnemite",
-       "cpMin": 544,
-       "cpMax": 583
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/into-the-wild-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
-     "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
-     },
-     "checkedAt": "2026-11-15"
-    },
-    {
-     "task": "Catch a Dynamax Machop",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Machop Candy",
-       "quantity": 25
-      },
-      {
-       "type": "item",
-       "name": "Stardust",
-       "quantity": 5000
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/into-the-wild-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
-     "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
-     },
-     "checkedAt": "2026-11-15"
-    },
-    {
-     "task": "Catch a Dynamax Ralts",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Ralts Candy",
-       "quantity": 25
-      },
-      {
-       "type": "item",
-       "name": "Stardust",
-       "quantity": 5000
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/into-the-wild-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
-     "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
-     },
-     "checkedAt": "2026-11-15"
-    },
-    {
-     "task": "Power up Dragon‑type Pokémon 5 times",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Bagon",
-       "cpMin": 459,
-       "cpMax": 495
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Skrelp",
-       "cpMin": 421,
-       "cpMax": 455
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Dratini",
-       "cpMin": 397,
-       "cpMax": 430
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Horsea",
-       "cpMin": 418,
-       "cpMax": 452
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/into-the-wild-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
-     "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
-     },
-     "checkedAt": "2026-11-15"
-    },
-    {
-     "task": "Power up Steel‑type Pokémon 5 times",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Aron",
-       "cpMin": 522,
-       "cpMax": 560
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Magnemite",
-       "cpMin": 544,
-       "cpMax": 583
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Togedemaru",
-       "cpMin": 876,
-       "cpMax": 926
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Galarian Meowth",
-       "cpMin": 409,
-       "cpMax": 443
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/into-the-wild-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
-     "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
-     },
-     "checkedAt": "2026-11-15"
-    },
-    {
-     "task": "Win a Max Battle",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Bagon",
-       "cpMin": 459,
-       "cpMax": 495
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Mawile",
-       "cpMin": 658,
-       "cpMax": 700
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/into-the-wild-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
-     "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
-     },
-     "checkedAt": "2026-11-15"
-    },
-    {
-     "task": "Win a raid",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Dratini",
-       "cpMin": 397,
-       "cpMax": 430
-      },
-      {
-       "type": "item",
-       "name": "Rare Candy",
-       "quantity": 2
-      },
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Scyther",
-       "cpMin": 1104,
-       "cpMax": 1160
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/into-the-wild-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
-     "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
-     },
-     "checkedAt": "2026-11-15"
-    }
-   ],
+   "researchTasks": [],
    "pokemon": [
-    {
-     "key": "116:base:none",
-     "speciesId": "116",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Horsea",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Horsea"
-    },
-    {
-     "key": "123:base:none",
-     "speciesId": "123",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Scyther",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Scyther"
-    },
-    {
-     "key": "147:base:none",
-     "speciesId": "147",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Dratini",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Dratini"
-    },
-    {
-     "key": "179:base:none",
-     "speciesId": "179",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Mareep",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Mareep"
-    },
-    {
-     "key": "280:dynamax:none",
-     "speciesId": "280",
-     "formId": "dynamax",
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Dynamax Ralts",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Dynamax Ralts"
-    },
-    {
-     "key": "303:base:none",
-     "speciesId": "303",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Mawile",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Mawile"
-    },
-    {
-     "key": "304:base:none",
-     "speciesId": "304",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Aron",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Aron"
-    },
-    {
-     "key": "371:base:none",
-     "speciesId": "371",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Bagon",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Bagon"
-    },
     {
      "key": "379:dynamax:none",
      "speciesId": "379",
@@ -7793,97 +6514,6 @@
      "collectionName": "Dynamax Latios"
     },
     {
-     "key": "52:galar:none",
-     "speciesId": "52",
-     "formId": "galar",
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Galarian Meowth",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Galarian Meowth"
-    },
-    {
-     "key": "621:base:none",
-     "speciesId": "621",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Druddigon",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Druddigon"
-    },
-    {
-     "key": "66:dynamax:none",
-     "speciesId": "66",
-     "formId": "dynamax",
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Dynamax Machop",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Dynamax Machop"
-    },
-    {
-     "key": "690:base:none",
-     "speciesId": "690",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Skrelp",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Skrelp"
-    },
-    {
-     "key": "714:base:none",
-     "speciesId": "714",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Noibat",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Noibat"
-    },
-    {
-     "key": "777:base:none",
-     "speciesId": "777",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Togedemaru",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Togedemaru"
-    },
-    {
-     "key": "81:base:none",
-     "speciesId": "81",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Magnemite",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Magnemite"
-    },
-    {
      "key": "888:crowned-sword:none",
      "speciesId": "888",
      "formId": "crowned-sword",
@@ -7895,19 +6525,6 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Crowned Sword Zacian"
-    },
-    {
-     "key": "888:crownedsword:none",
-     "speciesId": "888",
-     "formId": "crownedsword",
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Zacian (Crowned Sword)",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Zacian (Crowned Sword)"
     },
     {
      "key": "889:crowned-shield:none",
@@ -7923,19 +6540,6 @@
      "collectionName": "Crowned Shield Zamazenta"
     },
     {
-     "key": "889:crownedshield:none",
-     "speciesId": "889",
-     "formId": "crownedshield",
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Zamazenta (Crowned Shield)",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Zamazenta (Crowned Shield)"
-    },
-    {
      "key": "895:dynamax:none",
      "speciesId": "895",
      "formId": "dynamax",
@@ -7947,28 +6551,9 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Regidrago"
-    },
-    {
-     "key": "968:base:none",
-     "speciesId": "968",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Orthworm",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Orthworm"
     }
    ],
    "encounters": [
-    {
-     "identityKey": "280:dynamax:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
     {
      "identityKey": "379:dynamax:none",
      "method": "max",
@@ -7988,20 +6573,8 @@
      "access": "unknown"
     },
     {
-     "identityKey": "66:dynamax:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
      "identityKey": "895:dynamax:none",
      "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "621:base:none",
-     "method": "raid",
      "activityId": "main",
      "access": "unknown"
     },
@@ -8012,98 +6585,8 @@
      "access": "unknown"
     },
     {
-     "identityKey": "888:crownedsword:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
      "identityKey": "889:crowned-shield:none",
      "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "889:crownedshield:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "968:base:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "116:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "123:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "147:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "179:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "303:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "304:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "371:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "52:galar:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "690:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "714:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "777:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "81:base:none",
-     "method": "wild",
      "activityId": "main",
      "access": "unknown"
     }
@@ -8114,7 +6597,7 @@
    "name": "Minior Showers: Leonids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "hub",
@@ -8274,267 +6757,16 @@
      ]
     }
    ],
-   "researchTasks": [
-    {
-     "task": "Claim Reward!",
-     "category": "research",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Star Piece",
-       "quantity": 1
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "minior2",
-     "eventName": "Minior Showers: Leonids",
-     "eventWindow": {
-      "start": "2026-11-14T17:00",
-      "end": "2026-11-19T23:59"
-     },
-     "checkedAt": "2026-11-14"
-    },
-    {
-     "task": "Use a Star Piece",
-     "category": "research",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Stardust",
-       "quantity": 7740
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "minior2",
-     "eventName": "Minior Showers: Leonids",
-     "eventWindow": {
-      "start": "2026-11-14T17:00",
-      "end": "2026-11-19T23:59"
-     },
-     "checkedAt": "2026-11-14"
-    },
-    {
-     "task": "Claim Reward!",
-     "category": "timed",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Star Piece",
-       "quantity": 1
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "minior2",
-     "eventName": "Minior Showers: Leonids",
-     "eventWindow": {
-      "start": "2026-11-14T17:00",
-      "end": "2026-11-19T23:59"
-     },
-     "checkedAt": "2026-11-14"
-    },
-    {
-     "task": "Use a Star Piece",
-     "category": "timed",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Stardust",
-       "quantity": 7740
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "minior2",
-     "eventName": "Minior Showers: Leonids",
-     "eventWindow": {
-      "start": "2026-11-14T17:00",
-      "end": "2026-11-19T23:59"
-     },
-     "checkedAt": "2026-11-14"
-    },
-    {
-     "task": "Use a Star Piece",
-     "category": "timed",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Stardust",
-       "quantity": 7740
-      }
-     ],
-     "occurrence": 2,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "minior2",
-     "eventName": "Minior Showers: Leonids",
-     "eventWindow": {
-      "start": "2026-11-14T17:00",
-      "end": "2026-11-19T23:59"
-     },
-     "checkedAt": "2026-11-14"
-    },
-    {
-     "task": "Use a Star Piece",
-     "category": "timed",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Stardust",
-       "quantity": 7740
-      }
-     ],
-     "occurrence": 3,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "minior2",
-     "eventName": "Minior Showers: Leonids",
-     "eventWindow": {
-      "start": "2026-11-14T17:00",
-      "end": "2026-11-19T23:59"
-     },
-     "checkedAt": "2026-11-14"
-    },
-    {
-     "task": "Use a Star Piece",
-     "category": "timed",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Stardust",
-       "quantity": 7740
-      }
-     ],
-     "occurrence": 4,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "minior2",
-     "eventName": "Minior Showers: Leonids",
-     "eventWindow": {
-      "start": "2026-11-14T17:00",
-      "end": "2026-11-19T23:59"
-     },
-     "checkedAt": "2026-11-14"
-    },
-    {
-     "task": "Use a Star Piece",
-     "category": "timed",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Stardust",
-       "quantity": 7740
-      }
-     ],
-     "occurrence": 5,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
-      }
-     ],
-     "status": "single",
-     "eventId": "minior2",
-     "eventName": "Minior Showers: Leonids",
-     "eventWindow": {
-      "start": "2026-11-14T17:00",
-      "end": "2026-11-19T23:59"
-     },
-     "checkedAt": "2026-11-14"
-    }
-   ],
+   "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": [],
-   "researchParseWarning": "Research could not be confirmed this run; previously published research tasks were retained.",
-   "researchRetainedAt": "2026-11-15T07:05:32.213Z"
+   "encounterConflicts": []
   },
   "minior": {
    "name": "Orionids Meteor Shower: Minior Debut",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "hub",
@@ -9007,9 +7239,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/HyFWaQMZqtZNT3Sb3uFeHyWMBFI8bB_4hNQ2NLrpfBGrH1YijjIr1n0ZNC0YlNAZHPpfiWTq0zzgT9MRUFzlMoEjN4ENEm0AlnuJFZRA9CQ",
     "checkedFor": "Super Mega Raid Day",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -9268,9 +7500,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/1ZxNwH9PkuqgUPjvwhCrCNSTSDktinzgCcLJEkm4tu41LlE_7OdyfM4GkR9qd9atoN_Tairx5bQ6IxBBOULlCO29cCM4qTuvsE4dm-RFup0",
     "checkedFor": "Dynamax Trails",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -9283,6 +7515,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/dynamax-trails-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/guide/go-pass-dynamax-trails/"
     }
    ],
    "fields": {
@@ -9447,6 +7685,20 @@
       "status": "official"
      },
      {
+      "text": "Toxtricity (Amped Form)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Toxtricity (Low Key Form)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Additional rewards",
       "sources": [
        "leekduck"
@@ -9492,14 +7744,7 @@
       "status": "single"
      },
      {
-      "text": "Toxtricity (Amped Form)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Toxtricity (Low Key Form)",
+      "text": "Bulbasaur 100% IV CP Level 20 637",
       "sources": [
        "leekduck"
       ],
@@ -9526,30 +7771,34 @@
      {
       "text": "Power up Pokémon 10 times — 100 GO Points",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Trainers with GO Pass Deluxe get an additional Daily Task:",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Daily Tasks reset each day and may change throughout the event.",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      }
     ],
     "shiny": [],
@@ -9593,6 +7842,14 @@
       "status": "official"
      },
      {
+      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
       "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
       "sources": [
        "leekduck"
@@ -9601,13 +7858,6 @@
      },
      {
       "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
       "sources": [
        "leekduck"
       ],
@@ -9631,6 +7881,720 @@
       "text": "Toxtricity (Low Key Form)",
       "sources": [
        "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Level | Regular Reward | Deluxe Reward",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 1: Free: 10 × Poké Ball | Deluxe: 10 × Great Ball",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 2: Free: 3 × Revive | Deluxe: 2 × Max Revive",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 3: Free: 10 × Great Ball | Deluxe: 10 × Ultra Ball",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 4: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 5: Free: 1000 × XP | Deluxe: 5000 × XP",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 6: Free: 2 × Hyper Potion | Deluxe: 2 × Max Potion",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 7: Free: 2 × Nanab Berry | Deluxe: 1 × Silver Pinap Berry",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 8: Free: 1 × Poffin | Deluxe: 1 × Poffin",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 9: Free: 5 × Ultra Ball | Deluxe: 3 × Rare Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 11: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 12: Free: 1000 × XP | Deluxe: 5000 × XP",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 13: Free: 5 × Pinap Berry | Deluxe: 10 × Great Ball",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 14: Free: 5 × Razz Berry | Deluxe: 1 × Golden Razz Berry",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 15: 2× Catch Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 16: Free: 3 × Revive | Deluxe: 2 × Max Revive",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 17: Free: 10 × Poké Ball | Deluxe: 10 × Pinap Berry",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 18: Free: 1 × Fast TM | Deluxe: 1 × Fast TM",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 19: Free: 2 × Hyper Potion | Deluxe: 2 × Max Potion",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 21: Free: 5 × Razz Berry | Deluxe: 3 × Rare Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 22: Free: 10 × Great Ball | Deluxe: 1 × Silver Pinap Berry",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 23: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 24: Free: 1000 × XP | Deluxe: 5000 × XP",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Free: 5 × Ultra Ball | Deluxe: 3 × Rare Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 26: Free: 1 × Charged TM | Deluxe: 1 × Charged TM",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 27: Free: 5 × Pinap Berry | Deluxe: 3 × Rare Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 28: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 29: Free: 1000 × XP | Deluxe: 5000 × XP",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 30: Free: Eternatus | Deluxe: 100 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 31: Free: 10× Eternatus Sticker | Deluxe: 10× Eternatus Sticker",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 32: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 33: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 34: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 36: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 37: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 38: Free: 2 × Eternatus Candy XL | Deluxe: 6 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 39: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 41: Free: 2 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 42: Free: 2 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 43: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 44: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 45: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 46: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 47: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 48: Free: 2 × Eternatus Candy XL | Deluxe: 6 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 49: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 51: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 52: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 53: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 54: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 55: Additional Candy from Max Battles Additional Candy XL from Max Battles",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 56: Free: 2 × Eternatus Candy XL | Deluxe: 6 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 57: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 58: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 59: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 61: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 62: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 63: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 64: Free: 2 × Eternatus Candy XL | Deluxe: 6 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 65: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 66: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 67: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 68: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 69: Free: 2 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 71: Free: 2 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 72: Free: 2 × Eternatus Candy XL | Deluxe: 6 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 73: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 74: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 75: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 76: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 77: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 78: Free: 2 × Eternatus Candy XL | Deluxe: 6 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 79: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 81: Free: 2 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 82: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 83: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 84: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 85: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 86: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 87: Free: 2 × Eternatus Candy XL | Deluxe: 6 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 88: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 89: Free: 2 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 91: Free: 2 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 92: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 93: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 94: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 95: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 96: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 97: Free: 2 × Eternatus Candy XL | Deluxe: 6 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 98: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 99: Free: 5 × Eternatus Candy | Deluxe: 15 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 101: Free: 1 × Eternatus Candy | Deluxe: 1 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 102: Free: 1 × Eternatus Candy | Deluxe: 1 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 103: Free: 1 × Eternatus Candy | Deluxe: 1 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 104: Free: 1 × Eternatus Candy | Deluxe: 1 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 105: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 106: Free: 1 × Eternatus Candy | Deluxe: 1 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 107: Free: 1 × Eternatus Candy | Deluxe: 1 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 108: Free: 1 × Eternatus Candy | Deluxe: 1 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 109: Free: 1 × Eternatus Candy | Deluxe: 1 × Eternatus Candy",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 110: Free: 1 × Eternatus Candy XL | Deluxe: 2 × Eternatus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 300: Free: 1 × Eternatus Candy XL | Deluxe: 2 × Eternatus Candy XL",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      }
@@ -9669,7 +8633,32 @@
     ]
    },
    "conflicts": [],
-   "gaps": [],
+   "gaps": [
+    {
+     "field": "bonuses",
+     "missingFrom": [
+      "hub"
+     ]
+    },
+    {
+     "field": "featured",
+     "missingFrom": [
+      "hub"
+     ]
+    },
+    {
+     "field": "raids",
+     "missingFrom": [
+      "hub"
+     ]
+    },
+    {
+     "field": "dates",
+     "missingFrom": [
+      "hub"
+     ]
+    }
+   ],
    "researchTasks": [
     {
      "task": "Complete Pass Tasks to rank up and earn the following",
@@ -9683,7 +8672,8 @@
      ],
      "occurrence": 1,
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
      "sourceRefs": [
       {
@@ -9691,9 +8681,15 @@
        "name": "Leek Duck",
        "trust": "community",
        "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      },
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/guide/go-pass-dynamax-trails/"
       }
      ],
-     "status": "single",
+     "status": "corroborated",
      "eventId": "dyntrails",
      "eventName": "Dynamax Trails",
      "eventWindow": {
@@ -9704,6 +8700,19 @@
     }
    ],
    "pokemon": [
+    {
+     "key": "106:base:none",
+     "speciesId": "106",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hitmonlee",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hitmonlee"
+    },
     {
      "key": "106:dynamax:none",
      "speciesId": "106",
@@ -9716,6 +8725,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Hitmonlee"
+    },
+    {
+     "key": "107:base:none",
+     "speciesId": "107",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hitmonchan",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hitmonchan"
     },
     {
      "key": "107:dynamax:none",
@@ -9731,6 +8753,19 @@
      "collectionName": "Dynamax Hitmonchan"
     },
     {
+     "key": "10:base:none",
+     "speciesId": "10",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Caterpie",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Caterpie"
+    },
+    {
      "key": "10:dynamax:none",
      "speciesId": "10",
      "formId": "dynamax",
@@ -9742,6 +8777,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Caterpie"
+    },
+    {
+     "key": "111:base:none",
+     "speciesId": "111",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Rhyhorn",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Rhyhorn"
     },
     {
      "key": "111:dynamax:none",
@@ -9757,6 +8805,19 @@
      "collectionName": "Dynamax Rhyhorn"
     },
     {
+     "key": "113:base:none",
+     "speciesId": "113",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Chansey",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Chansey"
+    },
+    {
      "key": "113:dynamax:none",
      "speciesId": "113",
      "formId": "dynamax",
@@ -9768,6 +8829,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Chansey"
+    },
+    {
+     "key": "125:base:none",
+     "speciesId": "125",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Electabuzz",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Electabuzz"
     },
     {
      "key": "125:dynamax:none",
@@ -9783,6 +8857,19 @@
      "collectionName": "Dynamax Electabuzz"
     },
     {
+     "key": "126:base:none",
+     "speciesId": "126",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magmar",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magmar"
+    },
+    {
      "key": "126:dynamax:none",
      "speciesId": "126",
      "formId": "dynamax",
@@ -9794,6 +8881,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Magmar"
+    },
+    {
+     "key": "129:base:none",
+     "speciesId": "129",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magikarp",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magikarp"
     },
     {
      "key": "129:dynamax:none",
@@ -9809,6 +8909,19 @@
      "collectionName": "Dynamax Magikarp"
     },
     {
+     "key": "133:base:none",
+     "speciesId": "133",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Eevee",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Eevee"
+    },
+    {
      "key": "133:dynamax:none",
      "speciesId": "133",
      "formId": "dynamax",
@@ -9820,6 +8933,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Eevee"
+    },
+    {
+     "key": "138:base:none",
+     "speciesId": "138",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Omanyte",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Omanyte"
     },
     {
      "key": "138:dynamax:none",
@@ -9835,6 +8961,19 @@
      "collectionName": "Dynamax Omanyte"
     },
     {
+     "key": "140:base:none",
+     "speciesId": "140",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kabuto",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kabuto"
+    },
+    {
      "key": "140:dynamax:none",
      "speciesId": "140",
      "formId": "dynamax",
@@ -9846,6 +8985,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Kabuto"
+    },
+    {
+     "key": "163:base:none",
+     "speciesId": "163",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hoothoot",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hoothoot"
     },
     {
      "key": "163:dynamax:none",
@@ -9861,6 +9013,19 @@
      "collectionName": "Dynamax Hoothoot"
     },
     {
+     "key": "1:base:none",
+     "speciesId": "1",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Bulbasaur",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Bulbasaur"
+    },
+    {
      "key": "1:dynamax:none",
      "speciesId": "1",
      "formId": "dynamax",
@@ -9872,6 +9037,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Bulbasaur"
+    },
+    {
+     "key": "213:base:none",
+     "speciesId": "213",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Shuckle",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Shuckle"
     },
     {
      "key": "213:dynamax:none",
@@ -9887,6 +9065,19 @@
      "collectionName": "Dynamax Shuckle"
     },
     {
+     "key": "215:base:none",
+     "speciesId": "215",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Sneasel",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Sneasel"
+    },
+    {
      "key": "215:dynamax:none",
      "speciesId": "215",
      "formId": "dynamax",
@@ -9898,6 +9089,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Sneasel"
+    },
+    {
+     "key": "237:base:none",
+     "speciesId": "237",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hitmontop",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hitmontop"
     },
     {
      "key": "237:dynamax:none",
@@ -9913,6 +9117,19 @@
      "collectionName": "Dynamax Hitmontop"
     },
     {
+     "key": "25:base:none",
+     "speciesId": "25",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Pikachu",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Pikachu"
+    },
+    {
      "key": "25:dynamax:none",
      "speciesId": "25",
      "formId": "dynamax",
@@ -9924,6 +9141,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Pikachu"
+    },
+    {
+     "key": "280:base:none",
+     "speciesId": "280",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Ralts",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Ralts"
     },
     {
      "key": "280:dynamax:none",
@@ -9939,6 +9169,19 @@
      "collectionName": "Dynamax Ralts"
     },
     {
+     "key": "302:base:none",
+     "speciesId": "302",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Sableye",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Sableye"
+    },
+    {
      "key": "302:dynamax:none",
      "speciesId": "302",
      "formId": "dynamax",
@@ -9950,6 +9193,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Sableye"
+    },
+    {
+     "key": "320:base:none",
+     "speciesId": "320",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Wailmer",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Wailmer"
     },
     {
      "key": "320:dynamax:none",
@@ -9965,6 +9221,19 @@
      "collectionName": "Dynamax Wailmer"
     },
     {
+     "key": "328:base:none",
+     "speciesId": "328",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Trapinch",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Trapinch"
+    },
+    {
      "key": "328:dynamax:none",
      "speciesId": "328",
      "formId": "dynamax",
@@ -9976,6 +9245,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Trapinch"
+    },
+    {
+     "key": "349:base:none",
+     "speciesId": "349",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Feebas",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Feebas"
     },
     {
      "key": "349:dynamax:none",
@@ -9991,6 +9273,19 @@
      "collectionName": "Dynamax Feebas"
     },
     {
+     "key": "363:base:none",
+     "speciesId": "363",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Spheal",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Spheal"
+    },
+    {
      "key": "363:dynamax:none",
      "speciesId": "363",
      "formId": "dynamax",
@@ -10002,6 +9297,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Spheal"
+    },
+    {
+     "key": "374:base:none",
+     "speciesId": "374",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Beldum",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Beldum"
     },
     {
      "key": "374:dynamax:none",
@@ -10017,6 +9325,19 @@
      "collectionName": "Dynamax Beldum"
     },
     {
+     "key": "415:base:none",
+     "speciesId": "415",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Combee",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Combee"
+    },
+    {
      "key": "415:dynamax:none",
      "speciesId": "415",
      "formId": "dynamax",
@@ -10028,6 +9349,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Combee"
+    },
+    {
+     "key": "4:base:none",
+     "speciesId": "4",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Charmander",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Charmander"
     },
     {
      "key": "4:dynamax:none",
@@ -10043,6 +9377,19 @@
      "collectionName": "Dynamax Charmander"
     },
     {
+     "key": "519:base:none",
+     "speciesId": "519",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Pidove",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Pidove"
+    },
+    {
      "key": "519:dynamax:none",
      "speciesId": "519",
      "formId": "dynamax",
@@ -10054,6 +9401,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Pidove"
+    },
+    {
+     "key": "524:base:none",
+     "speciesId": "524",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Roggenrola",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Roggenrola"
     },
     {
      "key": "524:dynamax:none",
@@ -10069,6 +9429,19 @@
      "collectionName": "Dynamax Roggenrola"
     },
     {
+     "key": "527:base:none",
+     "speciesId": "527",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Woobat",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Woobat"
+    },
+    {
      "key": "527:dynamax:none",
      "speciesId": "527",
      "formId": "dynamax",
@@ -10080,6 +9453,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Woobat"
+    },
+    {
+     "key": "529:base:none",
+     "speciesId": "529",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Drilbur",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Drilbur"
     },
     {
      "key": "529:dynamax:none",
@@ -10095,6 +9481,19 @@
      "collectionName": "Dynamax Drilbur"
     },
     {
+     "key": "530:base:none",
+     "speciesId": "530",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Excadrill",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Excadrill"
+    },
+    {
      "key": "530:dynamax:none",
      "speciesId": "530",
      "formId": "dynamax",
@@ -10106,6 +9505,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Excadrill"
+    },
+    {
+     "key": "546:base:none",
+     "speciesId": "546",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Cottonee",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Cottonee"
     },
     {
      "key": "546:dynamax:none",
@@ -10121,6 +9533,19 @@
      "collectionName": "Dynamax Cottonee"
     },
     {
+     "key": "554:base:none",
+     "speciesId": "554",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Darumaka",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Darumaka"
+    },
+    {
      "key": "554:dynamax:none",
      "speciesId": "554",
      "formId": "dynamax",
@@ -10132,6 +9557,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Darumaka"
+    },
+    {
+     "key": "568:base:none",
+     "speciesId": "568",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Trubbish",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Trubbish"
     },
     {
      "key": "568:dynamax:none",
@@ -10147,6 +9585,19 @@
      "collectionName": "Dynamax Trubbish"
     },
     {
+     "key": "58:base:none",
+     "speciesId": "58",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Growlithe",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Growlithe"
+    },
+    {
      "key": "58:dynamax:none",
      "speciesId": "58",
      "formId": "dynamax",
@@ -10158,6 +9609,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Growlithe"
+    },
+    {
+     "key": "615:base:none",
+     "speciesId": "615",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Cryogonal",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Cryogonal"
     },
     {
      "key": "615:dynamax:none",
@@ -10173,6 +9637,19 @@
      "collectionName": "Dynamax Cryogonal"
     },
     {
+     "key": "633:base:none",
+     "speciesId": "633",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deino",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deino"
+    },
+    {
      "key": "633:dynamax:none",
      "speciesId": "633",
      "formId": "dynamax",
@@ -10184,6 +9661,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Deino"
+    },
+    {
+     "key": "63:base:none",
+     "speciesId": "63",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Abra",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Abra"
     },
     {
      "key": "63:dynamax:none",
@@ -10199,6 +9689,19 @@
      "collectionName": "Dynamax Abra"
     },
     {
+     "key": "66:base:none",
+     "speciesId": "66",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Machop",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Machop"
+    },
+    {
      "key": "66:dynamax:none",
      "speciesId": "66",
      "formId": "dynamax",
@@ -10210,6 +9713,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Machop"
+    },
+    {
+     "key": "686:base:none",
+     "speciesId": "686",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Inkay",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Inkay"
     },
     {
      "key": "686:dynamax:none",
@@ -10225,6 +9741,19 @@
      "collectionName": "Dynamax Inkay"
     },
     {
+     "key": "761:base:none",
+     "speciesId": "761",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Bounsweet",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Bounsweet"
+    },
+    {
      "key": "761:dynamax:none",
      "speciesId": "761",
      "formId": "dynamax",
@@ -10236,6 +9765,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Bounsweet"
+    },
+    {
+     "key": "766:base:none",
+     "speciesId": "766",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Passimian",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Passimian"
     },
     {
      "key": "766:dynamax:none",
@@ -10251,6 +9793,19 @@
      "collectionName": "Dynamax Passimian"
     },
     {
+     "key": "780:base:none",
+     "speciesId": "780",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Drampa",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Drampa"
+    },
+    {
      "key": "780:dynamax:none",
      "speciesId": "780",
      "formId": "dynamax",
@@ -10262,6 +9817,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Drampa"
+    },
+    {
+     "key": "7:base:none",
+     "speciesId": "7",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Squirtle",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Squirtle"
     },
     {
      "key": "7:dynamax:none",
@@ -10277,6 +9845,19 @@
      "collectionName": "Dynamax Squirtle"
     },
     {
+     "key": "810:base:none",
+     "speciesId": "810",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Grookey",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Grookey"
+    },
+    {
      "key": "810:dynamax:none",
      "speciesId": "810",
      "formId": "dynamax",
@@ -10288,6 +9869,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Grookey"
+    },
+    {
+     "key": "813:base:none",
+     "speciesId": "813",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Scorbunny",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Scorbunny"
     },
     {
      "key": "813:dynamax:none",
@@ -10303,6 +9897,19 @@
      "collectionName": "Dynamax Scorbunny"
     },
     {
+     "key": "816:base:none",
+     "speciesId": "816",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Sobble",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Sobble"
+    },
+    {
      "key": "816:dynamax:none",
      "speciesId": "816",
      "formId": "dynamax",
@@ -10314,6 +9921,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Sobble"
+    },
+    {
+     "key": "819:base:none",
+     "speciesId": "819",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Skwovet",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Skwovet"
     },
     {
      "key": "819:dynamax:none",
@@ -10329,6 +9949,19 @@
      "collectionName": "Dynamax Skwovet"
     },
     {
+     "key": "821:base:none",
+     "speciesId": "821",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Rookidee",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Rookidee"
+    },
+    {
      "key": "821:dynamax:none",
      "speciesId": "821",
      "formId": "dynamax",
@@ -10340,6 +9973,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Rookidee"
+    },
+    {
+     "key": "831:base:none",
+     "speciesId": "831",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Wooloo",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Wooloo"
     },
     {
      "key": "831:dynamax:none",
@@ -10355,6 +10001,19 @@
      "collectionName": "Dynamax Wooloo"
     },
     {
+     "key": "850:base:none",
+     "speciesId": "850",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Sizzlipede",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Sizzlipede"
+    },
+    {
      "key": "850:dynamax:none",
      "speciesId": "850",
      "formId": "dynamax",
@@ -10366,6 +10025,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Sizzlipede"
+    },
+    {
+     "key": "856:base:none",
+     "speciesId": "856",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hatenna",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hatenna"
     },
     {
      "key": "856:dynamax:none",
@@ -10381,6 +10053,19 @@
      "collectionName": "Dynamax Hatenna"
     },
     {
+     "key": "870:base:none",
+     "speciesId": "870",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Falinks",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Falinks"
+    },
+    {
      "key": "870:dynamax:none",
      "speciesId": "870",
      "formId": "dynamax",
@@ -10392,6 +10077,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Falinks"
+    },
+    {
+     "key": "884:base:none",
+     "speciesId": "884",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Duraludon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Duraludon"
     },
     {
      "key": "884:dynamax:none",
@@ -10407,6 +10105,19 @@
      "collectionName": "Dynamax Duraludon"
     },
     {
+     "key": "92:base:none",
+     "speciesId": "92",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Gastly",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Gastly"
+    },
+    {
      "key": "92:dynamax:none",
      "speciesId": "92",
      "formId": "dynamax",
@@ -10418,6 +10129,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dynamax Gastly"
+    },
+    {
+     "key": "98:base:none",
+     "speciesId": "98",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Krabby",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Krabby"
     },
     {
      "key": "98:dynamax:none",
@@ -10769,6 +10493,342 @@
      "method": "max",
      "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "1:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "10:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "106:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "107:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "111:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "113:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "125:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "126:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "129:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "133:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "138:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "140:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "163:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "213:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "215:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "237:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "25:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "280:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "302:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "320:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "328:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "349:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "363:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "374:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "4:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "415:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "519:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "524:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "527:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "529:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "530:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "546:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "554:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "568:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "58:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "615:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "63:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "633:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "66:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "686:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "7:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "761:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "766:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "780:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "810:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "813:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "816:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "819:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "821:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "831:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "850:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "856:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "870:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "884:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "92:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "98:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
     }
    ],
    "encounterConflicts": [],
@@ -10784,9 +10844,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/t5O4uk87m4uBdjNiiMgMq9nKNOkWyt3lNxwPc4dEqi8nL2ORXDgmO91Dc8orIGjysTupi4Jfr9F1FQq5jp36L68z7XZlddd8Kq-CSJQJEVfk",
     "checkedFor": "November Community Day",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -10990,9 +11050,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/6P6KzIHu36YynVJ4Bn6-2y_98P8qbfr5VP6aBOsIC83pPQ6NifL2ZrIWrF12RCzi-yJzdpuVsboYspq5mfkvph2B5OJslcoYMaHnNM8ua8og",
     "checkedFor": "Super Mega Raid Day",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -11183,9 +11243,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/4QN-7EtDk7S7dxL9bKLbsUF7lbTaUTntnGzOG8qDk4xxOQFyY4dKt3tQQ2msv37JhacLDFrawLGXVAv_kv3tzE_kTXiIh_HbskFdKhNCHjlh",
     "checkedFor": "Halloween 2026, Part Two",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -11447,9 +11507,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/_-kCe3YnQqLlPgLfqe6BZN6v8dIhuuhVzbOSgExE5XjKL__BcqBCbch1V2Z4fOEh18nYEX6O5rqBgWmNmU7kmvy92Yd2u8RBIxDbe79p3kU",
     "checkedFor": "Halloween 2026, Part One",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -11731,9 +11791,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/lKvMVkt13VprgaVCCdWqglwACCNc_F4rLJMuuZg_MqZSHjDIkEm3dldHcnyv7OPdDmJYAdfYC9xZef00Jfna7R1B8QJLLBMOigqW_89obec",
     "checkedFor": "Dynamax Uxie, Mesprit and Azelf",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -11985,9 +12045,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/gu1IHS_f2PGLsp57UvnfXLT3fugx6jlQbECfFUQfU5GIEGQfjVspMMywEamItPc6BA36X6bv4rYC1bVoLzjyvLC-ddmUXbkPD5CurRnP8w",
     "checkedFor": "Pokémon TCG: 30th Celebration (at stores)",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -12058,7 +12118,7 @@
    "name": "GO Wild Area: Gigantamax Machamp Power Up! Timed Research",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12150,7 +12210,7 @@
    "name": "Max Monday: Pokémon to be announced",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12197,7 +12257,7 @@
    "name": "Cresselia and Darkrai Raid Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12245,7 +12305,7 @@
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12344,7 +12404,7 @@
    "name": "Eternamax Eternatus Returns",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12434,9 +12494,9 @@
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-21-november-communityday2026/pawniard-november-cd-2026.jpg",
     "checkedFor": "Pawniard Community Day",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12742,7 +12802,7 @@
    "name": "Dynamax Espurr during Max Monday",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12825,7 +12885,7 @@
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12942,7 +13002,7 @@
    "name": "Mega Banette in Mega Raids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13033,7 +13093,7 @@
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13081,7 +13141,7 @@
    "name": "Noibat Spotlight Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13147,9 +13207,9 @@
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2",
     "checkedFor": "Twilight Wishes",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13657,7 +13717,7 @@
    "name": "Dynamax Cryogonal during Max Monday",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13745,9 +13805,9 @@
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-08-season-24-twilight-trails/season-24-twilight-trails.jpg",
     "checkedFor": "Twilight Trails",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14451,7 +14511,7 @@
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14520,7 +14580,7 @@
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14703,7 +14763,7 @@
    "name": "Mega Metagross in Mega Raids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14801,7 +14861,7 @@
    "name": "Max Battle Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14849,7 +14909,7 @@
    "name": "December Community Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14889,7 +14949,7 @@
    "name": "Minior Showers: Geminids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14986,7 +15046,7 @@
    "name": "Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15034,7 +15094,7 @@
    "name": "Hatch Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15082,7 +15142,7 @@
    "name": "January Community Day Classic",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15122,7 +15182,7 @@
    "name": "Super Mega Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15175,9 +15235,9 @@
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
     "checkedFor": "adidas × Pokémon Timed Research",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15261,7 +15321,7 @@
    "name": "January Community Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15301,7 +15361,7 @@
    "name": "Max Battle Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15349,7 +15409,7 @@
    "name": "Super Mega Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15397,7 +15457,7 @@
    "name": "February Community Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15437,7 +15497,7 @@
    "name": "Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15485,7 +15545,7 @@
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15525,7 +15585,7 @@
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15565,7 +15625,7 @@
    "name": "Pokémon GO Tour: Alola - Global 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15605,7 +15665,7 @@
    "name": "Minior Showers: Eta Aquariids 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15709,7 +15769,7 @@
    "name": "Minior Showers: Southern Delta Aquariids 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15809,10 +15869,107 @@
    "encounters": [],
    "encounterConflicts": []
   },
+  "leekduck:minior-showers-perseids-2027": {
+   "name": "Minior Showers: Perseids 2027",
+   "image": null,
+   "imageProvenance": null,
+   "updated": "2026-11-15T11:57:42.737Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/minior-showers-perseids-2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "This Minior Shower runs from August 10, 2027 at 5:00 p.m. to August 15, 2027 at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Orionids : October 19–24, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Leonids : November 14–19, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Geminids : December 11–16, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eta Aquariids : May 3–8, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
+  },
   "official:pokemon-run-30-2026": {
    "name": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -15828,7 +15985,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/c7e36ASB48bmKd_kOL4e61NU9Y3EPaXd0xmQJldeDAa9zn-W9CSwx6Taf_ENgLcx8K7RE3yP62zaLqwkUSACC6GUcEua_kus5gsm_xoljQ",
     "checkedFor": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [
@@ -16096,7 +16253,7 @@
   "official:save-the-date-go-tour-2027": {
    "name": "Save the Date: Pokémon GO Tour 2027",
    "researchTasks": [],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -16112,7 +16269,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/ZD_ZnJIVRb8a2RWD8L9wF4UR3f0fBAT2ZKk9lLB58yOlXhKOrghIstmijArGABhFlVacGQU56R514Pl0NsA9tTqEpGxbIo4D4oipystojQ",
     "checkedFor": "Save the Date: Pokémon GO Tour 2027",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [],
@@ -16154,7 +16311,7 @@
   "official:european-space-agency-event": {
    "name": "Pokémon GO partners with the European Space Agency",
    "researchTasks": [],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -16170,7 +16327,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/7CITEYsKb4CAwdYOln7q7h5K6U1cIVu2cnWRbDZtixs10PkfYfHzPn5Iz9wwbMFE3bosgBEiKnZlEZJZmGiyl-YqYRKHlIL8d7VAzR4DjA",
     "checkedFor": "Pokémon GO partners with the European Space Agency",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [],
@@ -16644,7 +16801,7 @@
      "checkedAt": "2026-11-15"
     }
    ],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16660,7 +16817,7 @@
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-mexico-city/key-art.jpg",
     "checkedFor": "Pokémon GO Wild Area 2026: Mexico City",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [
@@ -19172,7 +19329,7 @@
   "official:festival-of-lights-2026": {
    "name": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -19188,7 +19345,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/CecgAXRzLOF4ifTP3Ufl01if11xzdVEI6R169xxEXw095LM8_lhhWydeV5VNDpXF9Ax-U8N1Zxq6SlKpwsft03DRYjsekc05qpxF8EyqcnU",
     "checkedFor": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [
@@ -19370,7 +19527,7 @@
   "official:gowildarea-global-2026-osaka-gameplay-update": {
    "name": "Notice Regarding Gameplay in Osaka During Pokémon GO Wild Area: Global",
    "researchTasks": [],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -19386,7 +19543,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/bup0wWISTZ3O0vrWPQWqhldwW4KfZ5NK5ryVAi4WH9QbIhTbOruURsTgNo1YkmRqIHNjE8y_1rwotBus0gXX6_F--7Aww_qvO-Aw-yTgw9M",
     "checkedFor": "Notice Regarding Gameplay in Osaka During Pokémon GO Wild Area: Global",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [],
@@ -19440,7 +19597,7 @@
   "official:save-the-date-s25": {
    "name": "Save the dates for next Season’s Community Days! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -19456,7 +19613,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/GMESDlJRw5GMsmroW_oK6TLXA4OerLjNY43b0JkjCoSXrez97CwCflnTBTh-uzMhJZYQvQbtA8nK8YPEknYHu0tearwDyBVUoi8",
     "checkedFor": "Save the dates for next Season’s Community Days! — Pokémon GO",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [],
@@ -19567,7 +19724,7 @@
   "official:gowildarea-2026-timed-research": {
    "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -19583,7 +19740,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/ou9s1BeQ2dxKpKmtjCjzqmE7LInbAzbD6UxkhtK6DMHRPpfxjkCxIfoVyfWpulXpmXnCCuTOluKKw_e_5n6yMhRFnYOq4OBwe5KoWt4HCeU",
     "checkedFor": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [],
@@ -19689,7 +19846,7 @@
   "official:gowildarea-mexicocity-friday-update": {
    "name": "Friday experience update for Pokémon GO Wild Area: Mexico City",
    "researchTasks": [],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -19705,7 +19862,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/HTRHhRfsm0cILX-H3EJ03aILmCzRB95KY8pzCeLzd2yJQg7vTbr-OpzV9t1Vg8mAoqx6ztvEgeDtnwHfa6i4qepx0eHl1DnGl-1hXA8ONkk",
     "checkedFor": "Friday experience update for Pokémon GO Wild Area: Mexico City",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [],
@@ -19769,7 +19926,7 @@
   "official:city-safari-boston-rescheduled": {
    "name": "Pokémon GO City Safari: Boston Update",
    "researchTasks": [],
-   "updated": "2026-11-15T11:33:24.993Z",
+   "updated": "2026-11-15T11:57:42.737Z",
    "sources": [
     {
      "id": "official",
@@ -19785,7 +19942,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/5SAHXmMPUCpY_TUiDA81oiN00LXrIbsOXN9CTFtZbjI4pz_0RbQr0tmSACr1JErfEvZqM131RfCU8-LA2uskPRaP7YAom1uS216jhW_JpQ",
     "checkedFor": "Pokémon GO City Safari: Boston Update",
     "checkedAt": "2026-11-15",
-    "retrievedAt": "2026-11-15T11:33:24.993Z"
+    "retrievedAt": "2026-11-15T11:57:42.737Z"
    },
    "fields": {
     "bonuses": [],
@@ -20594,103 +20751,6 @@
     },
     "conflicts": []
    }
-  },
-  "leekduck:minior-showers-perseids-2027": {
-   "name": "Minior Showers: Perseids 2027",
-   "image": null,
-   "imageProvenance": null,
-   "updated": "2026-11-11T08:27:03.572Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/minior-showers-perseids-2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [
-     {
-      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "This Minior Shower runs from August 10, 2027 at 5:00 p.m. to August 15, 2027 at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Orionids : October 19–24, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Leonids : November 14–19, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Geminids : December 11–16, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Eta Aquariids : May 3–8, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": [],
-   "pokemon": [],
-   "encounters": [],
-   "encounterConflicts": []
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
