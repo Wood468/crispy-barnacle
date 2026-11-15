@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-15T18:01:19.735Z",
+ "runAt": "2026-11-15T23:00:14.698Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -556,7 +556,7 @@
    "error": ""
   },
   "hub": {
-   "listed": 1,
+   "listed": 2,
    "error": ""
   }
  },
@@ -979,29 +979,36 @@
    ]
   },
   {
-   "event": "Dynamax Trails",
+   "event": "Pawniard Community Day",
    "field": "bonuses",
    "missingFrom": [
     "hub"
    ]
   },
   {
-   "event": "Dynamax Trails",
+   "event": "Pawniard Community Day",
    "field": "featured",
    "missingFrom": [
     "hub"
    ]
   },
   {
-   "event": "Dynamax Trails",
+   "event": "Pawniard Community Day",
    "field": "raids",
    "missingFrom": [
-    "hub"
+    "leekduck"
    ]
   },
   {
-   "event": "Dynamax Trails",
-   "field": "dates",
+   "event": "Pawniard Community Day",
+   "field": "eggs",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Pawniard Community Day",
+   "field": "moves",
    "missingFrom": [
     "hub"
    ]

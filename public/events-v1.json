@@ -5547,36 +5547,67 @@
        "status": "official"
       },
       {
+       "text": "Power up Pokémon 8 times POSSIBLE REWARDS Feebas Max CP 117 Min CP 99 Magikarp Max CP 117 Min CP 99 ×3 Pinap Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Explore 1 km POSSIBLE REWARDS Eevee Max CP 459 Min CP 424 ×2000 Stardust ×2000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win a Max Battle POSSIBLE REWARDS Drampa Max CP 1249 Min CP 1191 Duraludon Max CP 1314 Min CP 1255 ×10 Eternatus Candy ×10 ×2000 Stardust ×2000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Unlock a Max Move POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×5000 Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Make an Excellent Throw POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Power up Pokémon 10 times — 100 GO Points",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Trainers with GO Pass Deluxe get an additional Daily Task:",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Daily Tasks reset each day and may change throughout the event.",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       }
      ],
      "shiny": [],
@@ -5620,14 +5651,6 @@
        "status": "official"
       },
       {
-       "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
        "sources": [
         "leekduck"
@@ -5636,6 +5659,13 @@
       },
       {
        "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
        "sources": [
         "leekduck"
        ],
@@ -5659,13 +5689,6 @@
        "text": "Toxtricity (Low Key Form)",
        "sources": [
         "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Level | Regular Reward | Deluxe Reward",
-       "sources": [
-        "hub"
        ],
        "status": "single"
       },
@@ -6417,8 +6440,8 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "f7bc2c3405fcd91651f02558bea2566785b80beee1e2af9282ba4f658c604095",
-    "revision": 13,
+    "contentHash": "f7d0d144e0c847e88ca5e8227ffdb6145f540fb382b1e5d0658ead9e35a529b3",
+    "revision": 14,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -6524,6 +6547,248 @@
    ],
    "research": [
     {
+     "task": "Catch 8 Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Bulbasaur",
+       "cpMin": 442,
+       "cpMax": 477
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Charmander",
+       "cpMin": 387,
+       "cpMax": 420
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Grookey",
+       "cpMin": 430,
+       "cpMax": 465
+      },
+      {
+       "type": "encounter",
+       "name": "+3 Scorbunny",
+       "quantity": 1,
+       "cpMin": 434,
+       "cpMax": 470
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Sobble",
+       "cpMin": 434,
+       "cpMax": 470
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Squirtle",
+       "cpMin": 372,
+       "cpMax": 405
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Explore 1 km",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Eevee",
+       "cpMin": 424,
+       "cpMax": 459
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 2000
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Make an Excellent Throw",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Eternatus Candy",
+       "quantity": 25
+      },
+      {
+       "type": "item",
+       "name": "Golden Razz Berry",
+       "quantity": 1
+      },
+      {
+       "type": "item",
+       "name": "Silver Pinap Berry",
+       "quantity": 1
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Power up Pokémon 8 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Feebas",
+       "cpMin": 99,
+       "cpMax": 117
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Magikarp",
+       "cpMin": 99,
+       "cpMax": 117
+      },
+      {
+       "type": "item",
+       "name": "Pinap Berry",
+       "quantity": 3
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Win a Max Battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Drampa",
+       "cpMin": 1191,
+       "cpMax": 1249
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Duraludon",
+       "cpMin": 1255,
+       "cpMax": 1314
+      },
+      {
+       "type": "item",
+       "name": "Eternatus Candy",
+       "quantity": 10
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 2000
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
      "task": "Complete Pass Tasks to rank up and earn the following",
      "category": "research",
      "rewards": [
@@ -6535,8 +6800,7 @@
      ],
      "occurrence": 1,
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
      "sourceRefs": [
       {
@@ -6544,15 +6808,9 @@
        "name": "Leek Duck",
        "trust": "community",
        "url": "https://leekduck.com/events/dynamax-trails-2026/"
-      },
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/guide/go-pass-dynamax-trails/"
       }
      ],
-     "status": "corroborated",
+     "status": "single",
      "eventId": "dyntrails",
      "eventName": "Dynamax Trails",
      "eventWindow": {
@@ -6577,36 +6835,67 @@
      "status": "official"
     },
     {
+     "text": "Power up Pokémon 8 times POSSIBLE REWARDS Feebas Max CP 117 Min CP 99 Magikarp Max CP 117 Min CP 99 ×3 Pinap Berry ×3",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Explore 1 km POSSIBLE REWARDS Eevee Max CP 459 Min CP 424 ×2000 Stardust ×2000",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Win a Max Battle POSSIBLE REWARDS Drampa Max CP 1249 Min CP 1191 Duraludon Max CP 1314 Min CP 1255 ×10 Eternatus Candy ×10 ×2000 Stardust ×2000",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Unlock a Max Move POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×5000 Stardust ×5000",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Make an Excellent Throw POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
      "text": "Power up Pokémon 10 times — 100 GO Points",
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
-     "status": "corroborated"
+     "status": "single"
     },
     {
      "text": "Trainers with GO Pass Deluxe get an additional Daily Task:",
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
-     "status": "corroborated"
+     "status": "single"
     },
     {
      "text": "Daily Tasks reset each day and may change throughout the event.",
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
-     "status": "corroborated"
+     "status": "single"
     },
     {
      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
-     "status": "corroborated"
+     "status": "single"
     }
    ],
    "passes": [
@@ -8353,14 +8642,6 @@
      "status": "official"
     },
     {
-     "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
      "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
      "sources": [
       "leekduck"
@@ -8369,6 +8650,13 @@
     },
     {
      "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
      "sources": [
       "leekduck"
      ],
@@ -8392,13 +8680,6 @@
      "text": "Toxtricity (Low Key Form)",
      "sources": [
       "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Level | Regular Reward | Deluxe Reward",
-     "sources": [
-      "hub"
      ],
      "status": "single"
     }
@@ -11368,7 +11649,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 197,
+    "revision": 199,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -25368,8 +25649,122 @@
        "status": "single"
       }
      ],
-     "raids": [],
-     "eggs": [],
+     "raids": [
+      {
+       "text": "On Wednesday, November 18, from 6:00 p.m. to 7:00 p.m. local time , Cresselia and Darkrai will feature in Raid Hour at Gyms.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "⚔️ Related guides:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Pokémon GO’s Dynamax Trails event runs from November 16 at 10:00 a.m. to November 23 at 8:00 p.m. local time , bringing a week of Max Battles and the return of Eternatus!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Expect more Power Spots active than usual, GO Pass and GO Pass Deluxe, themed wild encounters, and Max Battles galore!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From November 9 at 6:00 a.m. to November 24 at 10:00 p.m. local time , Cresselia and Darkrai appear in five-star raids.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From November 16 at 6:00 a.m. to November 24 at 10:00 p.m. local time , Mega Banette appears in Mega Raids.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "⚔️ Related guide: Mega Banette",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Incarnate Shadow Tornadus",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [
+      {
+       "text": "The following Pokémon are among this Season’s Egg hatches. These are selected highlights, not the complete hatch pools. Check our current Egg chart and each Egg’s in-game hatch list.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Wild Area exception: The event’s 10 km Egg lineup includes Honedge, Klefki, Drampa, and Duraludon. See our Wild Area guide for event Egg details.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Galarian Zigzagoon",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Galarian Meowth",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Galarian Stunfisk",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Hisuian Sneasel",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Galarian Slowpoke",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Galarian Corsola",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "research": [
       {
        "text": "Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 +2 ×2 Pinap Berry ×2 ×500 Stardust ×500",
@@ -25389,6 +25784,13 @@
        "text": "Check in at a Community Ambassador event to receive Timed Research with Pawniard encounters featuring a Special Background and other premium item rewards. Find a nearby meetup on the Pokémon GO event map .",
        "sources": [
         "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Earn a Research Stamp on seven different days to unlock a Research Breakthrough encounter with one of the following Season-themed Pokémon , as listed in our Field Research and Research Breakthrough guide .",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
@@ -25412,6 +25814,13 @@
        "text": "Trainers will have an increased chance of encountering Shiny Pawniard during Community Day. Shiny Pawniard can be evolved into Shiny Bisharp and Shiny Kingambit.",
        "sources": [
         "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Saturday, November 21: Pawniard Community Day takes place from 2:00 p.m. to 5 p.m. with boosted shiny rates.",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
@@ -25440,15 +25849,23 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "The November GO Pass starts on Tuesday, November 3, at 10:00 a.m. local time , and progression ends on Tuesday, December 1, at 10:00 a.m. local time .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "dates": [
       {
        "text": "The event takes place on Saturday, November 21, 2026, from 2:00 p.m. to 5:00 p.m. local time .",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "From 2:00 p.m. to 9:00 p.m. local time , evolve Bisharp into Kingambit after defeating 1 Dark- or Steel-type Raid Boss with Bisharp as your Buddy Pokémon .",
@@ -25463,6 +25880,69 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Wednesday, November 18: Cresselia and Darkrai feature in five-star Max Battles, with a Max Battle Hour from 6:00–7:00 p.m.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Thursday, November 19: Grookey, Scorbunny and Sobble feature for Spotlight Hour from 6:00–7:00 p.m.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Saturday, November 21: Eternamax Eternatus takes over Power Spots from 11:00 a.m to 2:00 p.m.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "On Wednesday, November 18, from 6:00 p.m. to 7:00 p.m. local time , Cresselia and Darkrai will feature in Raid Hour at Gyms.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Pokémon GO’s Dynamax Trails event runs from November 16 at 10:00 a.m. to November 23 at 8:00 p.m. local time , bringing a week of Max Battles and the return of Eternatus!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From November 9 at 6:00 a.m. to November 24 at 10:00 p.m. local time , Cresselia and Darkrai appear in five-star raids.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From November 16 at 6:00 a.m. to November 24 at 10:00 p.m. local time , Mega Banette appears in Mega Raids.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "November 10–17 | Great League Ultra League: Mega Edition 2026 GO LAIC Cup",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Explore Pokémon GO’s Twilight Trails Season , running from September 8 at 10 AM to December 1, 2026, at 10 AM local time . The season features new Mega and Dynamax Pokémon and more Pokémon from the Paldea region .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ]
     },
@@ -25475,8 +25955,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "aeb0de60a747e9a277a1f41115ec2b271b9d3d05b8c5dc071b2a9039890aa186",
-    "revision": 10,
+    "contentHash": "7c7be7236c6a6ff3fb6a9930eacca5efbe2d5d8bb9308637e93d3cf94ae867d0",
+    "revision": 11,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -25660,6 +26140,13 @@
       "leekduck"
      ],
      "status": "single"
+    },
+    {
+     "text": "Earn a Research Stamp on seven different days to unlock a Research Breakthrough encounter with one of the following Season-themed Pokémon , as listed in our Field Research and Research Breakthrough guide .",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
     }
    ],
    "passes": [],
@@ -25677,6 +26164,13 @@
       "leekduck"
      ],
      "status": "single"
+    },
+    {
+     "text": "The November GO Pass starts on Tuesday, November 3, at 10:00 a.m. local time , and progression ends on Tuesday, December 1, at 10:00 a.m. local time .",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
     }
    ],
    "sources": [
@@ -25690,9 +26184,158 @@
      "label": "G47IX",
      "trust": "community",
      "observed": "2026-10-22"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/this-week-in-pokemon-go-november-16-22-dynamax-trails-eternatus-pawniard-community-day/"
     }
    ],
    "pokemon": [
+    {
+     "key": "147:base:none",
+     "speciesId": "147",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dratini",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dratini"
+    },
+    {
+     "key": "239:base:none",
+     "speciesId": "239",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Elekid",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Elekid"
+    },
+    {
+     "key": "240:base:none",
+     "speciesId": "240",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magby",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magby"
+    },
+    {
+     "key": "263:galar:none",
+     "speciesId": "263",
+     "formId": "galar",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Galarian Zigzagoon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Galarian Zigzagoon"
+    },
+    {
+     "key": "298:base:none",
+     "speciesId": "298",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Azurill",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Azurill"
+    },
+    {
+     "key": "354:mega:none",
+     "speciesId": "354",
+     "formId": "mega",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mega Banette",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mega Banette"
+    },
+    {
+     "key": "446:base:none",
+     "speciesId": "446",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Munchlax",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Munchlax"
+    },
+    {
+     "key": "488:base:none",
+     "speciesId": "488",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Cresselia",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Cresselia"
+    },
+    {
+     "key": "491:base:none",
+     "speciesId": "491",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Darkrai",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Darkrai"
+    },
+    {
+     "key": "52:galar:none",
+     "speciesId": "52",
+     "formId": "galar",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Galarian Meowth",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Galarian Meowth"
+    },
+    {
+     "key": "618:galar:none",
+     "speciesId": "618",
+     "formId": "galar",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Galarian Stunfisk",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Galarian Stunfisk"
+    },
     {
      "key": "624:base:none",
      "speciesId": "624",
@@ -25705,9 +26348,151 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Pawniard"
+    },
+    {
+     "key": "679:base:none",
+     "speciesId": "679",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Honedge",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Honedge"
+    },
+    {
+     "key": "850:base:none",
+     "speciesId": "850",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Sizzlipede",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Sizzlipede"
+    },
+    {
+     "key": "859:base:none",
+     "speciesId": "859",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Impidimp",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Impidimp"
+    },
+    {
+     "key": "926:base:none",
+     "speciesId": "926",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Fidough",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Fidough"
     }
    ],
    "encounters": [
+    {
+     "identityKey": "147:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "239:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "240:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "263:galar:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "298:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "446:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "52:galar:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "618:galar:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "679:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "850:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "859:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "926:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "354:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "488:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "491:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
     {
      "identityKey": "624:base:none",
      "method": "wild",
@@ -25716,6 +26501,100 @@
     }
    ],
    "groups": {
+    "egg": [
+     {
+      "identityKey": "147:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "239:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "240:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "263:galar:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "298:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "446:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "52:galar:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "618:galar:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "679:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "850:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "859:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "926:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "raid": [
+     {
+      "identityKey": "354:mega:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "488:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "491:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
     "wild": [
      {
       "identityKey": "624:base:none",
@@ -31402,7 +32281,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 212,
+    "revision": 214,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -60538,7 +61417,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 188,
+    "revision": 190,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -61348,36 +62227,67 @@
        "status": "official"
       },
       {
+       "text": "Power up Pokémon 8 times POSSIBLE REWARDS Feebas Max CP 117 Min CP 99 Magikarp Max CP 117 Min CP 99 ×3 Pinap Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Explore 1 km POSSIBLE REWARDS Eevee Max CP 459 Min CP 424 ×2000 Stardust ×2000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win a Max Battle POSSIBLE REWARDS Drampa Max CP 1249 Min CP 1191 Duraludon Max CP 1314 Min CP 1255 ×10 Eternatus Candy ×10 ×2000 Stardust ×2000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Unlock a Max Move POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×5000 Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Make an Excellent Throw POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Power up Pokémon 10 times — 100 GO Points",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Trainers with GO Pass Deluxe get an additional Daily Task:",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Daily Tasks reset each day and may change throughout the event.",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       }
      ],
      "shiny": [],
@@ -61421,14 +62331,6 @@
        "status": "official"
       },
       {
-       "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
        "sources": [
         "leekduck"
@@ -61437,6 +62339,13 @@
       },
       {
        "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
        "sources": [
         "leekduck"
        ],
@@ -61460,13 +62369,6 @@
        "text": "Toxtricity (Low Key Form)",
        "sources": [
         "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Level | Regular Reward | Deluxe Reward",
-       "sources": [
-        "hub"
        ],
        "status": "single"
       },
@@ -62218,8 +63120,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "e0aaf058ce894fab338f7fd8e711646ae9f9ed448f521f28b98cf283fb71d6aa",
-    "revision": 14,
+    "contentHash": "102b855b88635cea9ef35df58ab86a3936e1d89eb41f1bcbf8d6ffb8b277dcc2",
+    "revision": 15,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -62323,6 +63225,248 @@
    ],
    "research": [
     {
+     "task": "Catch 8 Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Bulbasaur",
+       "cpMin": 442,
+       "cpMax": 477
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Charmander",
+       "cpMin": 387,
+       "cpMax": 420
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Grookey",
+       "cpMin": 430,
+       "cpMax": 465
+      },
+      {
+       "type": "encounter",
+       "name": "+3 Scorbunny",
+       "quantity": 1,
+       "cpMin": 434,
+       "cpMax": 470
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Sobble",
+       "cpMin": 434,
+       "cpMax": 470
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Squirtle",
+       "cpMin": 372,
+       "cpMax": 405
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Explore 1 km",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Eevee",
+       "cpMin": 424,
+       "cpMax": 459
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 2000
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Make an Excellent Throw",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Eternatus Candy",
+       "quantity": 25
+      },
+      {
+       "type": "item",
+       "name": "Golden Razz Berry",
+       "quantity": 1
+      },
+      {
+       "type": "item",
+       "name": "Silver Pinap Berry",
+       "quantity": 1
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Power up Pokémon 8 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Feebas",
+       "cpMin": 99,
+       "cpMax": 117
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Magikarp",
+       "cpMin": 99,
+       "cpMax": 117
+      },
+      {
+       "type": "item",
+       "name": "Pinap Berry",
+       "quantity": 3
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Win a Max Battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Drampa",
+       "cpMin": 1191,
+       "cpMax": 1249
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Duraludon",
+       "cpMin": 1255,
+       "cpMax": 1314
+      },
+      {
+       "type": "item",
+       "name": "Eternatus Candy",
+       "quantity": 10
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 2000
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
      "task": "Complete Pass Tasks to rank up and earn the following",
      "category": "research",
      "rewards": [
@@ -62334,8 +63478,7 @@
      ],
      "occurrence": 1,
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
      "sourceRefs": [
       {
@@ -62343,15 +63486,9 @@
        "name": "Leek Duck",
        "trust": "community",
        "url": "https://leekduck.com/events/dynamax-trails-2026/"
-      },
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/guide/go-pass-dynamax-trails/"
       }
      ],
-     "status": "corroborated",
+     "status": "single",
      "eventId": "dyntrails",
      "eventName": "Dynamax Trails",
      "eventWindow": {
@@ -62376,36 +63513,67 @@
      "status": "official"
     },
     {
+     "text": "Power up Pokémon 8 times POSSIBLE REWARDS Feebas Max CP 117 Min CP 99 Magikarp Max CP 117 Min CP 99 ×3 Pinap Berry ×3",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Explore 1 km POSSIBLE REWARDS Eevee Max CP 459 Min CP 424 ×2000 Stardust ×2000",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Win a Max Battle POSSIBLE REWARDS Drampa Max CP 1249 Min CP 1191 Duraludon Max CP 1314 Min CP 1255 ×10 Eternatus Candy ×10 ×2000 Stardust ×2000",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Unlock a Max Move POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×5000 Stardust ×5000",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Make an Excellent Throw POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
      "text": "Power up Pokémon 10 times — 100 GO Points",
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
-     "status": "corroborated"
+     "status": "single"
     },
     {
      "text": "Trainers with GO Pass Deluxe get an additional Daily Task:",
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
-     "status": "corroborated"
+     "status": "single"
     },
     {
      "text": "Daily Tasks reset each day and may change throughout the event.",
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
-     "status": "corroborated"
+     "status": "single"
     },
     {
      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
      "sources": [
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
-     "status": "corroborated"
+     "status": "single"
     }
    ],
    "passes": [
@@ -64152,14 +65320,6 @@
      "status": "official"
     },
     {
-     "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
      "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
      "sources": [
       "leekduck"
@@ -64168,6 +65328,13 @@
     },
     {
      "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
      "sources": [
       "leekduck"
      ],
@@ -64191,13 +65358,6 @@
      "text": "Toxtricity (Low Key Form)",
      "sources": [
       "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Level | Regular Reward | Deluxe Reward",
-     "sources": [
-      "hub"
      ],
      "status": "single"
     }
@@ -67170,7 +68330,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 197,
+    "revision": 199,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -74543,7 +75703,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 188,
+    "revision": 190,
     "amended": true,
     "native": false,
     "collection": "world-events"
