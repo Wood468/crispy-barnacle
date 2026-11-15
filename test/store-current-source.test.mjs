@@ -64,7 +64,7 @@ test('November, Into the Wild and standard coin pack are recently observed, neve
     const result = R.sourceOffer(name, fixture, NOW);
     assert.equal(result.status, 'listed', name);
     assert.match(result.note, /Seen in|latest Store snapshot/i);
-    assert.equal(result.image, null, 'unapproved publisher artwork stays out of runtime');
+    assert.ok(result.image === null || R.sourceArt(result.image), 'only a strictly validated exact-offer Niantic image (owner-approved 15 Nov 2026) or none');
   }
 });
 
@@ -139,9 +139,10 @@ test('India in-app coin packs are recorded separately from AU Web packs and neve
   assert.equal(OBSERVATIONS.find(x => x.id === 'in-itw-deluxe')?.amount,439);
 });
 
-test('publisher image candidates remain unapproved for runtime display', () => {
-  assert.equal(IMAGE_CSP_HOSTS.some(origin => origin === 'https://assets.pgo.webstore.nianticlabs.com'),false);
-  assert.equal(R.sourceOffer('GO Pass Deluxe: November', fixture, NOW).image,null);
+test('Niantic Store image host is allowed exactly once (owner-approved 15 Nov 2026) and only for the exact offer', () => {
+  assert.equal(IMAGE_CSP_HOSTS.filter(origin => origin === 'https://assets.pgo.webstore.nianticlabs.com').length,1);
+  assert.equal(R.sourceOffer('GO Pass Deluxe: November', fixture, NOW).image,image);
+  assert.equal(R.sourceOffer('GO Pass Deluxe: November', fixture, NOW, {ambiguousSku:true}).image,null);
 });
 
 /* Staleness boundaries use a fixed injected clock (the third argument), never Date.now(). */

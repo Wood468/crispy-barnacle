@@ -72,13 +72,13 @@ test('exact local item art renders as a same-origin lazy image; no image slot ot
   }
 });
 
-test('a snapshot publisher image is still never promoted to runtime artwork', async () => {
+test('a snapshot publisher image renders only for its exact offer (owner-approved host)', async () => {
   const now = new Date().toISOString();
   const cdn = 'https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle3.sprite.a-da6f21e79d79/w256.webp';
-  const { html } = await render({ prices: [au('store-fixture-pass', 'Fixture Pass', 8.99, 'Tickets')],
+  const { cards } = await render({ prices: [au('store-fixture-pass', 'Fixture Pass', 8.99, 'Tickets'), au('store-other', 'Fixture Pass Plus', 9.99, 'Tickets')],
     snapshot: { version: 1, updated: now, items: [{ name: 'Fixture Pass', image: cdn, lastSeen: now }], gone: [] } });
-  assert.match(html, /Fixture Pass/);
-  assert.doesNotMatch(html, /nianticlabs|<img/, 'CSP/CDN decision is the owner\'s, not this change');
+  assert.match(named(cards, 'Fixture Pass'), /<img class="sp-i" src="https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\//);
+  assert.doesNotMatch(named(cards, 'Fixture Pass Plus'), /<img/);
 });
 
 test('a failed exact image is removed, never replaced by a placeholder tile', async () => {

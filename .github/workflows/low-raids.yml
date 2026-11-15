@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 22
       - name: Check the reader
-        run: node --test test/low-raids.test.mjs
+        run: node --test test/low-raids.test.mjs test/low-raids-leekduck.test.mjs
       - name: Read the page and update the raid rotation
         shell: bash
         env:
