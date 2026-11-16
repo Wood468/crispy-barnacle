@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-15T16:22:10.456Z",
+ "updated": "2026-11-16T06:30:20.680Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 5
+   "items": 4
   },
   {
    "id": "miners-assets",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 0,
@@ -66,30 +66,6 @@
    "notInOurData": []
   },
   {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
-   "date": "2026-11-09T11:12:47.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
-   "date": "2026-11-09T10:48:45.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
-   ],
-   "notInOurData": []
-  },
-  {
    "source": "hub",
    "trust": "community",
    "title": "Pokémon GO Into the Wild (2026)",
@@ -100,18 +76,6 @@
     "Gimmighoul",
     "Regidrago",
     "Meltan"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Super Mega Clefable Raid Day",
-   "link": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/",
-   "date": "2026-11-05T18:14:11.000Z",
-   "summary": "Mega Clefable debuts during Clefable Super Mega Raid Day on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time. Mega Clefable appears in Super Mega Raids with an increased chance to b",
-   "pokemon": [
-    "Clefable"
    ],
    "notInOurData": []
   }
