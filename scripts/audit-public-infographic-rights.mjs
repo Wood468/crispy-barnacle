@@ -9,6 +9,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildWeekly } from './g47ix-publish.mjs';
 
 const isObject = v => !!v && typeof v === 'object' && !Array.isArray(v);
 const list = v => Array.isArray(v) ? v : [];
@@ -23,7 +24,7 @@ const g47ixEntry = (entry, mediaPath) =>
  * IDs, CDN URLs, filenames or OCR. Approval and permission are separate: even
  * a reviewed/published candidate cannot establish public redistribution rights.
  */
-export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queue = {}, registry = {} } = {}) {
+export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queue = {}, registry = {}, projectedWeekly = {} } = {}) {
   const totals = {
     eventReferences: 0,
     bossGuideReferences: 0,
@@ -36,6 +37,9 @@ export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queu
     sourceLabelPathMismatch: 0,
     explicitlyAttributedG47ixReferences: 0,
     namespaceOnlyReferences: 0,
+    projectedWeeklyChanges: 0,
+    projectedPendingWeeklyPromotions: 0,
+    projectedUnattributedWeeklyPromotions: 0,
   };
   const paths = new Set();
   const recorded = (entry, mediaPath, category) => {
@@ -84,6 +88,23 @@ export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queu
       totals.pendingWeeklyReferences++;
     }
   }
+  // Cross-check the next publisher selection against the currently committed
+  // weekly feed. The merged publisher prefers newest staged artwork, including
+  // candidates still labelled "pending". This is a forecast, not live state.
+  const currentByKind = new Map(list(weekly?.items).filter(x => x && x.kind)
+    .map(x => [x.kind, pathOnly(x.image)]));
+  for (const graphic of list(projectedWeekly?.items)) {
+    if (!graphic || !g47ixEntry(graphic, graphic.image)) continue;
+    const imagePath = pathOnly(graphic.image);
+    if (currentByKind.get(graphic.kind) === imagePath) continue;
+    totals.projectedWeeklyChanges++;
+    const candidate = indexed.get(imagePath);
+    if (!candidate || candidate.overview !== graphic.kind ||
+        candidate.decision === 'pending' || candidate.decision === 'rejected') {
+      totals.projectedPendingWeeklyPromotions++;
+    }
+    if (!string(candidate?.creator).trim()) totals.projectedUnattributedWeeklyPromotions++;
+  }
   for (const graphic of list(queue?.items)) {
     if (!recorded(graphic, graphic?.image, 'queueReferences')) continue;
     if (!string(graphic?.creator).trim()) totals.missingQueueCreatorAttribution++;
@@ -97,17 +118,21 @@ export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queu
     publicG47ixReferences: publicReferences,
     requiresRightsReview: publicReferences > 0,
     totals,
-    note: "The g47ix URL namespace may hold other creators' images; attribution and approval do not imply public redistribution permission.",
+    note: "Projected promotions describe a future publisher run, not currently deployed images. The g47ix namespace may hold other creators' images; attribution/approval do not imply public redistribution permission.",
   };
 }
 
 export function runAudit(directory = process.cwd(), strict = false) {
   const read = file => JSON.parse(readFileSync(resolve(directory, file), 'utf8'));
+  const registry = read('data/g47ix-infographics-review.json');
   const report = auditPublicInfographicRights({
     eventInfo: read('public/event-info.json'),
     weekly: read('public/weekly.json'),
     queue: read('public/infographic-queue.json'),
-    registry: read('data/g47ix-infographics-review.json'),
+    registry,
+    // Use the existing publisher contract read-only. Do not independently
+    // duplicate eligibility, month rollover, or tie-breaking policy here.
+    projectedWeekly: buildWeekly(registry),
   });
   return { report, exitCode: strict && report.requiresRightsReview ? 2 : 0 };
 }
