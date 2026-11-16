@@ -34,11 +34,17 @@ export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queu
     unmatchedWeeklyReferences: 0,
     missingQueueCreatorAttribution: 0,
     sourceLabelPathMismatch: 0,
+    explicitlyAttributedG47ixReferences: 0,
+    namespaceOnlyReferences: 0,
   };
   const paths = new Set();
   const recorded = (entry, mediaPath, category) => {
     if (!g47ixEntry(entry, mediaPath)) return false;
     totals[category]++;
+    // The /g47ix/ folder also stores owner-submitted Telegram graphics. A
+    // namespace match is a public-path concern, NOT creator attribution.
+    const attributed = /^g47ix$/i.test(string(entry?.source).trim()) || /^g47ix$/i.test(string(entry?.creator).trim());
+    totals[attributed ? 'explicitlyAttributedG47ixReferences' : 'namespaceOnlyReferences']++;
     const path = pathOnly(mediaPath);
     // Only local paths are counted for deduplicated public media. Other G47IX
     // source-labelled external links are counted as references, not local blobs.
@@ -87,11 +93,11 @@ export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queu
   const publicReferences = totals.eventReferences + totals.bossGuideReferences + totals.weeklyReferences + totals.queueReferences;
   return {
     auditVersion: 1,
-    classification: 'public-metadata-reference-audit-not-licence-or-live-access-verification',
+    classification: 'G47IX-attributed-or-g47ix-namespace-reference-not-creator-proof-licence-or-live-access',
     publicG47ixReferences: publicReferences,
     requiresRightsReview: publicReferences > 0,
     totals,
-    note: 'Pending state and creator labels are diagnostic only; reviewed images do not imply public redistribution permission.',
+    note: "The g47ix URL namespace may hold other creators' images; attribution and approval do not imply public redistribution permission.",
   };
 }
 
