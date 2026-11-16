@@ -10,6 +10,11 @@ SYN=json.loads(json.dumps(REAL))
 SYN['rotation']=[{'s':'2026-11-09T10:00','e':'2026-11-13T20:00','five':'Dialga','mega':'Mega Sableye','shadow':'Shadow Tornadus (Incarnate)','rh':'Dialga, Wed Nov 11','cp':{'Dialga':[2000,2500]},'shiny':['Dialga']}]
 SYN['maxRosters']=[]
 SYN['maxBattles']=[['2026-11-09','2026-11-15','Gigantamax Charizard'],['2026-11-16','2026-11-22','Dynamax Espurr']]
+# Fixed rotations for the lower-tier checks, so they never depend on what the live importer has filled in for a given week.
+LOW_ON=[{'s':'2026-11-04T06:00','e':'2026-11-08T22:00','five':'Giratina (Altered Forme)','mega':'Mega Sableye','shadow':'Shadow Tornadus (Incarnate)','low':{'one':['Pikachu','Antique Sinistea'],'three':['Cofagrigus','Trevenant','Dhelmise'],'shadowOne':['Shadow Larvitar','Shadow Mudkip','Shadow Makuhita','Shadow Cranidos'],'shadowThree':['Shadow Prinplup','Shadow Piloswine','Shadow Poliwhirl'],'observed':'2026-11-05','source':'Pokémon GO Hub current raids','sourceUrl':'https://pokemongohub.net/post/guide/current-go-raids/'},'rh':'Giratina, Wed Nov 4'}]
+LOW_OFF=[{'s':'2026-11-16T06:00','e':'2026-11-24T22:00','five':'Cresselia and Darkrai','mega':'Mega Banette','shadow':'Shadow Tornadus (Incarnate)','rh':'Cresselia and Darkrai, Wed Nov 18'}]
+def fixture(rotation,**extra):
+  d=json.loads(json.dumps(REAL));d['rotation']=rotation;d.update(extra);return d
 def shoot(page,name,width):
   if OUT:
     Path(OUT).mkdir(parents=True,exist_ok=True);page.screenshot(path=str(Path(OUT)/f'{name}-{width}.png'),full_page=True)
@@ -79,20 +84,20 @@ with sync_playwright() as p:
   assert 'Espurr' in root.inner_text();shoot(page,'raids-next-week',width)
   assert not errors,errors;c.close()
   # 3. A week with a raid rotation but no Max Battle information says so plainly.
-  c,page,errors=make(browser,width,REAL,'2026-11-16T12:00:00+11:00')
+  c,page,errors=make(browser,width,fixture(LOW_OFF,maxBattles=[],maxRosters=[]),'2026-11-16T12:00:00+11:00')
   page.locator('#tabs [data-tab="raids"]').click()
   assert 'Max Battles not announced for this week yet.' in page.locator('#rotnow').inner_text()
   shoot(page,'raids-empty-max',width)
   assert not errors,errors;c.close()
-  # 4. Lower tiers: the Nov 16 rotation has none published yet, so the Battle tab names every missing tier plainly (no silent blank).
-  c,page,errors=make(browser,width,REAL,'2026-11-16T12:00:00+11:00')
+  # 4. Lower tiers: a rotation with no low block (fixture, not live data), so the Battle tab names every missing tier plainly (no silent blank).
+  c,page,errors=make(browser,width,fixture(LOW_OFF),'2026-11-16T12:00:00+11:00')
   page.locator('#tabs [data-tab="raids"]').click();root=page.locator('#rotnow')
   empty=root.locator('.rw-low-empty')
   assert empty.count()>=1 and all(x in empty.first.inner_text() for x in ('1★','3★','Shadow 1–3★','not published')),(width,empty.first.inner_text())
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   assert not errors,errors;c.close()
   # 5. A rotation that has them lists every tier in order (1★, 3★, Shadow 1★, Shadow 3★) behind a 44px summary, inside the viewport.
-  c,page,errors=make(browser,width,REAL,'2026-11-05T12:00:00+11:00')
+  c,page,errors=make(browser,width,fixture(LOW_ON),'2026-11-05T12:00:00+11:00')
   page.locator('#tabs [data-tab="raids"]').click();root=page.locator('#rotnow')
   low=root.locator('details.rw-low').first;sm=low.locator('summary')
   assert sm.bounding_box()['height']>=44,(width,sm.bounding_box())
