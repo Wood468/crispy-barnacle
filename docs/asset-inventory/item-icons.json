@@ -154,6 +154,127 @@
       "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
       "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
       "reviewed": "Viewed by the implementer: tall glass capsule with a purple base"
+    },
+    {
+      "path": "public/ico/i/nanab-berry.webp",
+      "label": "Nanab Berry",
+      "sha256": "6e5c63b643f163371c43243dcda2ecfc1592f8761102132433bdc38d34f2c97c",
+      "bytes": 5038,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: pink banana-shaped berry with a yellow top"
+    },
+    {
+      "path": "public/ico/i/max-mushroom.webp",
+      "label": "Max Mushroom",
+      "sha256": "beaca46cd988074101e50a106be8a4744db2d631fa2e46157add700d3d3b2af2",
+      "bytes": 6812,
+      "width": 115,
+      "height": 128,
+      "processing": "Owner-supplied 182x203 png resized to 115x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: pink mushroom with spiral cap"
+    },
+    {
+      "path": "public/ico/i/revive.webp",
+      "label": "Revive",
+      "sha256": "6b576e560422dd9407fdcf4ad90f3c5d27c1dc1cb23f1339fa17c452720c4f4a",
+      "bytes": 2552,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: single yellow crystal"
+    },
+    {
+      "path": "public/ico/i/potion.webp",
+      "label": "Potion",
+      "sha256": "04e1a62d5ad63fef9180c275b7df1de072f3499cb01a8988d5bf7036af6c08ac",
+      "bytes": 3872,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: pink spray bottle"
+    },
+    {
+      "path": "public/ico/i/hyper-potion.webp",
+      "label": "Hyper Potion",
+      "sha256": "59b2947e1c040fef84ec9962472f598f44d19ccd053b33de2ea5b1221d1df32e",
+      "bytes": 4192,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: purple and pink spray bottle"
+    },
+    {
+      "path": "public/ico/i/super-potion.webp",
+      "label": "Super Potion",
+      "sha256": "7be69f777b446d9d170ec8fa9968aaa7df463ea32f74ea9886d5e084be3d160b",
+      "bytes": 3886,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: orange spray bottle"
+    },
+    {
+      "path": "public/ico/i/remote-raid-pass.webp",
+      "label": "Remote Raid Pass",
+      "sha256": "8607f5f01f5656a1c1c7300164e81482264362c5fc63cf20cf0c7f28d608cea5",
+      "bytes": 8092,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: blue and pink lanyard pass"
+    },
+    {
+      "path": "public/ico/i/max-particle-pack.webp",
+      "label": "Max Particle Pack",
+      "sha256": "bbed645a766d8e4950fd572cabb67347fc3cc2b8f2061b9e39693327754545f8",
+      "bytes": 3238,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 384x384 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: purple glowing cylinder capsule"
+    },
+    {
+      "path": "public/ico/i/lure-module.webp",
+      "label": "Lure Module",
+      "sha256": "a4609ecbfab9ffe0b5e995db0a781d76346e1f5ff556f207f231708c31aa32c4",
+      "bytes": 5318,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: magenta card with purple and pink circuit lines"
+    },
+    {
+      "path": "public/ico/i/link-charge.webp",
+      "label": "Link Charge",
+      "sha256": "acabcca04d83720f11371b4b4c19f575179cb676c7f5f889aec340644d976e26",
+      "bytes": 2738,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: white device with blue and purple circuits"
+    },
+    {
+      "path": "public/ico/i/premium-battle-pass.webp",
+      "label": "Premium Battle Pass",
+      "sha256": "b38a62b29a7a077615ef1b36298d03bd2b153188e9564ae41505ae6efe820031",
+      "bytes": 8010,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: green lanyard pass"
     }
   ]
 }

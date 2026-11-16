@@ -5,7 +5,7 @@ import { createRequire } from 'node:module';
 const R = createRequire(import.meta.url)('../public/go-pass-reward-art.js');
 
 test('the approved exact reward icon table points only to tracked on-disk assets', () => {
-  assert.equal(R.knownAssets.length,18);
+  assert.equal(R.knownAssets.length,29);
   assert.equal(new Set(R.knownAssets).size,R.knownAssets.length);
   for (const path of R.knownAssets) {
     assert.match(path,/^\/ico\/(?:i\/|g\/)?[a-z0-9-]+\.webp$/);
@@ -32,13 +32,20 @@ test('verified assets are used only for their actual item names', () => {
     ['Rare Candy XL','/ico/i/rare-candy-xl.webp'],
     ['Lucky Egg','/ico/i/lucky-egg.webp'],
     ['Egg Incubator','/ico/i/egg-incubator.webp'],
-    ['Super Incubator','/ico/i/super-incubator.webp']
+    ['Super Incubator','/ico/i/super-incubator.webp'],
+    ['Nanab Berry','/ico/i/nanab-berry.webp'],
+    ['Max Mushroom','/ico/i/max-mushroom.webp'],
+    ['Revive','/ico/i/revive.webp'],
+    ['Potion','/ico/i/potion.webp'],
+    ['Hyper Potion','/ico/i/hyper-potion.webp'],
+    ['Super Potion','/ico/i/super-potion.webp'],
+    ['Remote Raid Pass','/ico/i/remote-raid-pass.webp']
   ];
   for(const [name,src] of cases) assert.deepEqual(R.resolve({name,type:'item'}).src,src);
 });
 
 test('similar items do not borrow incorrect images', () => {
-  for(const name of ['Regular Potion','Super Potion','Hyper Potion','Revive','Remote Raid Pass','Premium Battle Pass','Razz Berry','Pinap Berry','Max Potion XL','Silver Bottle Cap','Lucky Egg Pack','Star Piece Pack','Great Ball Bundle','Premier Ball','Master Ball','Poffin','Rare Candy Pack','Machop Candy','Incubator']) {
+  for(const name of ['Regular Potion','Super Potion Pack','Hyper Potion Box','Revive Pack','Remote Raid Pass Bundle','Premium Battle Pass Bundle','Razz Berry','Pinap Berry','Max Potion XL','Silver Bottle Cap','Lucky Egg Pack','Star Piece Pack','Great Ball Bundle','Premier Ball','Master Ball','Poffin','Rare Candy Pack','Machop Candy','Incubator']) {
     const result=R.resolve({name,type:'item'});
     assert.equal(result.kind,'symbol',name);
     assert.equal(result.src,null,name);

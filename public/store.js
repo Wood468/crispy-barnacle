@@ -29,7 +29,21 @@
     [/^rare candy xl(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/rare-candy-xl.webp', ''],
     [/^lucky eggs?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/lucky-egg.webp', ''],
     [/^egg incubators?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/egg-incubator.webp', ''],
-    [/^super incubators?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/super-incubator.webp', '']
+    [/^super incubators?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/super-incubator.webp', ''],
+    /* Owner-supplied pictures, exact names only: plain Revive/Potion never match Max Revive/Max Potion (which keep their own icons) and vice versa. */
+    [/^nanab berr(?:y|ies)(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/nanab-berry.webp', ''],
+    [/^max mushrooms?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/max-mushroom.webp', ''],
+    [/^revives?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/revive.webp', ''],
+    [/^potions?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/potion.webp', ''],
+    [/^hyper potions?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/hyper-potion.webp', ''],
+    [/^super potions?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/super-potion.webp', ''],
+    [/^remote raid pass(?:es)?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/remote-raid-pass.webp', ''],
+    /* Owner-supplied pictures, exact names only (no leading quantity, no combined 'A + B' labels, no other Lure Module kinds). */
+    [/^max particle packs?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/max-particle-pack.webp', ''],
+    [/^max particles(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/max-particle-pack.webp', ''],
+    [/^lure modules?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/lure-module.webp', ''],
+    [/^link charges?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/link-charge.webp', ''],
+    [/^premium battle passe?s?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/premium-battle-pass.webp', '']
   ];
   /* Exact local art only (same-origin /ico/**). With no exact asset there is no image slot at all:
      never a letter tile, a glyph, or a picture borrowed from another item. */

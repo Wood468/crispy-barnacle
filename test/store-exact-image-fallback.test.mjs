@@ -58,7 +58,7 @@ test('exact local Store WebP art renders as an alt-named lazy image; failures re
 });
 
 test('quantity wording does not permit using exact art for bundles or other items',async()=>{
-  const {cards}=await render(['Incense Bundle','Incense x0','Remote Raid Pass','Premium Battle Pass','Max Potion Box']);
+  const {cards}=await render(['Incense Bundle','Incense x0','Remote Raid Pass Bundle','Premium Battle Pass Bundle','Max Potion Box']);
   assert.equal(cards.length,5);
   for(const card of cards){
     assert.doesNotMatch(card,/<img/,'only approved exact standalone items use item art');

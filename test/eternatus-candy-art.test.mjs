@@ -55,7 +55,7 @@ test('the generic candy glyph stays as the fallback for any other candy', () => 
 });
 
 test('pictures are local webp files whose bytes match the recorded checksum and provenance', () => {
-  assert.equal(prov.entries.length, 14);
+  assert.equal(prov.entries.length, 25);
   for (const e of prov.entries) {
     const buf = fs.readFileSync(new URL(e.path, root));
     assert.equal(crypto.createHash('sha256').update(buf).digest('hex'), e.sha256, e.path);
@@ -68,7 +68,7 @@ test('pictures are local webp files whose bytes match the recorded checksum and 
     assert.match(e.provenance, /Pok.mon artwork belongs to its owners$/);
     assert.doesNotMatch(JSON.stringify(e), /licen[cs]ed? (under|to)|CC0|public domain/i);
   }
-  assert.deepEqual(prov.entries.map(e => '/' + e.path.replace(/^public\//, '')).sort(), [CANDY, XL, PINAP, "/ico/i/item-bag.webp", "/ico/i/pokemon-storage.webp", "/ico/i/star-piece.webp", "/ico/i/poke-ball.webp", "/ico/i/great-ball.webp", "/ico/i/ultra-ball.webp", "/ico/i/rare-candy.webp", "/ico/i/rare-candy-xl.webp", "/ico/i/lucky-egg.webp", "/ico/i/egg-incubator.webp", "/ico/i/super-incubator.webp"].sort());
+  assert.deepEqual(prov.entries.map(e => '/' + e.path.replace(/^public\//, '')).sort(), [CANDY, XL, PINAP, "/ico/i/item-bag.webp", "/ico/i/pokemon-storage.webp", "/ico/i/star-piece.webp", "/ico/i/poke-ball.webp", "/ico/i/great-ball.webp", "/ico/i/ultra-ball.webp", "/ico/i/rare-candy.webp", "/ico/i/rare-candy-xl.webp", "/ico/i/lucky-egg.webp", "/ico/i/egg-incubator.webp", "/ico/i/super-incubator.webp", "/ico/i/nanab-berry.webp", "/ico/i/max-mushroom.webp", "/ico/i/revive.webp", "/ico/i/potion.webp", "/ico/i/hyper-potion.webp", "/ico/i/super-potion.webp", "/ico/i/remote-raid-pass.webp", "/ico/i/max-particle-pack.webp", "/ico/i/lure-module.webp", "/ico/i/link-charge.webp", "/ico/i/premium-battle-pass.webp"].sort());
 });
 
 test('no hotlinking: the pictures are same-origin paths and the shell cache moved to v376', () => {
@@ -85,6 +85,6 @@ test('Pinap picture is never used for Silver Pinap, Golden Razz or any other ber
   assert.equal(itemIcon('3\u00d7 Silver Pinap Berry'), '/ico/i/silver-pinap.webp');
   assert.equal(itemIcon('Golden Razz Berry'), '/ico/i/golden-razz.webp');
   for (const n of ['Razz Berry', 'Nanab Berry', 'Pinap', 'Pinap Berries', 'Silver Pinap Berry', 'Golden Pinap Berry', 'Eternatus Candy 1 \u00d7 Silver Pinap Berry', 'Pinap Berry Bonus', 'Not Pinap Berry', 'Wepar Berry', 'Berry', '']) assert.equal(pinapIcon(n), '', JSON.stringify(n));
-  for (const n of ['Razz Berry', 'Nanab Berry', 'Wepar Berry', 'Pinap']) assert.equal(itemIcon(n), '', n);
+  for (const n of ['Razz Berry', 'Wepar Berry', 'Pinap']) assert.equal(itemIcon(n), '', n);
   assert.match(detail, /\(berry\|pinap\|razz\|nanab/);
 });

@@ -17,7 +17,7 @@ test('Item Bag and Pokémon Storage (exact, optional +N) get their picture', () 
 });
 
 test('no false matches: lucky bags, other bags, other storage, combos', () => {
-  for (const n of ['Lucky Bag', 'Lucky Bag +1', 'Item Bag Bundle', 'Big Item Bag +1', 'Item Bag +1 Bundle', 'Item Bag +0', 'Item Bags', 'Bag', 'Bag Upgrade', 'Storage', 'Storage +1', 'Pokémon Storage Box', 'Pokémon Storage Bundle +1', 'Pokémon Storage +1 and Item Bag +1', 'Item Storage +1', 'Pokémon Bag +1', 'Starter Bag', 'Premium Battle Pass', '']) assert.equal(icon(n), '', JSON.stringify(n));
+  for (const n of ['Lucky Bag', 'Lucky Bag +1', 'Item Bag Bundle', 'Big Item Bag +1', 'Item Bag +1 Bundle', 'Item Bag +0', 'Item Bags', 'Bag', 'Bag Upgrade', 'Storage', 'Storage +1', 'Pokémon Storage Box', 'Pokémon Storage Bundle +1', 'Pokémon Storage +1 and Item Bag +1', 'Item Storage +1', 'Pokémon Bag +1', 'Starter Bag', 'Premium Battle Pass Bundle', '']) assert.equal(icon(n), '', JSON.stringify(n));
 });
 
 test('picture is decorative (empty alt), lazy, sized, same-origin; other icons keep their alt', () => {

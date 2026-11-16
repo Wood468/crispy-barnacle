@@ -26,7 +26,18 @@
     [/^rare candy xl$/i, '/ico/i/rare-candy-xl.webp'],
     [/^lucky egg$/i, '/ico/i/lucky-egg.webp'],
     [/^egg incubator$/i, '/ico/i/egg-incubator.webp'],
-    [/^super incubator$/i, '/ico/i/super-incubator.webp']
+    [/^super incubator$/i, '/ico/i/super-incubator.webp'],
+    [/^nanab berry$/i, '/ico/i/nanab-berry.webp'],
+    [/^max mushroom$/i, '/ico/i/max-mushroom.webp'],
+    [/^revive$/i, '/ico/i/revive.webp'],
+    [/^potion$/i, '/ico/i/potion.webp'],
+    [/^hyper potion$/i, '/ico/i/hyper-potion.webp'],
+    [/^super potion$/i, '/ico/i/super-potion.webp'],
+    [/^remote raid pass$/i, '/ico/i/remote-raid-pass.webp'],
+    [/^max particle(?: pack|s)$/i, '/ico/i/max-particle-pack.webp'],
+    [/^lure module$/i, '/ico/i/lure-module.webp'],
+    [/^link charges?$/i, '/ico/i/link-charge.webp'],
+    [/^premium battle pass$/i, '/ico/i/premium-battle-pass.webp']
   ];
   function normalize(name) {
     return String(name || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
