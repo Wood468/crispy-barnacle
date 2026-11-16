@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-16T03:13:23.850Z",
+ "runAt": "2026-11-16T11:05:21.770Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -556,7 +556,7 @@
    "error": ""
   },
   "hub": {
-   "listed": 2,
+   "listed": 1,
    "error": ""
   }
  },
@@ -976,41 +976,6 @@
    "field": "research",
    "missingFrom": [
     "leekduck"
-   ]
-  },
-  {
-   "event": "Pawniard Community Day",
-   "field": "bonuses",
-   "missingFrom": [
-    "hub"
-   ]
-  },
-  {
-   "event": "Pawniard Community Day",
-   "field": "featured",
-   "missingFrom": [
-    "hub"
-   ]
-  },
-  {
-   "event": "Pawniard Community Day",
-   "field": "raids",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Pawniard Community Day",
-   "field": "eggs",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Pawniard Community Day",
-   "field": "moves",
-   "missingFrom": [
-    "hub"
    ]
   },
   {

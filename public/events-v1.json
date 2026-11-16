@@ -5314,14 +5314,16 @@
       {
        "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
       {
        "text": "More Power Spots than usual will be active.",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
@@ -5329,7 +5331,8 @@
        "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
        "sources": [
         "official",
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
        "status": "official"
       },
@@ -5369,9 +5372,31 @@
        "status": "official"
       },
       {
+       "text": "The event features the following bonuses:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Eternatus returns!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 15: 2× Catch Stardust",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
@@ -5385,9 +5410,17 @@
       {
        "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
+      },
+      {
+       "text": "Rank 35: Half the Stardust required to activate the Dynamax Cannon Adventure Effect Half the Candy required to activate the Dynamax Cannon Adventure Effect",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       },
       {
        "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
@@ -5402,7 +5435,8 @@
        "text": "You may encounter event-themed Pokémon in the wild, including any Pokémon* that has debuted in Dynamax Max Battles!",
        "sources": [
         "official",
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
        "status": "official"
       },
@@ -5488,7 +5522,8 @@
       {
        "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
@@ -5527,6 +5562,13 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Expect more Power Spots active than usual, GO Pass and GO Pass Deluxe, themed wild encounters, and Max Battles galore! Here’s everything you need to know about the event.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "eggs": [],
@@ -5549,37 +5591,42 @@
       {
        "text": "Power up Pokémon 8 times POSSIBLE REWARDS Magikarp Max CP 117 Min CP 99 Feebas Max CP 117 Min CP 99 ×3 Pinap Berry ×3",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Explore 1 km POSSIBLE REWARDS Eevee Max CP 459 Min CP 424 ×2000 Stardust ×2000",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Win a Max Battle POSSIBLE REWARDS Drampa Max CP 1249 Min CP 1191 Duraludon Max CP 1314 Min CP 1255 ×10 Eternatus Candy ×10 ×2000 Stardust ×2000",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Unlock a Max Move POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×5000 Stardust ×5000",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Make an Excellent Throw POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Power up Pokémon 10 times — 100 GO Points",
@@ -5608,6 +5655,13 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Catch 8 Pokémon | Bulbasaur Charmander Squirtle Grookey Scorbunny Sobble",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "shiny": [],
@@ -5624,14 +5678,16 @@
       {
        "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
       {
        "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
@@ -5653,23 +5709,26 @@
       {
        "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Encounter Eternatus and Dynamax Pokémon, and earn Eternatus Candy!",
@@ -5689,6 +5748,13 @@
        "text": "Toxtricity (Low Key Form)",
        "sources": [
         "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From Monday, November 16, 2026, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time , the GO Pass and GO Pass Deluxe for Dynamax Trails will be available in Pokémon GO.",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       },
@@ -6405,7 +6471,8 @@
        "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
        "sources": [
         "official",
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
        "status": "official"
       },
@@ -6440,8 +6507,8 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "260e2fb2857adc25534198ce7e78d252990af25d1ab7c2c20ee0180836db3964",
-    "revision": 15,
+    "contentHash": "168e5c90ac41ad126f71aa9cd12a3ab89580d2a832221837a9bcbc79f3e2daf2",
+    "revision": 16,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -6462,14 +6529,16 @@
     {
      "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
     {
      "text": "More Power Spots than usual will be active.",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
@@ -6477,7 +6546,8 @@
      "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
      "sources": [
       "official",
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
      "status": "official"
     },
@@ -6517,9 +6587,31 @@
      "status": "official"
     },
     {
+     "text": "The event features the following bonuses:",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Eternatus returns!",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
      "text": "Rank 15: 2× Catch Stardust",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
@@ -6533,9 +6625,17 @@
     {
      "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
+    },
+    {
+     "text": "Rank 35: Half the Stardust required to activate the Dynamax Cannon Adventure Effect Half the Candy required to activate the Dynamax Cannon Adventure Effect",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
     },
     {
      "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
@@ -6694,6 +6794,37 @@
      "checkedAt": "2026-11-16"
     },
     {
+     "task": "Make an Excellent Throw",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Eternatus Candy 1 × Silver Pinap Berry",
+       "quantity": 10
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-16"
+    },
+    {
      "task": "Power up Pokémon 8 times",
      "category": "field",
      "rewards": [
@@ -6789,6 +6920,37 @@
      "checkedAt": "2026-11-16"
     },
     {
+     "task": "Win a Max Battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Eternatus Candy 2000 × Stardust Duraludon Drampa",
+       "quantity": 10
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-16"
+    },
+    {
      "task": "Complete Pass Tasks to rank up and earn the following",
      "category": "research",
      "rewards": [
@@ -6837,37 +6999,42 @@
     {
      "text": "Power up Pokémon 8 times POSSIBLE REWARDS Magikarp Max CP 117 Min CP 99 Feebas Max CP 117 Min CP 99 ×3 Pinap Berry ×3",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Explore 1 km POSSIBLE REWARDS Eevee Max CP 459 Min CP 424 ×2000 Stardust ×2000",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Win a Max Battle POSSIBLE REWARDS Drampa Max CP 1249 Min CP 1191 Duraludon Max CP 1314 Min CP 1255 ×10 Eternatus Candy ×10 ×2000 Stardust ×2000",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Unlock a Max Move POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×5000 Stardust ×5000",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Make an Excellent Throw POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Power up Pokémon 10 times — 100 GO Points",
@@ -6894,6 +7061,13 @@
      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
      "sources": [
       "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch 8 Pokémon | Bulbasaur Charmander Squirtle Grookey Scorbunny Sobble",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     }
@@ -8615,14 +8789,16 @@
     {
      "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
     {
      "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
@@ -8644,23 +8820,26 @@
     {
      "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Encounter Eternatus and Dynamax Pokémon, and earn Eternatus Candy!",
@@ -8680,6 +8859,13 @@
      "text": "Toxtricity (Low Key Form)",
      "sources": [
       "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "From Monday, November 16, 2026, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time , the GO Pass and GO Pass Deluxe for Dynamax Trails will be available in Pokémon GO.",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     }
@@ -8706,6 +8892,12 @@
      "name": "Pokémon GO Hub",
      "trust": "community",
      "url": "https://pokemongohub.net/post/guide/go-pass-dynamax-trails/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
     }
    ],
    "pokemon": [
@@ -11649,7 +11841,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 203,
+    "revision": 205,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -23701,14 +23893,7 @@
      "tickets": [],
      "dates": [
       {
-       "text": "The featured Dynamax Pokémon for November 16–23, 2026 has not been announced. Stay tuned for more details.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
+       "text": "There is no Max Monday on November 16, 2026. The Dynamax Trails event is happening instead, so there are no Max Monday-specific bonuses, such as the guaranteed Rare Candy XL.",
        "sources": [
         "leekduck"
        ],
@@ -25649,122 +25834,8 @@
        "status": "single"
       }
      ],
-     "raids": [
-      {
-       "text": "On Wednesday, November 18, from 6:00 p.m. to 7:00 p.m. local time , Cresselia and Darkrai will feature in Raid Hour at Gyms.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "⚔️ Related guides:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Pokémon GO’s Dynamax Trails event runs from November 16 at 10:00 a.m. to November 23 at 8:00 p.m. local time , bringing a week of Max Battles and the return of Eternatus!",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Expect more Power Spots active than usual, GO Pass and GO Pass Deluxe, themed wild encounters, and Max Battles galore!",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From November 9 at 6:00 a.m. to November 24 at 10:00 p.m. local time , Cresselia and Darkrai appear in five-star raids.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From November 16 at 6:00 a.m. to November 24 at 10:00 p.m. local time , Mega Banette appears in Mega Raids.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "⚔️ Related guide: Mega Banette",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Incarnate Shadow Tornadus",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "eggs": [
-      {
-       "text": "The following Pokémon are among this Season’s Egg hatches. These are selected highlights, not the complete hatch pools. Check our current Egg chart and each Egg’s in-game hatch list.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Wild Area exception: The event’s 10 km Egg lineup includes Honedge, Klefki, Drampa, and Duraludon. See our Wild Area guide for event Egg details.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Zigzagoon",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Meowth",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Stunfisk",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Hisuian Sneasel",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Slowpoke",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Corsola",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
+     "raids": [],
+     "eggs": [],
      "research": [
       {
        "text": "Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 +2 ×2 Pinap Berry ×2 ×500 Stardust ×500",
@@ -25784,13 +25855,6 @@
        "text": "Check in at a Community Ambassador event to receive Timed Research with Pawniard encounters featuring a Special Background and other premium item rewards. Find a nearby meetup on the Pokémon GO event map .",
        "sources": [
         "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Earn a Research Stamp on seven different days to unlock a Research Breakthrough encounter with one of the following Season-themed Pokémon , as listed in our Field Research and Research Breakthrough guide .",
-       "sources": [
-        "hub"
        ],
        "status": "single"
       }
@@ -25814,13 +25878,6 @@
        "text": "Trainers will have an increased chance of encountering Shiny Pawniard during Community Day. Shiny Pawniard can be evolved into Shiny Bisharp and Shiny Kingambit.",
        "sources": [
         "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Saturday, November 21: Pawniard Community Day takes place from 2:00 p.m. to 5 p.m. with boosted shiny rates.",
-       "sources": [
-        "hub"
        ],
        "status": "single"
       }
@@ -25849,23 +25906,15 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "The November GO Pass starts on Tuesday, November 3, at 10:00 a.m. local time , and progression ends on Tuesday, December 1, at 10:00 a.m. local time .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "dates": [
       {
        "text": "The event takes place on Saturday, November 21, 2026, from 2:00 p.m. to 5:00 p.m. local time .",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "From 2:00 p.m. to 9:00 p.m. local time , evolve Bisharp into Kingambit after defeating 1 Dark- or Steel-type Raid Boss with Bisharp as your Buddy Pokémon .",
@@ -25880,69 +25929,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Wednesday, November 18: Cresselia and Darkrai feature in five-star Max Battles, with a Max Battle Hour from 6:00–7:00 p.m.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Thursday, November 19: Grookey, Scorbunny and Sobble feature for Spotlight Hour from 6:00–7:00 p.m.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Saturday, November 21: Eternamax Eternatus takes over Power Spots from 11:00 a.m to 2:00 p.m.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "On Wednesday, November 18, from 6:00 p.m. to 7:00 p.m. local time , Cresselia and Darkrai will feature in Raid Hour at Gyms.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Pokémon GO’s Dynamax Trails event runs from November 16 at 10:00 a.m. to November 23 at 8:00 p.m. local time , bringing a week of Max Battles and the return of Eternatus!",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From November 9 at 6:00 a.m. to November 24 at 10:00 p.m. local time , Cresselia and Darkrai appear in five-star raids.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From November 16 at 6:00 a.m. to November 24 at 10:00 p.m. local time , Mega Banette appears in Mega Raids.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "November 10–17 | Great League Ultra League: Mega Edition 2026 GO LAIC Cup",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Explore Pokémon GO’s Twilight Trails Season , running from September 8 at 10 AM to December 1, 2026, at 10 AM local time . The season features new Mega and Dynamax Pokémon and more Pokémon from the Paldea region .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ]
     },
@@ -25955,8 +25941,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "3762eb5303ec6796b6884d7256a970290f14ba6b02791b921ebe77f9d406c56b",
-    "revision": 12,
+    "contentHash": "d67d915d5c7f544ad4fa6f82cec3dbd7231213d66527ac822bfdcb8bd2e18d13",
+    "revision": 13,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -26140,13 +26126,6 @@
       "leekduck"
      ],
      "status": "single"
-    },
-    {
-     "text": "Earn a Research Stamp on seven different days to unlock a Research Breakthrough encounter with one of the following Season-themed Pokémon , as listed in our Field Research and Research Breakthrough guide .",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
     }
    ],
    "passes": [],
@@ -26162,13 +26141,6 @@
      "text": "The Pawniard Community Day Ultra Ticket Box will be available soon for US$1.99 (or the equivalent pricing tier in your local currency) and includes an event ticket and five Ultra Balls at no additional cost!",
      "sources": [
       "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The November GO Pass starts on Tuesday, November 3, at 10:00 a.m. local time , and progression ends on Tuesday, December 1, at 10:00 a.m. local time .",
-     "sources": [
-      "hub"
      ],
      "status": "single"
     }
@@ -32281,7 +32253,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 218,
+    "revision": 220,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -61417,7 +61389,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 194,
+    "revision": 196,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -61994,14 +61966,16 @@
       {
        "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
       {
        "text": "More Power Spots than usual will be active.",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
@@ -62009,7 +61983,8 @@
        "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
        "sources": [
         "official",
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
        "status": "official"
       },
@@ -62049,9 +62024,31 @@
        "status": "official"
       },
       {
+       "text": "The event features the following bonuses:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Eternatus returns!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 15: 2× Catch Stardust",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
@@ -62065,9 +62062,17 @@
       {
        "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
+      },
+      {
+       "text": "Rank 35: Half the Stardust required to activate the Dynamax Cannon Adventure Effect Half the Candy required to activate the Dynamax Cannon Adventure Effect",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       },
       {
        "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
@@ -62082,7 +62087,8 @@
        "text": "You may encounter event-themed Pokémon in the wild, including any Pokémon* that has debuted in Dynamax Max Battles!",
        "sources": [
         "official",
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
        "status": "official"
       },
@@ -62168,7 +62174,8 @@
       {
        "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
@@ -62207,6 +62214,13 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Expect more Power Spots active than usual, GO Pass and GO Pass Deluxe, themed wild encounters, and Max Battles galore! Here’s everything you need to know about the event.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "eggs": [],
@@ -62229,37 +62243,42 @@
       {
        "text": "Power up Pokémon 8 times POSSIBLE REWARDS Magikarp Max CP 117 Min CP 99 Feebas Max CP 117 Min CP 99 ×3 Pinap Berry ×3",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Explore 1 km POSSIBLE REWARDS Eevee Max CP 459 Min CP 424 ×2000 Stardust ×2000",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Win a Max Battle POSSIBLE REWARDS Drampa Max CP 1249 Min CP 1191 Duraludon Max CP 1314 Min CP 1255 ×10 Eternatus Candy ×10 ×2000 Stardust ×2000",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Unlock a Max Move POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×5000 Stardust ×5000",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Make an Excellent Throw POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Power up Pokémon 10 times — 100 GO Points",
@@ -62288,6 +62307,13 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Catch 8 Pokémon | Bulbasaur Charmander Squirtle Grookey Scorbunny Sobble",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "shiny": [],
@@ -62304,14 +62330,16 @@
       {
        "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
       {
        "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
        "sources": [
-        "official"
+        "official",
+        "hub"
        ],
        "status": "official"
       },
@@ -62333,23 +62361,26 @@
       {
        "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Encounter Eternatus and Dynamax Pokémon, and earn Eternatus Candy!",
@@ -62369,6 +62400,13 @@
        "text": "Toxtricity (Low Key Form)",
        "sources": [
         "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From Monday, November 16, 2026, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time , the GO Pass and GO Pass Deluxe for Dynamax Trails will be available in Pokémon GO.",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       },
@@ -63085,7 +63123,8 @@
        "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
        "sources": [
         "official",
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
        "status": "official"
       },
@@ -63120,8 +63159,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "1632497c7b66a41cbeb9f0d6ff023c6bbcc4cf407a2fec4b210f3e651cc363f9",
-    "revision": 16,
+    "contentHash": "6b1164cb296dab5027f9d666bee0d37e628f8904f7ce8c4ea2a1507d3bb22b6c",
+    "revision": 17,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -63140,14 +63179,16 @@
     {
      "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
     {
      "text": "More Power Spots than usual will be active.",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
@@ -63155,7 +63196,8 @@
      "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
      "sources": [
       "official",
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
      "status": "official"
     },
@@ -63195,9 +63237,31 @@
      "status": "official"
     },
     {
+     "text": "The event features the following bonuses:",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Eternatus returns!",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
      "text": "Rank 15: 2× Catch Stardust",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
@@ -63211,9 +63275,17 @@
     {
      "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
+    },
+    {
+     "text": "Rank 35: Half the Stardust required to activate the Dynamax Cannon Adventure Effect Half the Candy required to activate the Dynamax Cannon Adventure Effect",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
     },
     {
      "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
@@ -63372,6 +63444,37 @@
      "checkedAt": "2026-11-16"
     },
     {
+     "task": "Make an Excellent Throw",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Eternatus Candy 1 × Silver Pinap Berry",
+       "quantity": 10
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-16"
+    },
+    {
      "task": "Power up Pokémon 8 times",
      "category": "field",
      "rewards": [
@@ -63467,6 +63570,37 @@
      "checkedAt": "2026-11-16"
     },
     {
+     "task": "Win a Max Battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Eternatus Candy 2000 × Stardust Duraludon Drampa",
+       "quantity": 10
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-16"
+    },
+    {
      "task": "Complete Pass Tasks to rank up and earn the following",
      "category": "research",
      "rewards": [
@@ -63515,37 +63649,42 @@
     {
      "text": "Power up Pokémon 8 times POSSIBLE REWARDS Magikarp Max CP 117 Min CP 99 Feebas Max CP 117 Min CP 99 ×3 Pinap Berry ×3",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Explore 1 km POSSIBLE REWARDS Eevee Max CP 459 Min CP 424 ×2000 Stardust ×2000",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Win a Max Battle POSSIBLE REWARDS Drampa Max CP 1249 Min CP 1191 Duraludon Max CP 1314 Min CP 1255 ×10 Eternatus Candy ×10 ×2000 Stardust ×2000",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Unlock a Max Move POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×5000 Stardust ×5000",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Make an Excellent Throw POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Power up Pokémon 10 times — 100 GO Points",
@@ -63572,6 +63711,13 @@
      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
      "sources": [
       "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch 8 Pokémon | Bulbasaur Charmander Squirtle Grookey Scorbunny Sobble",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     }
@@ -65293,14 +65439,16 @@
     {
      "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
     {
      "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
      "sources": [
-      "official"
+      "official",
+      "hub"
      ],
      "status": "official"
     },
@@ -65322,23 +65470,26 @@
     {
      "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Encounter Eternatus and Dynamax Pokémon, and earn Eternatus Candy!",
@@ -65358,6 +65509,13 @@
      "text": "Toxtricity (Low Key Form)",
      "sources": [
       "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "From Monday, November 16, 2026, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time , the GO Pass and GO Pass Deluxe for Dynamax Trails will be available in Pokémon GO.",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     }
@@ -65390,6 +65548,12 @@
      "name": "Pokémon GO Hub",
      "trust": "community",
      "url": "https://pokemongohub.net/post/guide/go-pass-dynamax-trails/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
     }
    ],
    "pokemon": [
@@ -68330,7 +68494,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 203,
+    "revision": 205,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -75703,7 +75867,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 194,
+    "revision": 196,
     "amended": true,
     "native": false,
     "collection": "world-events"
