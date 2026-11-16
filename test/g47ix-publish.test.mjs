@@ -354,3 +354,14 @@ test("committed public infographic feeds and tracked review registry contain no 
     assert.doesNotMatch(raw, /https:\/\/(?:www\.)?discord(?:app)?\.com\/channels\//i, path);
   }
 });
+
+test("a newer unpinned weekly replaces an older owner-pinned weekly; month and week never cross; rejected stays out", () => {
+  const now = Date.parse("2026-11-17T00:00:00Z");
+  const f = (id, o) => ({ id, stagedPath: "/infographics/g47ix/" + id + ".webp", publishedAt: "2026-11-09T00:00:00Z", ...o });
+  const ids = reg => buildWeekly(reg, now).items.map(i => i.id);
+  assert.deepEqual(ids({ candidates: [f("t2", { title: "GO Weekly T 2", overview: "week", reviewStatus: "weekly" }), f("t16", { title: "GO Weekly T16", publishedAt: "2026-11-16T00:00:00Z", reviewStatus: "weekly", decision: "pending" })] }), ["t16"], "newer unpinned weekly beats older pinned one");
+  assert.deepEqual(ids({ candidates: [f("t2", { title: "GO Weekly T 2", overview: "week", publishedAt: "2026-11-16T00:00:00Z" }), f("t16", { title: "GO Weekly T16", publishedAt: "2026-11-10T00:00:00Z" })] }), ["t2"], "owner-pinned wins when it is the newest");
+  assert.deepEqual(ids({ candidates: [f("t2", { title: "GO Weekly T 2", publishedAt: "2026-11-09T00:00:00Z" }), f("t16", { title: "GO Weekly T16", publishedAt: "2026-11-16T00:00:00Z", decision: "rejected" })] }), ["t2"], "rejected stays out");
+  assert.deepEqual(ids({ candidates: [f("m", { title: "NOV_CONTENT", overview: "month", publishedAt: "2026-11-01T00:00:00Z" }), f("w", { title: "GO Weekly T16", publishedAt: "2026-11-16T00:00:00Z" })] }), ["w", "m"], "a newer weekly does not replace the month overview");
+  assert.deepEqual(ids({ candidates: [f("w", { title: "GO Weekly T 2", overview: "week", publishedAt: "2026-11-09T00:00:00Z" }), f("m", { title: "NOV_CONTENT", overview: "month", publishedAt: "2026-11-16T00:00:00Z" })] }), ["w", "m"], "a newer month picture does not replace the weekly");
+});

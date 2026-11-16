@@ -29,7 +29,9 @@ test("a picture marked as week or month leaves the review list and shows under A
   const res = applyDecisions(reg, {}, [{ id: "a", status: "month", eventId: "", eventTitle: "" }]);
   assert.equal(res.changed.length, 1); assert.equal(reg.candidates[0].reviewStatus, "weekly");
   const w = buildWeekly(reg, Date.parse("2026-10-14T00:00:00Z")).items.filter(i => i.kind === "month");
-  assert.equal(w[0].id, "a", "the picture you chose comes first, even though it is old");
-  assert.equal(w.length, 1, "one picture per button: the chosen one replaces the other");
+  assert.equal(w[0].id, "b", "a newer picture of the same kind replaces the older one you chose");
+  assert.equal(w.length, 1, "one picture per button");
+  const only = buildWeekly({ candidates: [reg.candidates[0]] }, Date.parse("2026-10-14T00:00:00Z")).items.filter(i => i.kind === "month");
+  assert.equal(only[0].id, "a", "the picture you chose is still shown when nothing newer exists");
   assert.equal(applyDecisions(reg, {}, [{ id: "a", status: "month" }]).skipped.length, 1, "applying twice changes nothing");
 });
