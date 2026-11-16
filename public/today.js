@@ -119,6 +119,8 @@
   function cardMinor(ctx, ev, live) {
     var k = ctx.kindOf(ev), mons = pokemonFor(ev, 1), cd = timeLine(ctx, ev, live);
     var art = mons.length ? artFor(ctx, ev, mons[0], 'ea') : minorBanner(ev);
+    /* Still nothing: reuse the Schedule card's own Power Spot / Max Particles picture, but only for an event that already has it. No new image is chosen or fetched. */
+    if (!art && typeof ctx.specialArt === 'function') art = ctx.specialArt(ev) || '';
     return '<article class="t1-card t1-minor' + (live ? ' is-live' : '') + (art ? '' : ' t1-minor--noart') + '" style="--k:' + k[1] + '"' + dataAttrs(ev) + '>'
       + (art ? '<span class="t1-minor-art" aria-hidden="true">' + art + '</span>' : '')
       + '<button type="button" class="t1-open" data-open="' + esc(ev.id) + '" aria-label="' + esc('Open ' + ev.name + '. ' + cd) + '">'

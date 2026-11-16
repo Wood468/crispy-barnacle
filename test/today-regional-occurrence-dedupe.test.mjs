@@ -40,7 +40,7 @@ function actualToday(events, regionalEvents, {hiddenIds = [], doneIds = []} = {}
     regInPerson: () => true,
     LIB: {isGlobalEvent: e => e.scope === 'global'},
     fmtD: d => String(d), kindOf: () => ['Event', '#27a4b0'],
-    monArt: () => '', placeholderArt: () => '',
+    monArt: () => '', specialArt: () => '', placeholderArt: () => '',
     t1BoostRecords: () => ({live: [], upcoming: []}),
     GOSEASON: undefined
   };
