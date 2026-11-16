@@ -32,7 +32,7 @@ test('both live store labels are covered', () => {
 });
 
 test('store.js version token and shell cache are current', () => {
-  assert.match(html, /store\.js\?v=20261122a-storageart/);
-  assert.match(sw, /store\.js\?v=20261122a-storageart/);
-  assert.match(sw, /gofn-shell-v375/);
+  assert.match(html, /store\.js\?v=20261122b-ballart/);
+  assert.match(sw, /store\.js\?v=20261122b-ballart/);
+  assert.match(sw, /gofn-shell-v376/);
 });

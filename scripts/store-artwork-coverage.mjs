@@ -20,7 +20,8 @@ const baselineExact=new Set([
   '/ico/incense.webp','/ico/g/elite-fast-tm.webp',
   '/ico/g/elite-charged-tm.webp','/ico/g/raidpass.webp',
   /* Owner-supplied in-game pictures; provenance in docs/asset-inventory/item-icons.json, viewed by the implementer. */
-  '/ico/i/item-bag.webp','/ico/i/pokemon-storage.webp'
+  '/ico/i/item-bag.webp','/ico/i/pokemon-storage.webp',
+  '/ico/i/star-piece.webp','/ico/i/poke-ball.webp','/ico/i/great-ball.webp','/ico/i/ultra-ball.webp'
 ]);
 
 function remoteAsset(url) {

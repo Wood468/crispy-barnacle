@@ -16,7 +16,12 @@
     [/^elite charged tm$/i, '/ico/g/elite-charged-tm.webp'],
     [/^incense$/i, '/ico/incense.webp'],
     [/^stardust$/i, '/ico/dust.webp'],
-    [/^raid pass$/i, '/ico/g/raidpass.webp']
+    [/^raid pass$/i, '/ico/g/raidpass.webp'],
+    /* Owner-supplied pictures (docs/asset-inventory/item-icons.json); exact names only. */
+    [/^star piece$/i, '/ico/i/star-piece.webp'],
+    [/^poke ball$/i, '/ico/i/poke-ball.webp'],
+    [/^great ball$/i, '/ico/i/great-ball.webp'],
+    [/^ultra ball$/i, '/ico/i/ultra-ball.webp']
   ];
   function normalize(name) {
     return String(name || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();

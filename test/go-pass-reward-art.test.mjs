@@ -5,7 +5,7 @@ import { createRequire } from 'node:module';
 const R = createRequire(import.meta.url)('../public/go-pass-reward-art.js');
 
 test('the approved exact reward icon table points only to tracked on-disk assets', () => {
-  assert.equal(R.knownAssets.length,9);
+  assert.equal(R.knownAssets.length,13);
   assert.equal(new Set(R.knownAssets).size,R.knownAssets.length);
   for (const path of R.knownAssets) {
     assert.match(path,/^\/ico\/(?:i\/|g\/)?[a-z0-9-]+\.webp$/);
@@ -23,13 +23,17 @@ test('verified assets are used only for their actual item names', () => {
     ['Elite Charged TM','/ico/g/elite-charged-tm.webp'],
     ['Incense','/ico/incense.webp'],
     ['Stardust','/ico/dust.webp'],
-    ['Raid Pass','/ico/g/raidpass.webp']
+    ['Raid Pass','/ico/g/raidpass.webp'],
+    ['Star Piece','/ico/i/star-piece.webp'],
+    ['Poké Ball','/ico/i/poke-ball.webp'],
+    ['Great Ball','/ico/i/great-ball.webp'],
+    ['Ultra Ball','/ico/i/ultra-ball.webp']
   ];
   for(const [name,src] of cases) assert.deepEqual(R.resolve({name,type:'item'}).src,src);
 });
 
 test('similar items do not borrow incorrect images', () => {
-  for(const name of ['Regular Potion','Super Potion','Hyper Potion','Revive','Remote Raid Pass','Premium Battle Pass','Razz Berry','Pinap Berry','Max Potion XL','Silver Bottle Cap','Lucky Egg','Star Piece','Poffin','Rare Candy']) {
+  for(const name of ['Regular Potion','Super Potion','Hyper Potion','Revive','Remote Raid Pass','Premium Battle Pass','Razz Berry','Pinap Berry','Max Potion XL','Silver Bottle Cap','Lucky Egg','Star Piece Pack','Great Ball Bundle','Premier Ball','Master Ball','Poffin','Rare Candy']) {
     const result=R.resolve({name,type:'item'});
     assert.equal(result.kind,'symbol',name);
     assert.equal(result.src,null,name);
@@ -44,7 +48,7 @@ test('XP, Candy XL and Rare Candy distinguish source items with honest category 
   assert.notEqual(R.resolve({name:'Rare Candy XL'}).symbol,R.resolve({name:'Candy XL'}).symbol);
   assert.equal(R.resolve({name:'Rare Candy'}).symbol,'RC');
   assert.equal(R.resolve({name:'Silver Bottle Cap'}).symbol,'CAP');
-  assert.equal(R.resolve({name:'Poké Ball'}).symbol,'PB');
+  assert.equal(R.resolve({name:'Premier Ball'}).symbol,'PR');
 });
 
 test('Pokémon encounter rewards are delegated to the exact-form artwork resolver', () => {

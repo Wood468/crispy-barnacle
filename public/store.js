@@ -18,7 +18,12 @@
     /* Owner-supplied pictures (docs/asset-inventory/item-icons.json). Exact store names only: 'Item Bag' / 'Pokémon Storage', optionally with a '+N' upgrade suffix.
        The third entry is the alt text: empty, the name is printed beside the picture. */
     [/^item bag(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/item-bag.webp', ''],
-    [/^pok[eé]mon storage(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/pokemon-storage.webp', '']
+    [/^pok[eé]mon storage(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/pokemon-storage.webp', ''],
+    /* Owner-supplied pictures (docs/asset-inventory/item-icons.json). Exact names only, optional '×N'/'xN' quantity suffix; no bundles, packs or other balls. */
+    [/^star pieces?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/star-piece.webp', ''],
+    [/^pok[eé] balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/poke-ball.webp', ''],
+    [/^great balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/great-ball.webp', ''],
+    [/^ultra balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/ultra-ball.webp', '']
   ];
   /* Exact local art only (same-origin /ico/**). With no exact asset there is no image slot at all:
      never a letter tile, a glyph, or a picture borrowed from another item. */

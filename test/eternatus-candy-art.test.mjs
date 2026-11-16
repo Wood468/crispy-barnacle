@@ -11,9 +11,10 @@ const prov = JSON.parse(fs.readFileSync(new URL('docs/asset-inventory/item-icons
 function load() {
   const a = detail.match(/function eternatusIcon\(n\) \{[^\n]*\}\n/);
   const c = detail.match(/function pinapIcon\(n\) \{[^\n]*\}\n/);
+  const d = detail.match(/function ballIcon\(n\) \{[^\n]*\}\n/);
   const b = detail.match(/function itemIcon\(n\) \{[^\n]*\}\n/);
-  assert.ok(a && b && c, 'icon functions exist');
-  return new Function(a[0] + c[0] + b[0] + 'return { eternatusIcon: eternatusIcon, pinapIcon: pinapIcon, itemIcon: itemIcon };')();
+  assert.ok(a && b && c && d, 'icon functions exist');
+  return new Function(a[0] + c[0] + d[0] + b[0] + 'return { eternatusIcon: eternatusIcon, pinapIcon: pinapIcon, itemIcon: itemIcon };')();
 }
 const { eternatusIcon, pinapIcon, itemIcon } = load();
 const PINAP = '/ico/i/pinap-berry.webp', CANDY = '/ico/i/eternatus-candy.webp', XL = '/ico/i/eternatus-candy-xl.webp';
@@ -45,7 +46,7 @@ test('other item pictures are unchanged', () => {
   assert.equal(itemIcon('Max Potion'), '/ico/i/max-potion.webp');
   assert.equal(itemIcon('Golden Razz Berry'), '/ico/i/golden-razz.webp');
   assert.equal(itemIcon('Mega Energy'), '/ico/g/mega.webp');
-  assert.equal(itemIcon('Poke Ball'), '');
+  assert.equal(itemIcon('Premier Ball'), '');
 });
 
 test('the generic candy glyph stays as the fallback for any other candy', () => {
@@ -54,7 +55,7 @@ test('the generic candy glyph stays as the fallback for any other candy', () => 
 });
 
 test('pictures are local webp files whose bytes match the recorded checksum and provenance', () => {
-  assert.equal(prov.entries.length, 5);
+  assert.equal(prov.entries.length, 9);
   for (const e of prov.entries) {
     const buf = fs.readFileSync(new URL(e.path, root));
     assert.equal(crypto.createHash('sha256').update(buf).digest('hex'), e.sha256, e.path);
@@ -67,10 +68,10 @@ test('pictures are local webp files whose bytes match the recorded checksum and 
     assert.match(e.provenance, /Pok.mon artwork belongs to its owners$/);
     assert.doesNotMatch(JSON.stringify(e), /licen[cs]ed? (under|to)|CC0|public domain/i);
   }
-  assert.deepEqual(prov.entries.map(e => '/' + e.path.replace(/^public\//, '')).sort(), [CANDY, XL, PINAP, "/ico/i/item-bag.webp", "/ico/i/pokemon-storage.webp"].sort());
+  assert.deepEqual(prov.entries.map(e => '/' + e.path.replace(/^public\//, '')).sort(), [CANDY, XL, PINAP, "/ico/i/item-bag.webp", "/ico/i/pokemon-storage.webp", "/ico/i/star-piece.webp", "/ico/i/poke-ball.webp", "/ico/i/great-ball.webp", "/ico/i/ultra-ball.webp"].sort());
 });
 
-test('no hotlinking: the pictures are same-origin paths and the shell cache moved to v375', () => {
+test('no hotlinking: the pictures are same-origin paths and the shell cache moved to v376', () => {
   assert.doesNotMatch(detail.match(/function eternatusIcon[^\n]*/)[0], /https?:/);
   assert.ok(Number(/const SHELL_CACHE = 'gofn-shell-v(\d+)'/.exec(sw)[1]) >= 373);
 });

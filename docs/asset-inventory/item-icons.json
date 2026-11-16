@@ -55,6 +55,50 @@
       "processing": "Owner-supplied 256x163 webp resized to 128x82 (Lanczos, aspect kept), re-encoded as webp quality 88",
       "provenance": "supplied by owner (in-game picture; source page not recorded); Pokémon artwork belongs to its owners",
       "reviewed": "Viewed by the implementer: flat device with a Pikachu outline on its screen and a green button"
+    },
+    {
+      "path": "public/ico/i/star-piece.webp",
+      "label": "Star Piece",
+      "sha256": "e9bacca7104ba4b98fb91e40c66ffdc608cf226c2d8db9349f03b393b859bcf6",
+      "bytes": 4884,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 webp resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: pink and blue faceted crystal star"
+    },
+    {
+      "path": "public/ico/i/great-ball.webp",
+      "label": "Great Ball",
+      "sha256": "d168687f8c6e35e349efe2f8a08801176eae2ab3a180aa166dfdb0fa55093684",
+      "bytes": 4280,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: blue Poké Ball with two red stripes"
+    },
+    {
+      "path": "public/ico/i/ultra-ball.webp",
+      "label": "Ultra Ball",
+      "sha256": "168381fc0d96e6b25fbd5bd3cc963d688c6ba56a6fc329ba6ee30c737026a834",
+      "bytes": 4194,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: black Poké Ball with yellow markings"
+    },
+    {
+      "path": "public/ico/i/poke-ball.webp",
+      "label": "Poké Ball",
+      "sha256": "cca0e2202723524571175362e293cef35fbe659578b1fde49bbc8ccd2e605740",
+      "bytes": 3686,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: red and white Poké Ball"
     }
   ]
 }
