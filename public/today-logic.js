@@ -342,9 +342,13 @@
   function cardType(ev) {
     var kind = ev && ev.kind || '', name = String(ev && ev.name || ''), span = +ev.span || 0, feat = +ev.featuredCount || 0;
     if (kind === 'raid' || kind === 'max') return span >= 3 * 864e5 && /\b(day|weekend|trails|fest|tour)\b/i.test(name) ? 'major' : 'raid';
-    if (kind === 'cd' || kind === 'person') return 'major';
+    /* The importer normalizes worldwide GO Fest/Tour/Wild Area formats to 'global'.
+       They are flagships, not minor bonus rows. */
+    if (kind === 'cd' || kind === 'person' || kind === 'global') return 'major';
     if (kind === 'spot' || kind === 'pvp' || kind === 'twitch') return 'minor';
-    if (kind === 'event' || kind === 'debut') return span >= 20 * 36e5 || feat >= 2 ? 'major' : 'minor';
+    /* Several featured encounters warrant a major card; elapsed duration alone
+       must not turn a one-Pokémon activity into a giant generic illustration. */
+    if (kind === 'event' || kind === 'debut') return feat >= 2 ? 'major' : 'minor';
     return 'minor';
   }
 

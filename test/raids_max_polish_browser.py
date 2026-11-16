@@ -24,7 +24,7 @@ def make(browser,width,data,when):
   return c,page,errors
 with sync_playwright() as p:
  browser=getattr(p,os.environ.get('GO_FIELD_NOTES_TEST_BROWSER','chromium')).launch()
- for width in [360,390,430]:
+ for width in [320,360,390,430]:
   # 1. Real data during Into the Wild: event-tied raids and the tiered Max roster.
   c,page,errors=make(browser,width,REAL,'2026-11-09T12:00:00+11:00')
   page.locator('#tabs [data-tab="raids"]').click();root=page.locator('#rotnow')
@@ -83,5 +83,25 @@ with sync_playwright() as p:
   page.locator('#tabs [data-tab="raids"]').click()
   assert 'Max Battles not announced for this week yet.' in page.locator('#rotnow').inner_text()
   shoot(page,'raids-empty-max',width)
+  assert not errors,errors;c.close()
+  # 4. Lower tiers: the Nov 16 rotation has none published yet, so the Battle tab names every missing tier plainly (no silent blank).
+  c,page,errors=make(browser,width,REAL,'2026-11-16T12:00:00+11:00')
+  page.locator('#tabs [data-tab="raids"]').click();root=page.locator('#rotnow')
+  empty=root.locator('.rw-low-empty')
+  assert empty.count()>=1 and all(x in empty.first.inner_text() for x in ('1★','3★','Shadow 1–3★','not published')),(width,empty.first.inner_text())
+  assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
+  assert not errors,errors;c.close()
+  # 5. A rotation that has them lists every tier in order (1★, 3★, Shadow 1★, Shadow 3★) behind a 44px summary, inside the viewport.
+  c,page,errors=make(browser,width,REAL,'2026-11-05T12:00:00+11:00')
+  page.locator('#tabs [data-tab="raids"]').click();root=page.locator('#rotnow')
+  low=root.locator('details.rw-low').first;sm=low.locator('summary')
+  assert sm.bounding_box()['height']>=44,(width,sm.bounding_box())
+  sm.click()
+  tiers=low.locator('.rc .rc-tier-corner').all_inner_texts()
+  assert [t.strip() for t in tiers][0].startswith('1') and any('Shadow' in t or 'S' in t for t in tiers),(width,tiers)
+  names=low.locator('.rc[data-boss]').evaluate_all('e=>e.map(x=>x.dataset.boss)')
+  assert names==['Pikachu','Antique Sinistea','Cofagrigus','Trevenant','Dhelmise','Shadow Larvitar','Shadow Mudkip','Shadow Makuhita','Shadow Cranidos','Shadow Prinplup','Shadow Piloswine','Shadow Poliwhirl'],(width,names)
+  assert page.evaluate("[...document.querySelectorAll('#rotnow .rw-low .rc')].every(e=>e.getBoundingClientRect().right<=innerWidth+1)")
+  assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   assert not errors,errors;c.close()
   print(f'PASS raids and max polish at {width}px')

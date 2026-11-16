@@ -307,10 +307,47 @@
         Number.isFinite(+a.start) && Number.isFinite(+b.start) &&
         Math.abs(+a.start - +b.start) <= 36 * 36e5;
     }
+    /* Same recurring format, same place, same time, plus proof it is the same instalment. "Pawniard Community Day" (live) and "November
+       Community Day" (curated, featuring Pawniard) share no title key, article or two-word overlap, yet are one event. Only a LIVE card is ever
+       paired with a CURATED card (each used once; never curated with curated, never live with live). All of these must hold:
+       1. start and end each within 6 hours (checked first);
+       2. both titles name the SAME recurring format (Community Day, Community Day Classic, Spotlight Hour, Raid Hour, ...) and any set event kinds agree;
+       3. same place (global/empty counts as one place; two cities or an in-person record never merge, so regional occurrences stay distinct);
+       4. positive same-instalment evidence: a shared distinctive word (a featured Pokémon in both cards, or a Pokémon in one title that the other
+          card features, or the same Pokémon in both titles). The format words, a month or a date alone are never enough. */
+    var FORMATS = ['community day classic', 'community day', 'spotlight hour', 'raid hour', 'raid day', 'hatch day', 'max monday', 'max battle day'];
+    var NOT_SPECIES = { mega: 1, primal: 1, shadow: 1, alolan: 1, galarian: 1, hisuian: 1, paldean: 1, gigantamax: 1, dynamax: 1, shiny: 1, costume: 1, costumed: 1, form: 1, forme: 1, classic: 1, january: 1, february: 1, march: 1, april: 1, may: 1, june: 1, july: 1, august: 1, september: 1, october: 1, november: 1, december: 1 };
+    function formatOf(t) { var k = ' ' + key(t) + ' '; for (var i = 0; i < FORMATS.length; i++) if (k.indexOf(' ' + FORMATS[i] + ' ') >= 0) return FORMATS[i]; return ''; }
+    function placeOf(e) { var r = key(e.region); return /^(global|worldwide|world)?$/.test(r) ? '' : r; }
+    function distinct(o) { var r = {}; for (var w in o) if (!NOT_SPECIES[w]) r[w] = 1; return r; }
+    function shares(x, y) { for (var w in x) if (y[w]) return true; return false; }
+    /* Per-event facts, computed once and only for events that name a recurring format. */
+    function facts(e) {
+      if (e.__fmt !== undefined) return e.__fmt;
+      var f = formatOf(e.name), r = null;
+      if (f && !(e.kind === 'person' || e.attendance === 'in-person') && Number.isFinite(+e.start) && Number.isFinite(+e.end)) {
+        var fw = {}; (e.featured || []).forEach(function (x) { if (x && x.name && x.role !== 'shiny_form') { var ws = words(x.name); for (var w in ws) fw[w] = 1; } });
+        r = { format: f, place: placeOf(e), feat: distinct(fw), title: distinct(words(e.name)) };
+      }
+      try { Object.defineProperty(e, '__fmt', { value: r, enumerable: false, configurable: true, writable: true }); } catch (x) { /* frozen record: recomputed next time */ }
+      return r;
+    }
+    function sameFormat(a, b) {
+      if (!(Number.isFinite(+a.start) && Number.isFinite(+b.start) && Number.isFinite(+a.end) && Number.isFinite(+b.end))) return false;
+      if (Math.abs(+a.start - +b.start) > 6 * 36e5 || Math.abs(+a.end - +b.end) > 6 * 36e5) return false;
+      var fa = facts(a), fb = facts(b);
+      if (!fa || !fb || fa.format !== fb.format || fa.place !== fb.place) return false;
+      if (a.kind && b.kind && a.kind !== b.kind) return false;
+      return shares(fa.feat, fb.feat) || shares(fa.feat, fb.title) || shares(fa.title, fb.feat) || shares(fa.title, fb.title);
+    }
+    var liveCount = live.length;
     curated.forEach(function(c) {
-      var match = -1;
+      var match = -1, viaFormat = false;
       for (var i = 0; i < out.length; i++) {
         if (!used[i] && similar(out[i], c)) { match = i; break; }
+      }
+      if (match < 0) for (var j = 0; j < liveCount; j++) {
+        if (!used[j] && sameFormat(out[j], c)) { match = j; viaFormat = true; break; }
       }
       if (match < 0) { out.push(c); return; }
       used[match] = 1;
@@ -326,7 +363,12 @@
         });
       }
       /* Keep the fuller write-up's title when the curated card carries more detail. */
-      if ((c.featured || []).length > (liveEvent.featured || []).length) liveEvent.name = c.name;
+      if (viaFormat) {
+        /* A format-only match keeps whichever title names a featured Pokémon ("Pawniard Community Day" beats "November Community Day"). */
+        var fw = {}; (liveEvent.featured || []).concat(c.featured || []).forEach(function (x) { if (x && x.name && x.role !== 'shiny_form') { var ws = words(x.name); for (var w in ws) fw[w] = 1; } });
+        fw = distinct(fw);
+        if (shares(distinct(words(c.name)), fw) && !shares(distinct(words(liveEvent.name)), fw)) liveEvent.name = c.name;
+      } else if ((c.featured || []).length > (liveEvent.featured || []).length) liveEvent.name = c.name;
       (liveEvent.featured || []).forEach(function(f) { seen[(f.name || '').toLowerCase()] = 1; });
       (c.featured || []).forEach(function(f) {
         var k = (f.name || '').toLowerCase();
@@ -336,6 +378,7 @@
         });
       });
       liveEvent.aliasIds = (liveEvent.aliasIds || []).concat([c.id]); /* the curated copy's id: its infographics are filed under it */
+      liveEvent.aliasStarts = (liveEvent.aliasStarts || []).concat([{ id: c.id, start: c.start }]); /* its start too: Done/Hidden keys are id@start */
       if (!liveEvent.infographicUrl && c.infographicUrl) liveEvent.infographicUrl = c.infographicUrl;
       if (c.bonuses && c.bonuses.length) liveEvent.bonuses = Array.from(new Set((liveEvent.bonuses || []).concat(c.bonuses)));
       var liveHasDetail = (liveEvent.featured || []).length > 0 || (liveEvent.bonuses || []).length > 0;
@@ -462,9 +505,11 @@
       });
   }
   function isSaved(id) { return usGet('saved:' + id) === true; }
-  function isHidden(id) { return usGet('hide:' + id) === true; }
+  /* A merged card answers to every id it absorbed (aliasIds), so hiding the curated copy still hides the live card that now represents it. */
+  function idsOf(id) { for (var i = 0; i < EV.length; i++) if (EV[i].id === id) return [id].concat(EV[i].aliasIds || []); return [id]; }
+  function isHidden(id) { return idsOf(id).some(function (x) { return usGet('hide:' + x) === true; }); }
   function hiddenList() { return usKeys('hide:').map(function (k) { return k.slice(5); }); }
-  function toggleHide(id) { usSet('hide:' + id, isHidden(id) ? null : true); renderAll(); }
+  function toggleHide(id) { var was = isHidden(id); idsOf(id).forEach(function (x) { if (was) { if (usGet('hide:' + x) === true) usSet('hide:' + x, null); } else if (x === id) usSet('hide:' + id, true); }); renderAll(); }
   function savedList() { return usKeys('saved:').map(function (k) { return k.slice(6); }); }
   function followList() { return usKeys('follow:').map(function (k) { return String(usGet(k)); }); }
   function isFollowed(n) { return usGet('follow:' + baseOf(n).base.toLowerCase()) !== undefined; }
@@ -950,6 +995,10 @@
 
   /* ---------- Calendar: month grid, plus a compact Day / Week / Month list, with worldwide in-person events ---------- */
   var REG = [], regSel = 'all', scopeSel = 'month', REGCOL = '#2bb3a3';
+  /* Home's first layout must include the world feed (or its definitive failure).
+     Otherwise late overseas rows push the supporting panels into the viewport
+     and cause a large non-user-initiated layout shift on phones. */
+  var WORLD_READY = false;
   var REGIONS = [['all', 'Everything'], ['global', 'In the game'], ['Asia', 'Asia'], ['Americas', 'Americas'], ['Europe', 'Europe'], ['Oceania', 'Oceania']];
   var TRAVEL_REGIONS = [['all', 'All destinations'], ['Asia', 'Asia'], ['Americas', 'Americas'], ['Europe', 'Europe'], ['Oceania', 'Oceania']];
   var travelRegion = 'all', travelQuery = '';
@@ -994,10 +1043,34 @@
     }
     renderCalendar(); renderHomeAgenda(); renderTimeline(); renderTravel();
   }
-  fetch('/world-events.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (j) {
+  /* Wait only for the initial, bounded source request before revealing the
+     Today agenda. Source failures cannot keep Today blank indefinitely, and
+     an expired request must not insert overseas cards after that first paint. */
+  var worldExpired = false, worldAbort = typeof AbortController === 'function'
+    ? new AbortController() : null;
+  var worldOptions = worldAbort ? {signal: worldAbort.signal} : {};
+  function finishWorldSource() {
+    if (WORLD_READY) return;
+    WORLD_READY = true;
+    if (EV_READY) renderHomeAgenda();
+  }
+  var worldDeadline = setTimeout(function () {
+    worldExpired = true;
+    if (worldAbort) worldAbort.abort();
+    finishWorldSource();
+  }, 5000);
+  fetch('/world-events.json', worldOptions).then(function (r) {
+    return r.ok ? r.json() : null;
+  }).catch(function () { return null; }).then(function (j) {
+    if (worldExpired) return;
     if (j && (j.events || []).length) return loadWorld(j, false);
-    return fetch('/regional-events.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (k) { if (k) loadWorld(k, true); });
-  });
+    return fetch('/regional-events.json', worldOptions).then(function (r) {
+      return r.ok ? r.json() : null;
+    }).catch(function () { return null; }).then(function (k) {
+      if (!worldExpired && k) loadWorld(k, true);
+    });
+  }).catch(function () { /* Source failure leaves the curated Today usable. */ })
+    .finally(function () { clearTimeout(worldDeadline); finishWorldSource(); });
   function words(n) { return String(n).toLowerCase().replace(/[^a-z ]/g, ' ').split(/\s+/).filter(function (w) { return w.length > 4 && !/^(pokemon|event|festival|during|enjoy|bountiful|debut|chance|encounter|storms|fireball|rescue|explore)$/.test(w); }); }
   function regList() { // an announced game event the live feed already shows is not listed twice
     return REG.filter(function (x) {
@@ -1108,7 +1181,7 @@
     var ddOpen = {}; if (chips) Array.prototype.forEach.call(chips.querySelectorAll('details.dd[data-k]'), function (d) { ddOpen[d.getAttribute('data-k')] = d.open; });
     if (chips) chips.innerHTML = '<div class="rgrow">' + REGIONS.map(function (r) { return '<button type="button" class="fchip" data-creg="' + r[0] + '" aria-pressed="' + (regSel === r[0]) + '">' + esc(r[1]) + '</button>'; }).join('') + '</div>'
       + '<span class="seg" role="group" aria-label="Range">' + [['day', 'Day'], ['week', 'Week'], ['month', 'Month']].map(function (r) { return '<button type="button" class="fchip" data-cscope="' + r[0] + '" aria-pressed="' + (scopeSel === r[0]) + '">' + r[1] + '</button>'; }).join('') + '</span>' + (UNDATED.length && (regSel === 'all' || regSel === 'global') ? '<details class="dd" data-k="undated"><summary>Announced, date not published yet (' + UNDATED.length + ')</summary><div class="body">' + UNDATED.map(function (u) { return '<a class="agr reg"'+catalogueDetailAttr(u)+' href="' + esc(u.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(u.name) + '</b><small>' + esc(u.place || 'Dates to be announced') + '</small></span><em>' + esc(u.area || '') + '</em></a>'; }).join('') + '</div></details>' : '');
-    var hl = hiddenList().map(function (id) { var e = EV.filter(function (x) { return x.id === id; })[0] || REG.filter(function (x) { return x.id === id; })[0]; return e && e.end > now() ? { id: id, name: e.name } : null; }).filter(Boolean);
+    var hl = hiddenList().map(function (id) { var e = EV.filter(function (x) { return x.id === id || (x.aliasIds || []).indexOf(id) >= 0; })[0] || REG.filter(function (x) { return x.id === id; })[0]; return e && e.end > now() ? { id: id, name: e.name } : null; }).filter(Boolean);
     if (chips && hl.length) chips.innerHTML += '<details class="dd" data-k="hidden"><summary>Hidden by you (' + hl.length + ')</summary><div class="body">' + hl.map(function (h) { return '<div class="hid"><span>' + esc(h.name) + '</span><button type="button" class="more" data-unhide="' + esc(h.id) + '">Show again</button></div>'; }).join('') + '</div></details>';
     if (chips) Array.prototype.forEach.call(chips.querySelectorAll('details.dd[data-k]'), function (d) { if (ddOpen[d.getAttribute('data-k')]) d.open = true; });
     var first = (civil(calMonth).weekday + 6) % 7, days = civil(atDate(civil(calMonth).year, civil(calMonth).month + 1, 0)).day, today = dayKey(now());
@@ -1295,7 +1368,7 @@
     }
     function lowTier(r) {
       /* 1-3 star bosses, where a source has published them for that rotation. */
-      var l = r && r.low; if (!l) return '<p class="muted rw-low">1–3★ raid bosses are not announced for this rotation yet.</p>';
+      var l = r && r.low; if (!l) return '<p class="muted rw-low rw-low-empty">1★, 3★ and Shadow 1–3★ raid bosses are not published for this rotation yet. They are added here automatically once Pokémon GO Hub lists them.</p>';
       return '<details class="rw-low"><summary>1–3★ raid bosses</summary><span class="rw-label">1–3★ raids' + (l.shadowOne || l.shadowThree ? ' and Shadow raids' : '') + (l.observed ? ' · as of ' + esc(fmtD(pd(l.observed + 'T12:00'))) : '') + '</span>' + lowSourceLink(l) + '<div class="rcs rcs-low">' +
         [['1★', l.one], ['3★', l.three], ['Shadow 1★', l.shadowOne], ['Shadow 3★', l.shadowThree]].map(function (g) { return (g[1] || []).map(function (n) { return cell(g[0], n, r); }).join(''); }).join('') + '</div></details>';
     }
@@ -1334,7 +1407,7 @@
             return cell('5★',name,{s:slot.date+'T00:00',e:slot.date+'T23:59',five:name});
           }).join('');
           var maxRows=(slot.max||[]).map(function(name){
-            return '<div class="rw-max-pokemon" data-max-boss="'+esc(name)+'">'+monArt({kind:'max',tags:[],name:''},{name:name.replace(/^(?:Dynamax|Gigantamax)\s+/i,'')},'ea')+'<div class="rw-max-txt"><b>'+esc(name)+'</b><small>Event Max Battle</small></div></div>';
+            return '<div class="rw-max-pokemon" data-max-boss="'+esc(name)+'">'+monArt({kind:'max',tags:[],name:''},{name:name},'ea')+'<div class="rw-max-txt"><b>'+esc(name)+'</b><small>Event Max Battle</small></div></div>';
           }).join('');
           body+='<div class="rw-raid rw-event-day" data-event-raid-day="'+esc(slot.date)+'"><span class="rw-label">'+esc(event.t)+' · '+esc(fmtD(start))+'</span>'+
             '<p class="rw-window">Event-specific schedule · local date</p><div class="rw-rel">'+eventLink(event.t)+'</div>'+source+
@@ -1982,7 +2055,7 @@ function renderHomeBrief(t) {
   document.addEventListener('gofn-season-ready', function () { renderHomeBrief(now()); });
   /* Refresh only today's list when its visible event phases change. This keeps the rest of the agenda and focused controls intact. */
   function renderHomeToday(t, force) {
-    if (!EV_READY) return;
+    if (!EV_READY || !WORLD_READY) return;
     t = t || now();
     renderTodayShiny(t);
     var endDay = addDays(startOfDay(t), 1);
@@ -2130,7 +2203,7 @@ function renderHomeBrief(t) {
     }
     EV.forEach(function (ev) {
       var ph = phase(ev, t);
-      if (ph === 'ended' || ev.long || kindHidden(ev.kind) || isHidden(ev.id) || t1IsHidden(hide, ev.id, ev.start) || !announced(ev)) return;
+      if (ph === 'ended' || ev.long || kindHidden(ev.kind) || isHidden(ev.id) || t1StateKey(hide, ev, t1IsHidden) || !announced(ev)) return;
       if (ph === 'soon' && ev.start >= horizon) return;
       var target = ph === 'live' ? live : upcoming, kindKey = ph === 'live' ? 'l' : 'u';
       (ev.highlights || []).forEach(function (h) {
@@ -2148,6 +2221,53 @@ function renderHomeBrief(t) {
   }
   function t1Overseas(place) { return !!place && !/australia|melbourne|victoria|sydney|brisbane|perth|adelaide/i.test(place); }
   function t1PlaceKey(place) { return String(place || '').toLowerCase().split(/[,(]/)[0].trim(); }
+  /* Two listings are the same *visible* Today occurrence only with matching
+     event titles, place and overlapping dates. Name-only, fuzzy city-only or
+     hidden/Done source records must never erase an overseas in-person event. */
+  function t1SameRegionalOccurrence(r, ev) {
+    if (!r || !ev || !r.name || !ev.name || !r.place) return false;
+    function norm(v) { return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+    var rs = +r.start, re = +r.end, es = +ev.start, ee = +ev.end;
+    if (!(Number.isFinite(rs) && Number.isFinite(re) && Number.isFinite(es) &&
+      Number.isFinite(ee) && rs < re && es < ee)) return false;
+    // Compare complete first place component; never just its first word.
+    var cityR = norm(t1PlaceKey(r.place)), cityE = norm(t1PlaceKey(ev.region));
+    if (!cityR) return false;
+    var dedupe = window.GODEDUPE, titleOf = dedupe && dedupe.titleKey;
+    var rn = titleOf ? titleOf(r.name) : norm(r.name);
+    var en = titleOf ? titleOf(ev.name) : norm(ev.name);
+    if (ev.region) {
+      if (!rn || rn !== en || !cityE || cityR !== cityE) return false;
+      // An otherwise equal title/city in different countries is not one stop.
+      function country(v) { var parts = String(v || '').split(','); return parts.length < 2 ? '' : norm(parts.slice(1).join(',').split('(')[0]); }
+      var cr = country(r.place), ce = country(ev.region);
+      if (cr && ce && cr !== ce) return false;
+      return rs < ee && es < re;
+    }
+    // Some official/Leek Duck copies supply no EV.region but explicitly name
+    // the same city in their titles (e.g. Night Out 2026 - London).
+    // Require complete city + canonical title tokens; never fuzzy words alone.
+    // a generic similarly titled EV cannot hide a separate regional stop.
+    if ((' ' + norm(ev.name) + ' ').indexOf(' ' + cityR + ' ') < 0) return false;
+    // Day-level sources may differ by hours across zones, but widely separated
+    // times are insufficient evidence of one real-world occurrence.
+    var gap = Math.max(0, Math.max(rs, es) - Math.min(re, ee));
+    if (gap > 12 * 3600e3) return false;
+    if (!dedupe || typeof dedupe.tokens !== 'function') return false;
+    var ra = Object.keys(dedupe.tokens(r.name)).sort();
+    var ea = Object.keys(dedupe.tokens(ev.name)).sort();
+    // Require the same *complete* distinctive title tokens. Fuzzy similarity
+    // can hide a different activity even when the city and day also match.
+    return ra.length >= 2 && ra.join('|') === ea.join('|');
+  }
+  /* Saved Done/Hidden keys are id@start. A merged card also answers to the ids (and start times) of the records it absorbed. Returns the stored key that matches, or ''. */
+  function t1StateKey(map, ev, test) {
+    var tries = [[ev.id, ev.start]];
+    (ev.aliasStarts || []).forEach(function (a) { tries.push([a.id, a.start]); });
+    (ev.aliasIds || []).forEach(function (id) { tries.push([id, ev.start]); });
+    for (var i = 0; i < tries.length; i++) if (test(map, tries[i][0], tries[i][1])) return TL.doneKey(tries[i][0], tries[i][1]);
+    return '';
+  }
   function t1Ctx(t) {
     var done = t1Done(), hide = t1Hidden(), tn = +t, soonEnd = tn + 864e5, weekEnd = tn + 7 * 864e5;
     function visible(ev) { return announced(ev) && !ev.long && !isHidden(ev.id) && !kindHidden(ev.kind); }
@@ -2156,24 +2276,18 @@ function renderHomeBrief(t) {
       if (!visible(ev)) return;
       var ph = phase(ev, t);
       if (ph === 'ended') return;
-      var isDoneNow = t1IsDone(done, ev.id, ev.start);
-      if (isDoneNow) { if (ph === 'live' || +ev.start - tn < 7 * 864e5) hiddenDone.push({ key: TL.doneKey(ev.id, ev.start), name: ev.name, when: ph === 'live' ? 'Live now' : fmtD(ev.start) }); return; }
-      if (t1IsHidden(hide, ev.id, ev.start)) { if (ph === 'live' || +ev.start - tn < 7 * 864e5) hiddenByYou.push({ key: TL.doneKey(ev.id, ev.start), name: ev.name, when: ph === 'live' ? 'Live now' : fmtD(ev.start) }); return; }
+      var doneKeyNow = t1StateKey(done, ev, t1IsDone);
+      if (doneKeyNow) { if (ph === 'live' || +ev.start - tn < 7 * 864e5) hiddenDone.push({ key: doneKeyNow, name: ev.name, when: ph === 'live' ? 'Live now' : fmtD(ev.start) }); return; }
+      var hideKeyNow = t1StateKey(hide, ev, t1IsHidden);
+      if (hideKeyNow) { if (ph === 'live' || +ev.start - tn < 7 * 864e5) hiddenByYou.push({ key: hideKeyNow, name: ev.name, when: ph === 'live' ? 'Live now' : fmtD(ev.start) }); return; }
       if (ph === 'live') live.push(ev); else if (ev.start <= soonEnd) soon.push(ev); else if (ev.start <= weekEnd) week.push(ev);
     });
     soon.sort(function (a, b) { return a.start - b.start; }); week.sort(function (a, b) { return a.start - b.start; });
-    var evPlaces = EV.filter(function (ev) { return ev.region && (phase(ev, t) !== 'ended') && !/^global$/i.test(ev.region); });
-    function normT(v) { return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
-    function distinct(v) { return normT(v).split(' ').filter(function (w, i, a) { return w.length >= 4 && a.indexOf(w) === i && !/^(pokemon|events?|the|with|from|this|that|2026|2027)$/.test(w); }); }
-    var evNames = Object.create(null); EV.forEach(function (ev) { if (phase(ev, t) !== 'ended') evNames[normT(ev.name)] = 1; });
     function covered(r) {
-      if (evNames[normT(r.name)] || /worldwide|anywhere|global|in the game/i.test(String(r.place || '') + ' ' + String(r.area || ''))) return true;
-      /* Same real-world occurrence reported by two sources: two or more distinctive words (the place counts) in common and overlapping dates.
-         Night Out London and Night Out Los Angeles share only "night", so they stay separate. */
-      var rw = distinct(r.name + ' ' + (r.place || ''));
-      if (EV.some(function (ev) { if (!(+ev.start <= +r.end + 864e5 && +ev.end >= +r.start - 864e5) || phase(ev, t) === 'ended') return false; var ew = distinct(ev.name + ' ' + (ev.region || '')); return rw.filter(function (w) { return ew.indexOf(w) >= 0; }).length >= 2; })) return true;
-      var key = t1PlaceKey(r.place); if (!key) return false;
-      return evPlaces.some(function (ev) { return ev.start <= r.end && ev.end >= r.start && String(ev.region).toLowerCase().indexOf(key.split(' ')[0]) >= 0; });
+      if (/worldwide|anywhere|global|in the game/i.test(String(r.place || '') + ' ' + String(r.area || ''))) return true;
+      // Only a card actually shown in the main Today feed may replace its
+      // identical regional listing; hidden/Done/long/unannounced EV may not.
+      return live.concat(soon, week).some(function (ev) { return t1SameRegionalOccurrence(r, ev); });
     }
     var regLive = [], regSoon = [], regWeek = [];
     regList().forEach(function (r) {
@@ -2468,7 +2582,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261118b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261113ui737'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261118b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261113ui761'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

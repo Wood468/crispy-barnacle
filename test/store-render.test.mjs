@@ -58,54 +58,49 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   const ctx = vm.createContext(win);
   vm.runInContext(fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8'), ctx);
   await new Promise(r => setTimeout(r, 20));
-  for (const t of ['Rp 76,000', 'Rp 101,000', 'Rp 126,000', 'Rp 41,000', 'Rp 10,000', 'Rp 200,000', 'Not observed', 'A$7.99', 'Indonesia', 'India'])
+  for (const t of ['Rp 76,000', 'Rp 101,000', 'Rp 126,000', 'Rp 41,000', 'Rp 10,000', 'Rp 200,000', 'A$7.99', 'Indonesia', 'India'])
     assert.ok(el.innerHTML.includes(t), 'missing ' + t);
   assert.equal((el.innerHTML.match(/<summary>Regional Store prices/g) || []).length, 1,
     'one comprehensive regional comparison should be shown');
   assert.ok(!el.innerHTML.includes('Indonesia vs Australia'),
     'old legacy IDR summary must not repeat the regional price observations');
-  assert.ok(el.innerHTML.includes('Not observed'), 'missing source prices should not look like zero or a calibration failure');
+  assert.doesNotMatch(el.innerHTML, /Not observed/, 'an absent price is a quiet dash, not a sentence');
+  assert.ok(el.innerHTML.includes('class="sp-none"'), 'missing source prices are a quiet dash and never look like zero');
+  assert.doesNotMatch(el.innerHTML, /Recently listed offers appear|Dated prices are not live checkout quotes|ExchangeRate-API/,
+    'the long intro paragraph is gone');
   assert.ok(el.innerHTML.includes('data-sp-search'), 'search appears ahead of the product cards');
-  assert.ok(el.innerHTML.includes('data-sp-coverage'), 'owner can inspect source completeness without another pricing panel');
+  assert.ok(el.innerHTML.includes('data-sp-coverage'), 'owner can still inspect source completeness');
   assert.match(el.innerHTML,/Official listings awaiting regional prices: 3/,
     'source-only November SKUs are counted separately from checkout observations');
+  assert.ok(el.innerHTML.indexOf('data-sp-coverage') > el.innerHTML.indexOf('class="sp-catalogue"'),
+    'the review checklist sits behind the catalogue, collapsed, not above the search');
   const novCards=(el.innerHTML.match(/<article class="sp-product"[\s\S]*?<\/article>/g)||[])
     .filter(card=>card.includes('GO Pass Deluxe: November'));
   assert.equal(novCards.length,3,'official November passes are shown without hiding historical AU records');
   for(const card of novCards){
-    assert.match(card,/regional availability not verified/);
-    assert.match(card,/Not observed/);
-    assert.doesNotMatch(card,/sp-local-price/,
-      'official announcement alone must never invent an Australian, Indian or Indonesian price');
+    assert.doesNotMatch(card,/regional availability not verified|Official published product/);
+    assert.doesNotMatch(card,/data-sp-basis="verified"|sp-ver/,
+      'a publisher announcement must not be mistaken for an observed regional checkout quote');
+    if (card.includes('sp-local-price')) {
+      assert.match(card,/data-sp-basis="estimate"/);
+      assert.match(card,/sp-est-mark/, 'a modelled value carries the small est. marker');
+    }
   }
+  for (const gone of ['sp-offer-contents', 'Official offer description', 'Included in the published offer', 'Ultra Ball ×20'])
+    assert.ok(!el.innerHTML.includes(gone), 'per-card disclosure removed: ' + gone);
 
-  assert.ok(el.innerHTML.includes('sp-offer-contents'), 'verified official offer breakdown can be expanded');
-  assert.ok(el.innerHTML.includes('Ultra Ball ×20') && el.innerHTML.includes('Premium Battle Pass ×5'),
-    'published item quantities appear without replacing regional prices');
-  assert.ok(el.innerHTML.includes('Official offer description'), 'link to Niantic source is visible');
-  assert.ok(el.innerHTML.includes('not proof this historical offer is still for sale'),
-    'published contents are not represented as live checkout availability');
-
-  assert.ok(el.innerHTML.includes('Missing Australian product names'), 'unattributed official SKUs stay actionable');
+  assert.ok(el.innerHTML.includes('Missing Australian product names'), 'unattributed official SKUs stay actionable in the review');
   assert.ok(el.innerHTML.includes('Regional SKU/contents not safely paired'), 'unmatched packs are visible for review');
   assert.ok(el.innerHTML.includes('No observed Indian source price'), 'missing India evidence is not described as verified');
   assert.ok(el.innerHTML.includes('Exact item-art mappings'), 'neutral icon gaps can be reviewed without fake artwork');
-  assert.ok(el.innerHTML.indexOf('data-sp-coverage') < el.innerHTML.indexOf('data-sp-search'),
-    'review summary appears before the catalogue search');
 
-  assert.ok(el.innerHTML.includes('sp-market-grid'), 'regional prices share one compact grid');
-  assert.ok(el.innerHTML.includes('sp-market-au'), 'Australia price is visually grouped with the other regions');
+  assert.ok(el.innerHTML.includes('sp-prices'), 'regional prices share one compact row');
+  assert.ok(el.innerHTML.includes('data-sp-region="AU"'), 'Australia price is grouped with the other regions');
   assert.ok(el.innerHTML.includes('data-sp-product'), 'each item renders once in the browseable catalogue');
   assert.ok(el.innerHTML.includes('go-pass-oct-deluxe'), 'verified official AU pass offer is not silently filtered out');
-  assert.ok(el.innerHTML.includes('exact SKU; item name not recorded'),
-    'unlabelled source offer cannot masquerade as a verified product name');
-  assert.ok(el.innerHTML.includes('Distinct official SKU: store-raid-day-a'));
-  assert.ok(el.innerHTML.includes('Distinct official SKU: store-raid-day-b'));
-  assert.ok(el.innerHTML.includes('no exact AU SKU pairing established'),
-    'the same-name Indonesian offer must not be attributed to either AU box');
-  assert.equal((el.innerHTML.match(/Distinct official SKU: store-raid-day-/g)||[]).length,2);
+  assert.doesNotMatch(el.innerHTML, /exact SKU; item name not recorded|Distinct official SKU|no exact AU SKU pairing/);
   const raidCards = (el.innerHTML.match(/<article class="sp-product"[\s\S]*?<\/article>/g)||[])
-    .filter(card => card.includes('Raid Day Box'));
+    .filter(card => card.includes('>Raid Day Box</b>'));
   assert.equal(raidCards.length,3,'two AU SKUs plus one unpaired local observation');
   assert.equal(raidCards.filter(card=>card.includes('Rp 50,000')).length,1,
     'one regional observation cannot become two independently verified SKU prices');
@@ -114,13 +109,11 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.doesNotMatch(el.innerHTML, />event-pass-ranks-ultra</,
     'machine-readable product kind must not be visible in Store cards');
   const storeCss = fs.readFileSync(new URL('../public/dash.css', import.meta.url), 'utf8');
-  const mobileCss = storeCss.slice(storeCss.lastIndexOf('/* Mobile Store QA: three tall'));
-  assert.match(mobileCss, /@media\(max-width:659px\)/,
-    'compact Store rows must apply at phone widths');
-  assert.match(mobileCss, /\.storep-regional \.sp-market-grid\{display:grid;grid-template-columns:minmax\(0,1fr\);gap:0\}/,
-    'phone catalogue must use stacked independent country rows, not equal-height three-column tiles');
-  assert.match(mobileCss, /\.sp-market\+\.sp-market\{border-top:/,
-    'country rows must have a visible separator without losing source-backed missing prices');
+  const minimalCss = storeCss.slice(storeCss.lastIndexOf('/* Store minimal card'));
+  assert.match(minimalCss, /\.sp-prices\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/,
+    'phone layout shows three aligned regional columns');
+  for (const flag of ['🇦🇺', '🇮🇩', '🇮🇳']) assert.ok(el.innerHTML.includes(flag));
+
 
   assert.ok(el.innerHTML.includes('Advanced comparison'), 'cash/coin optimisation is disclosed only when requested');
   assert.ok(el.innerHTML.includes('Verified regional purchase options'));
@@ -142,53 +135,30 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   for (const group of ['boxes', 'items'])
     assert.match(el.innerHTML, new RegExp('data-sp-group="' + group + '" data-sp-default-open="no"'),
       group + ' must remain browsable without a huge first scroll');
-  assert.ok(el.innerHTML.includes('no sourced price for that region') && el.innerHTML.includes('Not observed'),
-    'explain unobserved prices rather than presenting missing data as zero');
   assert.doesNotMatch(el.innerHTML, /src="\/ico\/(?:xp|egg|dust)\.webp"/,
     'XP, egg and Stardust images must not masquerade as Coins, Incubators or Star Pieces');
   assert.doesNotMatch(el.innerHTML, /src="\/ico\/g\/event\.webp"/,
     'generic event artwork must not masquerade as a particular Store box');
-  assert.match(el.innerHTML, /class="sp-i-token"[^>]*>◎<\/span>/,
-    'PokéCoin rows use a distinct neutral coin token rather than XP artwork');
+  assert.doesNotMatch(el.innerHTML, /sp-i-token|data-sp-art|data-sp-fallback/, 'no placeholder tiles anywhere');
 
   const itemCards = (el.innerHTML.match(/<article class="sp-product"[\s\S]*?<\/article>/g) || []);
-  const cardFor = label => itemCards.find(card => card.includes('<b>' + label + '</b>'));
-  assert.match(cardFor('Raid Pass'), /src="\/ico\/g\/raidpass\.webp"/,
+  const cardFor = label => itemCards.find(card => card.includes('>' + label + '</b>'));
+  assert.match(cardFor('Raid Pass'), /src="\/ico\/g\/raidpass\.webp" alt="Raid Pass"/,
     'only ordinary Raid Passes may use verified ordinary Raid Pass art');
   assert.match(cardFor('Elite Fast TM'), /src="\/ico\/g\/elite-fast-tm\.webp"/);
   assert.match(cardFor('Elite Charged TM'), /src="\/ico\/g\/elite-charged-tm\.webp"/);
-  for (const label of ['Remote Raid Pass', 'Premium Battle Pass', 'Elite Charged TM Box']) {
+  // New Store products must not show a different item's purported exact art, nor a placeholder.
+  for (const label of ['Remote Raid Pass', 'Premium Battle Pass', 'Elite Charged TM Box', 'Max Mushroom x3',
+    '600 Link Charge', 'Super Incubator x2', 'Max Particle Pack + Remote Raid Pass', 'Future Unmapped Item']) {
     const card = cardFor(label);
     assert.ok(card, 'source-labelled product is displayed: ' + label);
-    assert.doesNotMatch(card, /<img class="sp-i"/,
-      'never borrow an unrelated exact item image for ' + label);
-  }
-  assert.match(cardFor('Remote Raid Pass'), /sp-i-token"[^>]*>PASS<\/span>/);
-  assert.match(cardFor('Premium Battle Pass'), /sp-i-token"[^>]*>PASS<\/span>/);
-  // New Store products must not show a different item's purported exact art.
-  for (const [name, token] of [
-    ['Max Mushroom x3', 'MM'], ['600 Link Charge', 'LC'],
-    ['Super Incubator x2', 'SINC'],
-    ['Max Particle Pack + Remote Raid Pass', '▣'],
-    ['Future Unmapped Item', '·']
-  ]) {
-    const card = cardFor(name);
-    assert.ok(card, 'visible Store product ' + name);
-    assert.ok(card.includes('data-sp-art="category-token">' + token + '</span>'),
-      'neutral source-accurate fallback for ' + name);
-    assert.doesNotMatch(card, /<img class="sp-i"/,
-      'do not use unrelated in-game artwork for ' + name);
+    assert.doesNotMatch(card, /<img/, 'never borrow an unrelated exact item image for ' + label);
   }
   assert.equal(typeof eventHandlers.error, 'function',
     'Store handles broken exact-item icons without a browser broken-image box');
-  let fallback = null;
-  eventHandlers.error({ target: {
-    matches: selector => selector === 'img.sp-i',
-    getAttribute: attr => attr === 'data-sp-fallback' ? 'PASS' : null,
-    replaceWith: node => { fallback = node; }
-  } });
-  assert.equal(fallback?.className, 'sp-i-token');
-  assert.equal(fallback?.textContent, 'PASS', 'a missing exact image becomes an honest type token');
+  let removed = 0;
+  eventHandlers.error({ target: { matches: selector => selector === 'img.sp-i', remove: () => { removed++; } } });
+  assert.equal(removed, 1, 'a missing exact image is removed, not swapped for a placeholder');
 
   const storeSource = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
   const exactIcons = [...new Set([...storeSource.matchAll(/'(\/ico\/[A-Za-z0-9/_-]+\.webp)'/g)].map(match => match[1]))];
@@ -234,8 +204,8 @@ test('verified Australian Store offers remain visible during missing regional-fe
     assert.match(html, /Item Bag Upgrade/);
     assert.match(html, /A\$3\.99/);
     assert.match(html, /data-sp-group="storage"/);
-    assert.equal((html.match(/sp-regional-value sp-none/g) || []).length, 2,
-      'Indonesia and India stay Not observed instead of making AU products disappear');
+    assert.equal((html.match(/class="sp-none"/g) || []).length, 2,
+      'Indonesia and India stay a quiet dash instead of making AU products disappear');
     assert.doesNotMatch(html, /Advanced comparison/,
       'no comparison panel without any verified local buying option');
     assert.equal(requests, 0, 'no foreign FX request when no regional currency is observed');
@@ -362,4 +332,42 @@ test('Store product search accepts unaccented and composed/decomposed Pokémon n
     'clearing the query restores the original open category state');
   assert.equal(groups.find(g=>g.id==='items').open,false,
     'clearing search keeps secondary categories collapsed');
+});
+
+
+test('Store counters separate fresh listings from visible unconfirmed and archived historical offers', async () => {
+  const R = createRequire(import.meta.url)('../public/regional-prices.js');
+  const source = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
+  const now = new Date().toISOString();
+  const prices = [
+    {product:'store-current-pass',label:'Current Fixture Pass',group:'Tickets',currency:'AUD',amount:8.99,region:'AU',verified:true,observed:'2026-11-13'},
+    {product:'store-storage-upgrade',label:'Item Bag Upgrade',group:'Storage',currency:'AUD',amount:3.99,region:'AU',verified:true,observed:'2026-11-13'},
+    {product:'store-old-pass',label:'Previous Fixture Pass',group:'Tickets',currency:'AUD',amount:6.99,region:'AU',verified:true,observed:'2026-10-12'}
+  ];
+  const snapshot = {version:1,updated:now,items:[{name:'Current Fixture Pass',lastSeen:now}],
+    gone:[{name:'Previous Fixture Pass',lastSeen:'2026-10-12',goneAt:now}]};
+  assert.equal(R.catalogue(prices, [], undefined, []).length, 3, 'synthetic AU Store rows must satisfy the real source-identity gate');
+  const data = {owner:true,prices,regional:[],storeSnapshot:snapshot};
+  const root = {innerHTML:'',addEventListener(){},querySelector:()=>null};
+  const host = {parentNode:{insertBefore(node){Object.assign(root,node);}}};
+  const doc = {readyState:'complete',getElementById:id=>id==='evsource'?host:null,
+    createElement:()=>root,addEventListener(){}};
+  const win = {GORegionalPrices:R,
+    GOLIB:{esc:s=>String(s),loadPrices:()=>Promise.resolve(data),
+      priceView:()=>({sub:'',save:'',main:''})},document:doc,
+    localStorage:{getItem:()=>null,setItem(){}},console};
+  win.window=win;
+  vm.runInNewContext(source,win);
+  await new Promise(resolve=>setTimeout(resolve,30));
+  assert.match(root.innerHTML,/<summary>Regional Store prices <small>3<\/small><\/summary>/,
+    'the section count is a bare number');
+  assert.doesNotMatch(root.innerHTML,/recently listed|visible unconfirmed|not confirmed on sale/,
+    'no availability sentences on the default view');
+  assert.match(root.innerHTML,/data-sp-listing="listed"/);
+  assert.match(root.innerHTML,/data-sp-listing="unconfirmed"/);
+  assert.match(root.innerHTML,/data-sp-listing="archived"/);
+  assert.match(root.innerHTML,/Item Bag Upgrade/);
+  assert.match(root.innerHTML,/A\$3\.99/,'historical storage price remains visible');
+  assert.match(root.innerHTML,/data-sp-group="earlier"/,'retired pass remains in archive');
+  assert.match(root.innerHTML,/data-sp-search/,'search remains available for all product cards');
 });

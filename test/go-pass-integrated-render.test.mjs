@@ -155,12 +155,14 @@ test('GO Pass encounter art stays species-specific with a separate source-labell
 }));
 test('load order, offline references and post-render mount form a complete PWA integration', () => {
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
+ const dashPreload=index.match(/<link rel="preload" href="(\/dash\.js\?v=[^"]+)" as="script">/);
+ assert.ok(dashPreload,'dashboard preload must be a versioned script');
  const assets=[
   '/go-pass-navigation.css?v=20261118h',
   '/go-pass-navigation.js?v=20261118i',
   '/go-pass-reward-art.js?v=20261118d',
   '/event-components.js?v=20261118h',
-  '/dash.js?v=20261118c'
+  dashPreload[1]
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
  assert.ok(index.indexOf('/go-pass-reward-art.js?v=')<index.indexOf('/event-components.js?v='),'semantic registry must load before renderer');

@@ -4,6 +4,7 @@
 // Inputs never create an approved entry on their own: queue items need approvedAsset (a person looked at the bytes), legacy entries are
 // the pictures the site already served before the manifest existed and are labelled as such.
 import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 const A = createRequire(import.meta.url)('../public/variant-art.js');
@@ -15,9 +16,10 @@ const SOURCES = {
   legacy: { name: 'Pictures mirrored to R2 before this manifest (Serebii / Dittobase via scripts/costumes.mjs + scripts/mirror-images.mjs)', rights: 'Existing repository policy; not re-reviewed by the manifest pipeline.' }
 };
 
-export function legacyEntries({ costumes, dex, previous = {} }) {
+// `hashes` ({ url: { sha256, bytes } }) carries checksums of mirrored files read from disk by the CLI; the builder itself stays pure.
+export function legacyEntries({ costumes, dex, previous = {}, hashes = {} }) {
   const byName = new Map((dex || []).map(p => [String(p[1]).toLowerCase(), Number(p[0])])), out = {};
-  const add = (key, url, extra) => { if (!SAFE_URL.test(url)) return; out[key] = { status: 'approved', url, source: 'legacy', review: 'legacy-live-not-reviewed', rights: SOURCES.legacy.rights, sha256: (previous[key] && previous[key].url === url && previous[key].sha256) || '', ...(previous[key] && previous[key].url === url && previous[key].bytes ? { bytes: previous[key].bytes } : {}), ...extra }; };
+  const add = (key, url, extra) => { if (!SAFE_URL.test(url)) return; out[key] = { status: 'approved', url, source: 'legacy', review: 'legacy-live-not-reviewed', rights: SOURCES.legacy.rights, sha256: (previous[key] && previous[key].url === url && previous[key].sha256) || (hashes[url] && hashes[url].sha256) || '', ...(previous[key] && previous[key].url === url && previous[key].bytes ? { bytes: previous[key].bytes } : hashes[url] && hashes[url].bytes ? { bytes: hashes[url].bytes } : {}), ...extra }; };
   const c = costumes || {};
   for (const [sec, shiny] of [['pictures', false], ['shiny', true]]) for (const [k, url] of Object.entries(c[sec] || {})) {
     const [name, label] = k.split('|'), dexNo = byName.get(name); if (!dexNo || !label) continue;
@@ -50,9 +52,9 @@ export function gigantamaxDex(index) {
   return Object.keys((index && index.pokemon) || {}).filter(d => Object.prototype.hasOwnProperty.call(index.pokemon[d], 'fGIGANTAMAX')).map(Number).sort((a, b) => a - b);
 }
 
-export function buildManifest({ costumes, queue, index, dex, previous }) {
+export function buildManifest({ costumes, queue, index, dex, previous, hashes }) {
   const prevEntries = (previous && previous.entries) || {};
-  const entries = { ...legacyEntries({ costumes, dex, previous: prevEntries }), ...queueEntries(queue) };
+  const entries = { ...legacyEntries({ costumes, dex, previous: prevEntries, hashes }), ...queueEntries(queue) };
   const sorted = Object.fromEntries(Object.keys(entries).sort().map(k => [k, entries[k]]));
   return { schemaVersion: 2, policy: POLICY, sources: SOURCES,
     pokeminers: { sourceCommit: (index && index.sourceCommit) || '', gigantamax: gigantamaxDex(index) },
@@ -60,13 +62,31 @@ export function buildManifest({ costumes, queue, index, dex, previous }) {
     entries: sorted };
 }
 
+// Checksums for legacy pictures the manifest does not know yet, read from the mirrored copies (public/img/ext, restored from R2 in the importer).
+export async function hashMirrored(urls, root = 'public') {
+  const out = {};
+  for (const url of urls) {
+    if (!/^\/img\/ext\/[A-Za-z0-9._-]+$/.test(url)) continue;
+    try { const buf = await readFile(root + url); out[url] = { sha256: createHash('sha256').update(buf).digest('hex'), bytes: buf.length }; } catch { /* not mirrored here: stays without a checksum */ }
+  }
+  return out;
+}
+
 async function main() {
   const rd = async f => JSON.parse(await readFile(f, 'utf8'));
   const [costumes, queue, index, dex] = await Promise.all([rd('public/costumes.json'), rd('docs/asset-inventory/candidate-queue.json'), rd('docs/asset-inventory/pokeminers-index.json'), rd('public/dex.json')]);
   let previous = null; try { previous = await rd('public/artwork-manifest.json'); } catch { /* first run */ }
-  const next = JSON.stringify(buildManifest({ costumes, queue, index, dex, previous }), null, 1) + '\n';
+  // Only pictures the committed manifest has no checksum for are read from disk, so --check stays offline-stable.
+  const known = new Set(Object.values((previous && previous.entries) || {}).filter(e => e.sha256).map(e => e.url));
+  const wanted = ['pictures', 'shiny', 'gmax', 'gmaxShiny'].flatMap(sec => Object.values(costumes[sec] || {})).filter(u => !known.has(u));
+  const hashes = await hashMirrored(wanted);
+  const next = JSON.stringify(buildManifest({ costumes, queue, index, dex, previous, hashes }), null, 1) + '\n';
   if (process.argv.includes('--check')) { if (!previous || JSON.stringify(previous, null, 1) + '\n' !== next) { console.error('public/artwork-manifest.json is stale: run node scripts/artwork-manifest.mjs'); process.exit(1); } console.log('artwork manifest is current'); return; }
   await writeFile('public/artwork-manifest.json', next);
-  const m = JSON.parse(next); console.log('artwork manifest: ' + m.counts.entries + ' entries, ' + m.counts.visuallyConfirmed + ' visually confirmed, ' + m.pokeminers.gigantamax.length + ' PokeMiners Gigantamax species');
+  const m = JSON.parse(next);
+  const unsummed = Object.entries(m.entries).filter(([, e]) => !e.sha256).map(([k]) => k);
+  console.log('artwork manifest: ' + m.counts.entries + ' entries, ' + m.counts.visuallyConfirmed + ' visually confirmed, ' + m.pokeminers.gigantamax.length + ' PokeMiners Gigantamax species');
+  // Loud, not silent: an entry whose picture is not on disk keeps an empty checksum, which the validator and tests reject.
+  if (unsummed.length) { console.error('::error title=Artwork manifest::' + unsummed.length + ' entries have no sha256 because their mirrored picture is not on disk: ' + unsummed.join(', ')); process.exit(1); }
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main().catch(e => { console.error(e.message); process.exit(1); });

@@ -29,7 +29,7 @@ const TYPES = ['benefits','featuredMoves','researchPrograms'];
 const cleanUrl = value => {
   try {
     const u = new URL(trim(value));
-    if(u.protocol!=='https:'||u.username||u.password||!u.hostname||u.hash) return null;
+    if(u.protocol!=='https:'||u.username||u.password||u.port||!u.hostname||u.hash) return null;
     return u.toString();
   } catch { return null; }
 };

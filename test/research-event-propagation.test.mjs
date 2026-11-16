@@ -25,6 +25,17 @@ for (const id of ['minior','minior2']) {
   const event=matches[0];
   const tasks=event.research.filter(row=>row&&typeof row.task==='string');
   const sourcedTasks=detail.researchTasks;
+  if(id==='minior2'&&sourcedTasks.length===0){
+   // Leek Duck's Leonids page explicitly denies Timed Research, so the source-denies rule may empty this event, but only with evidence
+   // (same contract as importer.test.mjs); emptiness must then propagate to the canonical event instead of leaving stale tasks.
+   const report=JSON.parse(readFileSync('data/importer-report.json','utf8'));
+   const entry=(report.researchRetention||[]).find(row=>row.id===id);
+   if(entry)assert.deepEqual([entry.retained,entry.reason],[false,'source-denies'],id+': research vanished without a source-denies report entry');
+   assert.equal(detail.researchParseWarning,undefined);
+   assert.equal(detail.researchRetainedAt,undefined);
+   assert.equal(tasks.length,0,'an emptied event must not keep stale research rows');
+   return;
+  }
   assert.ok(sourcedTasks.length>=2,'expected published source-backed tasks');
   // Every separately claimable identical timed step must remain a separate
   // record after importer regeneration and canonical event compilation.

@@ -1,6 +1,6 @@
 """Browser checks for the Phase 2 dashboard (needs: pip install playwright; a static server: cd public && python3 -m http.server 8791; UI_PORT overrides the port).
 Run: python3 test/ui_checks.py. Mocks every /api/* call, fixes the clock to Fri 10 Oct 2026 22:45 Melbourne time."""
-import json,sys,re,base64
+import json,sys,re,base64,time
 PNG1=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
 
 # Stable fixture: two sourced Brisbane City Safari locations, with no raid hotspots.
@@ -436,7 +436,7 @@ check('infographic card previews prefer static WebP thumbnails and stay lazy unt
 check('full-resolution infographic URLs remain in the accessible detail viewer',
       "esc(im.url)" in INFO_JS and 'data-thumb-full' in INFO_JS)
 check('mobile chrome uses compact 48px navigation targets, safe-area padding and reduced header/body spacing',
-      all(token in BASE_CSS for token in ['padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:var(--space-1) 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
+      all(token in BASE_CSS for token in ['padding-block:var(--safe-top) calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:var(--space-1) 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
       'min-height:68px' in BASE_CSS and 'nav.tabs button{min-height:56px}' in DASH_CSS and '@media(max-width:1199px){nav.tabs button{min-height:48px}}' in DASH_CSS)
 check('desktop navigation rail is breakpoint-scoped and mobile keeps the bottom bar',
       all(token in BASE_CSS for token in ['@media (min-width:1200px)', 'body{padding-left:max(132px,calc(4vw + 100px));padding-bottom:var(--space-6)}', 'left:16px;right:auto;top:50%;bottom:auto;transform:translateY(-50%)', 'nav.tabs .row{flex-direction:column', 'nav.tabs button{flex:none;width:100%;min-height:68px']) and
@@ -2796,7 +2796,24 @@ with sync_playwright() as p:
         # Cumulative layout shift of a cold Today load, summed over every shift (user input is not excluded: there is none). Measured un-throttled on purpose: the big
         # shifts (the footer jumping a screen when the agenda arrives, the freshness line and deadlines row growing, the date and tab bar filling in) happen at any speed, so
         # this is deterministic in CI. Batch 4 measured 0.62 (390px) and 1.09 (1280px) before the fix; Google's "good" threshold is 0.1. Throttled 20-run numbers are in docs/ROADMAP.md.
-        CLS_OBSERVER = """window.__cls=0;window.__clsShifts=[];new PerformanceObserver(l=>{
+        CLS_OBSERVER = """window.__cls=0;window.__clsShifts=[];
+        const watched=['#today-v1','#today-legacy','#today-top','#day-brief','.today-layout','#home-now','#action-centre','#seasonbar','#foryou-sec','#weekly-sec'];
+        const geometry=()=>Object.fromEntries(watched.map(sel=>{
+            const el=document.querySelector(sel),r=el?.getBoundingClientRect(),cs=el?getComputedStyle(el):null;
+            return [sel,el?{y:Math.round(r.y),height:Math.round(r.height),display:cs.display,hidden:el.hidden,renderKey:el.getAttribute('data-render-key'),state:el.getAttribute('data-state'),children:sel==='#today-top'?Array.from(el.children).map(c=>({tag:c.tagName,id:c.id,cls:typeof c.className==='string'?c.className:'',y:Math.round(c.getBoundingClientRect().y),height:Math.round(c.getBoundingClientRect().height),display:getComputedStyle(c).display})):undefined}:null];
+        }));
+        window.__clsGeometry=[];
+        const capture=(reason)=>{if(window.__clsGeometry.length<100)window.__clsGeometry.push({at:Math.round(performance.now()),reason,geometry:geometry()});};
+        document.addEventListener('DOMContentLoaded',()=>{
+            capture('dom-ready');
+            const targets=watched.map(sel=>document.querySelector(sel)).filter(Boolean);
+            const mo=new MutationObserver(()=>capture('mutation'));
+            targets.forEach(el=>mo.observe(el,{attributes:true,attributeFilter:['hidden','class','style','data-render-key','data-ready']}));
+            const ro=new ResizeObserver(()=>capture('resize'));
+            targets.forEach(el=>ro.observe(el));
+            requestAnimationFrame(()=>capture('first-frame'));
+        },{once:true});
+        new PerformanceObserver(l=>{
             for(const e of l.getEntries()){
                 window.__cls+=e.value;
                 if(window.__clsShifts.length>=30)continue;
@@ -2811,18 +2828,50 @@ with sync_playwright() as p:
                     })});
             }
         }).observe({type:'layout-shift',buffered:true})"""
+        # Three independent cold navigations per width expose intermittent shifts.
+        # Each sample must pass the existing strict CLS <0.1 guard.
         for cls_w in (390, 1280):
-            cpg = page(width=cls_w, mobile=cls_w < 500, pre=lambda p: p.add_init_script(CLS_OBSERVER))
-            settle(cpg, "!!(window.GOFRESH&&window.GOFRESH.state().done&&window.GOINFOGRAPHIC&&window.GOEXTRA)")  # the late scripts and the freshness line are part of the load
-            cpg.wait_for_timeout(1500)
-            cls_val = cpg.evaluate("window.__cls")
-            if cls_val >= 0.1:
-                # Preserve the strict performance gate; report the actual elements
-                # contributing the largest shift rather than guessing from timing.
+            for cls_sample in range(1, 4):
+                cpg = page(width=cls_w, mobile=cls_w < 500, pre=lambda p: p.add_init_script(CLS_OBSERVER))
+                settle(cpg, "!!(window.GOFRESH&&window.GOFRESH.state().done&&window.GOINFOGRAPHIC&&window.GOEXTRA)")
+                cpg.wait_for_timeout(1500)
+                cls_val = cpg.evaluate("window.__cls")
                 shifts = cpg.evaluate("window.__clsShifts.slice().sort((a,b)=>b.value-a.value).slice(0,12)")
-                print('CLS_DIAGNOSTICS %dpx %s' % (cls_w, json.dumps(shifts, separators=(',', ':'))), flush=True)
-            check('Today cold load at %dpx has a cumulative layout shift under 0.1' % cls_w, cls_val < 0.1, 'measured %.4f' % cls_val)
-            cpg.context.close()
+                geometry = cpg.evaluate("window.__clsGeometry")
+                print('CLS_GEOMETRY %dpx #%d %s' % (cls_w, cls_sample, json.dumps(geometry, separators=(',', ':'))), flush=True)
+                print('CLS_SAMPLE %dpx #%d measured %.5f top_shifts %s' % (cls_w, cls_sample, cls_val, json.dumps(shifts, separators=(',', ':'))), flush=True)
+                check('Today cold load at %dpx sample %d has a cumulative layout shift under 0.1' % (cls_w, cls_sample), cls_val < 0.1, 'measured %.4f' % cls_val)
+                cpg.context.close()
+
+        # Regression for #787: the fetched overseas venue list must be included
+        # in the FIRST Today agenda paint, rather than shifting panels after it.
+        synthetic_world = json.dumps({'events': [{
+            'id': 'synthetic-overseas-exhibition-2026',
+            'name': 'Synthetic Overseas Exhibition',
+            'place': 'Tokyo, Japan', 'area': 'Asia', 'scope': 'regional',
+            'mode': 'in-person', 'start': '2026-10-01T00:00:00Z',
+            'end': '2026-10-31T23:59:59Z',
+            'sources': [{'url': 'https://pokemongolive.com/', 'kind': 'official'}]
+        }]})
+        def delayed_world_source(pg):
+            pg.add_init_script(CLS_OBSERVER)
+            def respond_world(route):
+                time.sleep(0.8)
+                route.fulfill(status=200, body=synthetic_world, content_type='application/json')
+            pg.route('**/world-events.json', respond_world)
+        for cls_w in (390, 1280):
+            for cls_sample in range(1, 4 if cls_w == 390 else 2):
+                wpg = page(width=cls_w, mobile=cls_w < 500, pre=delayed_world_source)
+                overseas_visible = settle(wpg, "document.getElementById('home-now')?.textContent.includes('Synthetic Overseas Exhibition')")
+                wpg.wait_for_timeout(350)
+                late_cls = wpg.evaluate("window.__cls")
+                print('CLS_DELAYED_WORLD %dpx #%d measured %.5f overseas=%s' %
+                      (cls_w, cls_sample, late_cls, overseas_visible), flush=True)
+                check('delayed overseas feed remains on Today at %dpx sample %d' % (cls_w, cls_sample),
+                      overseas_visible and 'Tokyo, Japan' in wpg.locator('#home-now').inner_text())
+                check('delayed overseas feed cold load at %dpx sample %d CLS under 0.1' % (cls_w, cls_sample),
+                      late_cls < 0.1, 'measured %.4f' % late_cls)
+                wpg.context.close()
 
     if on('b'):
         # ---- Batch 2 regression guards: layout width, console cleanliness, touch targets (deterministic: fixed clock, mocked API/images/fonts) ----
@@ -3404,6 +3453,16 @@ with sync_playwright() as p:
         cards = opg.eval_on_selector_all('#igreview .igr', 'els=>els.map(e=>e.getAttribute("data-id"))')
         check('review: the same picture queued twice (same image and Discord post) appears once, and the second id is not listed', cards == ['discord:b9-dup-a', 'discord:b9-solo'], cards)
         check('review: two suggestions for the same event (leekduck:id and bare id) give one Approve button', opg.locator('#igreview .igr[data-id="discord:b9-dup-a"] [data-ig-ok]').count() == 1)
+        check('review: source-backed Pokémon selector is primary, event suggestions are collapsed by default',
+              opg.locator('#igreview .igr[data-id="discord:b9-dup-a"]').evaluate("""el => {
+                  const boss = el.querySelector('select[data-ig-boss-choice]');
+                  const suggestions = el.querySelector('details.igr-event-suggestions');
+                  const event = el.querySelector('select[aria-label="Choose another event"]');
+                  return !!boss && !!suggestions && !!event && !suggestions.open &&
+                      !!(boss.compareDocumentPosition(suggestions) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                      !!(suggestions.compareDocumentPosition(event) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                      suggestions.querySelectorAll('[data-ig-ok]').length === 1;
+              }"""))
         link_txt = opg.locator('#igreview .igr[data-id="discord:b9-solo"] a[href*="discord.com/channels"]').inner_text()
         check('review (owner only): the Discord post link stays, clearly labelled', link_txt == 'Open in Discord (owner only)', link_txt)
         check('review: Discard and Approve buttons say which picture they are for', opg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').get_attribute('aria-label') == 'Discard: Solo picture')
@@ -4082,7 +4141,7 @@ with sync_playwright() as p:
         check('Today shiny rail assets are versioned in the offline shell',
               all(url in SW_JS for url in (DASH_URL, DASH_CSS_URL, APP_URL)) and
               bool(re.fullmatch(r'gofn-shell-v[0-9]+', SHELL_CACHE)) and
-              re.search(r"'/research\.js\?v=[0-9]{8}[a-z]'", SW_JS) is not None and '/data.json' in SW_JS)
+              asset_ref(INDEX_HTML, r'<script src="(/research\.js\?v=[^"]+)"') in SW_JS and '/data.json' in SW_JS)
 
     if on('c'):
         # Purchase Planner: ticket availability is sourced, registration is not called a sale, and official links remain touch-sized.

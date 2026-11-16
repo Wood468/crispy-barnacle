@@ -23,5 +23,6 @@ test('Store source art candidates are pinned and never silently deployed', () =>
   const store=readFileSync(new URL('../public/store.js',import.meta.url),'utf8');
   for(const item of data.entries)
     assert.ok(!store.includes(item.sourcePath),'unapproved art cannot load: '+item.id);
-  assert.match(store,/data-sp-art="category-token"/);
+  assert.doesNotMatch(store,/data-sp-art="category-token"|sp-i-token/,
+    'no placeholder tile: a card has an exact image or no image slot');
 });
