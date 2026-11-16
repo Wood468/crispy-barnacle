@@ -967,7 +967,7 @@ img.art.is-shiny{outline:2px solid var(--color-accent);outline-offset:2px;border
 .evc-ph .ph-banner{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
 /* One picture beside the text: a fixed, slim picture column so every card's text starts at the same place and gets the rest of the width. */
-.evc.cmp > .evc-art:not(:has(.feat-mon + .feat-mon)):not(:has(.sp-art + .sp-art)){width:88px;min-width:0;max-width:88px}
+.evc.cmp > .evc-art:not(:has(.feat-mon + .feat-mon)):not(:has(.sp-art + .sp-art)):not(:has(.evc-banner)){width:88px;min-width:0;max-width:88px}
 .evc.cmp .evc-art .cp-under{flex-wrap:wrap;justify-content:center;white-space:normal;text-align:center;font-size:.64rem;gap:3px}
 .evc.cmp{grid-template-columns:88px minmax(0,1fr)}
 
@@ -2333,3 +2333,10 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .storep-regional .sp-unconf{flex:none;margin-left:auto;color:var(--color-text-muted);font-size:var(--type-caption-compact);font-weight:700}
 .storep-regional .sp-product[data-sp-listing="unconfirmed"] .sp-name{opacity:.85}
 .storep-regional .sp-legend,.storep-regional .sp-foot{margin:var(--space-2) 0 0;font-size:var(--type-caption-compact);line-height:1.4;color:var(--color-text-muted)}
+
+/* Schedule card with the event's verified official banner: one full-width picture across the top, fixed aspect so nothing shifts while it loads. */
+.evc.cmp:has(.evc-banner){grid-template-columns:minmax(0,1fr)}
+.evc.cmp > .evc-art:has(.evc-banner){grid-column:1/-1;width:100%;min-width:0;max-width:none;align-items:stretch}
+.evc.cmp > .evc-art:has(.evc-banner) ~ .evc-main{grid-column:1/-1}
+.evc-banner{display:block;width:100%;aspect-ratio:16/7;overflow:hidden;border-radius:var(--radius-md);background:var(--color-surface)}
+.evc-banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}

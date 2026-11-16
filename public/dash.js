@@ -615,6 +615,14 @@
     if (!out.length) return specialArt(ev) || placeholderArt(ev);
     return out.slice(0, n || 3).join('');
   }
+  /* A Schedule card for an event with no featured Pokémon shows the event's verified official banner (GOTODAY.eventBanner, the one acceptance rule) in place of the special-art pair. No verified banner, a raid/max card or any featured Pokémon: unchanged. */
+  function hasFeatMon(ev) { return (ev.featured || []).some(function (f) { return f.role !== 'shiny_form'; }); }
+  function bannerArt(ev) {
+    if (ev.kind === 'raid' || ev.kind === 'max' || hasFeatMon(ev) || !window.GOTODAY || !GOTODAY.eventBanner) return '';
+    var a = GOTODAY.eventBanner(ev);
+    return a ? '<span class="evc-banner"><img alt="" src="' + esc(a.src) + '" width="320" height="140" decoding="async" loading="lazy" data-err="prm" data-art-source="' + esc(a.provenance.source) + '" data-art-verified="' + esc(a.provenance.verifiedFor) + '"></span>' : '';
+  }
+  function scheduleArt(ev) { return bannerArt(ev) || featArts(ev, 3); }
   /* A card with no Pokémon or special art still gets a picture: the event's kind icon straight away, upgraded to the event page's own banner when it has one. */
   var PH_ICO = { raid: '/ico/g/raid.webp', cd: '/ico/g/event.webp', spot: '/ico/shiny.webp', max: '/ico/g/powerup.webp' };
   function placeholderArt(ev) {
@@ -801,7 +809,7 @@
       + '<button type="button" class="today-event-open" data-open="' + esc(ev.id) + '" aria-label="Explore ' + esc(ev.name) + '">Explore event <span aria-hidden="true">›</span></button>'
       + '</div></article>';
     return '<article class="evc cmp' + (week ? ' week-card' : '') + ' ' + p + '" style="--k:' + k[1] + ';--kf:' + k[2] + '" data-id="' + esc(ev.id) + '">'
-      + '<div class="evc-art">' + featArts(ev, 3) + '</div>'
+      + '<div class="evc-art">' + scheduleArt(ev) + '</div>'
       + '<div class="evc-main">'
       + '<div class="evc-top"><span class="kind-grp"><span class="kind">' + esc(k[0]) + '</span>' + statusChip(ev) + '</span><span class="cdn" data-id="' + esc(ev.id) + '">' + esc(countdown(ev)) + '</span><button type="button" class="hide-x" data-hide="' + esc(ev.id) + '" aria-label="Hide ' + esc(ev.name) + '" title="Hide this event">✕</button></div>'
       + '<div class="evc-title-row"><h3 title="' + esc(ev.name) + '">' + esc(ev.name) + '</h3></div>'
