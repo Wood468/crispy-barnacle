@@ -352,10 +352,14 @@
 
   /* Research reward cell, shared by Event Details and the Research tab. Exact variant art for encounters (forms and costumes), quantities, CP range,
      "Mighty" and a Shiny tag only when the source itself says the reward can be Shiny (never inferred from boosts or event type). */
-  /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol). */
-  function itemIcon(n) { n = String(n || ''); return /stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''; }
+  /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol), Eternatus Candy and Candy XL, Pinap Berry. */
+  /* Exact names only: 'Eternatus Candy' (optionally with a quantity prefix such as '25\u00d7 ') and 'Eternatus Candy XL' / 'Eternatus XL Candy'. Pictures supplied by the owner (see docs/asset-inventory/item-icons.json). Anything looser, any other species candy, Rare Candy and combined reward text fall through unchanged. */
+  function eternatusIcon(n) { n = String(n || '').normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/^[\d,]+ ?[\u00d7x] ?/i, ''); return /^eternatus candy$/i.test(n) ? '/ico/i/eternatus-candy.webp' : /^(?:eternatus candy xl|eternatus xl candy)$/i.test(n) ? '/ico/i/eternatus-candy-xl.webp' : ''; }
+  /* Exact 'Pinap Berry' only (optional quantity prefix such as '3\u00d7 '). Silver Pinap Berry, Golden Razz Berry and every other berry keep their own picture or the generic berry shape. Picture supplied by the owner. */
+  function pinapIcon(n) { n = String(n || '').normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/^[\d,]+ ?[\u00d7x] ?/i, ''); return /^pinap berry$/i.test(n) ? '/ico/i/pinap-berry.webp' : ''; }
+  function itemIcon(n) { n = String(n || ''); return eternatusIcon(n) || pinapIcon(n) || (/stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''); }
   /* A clearly typographic category fallback, never counterfeit item art.
-     Exact Rare Candy and Rare Candy XL images are not in the approved ico set. */
+     Exact Rare Candy and Rare Candy XL images are not in the approved ico set (only Eternatus Candy and Candy XL have pictures, matched by exact name in eternatusIcon). */
   function researchItemGlyph(name) {
     name = String(name || '');
     if (/\brare candy xl\b/i.test(name)) return { kind: 'rare-candy-xl', text: 'XL' };
