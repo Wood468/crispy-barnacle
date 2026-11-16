@@ -633,7 +633,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
     });
     draw();$('up-watch').appendChild(el);
   }).catch(function(){});
-  $('asof').textContent=D.asOf||'';if($('asof-wrap'))$('asof-wrap').hidden=!D.asOf;
+  /* The footer "Events as of" date comes from the live feed's last successful refresh (fresh.js fills it in); with no recorded refresh it stays hidden. */
 
   /* ---------- best pokemon ---------- */
   var TCOL={Normal:['#9099A1','#0C0F14'],Fighting:['#B8305A','#FFFFFF'],Flying:['#8FA8DD','#0C0F14'],Poison:['#AB6AC8','#0C0F14'],Ground:['#D97746','#0C0F14'],Rock:['#C5B78C','#0C0F14'],Bug:['#91C12F','#0C0F14'],Ghost:['#5269AC','#FFFFFF'],Steel:['#5A8EA2','#0C0F14'],Fire:['#FF9D55','#0C0F14'],Water:['#5090D6','#0C0F14'],Grass:['#63BB5B','#0C0F14'],Electric:['#F4D23C','#0C0F14'],Psychic:['#FA7179','#0C0F14'],Ice:['#73CEC0','#0C0F14'],Dragon:['#0B6DC3','#FFFFFF'],Dark:['#5A5465','#FFFFFF'],Fairy:['#EC8FE6','#0C0F14']};
@@ -1097,7 +1097,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
     var v=document.getElementById('today-v1');if(v&&v.getAttribute('aria-busy')==='true'){v.removeAttribute('aria-busy');v.innerHTML='<div class="today-status" role="alert"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry-v1">Try again</button></div>';var r2=document.getElementById('today-retry-v1');if(r2)r2.addEventListener('click',function(){window.location.reload()});}
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261120a-lowtiers';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261116a';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

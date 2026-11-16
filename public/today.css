@@ -261,5 +261,7 @@ header.top .hbtn{width:44px;height:44px}
 .t1-minor--noart,.t1-minor:has(> .t1-minor-art:empty){grid-template-columns:minmax(0,1fr) auto 44px}
 .t1-minor-art:empty{display:none}
 .t1-minor-art .t1-minor-banner{width:100%;height:100%;object-fit:cover;object-position:50% 40%;border-radius:var(--radius-sm,6px)}
+.t1-minor-art .sp-art{width:100%;height:100%}
+.t1-minor-art .sp-art .max-tag,.t1-minor-art .sp-art + .sp-art{display:none}
 .t1-minor > .t1-open{min-width:0}
 .t1-minor .t1-title{overflow-wrap:anywhere}

@@ -2316,7 +2316,7 @@ function renderHomeBrief(t) {
       ending.sort(function (a, b) { return a.end - b.end; });
     } catch (e) { }
     return { now: t, ending: ending, live: live, soon: soon, week: week, regLive: regLive, regSoon: regSoon, regWeek: regWeek, boosts: t1BoostRecords(t), seasons: seasons, done: hiddenDone, hidden: hiddenByYou,
-      kindOf: kindOf, monArt: monArt, fallbackArt: placeholderArt, overseas: function (ev) { return t1Overseas(ev.region); }, dayLabel: function (d) { return fmtD(d); } };
+      kindOf: kindOf, monArt: monArt, specialArt: specialArt, fallbackArt: placeholderArt, overseas: function (ev) { return t1Overseas(ev.region); }, dayLabel: function (d) { return fmtD(d); } };
   }
   var t1Signature = '';
   function sigEv(e) { return [e.id, e.name, e.region || '', +e.start || 0, +e.end || 0, e.img || '', e.artPageUrl || '', (e.featured || []).length, (e.tags || []).join(',')].join('|'); }
@@ -2582,7 +2582,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261118b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261113ui761'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261118b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261116a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261113ui761'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
