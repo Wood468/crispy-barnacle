@@ -301,10 +301,10 @@ export function comingMonth(c, now) {
 export function buildWeekly(reg, now = Date.now()) {
   const clean = t => String(t || "").replace(/^tr\s+/i, "").replace(/\s+/g, " ").trim().slice(0, 80);
   const pick = (test, days, max, kind, label) => (reg.candidates || []).filter(c => c.stagedPath && c.decision !== "rejected" && !(kind === "month" && comingMonth(c, now)) && (c.overview === kind || (test(c) && !c.overview && Date.parse(c.publishedAt || "") > now - days * 864e5)))
-    .sort((a, b) => (b.overview === kind) - (a.overview === kind) || Date.parse(b.publishedAt) - Date.parse(a.publishedAt)).slice(0, max)
+    .sort((a, b) => (Date.parse(b.publishedAt) || 0) - (Date.parse(a.publishedAt) || 0)).slice(0, max)
     .map(c => ({ id: c.id, kind, title: kind === "month" ? label(c) : clean(c.title), image: c.stagedPath, post: publicSourceUrl(c.url), publishedAt: c.publishedAt }));
   const monthName = c => { const m = String(c.title || "").concat(" ", String(c.imageUrl || "").split("?")[0]).match(new RegExp("(" + MONTH_NAMES + ")[ _-]*content", "i")); return m ? "Month overview: " + m[1].slice(0, 1).toUpperCase() + m[1].slice(1).toLowerCase() : "Month overview"; };
-  // One picture per button: a picture you chose still comes first, and among those the newest wins, so a new one replaces the old instead of stacking behind it.
+  // One picture per button, newest first: a picture you chose stays eligible (and is shown when it is the newest of its kind), but a newer one of the same kind replaces it instead of stacking behind it.
   const items = [...pick(isWeekly, 10, 1, "week"), ...pick(isMonthly, 40, 1, "month", monthName)];
   return { updated: new Date(now).toISOString(), items };
 }
