@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -131,4 +131,18 @@ test('malformed JSON reports safely with a nonzero exit and without leaking sour
   } finally {
     rmSync(temp, { recursive: true, force: true });
   }
+});
+
+test('current repository public feeds can be audited offline without logging source media', () => {
+  const repo = new URL('../', import.meta.url).pathname;
+  // The fixture is shipped by the repository in CI. Local standalone contract
+  // testing may not include public data; synthetic tests above cover that case.
+  const files = ['public/event-info.json', 'public/weekly.json', 'public/infographic-queue.json', 'data/g47ix-infographics-review.json'];
+  if (!files.every(p => existsSync(join(repo, p)))) return;
+  const { report, exitCode } = runAudit(repo);
+  assert.equal(exitCode, 0);
+  assert.equal(report.publicG47ixReferences,
+    report.totals.eventReferences + report.totals.bossGuideReferences + report.totals.weeklyReferences + report.totals.queueReferences);
+  assert.equal(report.totals.explicitlyAttributedG47ixReferences + report.totals.namespaceOnlyReferences, report.publicG47ixReferences);
+  assert.doesNotMatch(JSON.stringify(report), /discord\.com\/channels\/|cdn\.discordapp\.com|\/infographics\/g47ix\/discord-/i);
 });
