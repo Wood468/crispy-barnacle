@@ -397,7 +397,8 @@ test('official descriptions preserve exact historic pass variants and original A
 
 test('official current November pass listings remain unpriced and preserve exact published variants', () => {
   const official = require('../public/store-offer-identities.js');
-  const prices = require('../public/prices.json').prices;
+  // Evaluated at NOW (2026-11-12): owner-read AU prices dated after that did not exist yet, so later data entries cannot change this scenario.
+  const prices = require('../public/prices.json').prices.filter(p=>!p.observed||Date.parse(p.observed)<=NOW);
   assert.equal(official.length,3,'three independently announced November product variants');
   const rows = R.catalogue(prices, OBS, NOW, official);
   const sourceOnly=rows.filter(p=>p.unpricedOfficial);
