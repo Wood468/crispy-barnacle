@@ -6500,9 +6500,9 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "1b6fd5ccbe9284d50481884d5b8ad9e46a5d0f00487efa5a9a14e5e6eee44be7",
-    "revision": 17,
-    "amended": true,
+    "contentHash": "d56e57a25644195bd1076df307839ef8bb43755cb980d7e911ffb410c3d6379c",
+    "revision": 18,
+    "amended": false,
     "native": false,
     "collection": "events"
    },
@@ -6666,8 +6666,8 @@
       },
       {
        "type": "encounter",
-       "name": "Grookey",
        "quantity": 1,
+       "name": "Grookey",
        "cpMin": 430,
        "cpMax": 465
       },
@@ -6886,13 +6886,8 @@
        "rewards": [
         {
          "type": "item",
-         "name": "Eternatus Candy",
+         "name": "Eternatus Candy 5000 × Stardust",
          "quantity": 10
-        },
-        {
-         "type": "item",
-         "name": "Stardust",
-         "quantity": 5000
         }
        ]
       }
@@ -11826,7 +11821,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 207,
+    "revision": 209,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -21622,6 +21617,76 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "leekduck:gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup",
+   "aliases": [],
+   "family": "other",
+   "title": "Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup will run from November 10, 2026, at 1:00 p.m. to November 17, 2026, at 1:00 p.m. PT.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
+    "info": [],
+    "detailRefs": [
+     "leekduck:gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "3b5e6dacf7c77407cd450b017c94ab30a6adc70172d3702fee9b73d4005e6d02",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "leekduck:gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3",
    "aliases": [],
    "family": "other",
@@ -21684,6 +21749,76 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup",
+   "aliases": [],
+   "family": "other",
+   "title": "Ultra League, Master League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Ultra League, Master League: Mega Edition, and 2026 GO LAIC Cup will run from November 18, 2026, at 1:00 p.m. to November 25, 2026, at 1:00 p.m. PT.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
+    "info": [],
+    "detailRefs": [
+     "leekduck:gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "bbcf8a6f2c912c410880e74748ef1ab104ba417d3de3a2589bbc0d03c67bafe3",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup/"
     }
    ],
    "pokemon": [],
@@ -23896,7 +24031,7 @@
    "eventId": "leekduck:max-mondays-2026-11-16",
    "aliases": [],
    "family": "max-battles",
-   "title": "Max Monday: Pokémon to be announced",
+   "title": "[Canceled] Max Monday",
    "dateText": "",
    "completeness": "partial",
    "lifecycle": "reference",
@@ -23937,8 +24072,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "6ceac660dbd51e26f65930e3c36892b669ac81a4aedb918fb1beaa47e31304f0",
-    "revision": 4,
+    "contentHash": "edadf5975a31797210a085d1514ebbe331bd149f60158ed5bac15d10405d60ef",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -32280,7 +32415,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 222,
+    "revision": 224,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -61458,7 +61593,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 198,
+    "revision": 200,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -63221,9 +63356,9 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "d85b9c6af24778f805d9726278d43444fed9c41077c6bb2083795de2564a61f0",
-    "revision": 18,
-    "amended": true,
+    "contentHash": "8726aa5747c8e95db29534f6b96a94e97ba9637bb87ecd2d8769c8fd3838c063",
+    "revision": 19,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -63385,8 +63520,8 @@
       },
       {
        "type": "encounter",
-       "name": "Grookey",
        "quantity": 1,
+       "name": "Grookey",
        "cpMin": 430,
        "cpMax": 465
       },
@@ -63605,13 +63740,8 @@
        "rewards": [
         {
          "type": "item",
-         "name": "Eternatus Candy",
+         "name": "Eternatus Candy 5000 × Stardust",
          "quantity": 10
-        },
-        {
-         "type": "item",
-         "name": "Stardust",
-         "quantity": 5000
         }
        ]
       }
@@ -68548,7 +68678,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 207,
+    "revision": 209,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -76855,7 +76985,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 198,
+    "revision": 200,
     "amended": true,
     "native": false,
     "collection": "world-events"

@@ -1,8 +1,8 @@
 {
- "runAt": "2026-11-16T12:07:23.687Z",
+ "runAt": "2026-11-16T21:31:25.402Z",
  "artworkCoverage": {
   "selected": 27,
-  "missing": 74,
+  "missing": 76,
   "legacyUnattributed": 2,
   "bySource": {
    "Pokémon GO (official)": 22,
@@ -26,7 +26,7 @@
    },
    {
     "id": "leekduck:max-mondays-2026-11-16",
-    "name": "Max Monday: Pokémon to be announced",
+    "name": "[Canceled] Max Monday",
     "sources": [
      "https://leekduck.com/events/max-mondays-2026-11-16/"
     ]
@@ -239,6 +239,20 @@
     "name": "Minior Showers: Perseids 2027",
     "sources": [
      "https://leekduck.com/events/minior-showers-perseids-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup",
+    "name": "Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
+    "sources": [
+     "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/"
+    ]
+   },
+   {
+    "id": "leekduck:gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup",
+    "name": "Ultra League, Master League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
+    "sources": [
+     "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup/"
     ]
    },
    {
@@ -541,7 +555,7 @@
  },
  "sources": {
   "official": {
-   "listed": 22,
+   "listed": 20,
    "error": ""
   },
   "leekduck": {
@@ -554,7 +568,7 @@
   }
  },
  "pagesRead": 80,
- "events": 103,
+ "events": 105,
  "worldEvents": 68,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
@@ -694,11 +708,6 @@
    "source": "official",
    "title": "Pokémon GO City Safari: Boston Update",
    "url": "https://pokemongo.com/news/city-safari-boston-rescheduled/"
-  },
-  {
-   "source": "official",
-   "title": "Explore by starlight during meteor showers for a chance to encounter Minior! — Pokémon GO",
-   "url": "https://pokemongo.com/news/minior-meteor-showers-2026/"
   }
  ],
  "intl": {
