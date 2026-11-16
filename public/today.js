@@ -197,9 +197,8 @@
   /* Whole Today view. ctx supplies: now, live[], soon[], week[], regLive[], regSoon[], regWeek[], boosts{live[],upcoming[]},
      seasons[], done (list of {key,id,start}), hidden (list of {key,id,start}), kindOf, monArt, fallbackArt, overseas, dayLabel. */
   function render(ctx) {
-    var live = ctx.live, soon = ctx.soon, rank = { major: 0, raid: 1, minor: 2 };
-    function typeOf(ev) { return LOGIC.cardType({ kind: ev.kind, name: ev.name, featuredCount: pokemonFor(ev, 9).length, span: +ev.end - +ev.start, tags: ev.tags }); }
-    var liveSorted = live.slice().sort(function (a, b) { return rank[typeOf(a)] - rank[typeOf(b)] || +a.end - +b.end; });
+    var live = ctx.live, soon = ctx.soon;
+    var liveSorted = LOGIC.happeningNowSort(live);
     var liveCards = liveSorted.map(function (e) { return card(ctx, e, true); }).concat(ctx.regLive.map(function (r) { return regRow(ctx, r, true); }));
     var soonCards = soon.map(function (e) { return card(ctx, e, false); }).concat(ctx.regSoon.map(function (r) { return regRow(ctx, r, false); }));
     var weekCards = ctx.week.map(function (e) { return weekRow(ctx, e); }).concat(ctx.regWeek.map(function (r) { return regWeekRow(ctx, r); }));
