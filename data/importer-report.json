@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-15T23:13:06.450Z",
+ "runAt": "2026-11-16T03:13:23.850Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -562,7 +562,7 @@
  },
  "pagesRead": 80,
  "events": 104,
- "worldEvents": 69,
+ "worldEvents": 68,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
