@@ -71,6 +71,8 @@ test('queue creator attribution gaps are counted without printing titles, URLs o
     { image: path('y'), creator: 'G47IX', post: privateUrl },
   ] } });
   assert.equal(result.totals.queueReferences, 2);
+  assert.equal(result.totals.namespaceOnlyReferences, 1);
+  assert.equal(result.totals.explicitlyAttributedG47ixReferences, 1);
   assert.equal(result.totals.missingQueueCreatorAttribution, 1);
   const log = JSON.stringify(result);
   assert.doesNotMatch(log, /very-secret|discord\.com|guild|\/infographics\/g47ix\/x/);
@@ -90,6 +92,8 @@ test('non-G47IX art is excluded and contradicting source labels on G47IX paths a
   ] } } } });
   assert.equal(result.totals.eventReferences, 2);
   assert.equal(result.totals.sourceLabelPathMismatch, 1);
+  assert.equal(result.totals.explicitlyAttributedG47ixReferences, 1);
+  assert.equal(result.totals.namespaceOnlyReferences, 1);
 });
 
 test('offline CLI remains report-only by default, with opt-in failure and no logged media IDs', () => {
