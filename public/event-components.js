@@ -156,8 +156,18 @@ function passReward(raw,ctx){
  }
  var qty=Number.isInteger(item.quantity)&&item.quantity>1?'×'+esc(item.quantity):'';
  var lvl=item.type==='encounter'&&Number.isInteger(item.level)?' · Level '+esc(item.level):'';
+ /* The species artwork remains the primary image for encounter rewards.
+    Dynamax is a battle treatment, not a substitute generic MAX icon. Keep
+    source-labelled modes visibly separate from the real Pokémon picture. */
+ var mode='';
+ if(item.type==='encounter'){
+  var named=/^(Dynamax|Gigantamax|Shadow|Mega|Primal)\s+/i.exec(item.name);
+  var declared=String(item.battleMode||item.formId||'').toLowerCase();
+  mode=named?named[1].toLowerCase():/^(dynamax|gigantamax|shadow|mega|primal)$/.test(declared)?declared:'';
+ }
+ var modeChip=mode?'<span class="ue-pass-mode ue-pass-mode-'+esc(mode)+'">'+esc(mode==='gigantamax'?'Gigantamax':mode[0].toUpperCase()+mode.slice(1))+'</span>':'';
  var symbol=semantic&&semantic.kind==='symbol'?semantic.symbol:passGlyph(item,cat);
- return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(hasArt?'':' data-art="category"')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+esc(symbol)+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b><small>'+(qty?qty+' · ':'')+esc(cat)+lvl+'</small></span></div>';
+ return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(mode?' data-battle-mode="'+esc(mode)+'"':'')+(hasArt?'':' data-art="category"')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+esc(symbol)+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b>'+(modeChip?'<span class="ue-pass-mode-line">'+modeChip+'</span>':'')+'<small>'+(qty?qty+' · ':'')+esc(cat)+lvl+'</small></span></div>';
 }
 function passLane(label,cls,list,ctx){
  var chips=[].concat(list||[]).map(function(x){return passReward(x,ctx);}).filter(Boolean);

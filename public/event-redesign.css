@@ -490,6 +490,12 @@ html[data-kbd] #evd .hbtn:focus-visible,html[data-kbd] #evd .evd-nav-link:focus-
 .ue-pass-gap{margin:6px 0;padding:7px 9px}
 @media(max-width:375px){.ue-pass-stages>li.ue-pass-rank{grid-template-columns:minmax(58px,65px) minmax(0,1fr);gap:6px}.ue-pass-highlight{padding:9px}}
 
+/* Source-backed GO Pass Pokémon keep their species illustration visible.
+   The mode is separate text, not a fake Dynamax/Shadow sprite or MAX icon. */
+.ue-pass-mode-line{display:flex;align-items:center;min-width:0}
+.ue-pass-mode{display:inline-flex;align-items:center;max-width:100%;width:max-content;min-height:15px;padding:1px 5px;border:1px solid color-mix(in srgb,var(--color-accent) 45%,var(--color-border));border-radius:5px;background:color-mix(in srgb,var(--color-accent) 11%,transparent);color:var(--color-text);font:750 .59rem/1.2 var(--font-body);letter-spacing:.015em;white-space:nowrap}
+.ue-pass-reward[data-battle-mode="dynamax"] .ue-pass-mode,.ue-pass-reward[data-battle-mode="gigantamax"] .ue-pass-mode{border-color:color-mix(in srgb,#d17bff 45%,var(--color-border));background:color-mix(in srgb,#d17bff 13%,transparent)}
+
 /* Schedule: today marker on day headings, honest empty week */
 h2.dh-today{color:var(--color-accent,#f5c518)}
 h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);border:1px solid var(--color-border);border-radius:999px;padding:3px 8px;vertical-align:middle;margin-left:6px}
