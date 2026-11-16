@@ -7,6 +7,65 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1571789562240303105",
+      "source": "discord",
+      "creator": "",
+      "title": "GO Weekly T16",
+      "publishedAt": "2026-11-16T07:30:34.076000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1571675362243649667/GO_Weekly_T16.png?ex=6afc40fe&is=6afaef7e&hm=995dcb62c93df345034b2d255c4fb335fa8bb4d8d61469a163791432e7efed98&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "PaREctoy ws GOW-L/, | 16-22 NOVEMBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY 16 NOV 17 NOV 18 NOV 19 NOV 20 NOV 21 NOV 22 NOV is (= eye Scenic =—_ — Ww “un Tuesday Hour Thursday Friday Sunday qa Qu Up to 3 Special Trades More Pokémon in the Enter up to One Rare Candy XL for completing 50 battles/day wild and Boosted 5 Showcases in-person 4x Stardust Candy XL from trade 2 guaranteed incense on Routes Raid Battles. from win rewards Increased chance Encounter Mateo 3x of Lucky Trade RAIDS, 98 = SHAI RAID: aor VN — <a oe Eternatus Returns 11:00 am - 2:00 pm { @ 1:00pm pst | eS § (EY spotight Hour Spotlight Hour Nv DAY COMMUNITY ROTATION @ © 6:00 pm - 7:00 pm I MINIOR py SHOWERS LEONIDS 0 @ 10:00 am ey ll 225 Dynamax Trails a fi aa iF \\ (@) INES) HAN RENIIING / Local and exclusive events POKEMON we LAIC INTER e HOCLEr NA 9 @ 2027 a) NOV 20-22 Pokémon Six museums © .8 APAC Cross-Region Stamp Rally Observatory ADIDAS collab Mall Explo > im @esa across Europe = ° Until 2029 Eh until Dec 6 Mis Until January 202: i} Until Dec 2026 /Jan Until 30 APR 2027 Pokémon Center Pokémon Jet UK NATIONAL until Aug 2027 e until Aug 2027 a [e] TRUST SITES Until Dec 31 KANTO 1 Fad © | G47IX 90 @XxUoa TWILIGHT Follow for more g47ix.pro RAI",
+      "eventMatch": {
+        "eventId": "novcd",
+        "eventTitle": "November Community Day",
+        "score": 0.813,
+        "confidence": "high",
+        "matchedTerms": [
+          "november",
+          "day",
+          "2026",
+          "more",
+          "wild",
+          "local",
+          "special",
+          "candy",
+          "chance",
+          "hour",
+          "incense",
+          "trade"
+        ],
+        "alternatives": [
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.813
+          },
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.809
+          },
+          {
+            "eventId": "dyntrails",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.809
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 6,
+      "stagedPath": "/infographics/g47ix/discord-1571789562240303105.webp"
+    },
+    {
       "id": "discord:1571680415083667596",
       "source": "discord",
       "creator": "",
