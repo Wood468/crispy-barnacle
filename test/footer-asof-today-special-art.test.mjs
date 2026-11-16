@@ -55,6 +55,31 @@ test('compact card with no Pokemon or banner shows the Schedule special art when
   assert.doesNotMatch(html, /t1-minor--noart/);
 });
 
+const PARTICLE = '<span class="sp-art sp-particle"><img class="art" alt="Max Particles" src="/img/ext/Max-Particle-Sprite-9818b5dc.png"><span class="max-tag">Max Particles</span></span>';
+const BOTH = SPECIAL + PARTICLE;
+
+test('compact card prefers the Max Particles image over the Power Spot map when the event has both', () => {
+  const html = card(TODAY.render(ctx(base, { specialArt: () => BOTH })));
+  assert.match(html, /sp-particle/);
+  assert.match(html, /Max-Particle-Sprite-9818b5dc\.png/);
+  assert.doesNotMatch(html, /sp-powerspot|powerspots-overworld/);
+  assert.equal((html.match(/<img/g) || []).length, 1);
+});
+
+test('compact card falls back to the Power Spot image only when there is no Max Particles art', () => {
+  const html = card(TODAY.render(ctx(base, { specialArt: () => SPECIAL })));
+  assert.match(html, /sp-powerspot/);
+  assert.doesNotMatch(html, /sp-particle/);
+  const only = card(TODAY.render(ctx(base, { specialArt: () => PARTICLE })));
+  assert.match(only, /sp-particle/);
+});
+
+test('compact card keeps the no-art layout when specialArt returns nothing usable', () => {
+  const html = card(TODAY.render(ctx(base, { specialArt: () => '<span class="other">x</span>' })));
+  assert.match(html, /t1-minor--noart/);
+  assert.doesNotMatch(html, /t1-minor-art|<img/);
+});
+
 test('compact card keeps the no-art layout when the event has no special art or no helper is supplied', () => {
   const none = { ...base, tags: ['Max Battles'] };
   for (const c of [ctx(none, { specialArt: () => '' }), ctx(base)]) {
