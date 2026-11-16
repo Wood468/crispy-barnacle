@@ -6,6 +6,9 @@ import worker, { withSecurityHeaders, SECURITY_HEADERS, guideImage } from "../sr
 import { IMAGE_CSP_HOSTS, OG_IMAGE_HOSTS } from "../src/image-policy.js";
 import { ogImage } from "../src/og.js";
 import { makeDB } from "./helpers.mjs";
+import { createRequire } from "node:module";
+const FX = createRequire(import.meta.url)("../public/store-fx.js");
+
 
 test("every response gets the browser security headers, including framing and cross-site calls", async () => {
   const r = withSecurityHeaders(new Response("hi", { status: 200, headers: { "content-type": "text/html" } }));
@@ -17,6 +20,25 @@ test("every response gets the browser security headers, including framing and cr
   assert.equal(await r.text(), "hi");
 });
 
+
+test("the Store AUD reference provider is the only cross-origin browser fetch exception", () => {
+  const csp = SECURITY_HEADERS["content-security-policy"];
+  const directives = csp.split(";").map(x => x.trim());
+  const connect = directives.find(x => x.startsWith("connect-src "));
+  assert.equal(FX.ENDPOINT, "https://open.er-api.com/v6/latest/AUD",
+    "the FX provider is fixed, keyless and sends no owner prices");
+  assert.equal(connect, "connect-src 'self' " + FX.ENDPOINT,
+    "no wildcard host, HTTP downgrade or arbitrary third-party connections");
+  assert.match(csp, /script-src 'self';/);
+  assert.match(csp, /frame-ancestors 'none'/);
+  assert.match(csp, /form-action 'self'/);
+  assert.match(csp, /object-src 'none'/);
+  const response = withSecurityHeaders(new Response("<html>Store</html>", {
+    headers: { "content-type": "text/html" }
+  }));
+  assert.ok(response.headers.get("content-security-policy").includes(connect),
+    "the applied policy, not just a source string, must permit the dated FX quote");
+});
 
 test("the Worker applies security headers to static asset responses too", async () => {
   const env = { DB: makeDB(), ASSETS: { fetch: async () => new Response("<html>asset</html>", { headers: { "content-type": "text/html" } }) } };

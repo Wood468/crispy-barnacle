@@ -7,6 +7,7 @@ Cloudflare Worker + static assets + D1, deployed by Workers Builds on every push
 - `public/data.json` all events, raid rotations, Max Battles, rankings and the Upcoming lists. To refresh, edit this file
   and run `node scripts/event-experience/build-catalogue.cjs` before pushing. Verify the resulting catalogue with
   `node scripts/event-experience/audit-catalogue-v1.cjs`. The scheduled importer rebuilds it automatically.
+- [`docs/DATA_FLOW.md`](docs/DATA_FLOW.md) plain-English map of how data gets into the app (sources, scheduled jobs, files, screens).
 - `src/worker.js` `/api/art` (Pokémon artwork from PokeAPI, cached at the edge) and `/api/dex` (your marks, behind `SYNC_PIN`).
 
 ## Setup (once)

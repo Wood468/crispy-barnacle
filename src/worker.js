@@ -22,6 +22,7 @@ import * as auth from "./auth.js";
 import * as jobs from "./jobs.js";
 import { ogImage, OG_HOSTS } from "./og.js";
 import { IMAGE_CSP_HOSTS } from "./image-policy.js";
+import { encodeInfographicTargets, decodeInfographicTargets } from "./infographic-decision-wire.mjs";
 import { OBSERVATIONS as REGIONAL_OBSERVATIONS } from "./regional-observations.js";
 import { venueItems, venueFor, describeVenue } from "./venue-times.js";
 export { ogImage };
@@ -183,9 +184,9 @@ const handler = {
   },
 };
 
-// Browser security headers on every response. script-src allows only our own files (no inline scripts or handlers); inline styles are still allowed. The rest of the policy still stops framing, plugins, form hijacking and calls to other sites (so a stolen PIN has nowhere to go).
+// Browser security headers on every response. script-src allows only our own files (no inline scripts or handlers); inline styles are still allowed. The only cross-origin connect-src exception is the fixed, public AUD-reference FX GET endpoint (no cookies or user data). Framing, plugins, form hijacking and all other cross-origin connections stay blocked.
 export const SECURITY_HEADERS = {
-  "content-security-policy": `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: ${IMAGE_CSP_HOSTS.join(" ")}; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`,
+  "content-security-policy": `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: ${IMAGE_CSP_HOSTS.join(" ")}; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`,
   "x-frame-options": "DENY",
   "x-content-type-options": "nosniff",
   "referrer-policy": "strict-origin-when-cross-origin",
@@ -270,8 +271,11 @@ export function artCandidates(raw) {
   // PokeAPI uses "gimmighoul-roaming" (not "-roaming-form") for the
   // exact Coin Bag/GO Pass encounter. Chest Form is the default species.
   // Keep exact=true: a missing form must never silently display the other one.
-  const gimmighoul = /^Gimmighoul\s*\((Roaming|Chest)\s+Form\)$/i.exec(n);
-  if (gimmighoul) return { base: "gimmighoul", list: [gimmighoul[1].toLowerCase() === "roaming" ? "gimmighoul-roaming" : "gimmighoul"], exact: true };
+  // Both the official "Gimmighoul (Roaming Form)" and publisher/source
+  // "Roaming Form Gimmighoul" describe the same exact Pokémon variety.
+  // Chest is the default PokeAPI form, not a substitute for Roaming.
+  const gimmighoul = /^(?:Gimmighoul\s*\((Roaming|Chest)\s+Form\)|(Roaming|Chest)\s+Form\s+Gimmighoul)$/i.exec(n);
+  if (gimmighoul) return { base: "gimmighoul", list: [(gimmighoul[1] || gimmighoul[2]).toLowerCase() === "roaming" ? "gimmighoul-roaming" : "gimmighoul"], exact: true };
   // Source articles also say "Zacian (Crowned Sword)"; both spellings
   // are the *same exact form*, and neither may borrow Hero-of-Many-Battles art.
   const crownedSword = /^(?:Crowned Sword Zacian|Zacian\s*\(Crowned Sword\))$/i.test(n);
@@ -1096,17 +1100,28 @@ async function pinned(request, env) {
 export function cleanDecision(b) {
   const id = String(b && b.id || ""), status = String(b && b.status || "");
   if (!/^[a-z0-9:_.-]{1,90}$/i.test(id) || !["approved", "rejected", "reset", "unlinked", "week", "month"].includes(status)) return null;
-  // An infographic can sit on several events: ids are comma-separated, titles are separated by " | ", in the same order.
-  const eventId = String(b.eventId || "").slice(0, 700), eventTitle = String(b.eventTitle || "").replace(/[<>]/g, "").slice(0, 900);
-  if (status === "approved" && !/^[\w:.-]{1,90}(,[\w:.-]{1,90}){0,7}$/.test(eventId)) return null;
-  return { id, status, eventId: status === "approved" ? eventId : "", eventTitle: status === "approved" ? eventTitle : "" };
+  // An existing D1 TEXT column stores both legacy event IDs and new explicitly
+  // chosen Pokémon targets. No inferred form, unapproved event or schema change.
+  const eventTitle = String(b.eventTitle || "").replace(/[<>]/g, "").slice(0, 900);
+  let eventId = "";
+  if (status === "approved") {
+    try { eventId = encodeInfographicTargets({eventId: b.eventId, targets: b.targets}).stored; }
+    catch { return null; }
+  }
+  return { id, status, eventId, eventTitle: status === "approved" ? eventTitle : "" };
 }
 async function igDecisions(request, env) {
   if (!env.DB) return json({ decisions: [] });
   await env.DB.prepare("CREATE TABLE IF NOT EXISTS ig_decisions (id TEXT PRIMARY KEY, status TEXT NOT NULL, event_id TEXT NOT NULL, event_title TEXT NOT NULL, at INTEGER NOT NULL)").run();
   if (request.method === "GET") {
     const rows = (await env.DB.prepare("SELECT id, status, event_id, event_title, at FROM ig_decisions ORDER BY at DESC LIMIT 500").all()).results || [];
-    return json({ decisions: rows.map(r => ({ id: r.id, status: r.status, eventId: r.event_id, eventTitle: r.event_title, at: r.at })) });
+    // Reject corrupt target envelopes rather than silently changing someone's
+    // previously approved attachments on the next owner action.
+    return json({ decisions: rows.map(r => {
+      const parsed = decodeInfographicTargets(r.event_id);
+      return { id: r.id, status: r.status, eventId: parsed.eventId, targets: parsed.targets,
+        eventTitle: r.event_title, at: r.at };
+    }) });
   }
   if (request.method !== "POST") return json({ error: "Method not allowed." }, 405);
   const denied = await pinned(request, env); if (denied) return denied;

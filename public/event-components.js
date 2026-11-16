@@ -102,7 +102,9 @@ function research(items,ctx){var list=items.filter(function(r){return value(r);}
  return tasks.map(function(r){return researchTask(r,ctx);}).join('')+(notes.length?'<ul class="ue-facts ue-research-notes">'+notes.map(function(r){return '<li>'+esc(value(r))+'</li>';}).join('')+'</ul>':'')+(!tasks.length&&notes.length?'<p class="ue-more-note" role="note">No individual research tasks have been published yet.</p>':'');}
 /* Only use icons whose published app assets identify the actual reward.
    XP and Candy XL deliberately use category symbols instead of misleading art. */
-var PASS_ICONS=[[/^stardust$/i,'/ico/dust.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz/i,'/ico/i/golden-razz.webp'],[/^silver pinap/i,'/ico/i/silver-pinap.webp'],[/^incense$/i,'/ico/incense.webp'],[/(raid|battle) pass/i,'/ico/g/raidpass.webp']];
+/* Exact-only fallback for when the semantic artwork helper is unavailable.
+   Never reuse standard Raid Pass art for Remote/Premium Battle Passes. */
+var PASS_ICONS=[[/^stardust$/i,'/ico/dust.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz berry$/i,'/ico/i/golden-razz.webp'],[/^silver pinap berry$/i,'/ico/i/silver-pinap.webp'],[/^incense$/i,'/ico/incense.webp'],[/^raid pass$/i,'/ico/g/raidpass.webp']];
 function passCategory(item){
  if(item.type==='encounter')return 'Pokémon';
  var n=item.name;
@@ -117,7 +119,7 @@ function passGlyph(item,cat){
  if(/^xp$/i.test(item.name))return 'XP';
  if(/candy xl/i.test(item.name))return 'XL';
  if(/candy/i.test(item.name))return 'C';
- if(cat==='Pokémon')return '?';
+ if(cat==='Pokémon')return 'PKM'; /* Honest encounter category, not missing artwork. */
  if(cat==='Avatar item')return '👕';
  if(cat==='Box')return '▣';
  if(/stardust|star piece/i.test(item.name))return '✦';
@@ -130,7 +132,17 @@ function passGlyph(item,cat){
 function passReward(raw,ctx){
  var item=typeof raw==='string'?{name:raw.trim(),type:'other',quantity:1}:raw;
  if(!item||typeof item.name!=='string'||!item.name||/^[-–—]+$/.test(item.name.trim()))return null;
- if(typeof raw==='string'){var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name);if(q){item={name:q[1].trim(),type:'item',quantity:+q[2]};}}
+ /* Both source string and structured reward names can contain a quantity.
+    Show it once and resolve art against the real item name, but never silently
+    override a disagreeing explicit source quantity. */
+ var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name.trim());
+ if(q){
+  var stated=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:null;
+  var inlineQty=Number(q[2]);
+  if(stated===null||stated===inlineQty){
+   item=Object.assign({},item,{name:q[1].trim(),type:typeof raw==='string'?'item':item.type,quantity:stated||inlineQty});
+  }
+ }
  var cat=passCategory(item),art='',hasArt=false;
  var semantic=typeof globalThis!=='undefined'&&globalThis.GOGoPassRewardArt&&typeof globalThis.GOGoPassRewardArt.resolve==='function'?globalThis.GOGoPassRewardArt.resolve(item):null;
  if(item.type==='encounter'&&ctx.rewardArt){
@@ -158,20 +170,32 @@ function passRewardIdentity(raw){
  var name=typeof raw==='string'?raw:raw&&raw.name;
  if(typeof name!=='string')return '';
  var quantity=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:1;
- if(typeof raw==='string'){
-  var match=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(name);
-  if(match){name=match[1];quantity=Number(match[2]);}
+ /* Source feeds encode quantities either as a structured field or in the
+    item label. Normalize both for identity, without changing display text.
+    If two explicit quantities disagree, preserve that conflict instead of
+    silently assuming two rewards are identical. */
+ var match=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(name.trim());
+ if(match){
+  var stated=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:null;
+  var inlineQty=Number(match[2]);
+  if(stated===null||stated===inlineQty){
+   name=match[1];quantity=inlineQty;
+  }
  }
- return name.trim().replace(/\s+/g,' ').toLowerCase()+'|'+quantity;
+ return name.trim().normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+  .replace(/\s+/g,' ').toLowerCase()+'|'+quantity;
 }
-function passStageLanes(s,ctx){
+function passUnspecified(s){
  var free=[].concat(s.free||[]),deluxe=[].concat(s.deluxe||[]);
  var identified=new Set(free.concat(deluxe).map(passRewardIdentity).filter(Boolean));
- var unspecified=[].concat(s.rewards||[]).filter(function(item){
+ return [].concat(s.rewards||[]).filter(function(item){
   var identity=passRewardIdentity(item);
   return identity&&!identified.has(identity);
  });
- return passLane('Free','free',free,ctx)+passLane('Deluxe','deluxe',deluxe,ctx)+passLane('Track not specified','unspecified',unspecified,ctx);
+}
+function passStageLanes(s,ctx){
+ return passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx)
+  +passLane('Track not specified','unspecified',passUnspecified(s),ctx);
 }
 function passStageRewards(s){
  return [].concat(s.free||[],s.deluxe||[],s.rewards||[]).filter(function(x){return x&&typeof x==='object'&&typeof x.name==='string'||typeof x==='string'&&x.trim();});
@@ -215,7 +239,17 @@ function passes(items,ctx){
   else{
    var groups={};stages.forEach(function(s){var key=Math.floor(Math.max(0,s.rank-1)/25);(groups[key]||(groups[key]=[])).push(s);});
    var keys=Object.keys(groups),first=stages[0].rank,last=stages[stages.length-1].rank;
-   var head='<p class="ue-pass-count">'+stages.length+' '+(stages.length===1?'rank with a published entry':'ranks with published entries')+' · through Rank '+last+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' have no track-reward entries published; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend"><span class="ue-key ue-key-free">Free track</span><span class="ue-key ue-key-deluxe">Deluxe track</span> Deluxe also receives every Free reward.</p>';
+   /* A legend must reflect *published* track assignments; source records
+      without attribution must not masquerade as Free or Deluxe rewards. */
+   var hasFree=stages.some(function(s){return [].concat(s.free||[]).some(function(x){return passReward(x,ctx)!==null;});});
+   var hasDeluxe=stages.some(function(s){return [].concat(s.deluxe||[]).some(function(x){return passReward(x,ctx)!==null;});});
+   var hasUnspecified=stages.some(function(s){return passUnspecified(s).some(function(x){return passReward(x,ctx)!==null;});});
+   var legend=[];
+   if(hasFree)legend.push('<span class="ue-key ue-key-free">Free track</span>');
+   if(hasDeluxe)legend.push('<span class="ue-key ue-key-deluxe">Deluxe track</span>');
+   if(hasUnspecified)legend.push('<span class="ue-key ue-key-unspecified">Track not specified</span>');
+   if(hasFree&&hasDeluxe)legend.push('Deluxe also receives every Free reward.');
+   var head='<p class="ue-pass-count">'+stages.length+' '+(stages.length===1?'rank with a published entry':'ranks with published entries')+' · through Rank '+last+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' have no track-reward entries published; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend">'+legend.join(' ')+'</p>';
    var ranked=stages.map(function(s){return {stage:s,score:passHighlightScore(s)};}).filter(function(x){return x.score>0;});
    ranked.sort(function(a,b){return b.score-a.score||a.stage.rank-b.stage.rank;});
    /* Source-listed reward milestones at the familiar 45/100 thresholds stay visible

@@ -87,6 +87,41 @@ test('form art classifier marks special forms exact and never allows a silent ba
   assert.equal(L.artFallback(L.classifyArt({ name: 'Pikachu', costume: true })).chip, 'Costume art unavailable');
 });
 
+test('all 28 Unown glyphs remain exact in UI, matching the Worker art resolver', () => {
+  const glyphs = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '!', '?'];
+  assert.equal(glyphs.length, 28);
+  for (const glyph of glyphs) {
+    const form = glyph === '!' ? 'exclamation' : glyph === '?' ? 'question' : glyph.toLowerCase();
+    const aliases = [
+      'Unown ' + glyph,
+      'Unown (' + glyph + ')',
+      'Unown ' + glyph + ' (' + form + ')',
+      'Unown (' + glyph + ' Form)'
+    ];
+    if (glyph === '!') aliases.push('Unown Exclamation', 'Unown (Exclamation Mark)');
+    if (glyph === '?') aliases.push('Unown Question', 'Unown (Question Mark)');
+    for (const name of aliases) {
+      const art = L.classifyArt(name);
+      assert.equal(art.kind, 'form', name);
+      assert.equal(art.exact, true, name);
+      assert.equal(art.base, 'Unown', name);
+      assert.equal(art.form, glyph, name);
+      assert.equal(art.label, 'Unown ' + glyph, name);
+      assert.deepEqual(L.artFallback(art), { show: 'base-with-label', chip: 'Form art unavailable' }, name);
+    }
+  }
+  assert.equal(L.classifyArt('Unown').exact, false, 'ordinary base Unown is not an invented explicit glyph');
+  for (const name of ['Unown A (B)', 'Unown D (I)', 'Unown ! (?)', 'Unown ? (!)']) {
+    const art = L.classifyArt(name);
+    assert.equal(art.kind, 'form', name);
+    assert.equal(art.exact, true, name);
+    assert.equal(art.base, 'Unown', name);
+    assert.equal(art.label, 'Unown form', name + ' must not claim either conflicting glyph');
+    assert.equal(L.artFallback(art).chip, 'Form art unavailable', name);
+  }
+  assert.equal(L.classifyArt('Pikachu').exact, false, 'ordinary species remain ordinary');
+});
+
 test('venue zones: explicit tz wins, single-zone places resolve, multi-zone and worldwide do not', () => {
   assert.equal(L.venueZone({ tz: 'Asia/Tokyo', place: 'x' }), 'Asia/Tokyo');
   assert.equal(L.venueZone({ place: 'Sendai and Tohoku, Japan' }), 'Asia/Tokyo');
@@ -148,7 +183,13 @@ test('card types: majors, raids and minor rows', () => {
   const t = (kind, name, span = 36e5, featuredCount = 0) => L.cardType({ kind, name, span, featuredCount });
   assert.equal(t('cd', 'Pawniard Community Day', 3 * 36e5), 'major');
   assert.equal(t('person', 'GO Wild Area: Sendai', 2 * 864e5), 'major');
+  assert.equal(t('global', 'GO Wild Area: Global', 2 * 864e5, 1), 'major');
+  assert.equal(t('global', 'GO Tour: Global', 2 * 864e5, 0), 'major');
   assert.equal(t('event', 'Into the Wild', 4 * 864e5, 3), 'major');
+  assert.equal(t('event', 'Two-feature celebration', 2 * 36e5, 2), 'major');
+  assert.equal(t('event', 'Minior Showers: Leonids', 5 * 864e5, 1), 'minor');
+  assert.equal(t('event', 'Long-running single reward', 8 * 864e5, 0), 'minor');
+  assert.equal(t('debut', 'One-Pokémon debut', 4 * 864e5, 1), 'minor');
   assert.equal(t('raid', 'Giratina (Altered Forme) in 5-star Raid Battles', 4 * 864e5), 'raid');
   assert.equal(t('raid', 'Cresselia Raid Hour'), 'raid');
   assert.equal(t('max', 'Max Monday: Pokémon to be announced', 15 * 36e5), 'raid');

@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-12T19:54:39.094Z",
+ "updated": "2026-11-16T06:30:20.821Z",
  "state": "ok",
- "scrapedDuckEvents": 48,
+ "scrapedDuckEvents": 44,
  "missingHere": [
   {
    "name": "Raid Day",
@@ -80,11 +80,6 @@
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
    "name": "Pokémon 30th Anniversary Mall Exploration: Jewel",
    "start": "2026-11-07"
-  },
-  {
-   "id": "w-pok-mon-run-30-new-taipei",
-   "name": "Pokémon RUN 30: New Taipei",
-   "start": "2026-11-14"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-south",

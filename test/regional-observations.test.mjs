@@ -20,10 +20,53 @@ test('every observation is complete and ids are unique', () => {
   const ids = new Set();
   for (const o of OBSERVATIONS) { assert.ok(o.id && !ids.has(o.id), o.id); ids.add(o.id); assert.ok(o.amount > 0 && o.currency && o.region && o.channel && o.source && Date.parse(o.observed), o.id); }
 });
-test('Indonesian prices are served only through the owner route, never from public files', () => {
-  for (const f of ['regional-prices.js', 'store.js', 'lib.js', 'prices.json']) assert.ok(!/101000|126000|76000/.test(fs.readFileSync(new URL('../public/' + f, import.meta.url), 'utf8')), f);
+/* Privacy boundary. Method: for EVERY record in src/regional-observations.js, scan EVERY text file under public/**.
+   - The record id (e.g. "id-itw-deluxe") is distinctive, so any occurrence is a leak.
+   - Amounts are short numbers that collide with dex numbers, Discord ids and CSS, so a bare-number grep would give
+     false positives. An amount only counts as a leak in PRICE CONTEXT: right after a currency marker (Rp, IDR, INR, the
+     rupiah/rupee signs) or as the value of an amount/price/idr/inr JSON key, in plain, comma-grouped or
+     dot-grouped (Indonesian "76.000") form. */
+test('no owner regional observation id or price appears in any public/** file or unauthenticated Worker response', async () => {
+  const walk = d => fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(d + '/' + e.name) : [d + '/' + e.name]);
+  const files = walk(new URL('../public', import.meta.url).pathname).filter(f => /\.(json|js|cjs|mjs|html|css|txt|webmanifest|svg)$/.test(f));
+  assert.ok(files.length > 50, 'scanned a meaningful number of public files');
+  /* No regex is built from data: plain string search on exact formatted forms (plain, comma- and dot-grouped). */
+  const forms = n => { const g = String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); return [...new Set([String(n), g, g.replace(/,/g, '.')])]; };
+  const MARKERS = ['Rp', 'IDR', 'INR', '\u20b9', '\u20a8'], KEYS = ['amount', 'price', 'idr', 'inr'];
+  const isDigit = c => c >= '0' && c <= '9';
+  /* True if `needle` occurs in text and is not immediately followed by more number characters (so 76000 does not match 760001). */
+  const hasNumber = (text, needle) => {
+    for (let at = text.indexOf(needle); at !== -1; at = text.indexOf(needle, at + 1)) {
+      const next = text[at + needle.length] || '', after = text[at + needle.length + 1] || '';
+      if (!isDigit(next) && !((next === '.' || next === ',') && isDigit(after))) return true;
+    }
+    return false;
+  };
+  const inPriceContext = (body, amount) => forms(amount).some(f =>
+    MARKERS.some(m => hasNumber(body.toLowerCase(), (m + f).toLowerCase()) || hasNumber(body.toLowerCase(), (m + ' ' + f).toLowerCase())) ||
+    KEYS.some(k => ['"' + k + '":' + f, '"' + k + '": ' + f, '"' + k + '":"' + f + '"', '"' + k + '": "' + f + '"'].some(x => hasNumber(body, x))));
+  const leaks = [];
+  const bodies = files.map(f => [f, fs.readFileSync(f, 'utf8')]);
+  for (const o of OBSERVATIONS) {
+    for (const [f, body] of bodies) {
+      if (body.includes(o.id)) leaks.push(f + ' id ' + o.id);
+      if (inPriceContext(body, o.amount)) leaks.push(f + ' amount ' + o.amount + ' (' + o.id + ')');
+    }
+  }
+  assert.deepEqual(leaks, []);
+  /* Worker boundary: the observations module is referenced from exactly one handler, and an unauthenticated call leaks nothing. */
   const w = fs.readFileSync(new URL('../src/worker.js', import.meta.url), 'utf8');
+  assert.equal((w.match(/REGIONAL_OBSERVATIONS/g) || []).length, 2, 'import + the single prices-private response');
   assert.match(w, /async function pricesPrivate[\s\S]{0,300}x-pin[\s\S]{0,400}REGIONAL_OBSERVATIONS/);
+  const { default: worker } = await import('../src/worker.js');
+  const { makeDB } = await import('./helpers.mjs');
+  const env = { SYNC_PIN: '1234', DB: makeDB(), ASSETS: { fetch: async () => new Response('{}') }, MEDIA: { get: async () => ({ json: async () => ({ prices: [] }) }) } };
+  for (const headers of [{}, { 'x-pin': 'wrong' }]) {
+    const res = await worker.fetch(new Request('https://x.test/api/prices-private', { headers }), env);
+    assert.equal(res.status, 401);
+    const text = await res.text();
+    for (const o of OBSERVATIONS) assert.ok(!text.includes(o.id));
+  }
 });
 
 test('standard Indonesian coin packs and one-time promotional bonus are faithfully recorded', () => {

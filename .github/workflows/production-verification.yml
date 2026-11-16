@@ -7,6 +7,7 @@ on:
       - "public/**"
       - "src/**"
       - "wrangler.toml"
+      - "test/live_core_journey_qa.py"
   workflow_dispatch:
 
 permissions:

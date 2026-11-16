@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-12T19:54:38.912Z",
+ "updated": "2026-11-16T06:30:20.680Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 3
+   "items": 4
   },
   {
    "id": "miners-assets",
@@ -23,12 +23,36 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 0,
  "items": [
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "How to Beat Dynamax Latios: Best Counters &#038; Guide",
+   "link": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-latios-best-counters-guide/",
+   "date": "2026-11-13T05:00:51.000Z",
+   "summary": "Dynamax Latios is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Latios successfully. Dynamax Latios can",
+   "pokemon": [
+    "Latios"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "How to Beat Dynamax Latias: Best Counters &#038; Guide",
+   "link": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-latias-best-counters-guide/",
+   "date": "2026-11-13T05:00:37.000Z",
+   "summary": "Dynamax Latias is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Latias successfully. Dynamax Latias can",
+   "pokemon": [
+    "Latias"
+   ],
+   "notInOurData": []
+  },
   {
    "source": "hub",
    "trust": "community",
@@ -38,30 +62,6 @@
    "summary": "Dynamax Registeel is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Registeel successfully. Dynamax Regi",
    "pokemon": [
     "Registeel"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
-   "date": "2026-11-09T11:12:47.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
-   "date": "2026-11-09T10:48:45.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
    ],
    "notInOurData": []
   },
@@ -76,18 +76,6 @@
     "Gimmighoul",
     "Regidrago",
     "Meltan"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Super Mega Clefable Raid Day",
-   "link": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/",
-   "date": "2026-11-05T18:14:11.000Z",
-   "summary": "Mega Clefable debuts during Clefable Super Mega Raid Day on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time. Mega Clefable appears in Super Mega Raids with an increased chance to b",
-   "pokemon": [
-    "Clefable"
    ],
    "notInOurData": []
   }

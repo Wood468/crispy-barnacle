@@ -499,7 +499,7 @@
       ],
       "p": [
         "Gigantamax Duraludon debuts in six-star Max Battles. Dynamax Dialga on Saturday, Dynamax Palkia on Sunday.",
-        "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday. Machamp wearing a modern jacket appears in three-star raids on Saturday and Sunday; the official event page does not confirm it can be Shiny.",
+        "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday. Machamp wearing a modern jacket appears in three-star raids on Saturday and Sunday and may be Shiny.",
         "Optional ticket US$11.99 in the web store. Daily Discoveries pause Nov 9 to 15."
       ],
       "art": [
@@ -708,7 +708,10 @@
         "Remote Raid limit 20 from Fri Nov 27, 5 pm to Sat Nov 28, 8 pm PST. Up to six free Raid Passes from Gym Photo Discs. Optional US$4.99 ticket: up to 14 Raid Passes, more Rare Candy XL, plus 5,000 XP and 5,000 Stardust from Super Mega Raids.",
         "Mega Clefable can reach the new Super Max Mega Level and learns Moonblast+. Expected event Timed Research includes a Premium Battle Pass and a Metagross encounter, to be confirmed when the event begins."
       ],
-      "sourceUrl": "https://leekduck.com/events/super-mega-raid-day-november-2026/"
+      "sourceUrl": "https://pokemongo.com/en/news/clefable-super-mega-raid-day-2026/",
+      "detailIds": [
+        "leekduck:clefable-super-mega-raid-day-2026"
+      ]
     }
   ],
   "spotlight": [
@@ -1005,6 +1008,7 @@
       "five": "Cresselia and Darkrai",
       "mega": "Mega Banette",
       "shadow": "Shadow Tornadus (Incarnate)",
+      "low": { "one": ["Alolan Meowth", "Misdreavus", "Yamask", "Sandygast"], "three": ["Alolan Marowak", "Liepard", "Golurk"], "shadowOne": ["Shadow Larvitar", "Shadow Mudkip", "Shadow Makuhita", "Shadow Cranidos"], "shadowThree": ["Shadow Prinplup", "Shadow Piloswine", "Shadow Poliwhirl"], "observed": "2026-11-16", "source": "Pokémon GO Hub current raids", "sourceUrl": "https://pokemongohub.net/post/guide/current-go-raids/" },
       "rh": "Cresselia and Darkrai, Wed Nov 18",
       "sourceUrl": "https://leekduck.com/events/cresselia-darkrai-in-5-star-raid-battles-november-2026/"
     },
@@ -2482,9 +2486,9 @@
       "where": "London, Toulouse, Nuremberg, Valencia, Noordwijk and Transinne",
       "region": "Europe",
       "s": "2026-10-04",
-      "e": "",
-      "link": "",
-      "note": "Space agency partnership with events at ESA sites. No end date.",
+      "e": "2027-04-30",
+      "link": "https://pokemongo.com/news/european-space-agency-event/",
+      "note": "Participating museums: raids and Timed Research through 30 Apr 2027. ESA-site gameplay and museum wild spawns/Field Research: 4–10 Oct 2026 only.",
       "kind": "long"
     },
     {

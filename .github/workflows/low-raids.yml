@@ -1,11 +1,11 @@
 name: 1-3 star raid bosses
 
 # Reads Pokémon GO Hub's current raids page and fills the 1-3 star bosses for the current rotation in public/data.json.
-# Raids change Wednesdays at 10 am Melbourne (Tuesday 23:00 UTC), so this runs Wednesday afternoon and again Thursday
-# in case the page was late. A run that finds nothing new changes nothing. Run it by hand from the Actions tab any time.
+# Rotations usually change Wednesday 10 am Melbourne, but some start earlier (Monday 6 am), so this runs daily at
+# 1:30 pm Melbourne. A run that finds nothing new changes nothing. Run it by hand from the Actions tab any time.
 on:
   schedule:
-    - cron: "30 2 * * 3,4"
+    - cron: "30 2 * * *"
   workflow_dispatch:
 
 permissions:
@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 22
       - name: Check the reader
-        run: node --test test/low-raids.test.mjs
+        run: node --test test/low-raids.test.mjs test/low-raids-leekduck.test.mjs
       - name: Read the page and update the raid rotation
         shell: bash
         env:

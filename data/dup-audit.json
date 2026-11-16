@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T01:40:15.841Z",
+ "updated": "2026-11-16T03:13:24.821Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -29,44 +29,6 @@
  ],
  "same": [],
  "crossList": [
-  {
-   "keep": {
-    "id": "into",
-    "name": "Into the Wild",
-    "place": "",
-    "start": "2026-11-09",
-    "end": "2026-11-13",
-    "list": "curated"
-   },
-   "dupe": {
-    "id": "w-into-the-wild",
-    "name": "Into the Wild",
-    "place": "Play from anywhere",
-    "start": "2026-11-09",
-    "end": "2026-11-13",
-    "list": "world"
-   },
-   "why": "ruled by you"
-  },
-  {
-   "keep": {
-    "id": "wag",
-    "name": "GO Wild Area: Global",
-    "place": "",
-    "start": "2026-11-14",
-    "end": "2026-11-15",
-    "list": "curated"
-   },
-   "dupe": {
-    "id": "w-community-meetups-go-wild-area-details-asia-pacifi",
-    "name": "Community Meetups Go Wild Area Details Asia Pacific",
-    "place": "Taipei, Taiwan",
-    "start": "2026-11-14",
-    "end": "2026-11-14",
-    "list": "world"
-   },
-   "why": "same dates, 2 shared words (67%)"
-  },
   {
    "keep": {
     "id": "dyntrails",
@@ -144,44 +106,6 @@
     "list": "curated"
    },
    "why": "dates fit and 1 shared word"
-  },
-  {
-   "a": {
-    "id": "into",
-    "name": "Into the Wild",
-    "place": "",
-    "start": "2026-11-09",
-    "end": "2026-11-13",
-    "list": "curated"
-   },
-   "b": {
-    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
-    "name": "GO Wild Area Gigantamax Machamp Power Up Timed Research",
-    "place": "",
-    "start": "2026-11-06",
-    "end": "2026-11-15",
-    "list": "world"
-   },
-   "why": "dates fit and 1 shared word"
-  },
-  {
-   "a": {
-    "id": "wag",
-    "name": "GO Wild Area: Global",
-    "place": "",
-    "start": "2026-11-14",
-    "end": "2026-11-15",
-    "list": "curated"
-   },
-   "b": {
-    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
-    "name": "GO Wild Area Gigantamax Machamp Power Up Timed Research",
-    "place": "",
-    "start": "2026-11-06",
-    "end": "2026-11-15",
-    "list": "world"
-   },
-   "why": "dates fit and 2 shared words"
   }
  ],
  "odd": []

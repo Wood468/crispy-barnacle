@@ -120,12 +120,14 @@ test('dense and single-rank groups avoid cross-boundary gaps and do not fabricat
 
 test('load order, offline references and post-render mount form a complete PWA integration', () => {
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
+ const dashPreload=index.match(/<link rel="preload" href="(\/dash\.js\?v=[^"]+)" as="script">/);
+ assert.ok(dashPreload,'dashboard preload must be a versioned script');
  const assets=[
-  '/go-pass-navigation.css?v=20261118f',
-  '/go-pass-navigation.js?v=20261118f',
+  '/go-pass-navigation.css?v=20261118h',
+  '/go-pass-navigation.js?v=20261118i',
   '/go-pass-reward-art.js?v=20261118d',
-  '/event-components.js?v=20261118e',
-  '/dash.js?v=20261118c'
+  '/event-components.js?v=20261118g',
+  dashPreload[1]
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
  assert.ok(index.indexOf('/go-pass-reward-art.js?v=')<index.indexOf('/event-components.js?v='),'semantic registry must load before renderer');
@@ -148,4 +150,111 @@ test('exact Pokémon encounter artwork stays delegated to the existing resolver'
  assert.match(html,/class="exact-form-art"/);
  assert.match(html,/src="\/art\/zacian-crowned-test\.webp"/);
  assert.doesNotMatch(html,/Form art unavailable|generic-zacian/);
+}));
+
+
+test('GO Pass legend identifies only tracks actually backed by published rewards', () => withSemantic(() => {
+ const unknown=UI.render(model([{rank:45,rewards:[{type:'item',name:'Silver Bottle Cap'}]}]),{});
+ const legend=unknown.match(/<p class="ue-pass-legend">([\s\S]*?)<\/p>/);
+ assert.ok(legend);
+ assert.match(legend[1],/class="ue-key ue-key-unspecified">Track not specified/);
+ assert.doesNotMatch(legend[1],/Free track|Deluxe track|Deluxe also receives/);
+ const freeOnly=UI.render(model([{rank:1,free:[{name:'Poké Ball',type:'item'}]}]),{});
+ const freeLegend=freeOnly.match(/<p class="ue-pass-legend">([\s\S]*?)<\/p>/)[1];
+ assert.match(freeLegend,/Free track/);
+ assert.doesNotMatch(freeLegend,/Deluxe track|Track not specified|Deluxe also receives/);
+ const mixed=UI.render(model([{rank:1,free:[{name:'Poké Ball',type:'item'}],
+  deluxe:[{name:'Silver Bottle Cap',type:'item'}],rewards:[{name:'Incense',type:'item'}]}]),{});
+ const mixedLegend=mixed.match(/<p class="ue-pass-legend">([\s\S]*?)<\/p>/)[1];
+ assert.match(mixedLegend,/Free track/);
+ assert.match(mixedLegend,/Deluxe track/);
+ assert.match(mixedLegend,/Track not specified/);
+ assert.match(mixedLegend,/Deluxe also receives every Free reward/);
+}));
+
+test('GO Pass avoids reclassifying accented or inline-quantity duplicate rewards as unknown track', () => withSemantic(() => {
+ const html=UI.render(model([{rank:45,
+   free:[{name:'Poké Ball',quantity:3,type:'item'}],
+   deluxe:[{name:'Rare Candy XL',quantity:2,type:'item'}],
+   rewards:[
+     'Poke Ball ×3',
+     {name:'Poké Ball ×3',type:'item'},
+     {name:'Rare Candy XL x2',type:'item'},
+     {name:'Poké Ball',quantity:4,type:'item'},
+     {name:'Remote Raid Pass',type:'item'}
+   ]
+ }]),{});
+ const row=html.match(/<li class="ue-pass-rank" data-rank="45">([\s\S]*?)<\/li>/)[1];
+ assert.equal((row.match(/<b>Poké Ball<\/b>/g)||[]).length,2,
+   'Free ×3 and distinct unattributed ×4 remain, but inline ×3 duplicate is suppressed');
+ assert.equal((row.match(/<b>Rare Candy XL<\/b>/g)||[]).length,1);
+ assert.doesNotMatch(row,/<b>Poké Ball ×3<\/b>|<b>Poke Ball<\/b>|<b>Rare Candy XL x2<\/b>/);
+ assert.match(row,/<div class="ue-lane ue-lane-unspecified">/);
+ assert.match(row,/×4 · Item/);
+ assert.match(row,/<b>Remote Raid Pass<\/b>/);
+}));
+
+
+test('conflicting explicit GO Pass quantities remain separate pending source reconciliation', () => withSemantic(() => {
+ const html=UI.render(model([{rank:12,
+  free:[{name:'Incense ×2',quantity:3,type:'item'}],
+  rewards:[{name:'Incense',quantity:2,type:'item'}]
+ }]),{});
+ const rank=html.match(/<li class="ue-pass-rank" data-rank="12">([\s\S]*?)<\/li>/)[1];
+ assert.match(rank,/<div class="ue-lane ue-lane-free">/);
+ assert.match(rank,/<div class="ue-lane ue-lane-unspecified">/);
+ assert.equal((rank.match(/<b>Incense<\/b>|<b>Incense ×2<\/b>/g)||[]).length,2,
+   'conflicting quantities are not silently merged into a single entitlement');
+}));
+
+test('fallback without optional item-art mapper never borrows remote or premium pass artwork', () => {
+ const previous = globalThis.GOGoPassRewardArt;
+ try {
+  delete globalThis.GOGoPassRewardArt;
+  const html = UI.render(model([{rank:1,free:[
+   {type:'item',name:'Remote Raid Pass'},
+   {type:'item',name:'Premium Battle Pass'},
+   {type:'item',name:'Raid Pass'},
+   {type:'encounter',name:'Dynamax Meltan'},
+   {type:'item',name:'Golden Razz Bonus'}
+  ]}]),{});
+  const row=html.match(/<li class="ue-pass-rank" data-rank="1">([\s\S]*?)<\/li>/);
+  assert.ok(row,'actual GO Pass reward row renders');
+  assert.equal((row[1].match(/src="\/ico\/g\/raidpass\.webp"/g)||[]).length,1,
+    'only the ordinary Raid Pass uses its exact verified image');
+  const tiles=row[1].match(/<div class="ue-pass-reward"[\s\S]*?<\/div>/g)||[];
+  function tile(name){return tiles.find(t=>t.includes('<b>'+name+'</b>'));}
+  for(const name of ['Remote Raid Pass','Premium Battle Pass']){
+    assert.ok(tile(name),name+' displayed');
+    assert.doesNotMatch(tile(name),/\/ico\/g\/raidpass\.webp/,
+      name+' must not masquerade as an ordinary Raid Pass');
+  }
+  assert.match(tile('Raid Pass'),/\/ico\/g\/raidpass\.webp/);
+  assert.match(row[1],/ue-reward-icon">PKM<\/span>/,
+    'encounters with no sourced asset should show an honest category indicator, not a broken-image question mark');
+  assert.doesNotMatch(row[1],/\/ico\/i\/golden-razz\.webp/,
+    'a Golden Razz Bonus is not proof of a Golden Razz Berry reward');
+ } finally {
+  if(previous === undefined) delete globalThis.GOGoPassRewardArt;
+  else globalThis.GOGoPassRewardArt = previous;
+ }
+});
+
+test('agreeing inline and structured reward quantities display once with exact semantic artwork', () => withSemantic(() => {
+ const html=UI.render(model([{rank:8,
+  free:[{name:'Raid Pass x2',quantity:2,type:'item'},{name:'Poké Ball ×3',quantity:3,type:'item'}],
+  rewards:[{name:'Raid Pass',quantity:2,type:'item'},{name:'Poké Ball',quantity:3,type:'item'},
+   {name:'Poké Ball',quantity:4,type:'item'}]
+ }]),{});
+ const row=html.match(/<li class="ue-pass-rank" data-rank="8">([\s\S]*?)<\/li>/)[1];
+ assert.equal((row.match(/<b>Raid Pass<\/b>/g)||[]).length,1);
+ assert.equal((row.match(/<b>Poké Ball<\/b>/g)||[]).length,2,
+  'an agreed inline ×3 is the same reward; a genuinely distinct ×4 remains');
+ assert.doesNotMatch(row,/<b>(?:Raid Pass x2|Poké Ball ×3)<\/b>/,
+  'quantities in the name are displayed once instead of repeated');
+ assert.match(row,/src="\/ico\/g\/raidpass\.webp"/,
+  'the exact item resolver can recognise a named reward after normalisation');
+ assert.match(row,/×2 · Item/);
+ assert.match(row,/×3 · Item/);
+ assert.match(row,/×4 · Item/);
 }));

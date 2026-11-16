@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 import { auditOfficialStore } from '../scripts/store-catalogue-audit.mjs';
 
 const au = (sku, amount, more = {}) => ({
@@ -65,4 +67,46 @@ test('removed offers remain historical, missing prices never become zero, and ma
   assert.equal(prior.availability, 'last seen, no longer listed');
   assert.equal(prior.priceLabel,null);
   assert.equal(prior.currency,null);
+});
+
+test('the current three official November listings stay separate from regional price observations', () => {
+  const official = require('../public/store-offer-identities.js');
+  const result = auditOfficialStore([], [], official, '2026-11-13T00:00:00Z');
+  assert.equal(result.counts.announcedUnpriced, 3);
+  assert.equal(result.counts.announcedReviewDue, 0);
+  assert.equal(result.counts.officialAuPriceSkus, 0);
+  assert.equal(result.counts.feedPurchaseSlugs, 0);
+  assert.deepEqual(result.officialUnpriced.map(x => x.label).sort(),
+    ['GO Pass Deluxe: November', 'GO Pass Deluxe: November + 10 Ranks', 'GO Pass Deluxe: November Ultra Box'].sort());
+  for (const row of result.officialUnpriced) {
+    assert.equal(row.regionAvailability, 'unknown');
+    assert.equal(row.regionalPricing, 'not observed (AU / ID / IN)');
+    assert.equal(row.reviewDue, false);
+    assert.match(row.sourceUrl, /^https:\/\/pokemongo\.com\/news\//);
+    assert.equal(row.contents.find(x => x.item === 'Premium Battle Pass')?.quantity,
+      row.label.includes('Ultra Box') ? 5 : row.label.includes('10 Ranks') ? 2 : 1);
+    assert.equal('amount' in row, false, 'publisher announcements must never inject checkout prices');
+    assert.equal('currency' in row, false);
+    assert.equal('checkout' in row, false);
+  }
+  const older = auditOfficialStore([], [], official, '2027-01-01T00:00:00Z');
+  assert.equal(older.counts.announcedReviewDue,3,'aged publisher descriptions need fresh review');
+});
+test('reject spoofed sources, malformed contents and preserve separate same-title source identities', () => {
+  const offer = {id:'official:one',label:'Same published title',
+    sourceUrl:'https://pokemongo.com/news/go-pass-november-2026',
+    sourceCheckedAt:'2026-11-13',regionAvailability:'unknown',noPriceObservation:true,
+    contents:[{item:'Premium Battle Pass',quantity:1}],amount:7.99,currency:'USD',
+    secret:'do-not-copy',checkout:'private-checkout-link'};
+  const data = [offer,{...offer,id:'official:two',contents:[{item:'Premium Battle Pass',quantity:2}]},
+    {...offer,sourceCheckedAt:'2026-11-12'},
+    {...offer,id:'official:spoofed',sourceUrl:'https://pokemongo.com.evil.test/news/x'},
+    {...offer,id:'official:invalid',contents:[{item:'Bonus Ranks',quantity:-10}]},
+    {...offer,id:'official:regional',regionAvailability:'AU'},
+    {...offer,id:'official:priced',noPriceObservation:false}];
+  const audited = auditOfficialStore([],[],data,'2026-11-13T00:00:00Z');
+  assert.equal(audited.counts.announcedUnpriced,2);
+  assert.deepEqual(audited.officialUnpriced.map(x=>x.id),['official:one','official:two']);
+  assert.equal(audited.officialUnpriced[0].contents[0].quantity,1);
+  assert.ok(audited.officialUnpriced.every(x=>!('amount' in x)&&!('currency' in x)&&!('secret' in x)&&!('checkout' in x)));
 });

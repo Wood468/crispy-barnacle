@@ -293,3 +293,45 @@ test('research source excerpts remain sanitized and missing deadlines are not in
  assert.equal(d.researchPrograms[0].onceOnly,null);
  assert.equal(d.publication,'staging-only');
 });
+
+test('featured attacks preserve explicit day, time and ticket-session scopes without inferring missing windows',()=>{
+  const claim=(url,scope={})=>({
+    pokemonLabel:'Synthetic Dragon',move:'Synthetic Beam',moveKind:'charged',
+    access:'ticket',acquisitionMethods:['raid'],
+    source:source(url,'Featured Attacks'),...scope
+  });
+  const records=[
+    mk('leekduck',duck,{featuredMoves:[
+      claim(duck,{dayScope:'ticketed-day',windowText:'Saturday 10:00–18:00',sessionLabel:'Saturday park session'}),
+      claim(duck,{dayScope:'ticketed-day',windowText:'Sunday 10:00–18:00',sessionLabel:'Sunday park session'}),
+      claim(duck)
+    ]}),
+    mk('official',official,{featuredMoves:[
+      claim(official,{dayScope:'ticketed-day',windowText:'Saturday 10:00–18:00',sessionLabel:'Saturday park session'})
+    ]})
+  ];
+  const forward=normalizeEventSourceFacets('synthetic-festival',records);
+  const reverse=normalizeEventSourceFacets('synthetic-festival',records.slice().reverse());
+  assert.deepEqual(forward,reverse);
+  assert.equal(forward.featuredMoves.length,3);
+  assert.equal(new Set(forward.featuredMoves.map(x=>x.id)).size,3);
+  assert.equal(forward.featuredMoves.find(x=>x.sessionLabel==='Saturday park session').status,'corroborated');
+  assert.equal(forward.featuredMoves.find(x=>x.sessionLabel==='Sunday park session').status,'source-claimed');
+  const unspecified=forward.featuredMoves.find(x=>x.sessionLabel===null);
+  assert.ok(unspecified);
+  assert.equal(unspecified.windowText,null);
+  assert.equal(unspecified.dayScope,null);
+  assert.equal(forward.publication,'staging-only');
+});
+
+test('invalid featured move session scope cannot become a fabricated event day',()=>{
+  const raw={pokemonLabel:'Synthetic Dragon',move:'Synthetic Beam',moveKind:'fast',
+    access:'unknown',acquisitionMethods:['unknown'],
+    dayScope:'every-weekend',windowText:'',sessionLabel:'',source:source(duck,'Featured Attacks')};
+  const data=normalizeEventSourceFacets('synthetic-event',[mk('leekduck',duck,{featuredMoves:[raw]})]);
+  assert.equal(data.featuredMoves.length,1);
+  assert.equal(data.featuredMoves[0].dayScope,null);
+  assert.equal(data.featuredMoves[0].windowText,null);
+  assert.equal(data.featuredMoves[0].sessionLabel,null);
+  assert.equal(data.featuredMoves[0].access,'unknown');
+});

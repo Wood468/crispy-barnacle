@@ -135,3 +135,74 @@ test("curated event attribution uses actual guarded fallback expressions and pre
     status: "community_reported", source: "Owner-supplied source"
   }), ["community_reported", "Owner-supplied source"], "explicit attribution takes precedence");
 });
+
+test("official-source inference rejects non-HTTPS and credentialed URLs", () => {
+  const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+  const lines = dash.split("\n");
+  const officialLine = lines.find(line => line.trim().startsWith("function isOfficialUrl(u) {"));
+  const safeLine = lines.find(line => line.trim().startsWith("function safeUrl(u) {"));
+  assert.ok(officialLine && safeLine, "actual dashboard URL validators exist");
+  const body = line => line.slice(line.indexOf("{") + 1, line.lastIndexOf("}"));
+  const isOfficialUrl = new Function("u", body(officialLine));
+  const actualSafe = new Function("u", "window", body(safeLine));
+  const safeUrl = u => actualSafe(u, { GOLIB: { isPrivateLink: () => false } });
+  const anchor = "highlights: Array.isArray(x.highlights) ? x.highlights : [],";
+  const offset = dash.indexOf(anchor);
+  assert.ok(offset >= 0, "actual curated attribution exists");
+  const fields = dash.slice(offset, offset + 650).match(/\n\s*status:\s*([^\n]+),\n\s*source:\s*([^\n]+),\n\s*link:/);
+  assert.ok(fields, "actual status/source fallback expressions exist");
+  const status = new Function("x", "safeUrl", "isOfficialUrl", "return (" + fields[1] + ");");
+  const source = new Function("x", "safeUrl", "isOfficialUrl", "return (" + fields[2] + ");");
+  const infer = x => [status(x, safeUrl, isOfficialUrl), source(x, safeUrl, isOfficialUrl)];
+  for (const url of ["https://pokemongo.com/news", "https://www.pokemongo.com/news",
+    "https://NEWS.POKEMONGO.COM/path", "https://pokemongo.com:443/news"]) {
+    assert.equal(isOfficialUrl(url), true, url);
+    assert.deepEqual(infer({ sourceUrl: url }), ["official_confirmed", "Official Pokémon GO announcement"]);
+  }
+  for (const url of ["http://pokemongo.com/news", "http://www.pokemongo.com/news",
+    "https://evil@pokemongo.com/news", "https://evil:pw@pokemongo.com",
+    "https://:pw@www.pokemongo.com/news", "https://%65vil@www.pokemongo.com/news",
+    "https://pokemongo.com@evil.example/news", "https://pokemongo.com.evil.example/news",
+    "https://evilpokemongo.com/news", "javascript:alert(1)", "//pokemongo.com/news",
+    "not a url", "", null, undefined, false, 42, {}, [], ["https://pokemongo.com/news"]]) {
+    assert.equal(isOfficialUrl(url), false, String(url));
+    assert.deepEqual(infer({ sourceUrl: url }), ["community_reported", "Curated community calendar"], String(url));
+  }
+  assert.deepEqual(infer({ sourceUrl: "https://evil@pokemongo.com/news",
+    status: "community_reported", source: "Owner-supplied source" }),
+    ["community_reported", "Owner-supplied source"], "explicit attribution remains authoritative");
+});
+
+test("cpRows safely handles missing or malformed rosters and renders properly", () => {
+  const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+  const start = dash.indexOf("  function cpRows(ev) {");
+  assert.ok(start >= 0, "cpRows function exists");
+  const end = dash.indexOf("  /* ---------- kinds:", start);
+  assert.ok(end > start, "cpRows extent found");
+  const calls = [];
+  const hundo = (ev, f) => {
+    assert.ok(ev.featured.includes(f), "renderer receives the original event and member");
+    assert.equal(typeof f.name, "string", "malformed members never reach renderer");
+    calls.push(f.name);
+    return '<span>123 CP · 100% IV</span>';
+  };
+  const esc = s => s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+  const cpRows = new Function("hundoLabels", "esc", dash.slice(start, end) + "\nreturn cpRows;")(hundo, esc);
+
+  for (const ev of [undefined, null, {}, ...[null, "invalid", {}, 42, true].map(featured => ({ featured }))]) {
+    assert.equal(cpRows(ev), "", "absent or non-array roster is empty");
+  }
+  assert.deepEqual(calls, [], "empty rosters never call renderer");
+  assert.equal(cpRows({ featured: [null, undefined, {}, 42, "bad", { name: null }, { name: 7 }, ,
+    { name: "Pikachu" }, { name: "PIKACHU" }] }),
+    '<div class="cp-rows"><div class="cp-row"><b>Catch CP</b><span>123 CP · 100% IV</span></div></div>');
+  assert.deepEqual(calls, ["Pikachu"], "sparse members are skipped and names deduplicate ignoring case");
+
+  calls.length = 0;
+  const html = cpRows({ featured: [{ name: "<Pikachu>&" }, { name: "<PIKACHU>&" },
+    { name: "Bulbasaur" }, { name: "Charmander" }, { name: "Squirtle" }] });
+  assert.deepEqual(calls, ["<Pikachu>&", "Bulbasaur", "Charmander", "Squirtle"], "roster order is preserved");
+  assert.deepEqual([...html.matchAll(/<b>(.*?)<\/b>/g)].map(m => m[1]),
+    ["&lt;Pikachu&gt;&amp;", "Bulbasaur", "Charmander"], "only the first three escaped names render");
+  assert.equal((html.match(/100% IV/g) || []).length, 3, "each visible row retains the CP renderer output");
+});

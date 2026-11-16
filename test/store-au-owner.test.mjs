@@ -1,0 +1,111 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import fs from 'node:fs';
+import {applyOwnerInput} from '../scripts/store-au-owner.mjs';
+import {updatePrices} from '../scripts/store-au-prices.mjs';
+const require = createRequire(import.meta.url);
+const R = require('../public/regional-prices.js');
+const TODAY = '2026-11-15';
+const snapshot = () => ({items:[{name:'GO Pass Deluxe: November'},{name:'GO Pass Deluxe: November Ultra Box'},{name:'Brand New Box'}]});
+const base = () => ({prices:[
+  {product:'store-lucky-egg-x8',label:'Lucky Egg x8',group:'Items',currency:'AUD',amount:7.99,region:'AU',verified:true,observed:'2026-10-12'},
+  {product:'go-pass-oct-deluxe',label:'GO Pass Deluxe: October',currency:'AUD',amount:12.99,region:'AU',verified:true,observed:'2026-10-12',url:'https://store.pokemongo.com/'}]});
+const input = (items, extra = {}) => ({observed:'2026-11-14', items, ...extra});
+const apply = (inp, data = base()) => applyOwnerInput(data, inp, snapshot(), {today:TODAY});
+
+test('adds verified AU entries for current offers with the real observation date', () => {
+  const r = apply(input([{label:'GO Pass Deluxe: November', price:'A$12.99'},{label:'GO Pass Deluxe: November Ultra Box', price:'A$22.99'}]));
+  assert.deepEqual(r.errors, []);
+  assert.equal(r.changed, 2);
+  const e = r.data.prices.find(p => p.label === 'GO Pass Deluxe: November');
+  assert.equal(e.product, 'store-go-pass-deluxe-november'); // same id the buy planner derives
+  assert.equal(e.region, 'AU'); assert.equal(e.currency, 'AUD'); assert.equal(e.verified, true);
+  assert.equal(e.amount, 12.99); assert.equal(e.observed, '2026-11-14');
+  assert.match(e.source, /owner/i);
+});
+test('re-verifying a known product reuses its id and appends a fresher entry', () => {
+  const r = apply(input([{label:'lucky egg x8', price:'A$7.99'}]));
+  assert.equal(r.changed, 1);
+  const last = r.data.prices.at(-1);
+  assert.equal(last.product, 'store-lucky-egg-x8'); assert.equal(last.observed, '2026-11-14');
+});
+test('input is all-or-nothing: any bad row rejects everything', () => {
+  const bad = [
+    [{label:'GO Pass Deluxe: November', price:'$12.99'}],        // US dollars
+    [{label:'GO Pass Deluxe: November', price:'AU$12.99'}],      // not the explicit A$ form
+    [{label:'GO Pass Deluxe: November', price:'Rp 150.000'}],
+    [{label:'GO Pass Deluxe: November', price:'A$0'}],
+    [{label:'GO Pass Deluxe: November', price:'A$9999.99'}],     // implausible
+    [{label:'Made Up Offer', price:'A$5.00'}],                   // not in snapshot or catalogue
+    [{label:'GO Pass Deluxe: November', price:'A$12.99'},{label:'go pass deluxe: november', price:'A$13.99'}], // duplicate
+  ];
+  for (const items of bad) {
+    const data = base();
+    const r = apply(input(items), data);
+    assert.ok(r.errors.length, JSON.stringify(items));
+    assert.equal(r.changed, 0); assert.equal(r.data, data);
+  }
+  const mixed = apply(input([{label:'GO Pass Deluxe: November', price:'A$12.99'},{label:'Brand New Box', price:'$3.00'}]));
+  assert.ok(mixed.errors.length); assert.equal(mixed.changed, 0);
+});
+test('bad dates are rejected: missing, impossible, future, stale, older than the recorded price', () => {
+  const items = [{label:'Lucky Egg x8', price:'A$7.99'}];
+  for (const observed of [undefined, '2026-13-01', '2026-02-30', '2026-11-16', '2026-10-01', '15/11/2026'])
+    assert.ok(apply({observed, items}).errors.length, String(observed));
+  const data = base(); data.prices.push({...data.prices[0], observed:'2026-11-14', amount:7.99});
+  assert.ok(apply(input(items, {observed:'2026-11-13'}), data).errors.length);
+});
+test('more than 3x change vs the last verified price needs an explicit per-item confirm:true', () => {
+  const big = [{label:'Lucky Egg x8', price:'A$29.99'}];
+  assert.ok(apply(input(big)).errors.some(e => /confirm/.test(e)));
+  assert.ok(apply(input([{label:'Lucky Egg x8', price:'A$1.99'}])).errors.some(e => /confirm/.test(e)));
+  const ok = apply(input([{label:'Lucky Egg x8', price:'A$29.99', confirm:true}]));
+  assert.deepEqual(ok.errors, []); assert.equal(ok.changed, 1);
+  assert.equal(ok.data.prices.at(-1).confirm, undefined, 'confirm is not stored');
+});
+test('an identical same-day entry is a no-op, a conflicting same-day price is rejected', () => {
+  const once = apply(input([{label:'Lucky Egg x8', price:'A$8.49'}]));
+  const same = applyOwnerInput(once.data, input([{label:'Lucky Egg x8', price:'A$8.49'}]), snapshot(), {today:TODAY});
+  assert.equal(same.changed, 0); assert.deepEqual(same.errors, []);
+  const clash = applyOwnerInput(once.data, input([{label:'Lucky Egg x8', price:'A$8.99'}]), snapshot(), {today:TODAY});
+  assert.ok(clash.errors.length);
+});
+test('ambiguous known labels and empty input are rejected', () => {
+  const data = base(); data.prices.push({...data.prices[0], product:'store-lucky-egg-x8-b'});
+  assert.ok(apply(input([{label:'Lucky Egg x8', price:'A$7.99'}]), data).errors.length);
+  assert.ok(apply(input([])).errors.length);
+  assert.ok(apply(null).errors.length);
+});
+test('only the supplied AU entries are added: no other region or product is touched or inferred', () => {
+  const data = base(); data.prices.push({product:'x',currency:'IDR',amount:1,region:'ID'});
+  const before = JSON.stringify(data.prices);
+  const r = apply(input([{label:'GO Pass Deluxe: November', price:'A$12.99'}]), data);
+  assert.equal(JSON.stringify(r.data.prices.slice(0, data.prices.length)), before);
+  assert.equal(r.data.prices.length, data.prices.length + 1);
+});
+test('the US-runner importer cannot overwrite or contaminate owner-supplied AU prices', () => {
+  const owned = apply(input([{label:'Lucky Egg x8', price:'A$8.49'}])).data;
+  const us = updatePrices(owned, {fetched:'2026-11-15T10:00:00Z', items:[{name:'Lucky Egg x8', price:'$5.99'},{name:'a', price:'$1.99'},{name:'b', price:'$2.99'}]});
+  assert.equal(us.changed, 0);
+  const olderAud = updatePrices(owned, {fetched:'2026-11-01T10:00:00Z', items:[{name:'Lucky Egg x8', price:'A$1.00'},{name:'a', price:'A$1.99'},{name:'b', price:'A$2.99'}]});
+  assert.equal(olderAud.data.prices.at(-1).amount, 8.49);
+});
+test('a fresh owner-supplied November price makes one priced planner card (no unpriced duplicate) with publisher contents', () => {
+  const offers = require('../public/store-offer-identities.js');
+  const r = apply(input([{label:'GO Pass Deluxe: November', price:'A$12.99'}]));
+  const rows = R.catalogue(r.data.prices, [], Date.parse('2026-11-15T00:00:00Z'), offers);
+  const nov = rows.filter(x => x.label === 'GO Pass Deluxe: November');
+  assert.equal(nov.length, 1);
+  assert.equal(nov[0].aud, 12.99); assert.equal(nov[0].observed, '2026-11-14');
+  assert.ok(nov[0].contents.length > 0);
+  assert.ok(rows.some(x => x.label === 'GO Pass Deluxe: November Ultra Box' && x.unpricedOfficial), 'unpriced offers stay honestly unpriced');
+});
+test('the committed owner input file (if any) is valid against the committed data', () => {
+  if (!fs.existsSync(new URL('../data/au-store-input.json', import.meta.url))) return;
+  const input = JSON.parse(fs.readFileSync(new URL('../data/au-store-input.json', import.meta.url), 'utf8'));
+  const data = JSON.parse(fs.readFileSync(new URL('../public/prices.json', import.meta.url), 'utf8'));
+  const snap = JSON.parse(fs.readFileSync(new URL('../public/store-current-snapshot.json', import.meta.url), 'utf8'));
+  const r = applyOwnerInput(data, input, snap, {today: input.observed});
+  assert.deepEqual(r.errors, []);
+});

@@ -76,4 +76,34 @@ with sync_playwright() as p:
     assert rows.count() == 1, rows.all_inner_texts()
     assert errors == [], errors
     browser.close()
+    # 7. A long, source-shaped event title must stay below its featured art at phone widths.
+    # Visual bounds test the actual rendered layout (not just a CSS selector snapshot).
+    LONG = {'id': 'leekduck:sprint3-long-title-fixture', 'name': 'Pokémon GO City Safari — Exceptionally Long Event Title for Mobile Layout Testing',
+            'type': 'event', 'start': '2026-11-13T16:00:00.000', 'end': '2026-11-15T20:00:00.000',
+            'tzMode': 'local', 'scope': 'worldwide_local', 'status': 'official_confirmed',
+            'featured': [{'name': 'Latias'}, {'name': 'Latios'}], 'region': 'Osaka, Japan',
+            'bonuses': [], 'reports': [{'source': 'leekduck', 'status': 'community_reported',
+            'link': 'https://leekduck.com/events/sprint3-fixture/'}],
+            'link': 'https://leekduck.com/events/sprint3-fixture/'}
+    browser, page, errors = run(p, [LONG], '2026-11-13T12:00:00+11:00')
+    page.goto(BASE); page.wait_for_selector('#today-v1 .t1-glance')
+    long_card = page.locator('#t1-soon .t1-major').filter(has_text='Exceptionally Long').first
+    long_card.wait_for(state='visible')
+    for width in (360, 390, 430):
+        page.set_viewport_size({'width': width, 'height': 844})
+        bounds = long_card.evaluate("""el => {
+          const art = el.querySelector(':scope > .t1-major-art').getBoundingClientRect();
+          const details = el.querySelector(':scope > .t1-open').getBoundingClientRect();
+          const titleNode = el.querySelector('.t1-open .t1-title');
+          const title = titleNode.getBoundingClientRect();
+          return {artBottom: art.bottom, detailsTop: details.top, detailsBottom: details.bottom,
+                  titleTop: title.top, titleBottom: title.bottom,
+                  titleOverflow: titleNode.scrollWidth - titleNode.clientWidth,
+                  pageOverflow: document.documentElement.scrollWidth - window.innerWidth};
+        }""")
+        assert bounds['artBottom'] <= bounds['detailsTop'] + 1, f'art overlaps content at {width}px: {bounds}'
+        assert bounds['titleTop'] >= bounds['detailsTop'] - 1 and bounds['titleBottom'] <= bounds['detailsBottom'] + 1, f'title clipped at {width}px: {bounds}'
+        assert bounds['titleOverflow'] <= 1 and bounds['pageOverflow'] <= 1, f'horizontal overflow at {width}px: {bounds}'
+    assert errors == [], errors
+    browser.close()
 print('PASS Today v1: boost rail, empty state, Ending soon, undo window, midnight, legacy unreachable')

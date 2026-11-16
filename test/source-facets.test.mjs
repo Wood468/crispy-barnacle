@@ -301,3 +301,45 @@ test('detached unrelated stage lists cannot be adopted as paid Special Research'
  assert.equal(d.researchPrograms.find(x=>x.kind==='special').steps.length,0);
  assert.equal(d.researchPrograms.find(x=>x.kind==='special').storyTitle,null);
 });
+
+test('featured attack windows are scoped to the explicit Pokémon row, not inherited across sessions',()=>{
+  const html='<main><h2>Moves</h2>'+
+    '<p>Event hours are 10:00 a.m. to 6:00 p.m. on both days.</p>'+
+    '<h3>Dragonite</h3>'+
+    '<p>On Saturday from 10:00 a.m. to 6:00 p.m., Dragonite caught in raids can learn this featured move.</p>'+
+    '<img alt="Dragon Claw Charged Attack">'+
+    '<h3>Flygon</h3>'+
+    '<p>Flygon can learn its featured move when evolved during the event.</p>'+
+    '<img alt="Earth Power Charged Attack">'+
+    '<h3>Garchomp</h3>'+
+    '<p>On Sunday from 10:00 a.m. to 6:00 p.m., Garchomp caught in raids can learn its featured move.</p>'+
+    '<img alt="Earth Power Charged Attack"></main>';
+  const data=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-move-hours/'});
+  assert.equal(data.featuredMoves.length,3);
+  const byName=Object.fromEntries(data.featuredMoves.map(x=>[x.pokemonLabel,x]));
+  assert.equal(byName.Dragonite.sessionLabel,'Saturday');
+  assert.match(byName.Dragonite.windowText,/Saturday from 10:00 a.m./);
+  assert.equal(byName.Garchomp.sessionLabel,'Sunday');
+  assert.match(byName.Garchomp.windowText,/Sunday from 10:00 a.m./);
+  assert.equal(byName.Flygon.sessionLabel,null);
+  assert.equal(byName.Flygon.windowText,null);
+  assert.equal(byName.Flygon.dayScope,null);
+});
+
+test('ticketed-day move timing only survives when row source explicitly states it',()=>{
+  const html='<main><h2>Featured Attacks</h2>'+
+    '<h3>Dragonite</h3>'+
+    '<p>During your ticketed event day from 10:00 a.m. to 6:00 p.m., Dragonite caught in raids can learn the attack.</p>'+
+    '<img alt="Dragon Claw Charged Attack">'+
+    '<h3>Flygon</h3>'+
+    '<p>Flygon can learn this move when caught.</p>'+
+    '<img alt="Earth Power Charged Attack"></main>';
+  const data=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-ticket-moves/'});
+  const dragonite=data.featuredMoves.find(x=>x.pokemonLabel==='Dragonite');
+  const flygon=data.featuredMoves.find(x=>x.pokemonLabel==='Flygon');
+  assert.equal(dragonite.dayScope,'ticketed-day');
+  assert.match(dragonite.windowText,/ticketed event day/);
+  assert.equal(dragonite.sessionLabel,null);
+  assert.equal(flygon.dayScope,null);
+  assert.equal(flygon.windowText,null);
+});
