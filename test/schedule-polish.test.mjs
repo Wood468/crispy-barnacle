@@ -43,7 +43,7 @@ test('Research rewards: Eternatus Candy and Pinap Berry get a generic inline sha
   assert.match(detail, /\(glyph\.svg \|\| glyph\.text\)/);
   /* exact-match picture list unchanged: only Silver Pinap and Golden Razz have berry art */
   assert.match(detail, /silver pinap/);
-  assert.doesNotMatch(detail, /\/ico\/i\/pinap/);
+  assert.doesNotMatch(detail, /\/ico\/i\/pinap(?!-berry\.webp)/); /* the plain Pinap Berry has its own exact-name picture, see eternatus-candy-art.test.mjs */
   const svgs = [...detail.matchAll(/svg: '(<svg[^']*<\/svg>)'/g)].map(m => m[1]);
   assert.equal(svgs.length, 2);
   for (const s of svgs) assert.match(s, /focusable="false"/);
