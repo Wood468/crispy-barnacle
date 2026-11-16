@@ -551,3 +551,10 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 #evd .ue-raid-day-info{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
 #evd .ue-raid-day-info .ue-raid-cp{justify-content:flex-start;font-size:.57rem}
 @media(max-width:390px){#evd .ue-raid-day-grid{grid-template-columns:1fr}}
+/* Research tab: generic candy/berry shape where no approved item picture exists (kept in the grey-dot's place, but readable as an item). */
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-category[data-item-glyph="candy"],.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-category[data-item-glyph="berry"]{border-style:dashed}
+.rs-rewards .ue-reward-category svg{display:block;width:22px;height:22px}
+/* Research tab: the "Form art unavailable" badge is added at run time inside the 34px picture box, where it was cut off mid-word ("Form ar").
+   Hide it visually there (its text stays in the picture's label) and show the same words, whole, under the reward name where they can wrap. */
+.rs-rewards .ue-reward-art .form-chip{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;padding:0;border:0}
+.rs-rewards .research-reward:has(.ue-reward-art .form-chip)>span:last-child::after{content:"Form art unavailable";display:block;max-width:100%;text-align:center;white-space:normal;overflow-wrap:normal;word-break:normal;font-size:.62rem;line-height:1.15;color:var(--color-text-muted)}

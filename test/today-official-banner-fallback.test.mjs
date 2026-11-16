@@ -71,12 +71,12 @@ test('Schedule card (dash.js) shows the verified banner only without featured Po
   assert.match(src, /<div class="evc-art">' \+ scheduleArt\(ev\) \+ '<\/div>/);
   assert.match(src, /<div class="today-event-art evc-art" aria-hidden="true">' \+ featArts\(ev, 1\)/);
   const b = src.slice(src.indexOf('function bannerArt'), src.indexOf('function scheduleArt'));
-  assert.match(b, /alt=""/); assert.match(b, /loading="lazy"/); assert.match(b, /data-err="prm"/); assert.match(b, /width="320" height="140"/);
+  assert.match(b, /alt=""/); assert.match(b, /loading="lazy"/); assert.match(b, /data-err="prm"/); assert.match(b, /width="320" height="160"/);
 });
 
 test('dash.css gives the Schedule banner a fixed aspect, cover crop and a full-width row', () => {
   const css = fs.readFileSync(new URL('../public/dash.css', import.meta.url), 'utf8');
-  assert.match(css, /\.evc-banner\{[^}]*aspect-ratio:16\/7[^}]*\}/);
+  assert.match(css, /\.evc-banner\{[^}]*aspect-ratio:2\/1[^}]*\}/);
   assert.match(css, /\.evc-banner img\{[^}]*object-fit:cover/);
   assert.match(css, /:not\(:has\(\.evc-banner\)\)\{width:88px/);
 });
