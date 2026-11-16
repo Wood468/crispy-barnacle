@@ -96,7 +96,7 @@ function reward(item,ctx){
  var icon='<span class="ue-reward-art">'+(artwork||fallback)+'</span>';
  return '<div class="research-reward">'+icon+'<span><b>'+quantity+esc(item.name)+'</b>'+cp+'</span></div>';
 }
-function researchTask(r,ctx){return '<article class="research-task"><h4>'+esc(value(r))+'</h4>'+(r.access&&r.access!=='unknown'?'<p>'+esc(r.access)+'</p>':'')+(Array.isArray(r.rewards)?'<div class="research-rewards">'+r.rewards.map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+'</article>';}
+function researchTask(r,ctx){return '<article class="research-task"><h4>'+esc(value(r))+'</h4>'+(r.access&&r.access!=='unknown'?'<p>'+esc(r.access)+'</p>':'')+(Array.isArray(r.rewards)?'<div class="research-rewards">'+r.rewards.map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+(Array.isArray(r.rewardConflicts)&&r.rewardConflicts.length?'<small class="research-task-source">Sources disagree on these rewards. Quantities are unconfirmed.</small>':'')+'</article>';}
 /* Parsed tasks are the countable unit. Source prose lines are shown as notes underneath and never counted as tasks. */
 function research(items,ctx){var list=items.filter(function(r){return value(r);}),tasks=list.filter(function(r){return V.researchTaskCount([r]);}),notes=list.filter(function(r){return !V.researchTaskCount([r]);});
  return tasks.map(function(r){return researchTask(r,ctx);}).join('')+(notes.length?'<ul class="ue-facts ue-research-notes">'+notes.map(function(r){return '<li>'+esc(value(r))+'</li>';}).join('')+'</ul>':'')+(!tasks.length&&notes.length?'<p class="ue-more-note" role="note">No individual research tasks have been published yet.</p>':'');}

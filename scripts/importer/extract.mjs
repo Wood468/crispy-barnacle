@@ -66,12 +66,18 @@ function researchRewardNames(options){
  return value=>{let rest=key(value),out=[];if(!rest||!names.length)return null;while(rest){const name=names.find(name=>rest===name||rest.startsWith(name+' '));if(!name)return null;out.push({...entries.get(name)});rest=rest.slice(name.length).trim();}return out;};
 }
 
+// Leek Duck collapses long reward lists behind a "+3" chip; the flattened text glues it onto the next name ("+3 Grookey").
+// Only a leading "+N" followed by a space is dropped, so a name that merely contains a plus sign is left alone.
+const cleanRewardName = value => trim(value).replace(/^[,;\s]+/, "").replace(/^\+\d{1,3}\s+(?=\S)/, "");
+// GO Pass prose ("Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award ...") reads like a task row but is a pass fact, not research.
+const isPassProse = (task, rewardText) => /\bpass tasks?\b|\brank(?:s)?\s+(?:up|\d+\s+through)\b/i.test(task) || /^[.,;:]/.test(rewardText) || /\branks?\s+\d+\s+(?:through|to)\s+\d+\b/i.test(rewardText);
+
 function parseResearchTask(line, category, declaredNames) {
   // Published research tables may use "Task | 7740 × Stardust" rather
   // than the prose marker "REWARD". Only accept an explicit task verb
   // and a concrete reward cell; do not infer tasks from event descriptions.
   const cells = String(line || "").split(/\s*\|\s*/).map(trim);
-  if (cells.length === 2 && /^(?:catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i.test(cells[0]) &&
+  if (cells.length === 2 && /^(?:catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|unlock|claim reward)\b/i.test(cells[0]) &&
       /^(?:\d[\d,]*\s*[×x]\s*|[×x]\s*\d+\s+|\d[\d,]*\s+|an?\s+encounter with\s+)/i.test(cells[1])) {
     line = cells[0] + " REWARD " + cells[1].replace(/^(\d[\d,]*)\s*[×x]\s*/i, "×$1 ");
   }
@@ -80,7 +86,8 @@ function parseResearchTask(line, category, declaredNames) {
   const task = trim(String(line).slice(0, marker.index)).replace(/[|:–—-]+$/, "").trim();
   const rewardText = trim(String(line).slice(marker.index + marker[0].length));
   if (!task || /^task$/i.test(task) || task.length < 4 || !rewardText || /^(possible )?rewards?$/i.test(rewardText)) return null;
-  if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i.test(task)) return null;
+  if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|unlock|claim reward)\b/i.test(task)) return null;
+  if (isPassProse(task, rewardText)) return null;
   const rewards = [];
   // Some feeds flatten adjacent item blocks and repeat the quantity around an icon.
   // Only a named item with an explicit × quantity creates a boundary; Pokémon names stay intact.
@@ -95,7 +102,7 @@ function parseResearchTask(line, category, declaredNames) {
     let match, hasCP = false, lastEnd = 0;
     while ((match = cp.exec(chunk)) !== null) {
       hasCP = true; lastEnd = cp.lastIndex;
-      const name = trim(match[1]).replace(/^[,;\s]+/, "");
+      const name = cleanRewardName(match[1]);
       const maxCP = Number(match[2]), minCP = Number(match[3]);
       if (!name || minCP > maxCP || maxCP > 9999) continue;
       const declared=declaredNames(name);
@@ -110,7 +117,7 @@ function parseResearchTask(line, category, declaredNames) {
     if (!qty) continue;
     // Flattened source tables sometimes repeat the REWARD label after an item name.
     // It is presentation text, not part of the reward's name.
-    let name = trim(qty[2]).replace(/\s+REWARD$/i, "");
+    let name = cleanRewardName(qty[2]).replace(/\s+REWARD$/i, "");
     if (!name || /^(possible )?rewards?$/i.test(name) || name.length > 100) continue;
     let quantity = Number(qty[1] || qty[3] || 1);
     if (qty[1] && qty[3] && Number(qty[1]) !== Number(qty[3])) continue;
@@ -132,11 +139,11 @@ function parseResearchTask(line, category, declaredNames) {
   return rewards.length ? { task, category: category || "research", rewards } : null;
 }
 
-const TASK_VERB = /^(?:catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i;
+const TASK_VERB = /^(?:catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|unlock|claim reward)\b/i;
 // Must equal the slice(0, 900000) in discover.mjs get(), the importer's page cap (a test pins the two together).
 const PAGE_CAP = 900000;
 // A line that looks like a task row (task verb, then a cell or REWARD marker), whether or not it parsed.
-const looksLikeTaskRow = text => { const t = trim(String(text || "")); return TASK_VERB.test(t) && (/\s\|\s/.test(t) || /\breward/i.test(t)); };
+const looksLikeTaskRow = text => { const t = trim(String(text || "")); return TASK_VERB.test(t) && !/\bpass tasks?\b|\branks?\s+\d+\s+(?:through|to)\s+\d+\b/i.test(t) && (/\s\|\s/.test(t) || /\breward/i.test(t)); };
 
 function extractFromLines(html, options, lines, { skipPass = false } = {}) {
   const declaredNames=researchRewardNames(options);

@@ -38,6 +38,7 @@
       return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(name) + '</a>' : esc(name);
     }).filter(Boolean);
     var label = task.status === 'official' ? 'Official' : task.status === 'corroborated' ? 'Cross-checked' : 'Single source';
+    if (Array.isArray(task.rewardConflicts) && task.rewardConflicts.length) label += ' (sources disagree on rewards; quantities unconfirmed)';
     return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small>';
   }
 
