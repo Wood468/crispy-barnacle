@@ -11,7 +11,7 @@ const prov = JSON.parse(fs.readFileSync(new URL('docs/asset-inventory/item-icons
 function load() {
   const a = detail.match(/function eternatusIcon\(n\) \{[^\n]*\}\n/);
   const c = detail.match(/function pinapIcon\(n\) \{[^\n]*\}\n/);
-  const d = detail.match(/function ballIcon\(n\) \{[^\n]*\}\n/);
+  const d = detail.match(/function ownerIcon\(n\) \{[^\n]*\}\n/);
   const b = detail.match(/function itemIcon\(n\) \{[^\n]*\}\n/);
   assert.ok(a && b && c && d, 'icon functions exist');
   return new Function(a[0] + c[0] + d[0] + b[0] + 'return { eternatusIcon: eternatusIcon, pinapIcon: pinapIcon, itemIcon: itemIcon };')();
@@ -30,7 +30,7 @@ test('Eternatus Candy XL (and Eternatus XL Candy) use the XL picture', () => {
 test('no lookalike matching: other candy, Rare Candy, other species and loose strings are untouched', () => {
   for (const n of ['Rare Candy', 'Rare Candy XL', 'XL Candy', 'Candy', 'Candy XL', 'Pikachu Candy', 'Pikachu Candy XL', 'Eternatus', 'Eternamax Eternatus', 'Eternatus Sticker',
     'Eternatus Candy Bonus', 'Not Eternatus Candy', 'Eternatus Candy XL Extra', 'Eternatus Candies', 'Duraludon Candy', 'Mega Eternatus Candy', '']) assert.equal(eternatusIcon(n), '', JSON.stringify(n));
-  assert.equal(itemIcon('Rare Candy'), '');
+  assert.equal(itemIcon('Rare Candy'), '/ico/i/rare-candy.webp');
   assert.equal(itemIcon('Pikachu Candy'), '');
   assert.equal(itemIcon('XL Candy'), '');
 });
@@ -55,7 +55,7 @@ test('the generic candy glyph stays as the fallback for any other candy', () => 
 });
 
 test('pictures are local webp files whose bytes match the recorded checksum and provenance', () => {
-  assert.equal(prov.entries.length, 9);
+  assert.equal(prov.entries.length, 14);
   for (const e of prov.entries) {
     const buf = fs.readFileSync(new URL(e.path, root));
     assert.equal(crypto.createHash('sha256').update(buf).digest('hex'), e.sha256, e.path);
@@ -68,7 +68,7 @@ test('pictures are local webp files whose bytes match the recorded checksum and 
     assert.match(e.provenance, /Pok.mon artwork belongs to its owners$/);
     assert.doesNotMatch(JSON.stringify(e), /licen[cs]ed? (under|to)|CC0|public domain/i);
   }
-  assert.deepEqual(prov.entries.map(e => '/' + e.path.replace(/^public\//, '')).sort(), [CANDY, XL, PINAP, "/ico/i/item-bag.webp", "/ico/i/pokemon-storage.webp", "/ico/i/star-piece.webp", "/ico/i/poke-ball.webp", "/ico/i/great-ball.webp", "/ico/i/ultra-ball.webp"].sort());
+  assert.deepEqual(prov.entries.map(e => '/' + e.path.replace(/^public\//, '')).sort(), [CANDY, XL, PINAP, "/ico/i/item-bag.webp", "/ico/i/pokemon-storage.webp", "/ico/i/star-piece.webp", "/ico/i/poke-ball.webp", "/ico/i/great-ball.webp", "/ico/i/ultra-ball.webp", "/ico/i/rare-candy.webp", "/ico/i/rare-candy-xl.webp", "/ico/i/lucky-egg.webp", "/ico/i/egg-incubator.webp", "/ico/i/super-incubator.webp"].sort());
 });
 
 test('no hotlinking: the pictures are same-origin paths and the shell cache moved to v376', () => {

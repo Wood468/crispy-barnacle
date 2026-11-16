@@ -33,7 +33,8 @@ test('wired renderer uses only exact approved item art and honest category token
  // Remote Raid Pass is a separate item with a category glyph.
  assert.equal((html.match(/src="\/ico\/g\/raidpass\.webp"/g)||[]).length,1);
  assert.match(html,/ue-reward-icon">XP<\/span>/);
- assert.match(html,/ue-reward-icon">RXL<\/span>/);
+ assert.match(html,/src="\/ico\/i\/rare-candy-xl\.webp"/);
+ assert.doesNotMatch(html,/ue-reward-icon">RXL<\/span>/);
  assert.doesNotMatch(html,/\/ico\/xp\.webp/);
  assert.match(html,/<b>Remote Raid Pass<\/b>/);
  assert.match(html,/<b>Rare Candy XL<\/b>/);

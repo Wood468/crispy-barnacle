@@ -21,7 +21,8 @@ const baselineExact=new Set([
   '/ico/g/elite-charged-tm.webp','/ico/g/raidpass.webp',
   /* Owner-supplied in-game pictures; provenance in docs/asset-inventory/item-icons.json, viewed by the implementer. */
   '/ico/i/item-bag.webp','/ico/i/pokemon-storage.webp',
-  '/ico/i/star-piece.webp','/ico/i/poke-ball.webp','/ico/i/great-ball.webp','/ico/i/ultra-ball.webp'
+  '/ico/i/star-piece.webp','/ico/i/poke-ball.webp','/ico/i/great-ball.webp','/ico/i/ultra-ball.webp',
+  '/ico/i/rare-candy.webp','/ico/i/rare-candy-xl.webp','/ico/i/lucky-egg.webp','/ico/i/egg-incubator.webp','/ico/i/super-incubator.webp'
 ]);
 
 function remoteAsset(url) {

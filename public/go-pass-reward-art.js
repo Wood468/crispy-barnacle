@@ -21,7 +21,12 @@
     [/^star piece$/i, '/ico/i/star-piece.webp'],
     [/^poke ball$/i, '/ico/i/poke-ball.webp'],
     [/^great ball$/i, '/ico/i/great-ball.webp'],
-    [/^ultra ball$/i, '/ico/i/ultra-ball.webp']
+    [/^ultra ball$/i, '/ico/i/ultra-ball.webp'],
+    [/^rare candy$/i, '/ico/i/rare-candy.webp'],
+    [/^rare candy xl$/i, '/ico/i/rare-candy-xl.webp'],
+    [/^lucky egg$/i, '/ico/i/lucky-egg.webp'],
+    [/^egg incubator$/i, '/ico/i/egg-incubator.webp'],
+    [/^super incubator$/i, '/ico/i/super-incubator.webp']
   ];
   function normalize(name) {
     return String(name || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();

@@ -23,7 +23,13 @@
     [/^star pieces?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/star-piece.webp', ''],
     [/^pok[eé] balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/poke-ball.webp', ''],
     [/^great balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/great-ball.webp', ''],
-    [/^ultra balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/ultra-ball.webp', '']
+    [/^ultra balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/ultra-ball.webp', ''],
+    /* Owner-supplied pictures, exact names only. Rare Candy and Rare Candy XL are separate pictures and never match each other or species candy. */
+    [/^rare candy(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/rare-candy.webp', ''],
+    [/^rare candy xl(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/rare-candy-xl.webp', ''],
+    [/^lucky eggs?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/lucky-egg.webp', ''],
+    [/^egg incubators?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/egg-incubator.webp', ''],
+    [/^super incubators?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/super-incubator.webp', '']
   ];
   /* Exact local art only (same-origin /ico/**). With no exact asset there is no image slot at all:
      never a letter tile, a glyph, or a picture borrowed from another item. */

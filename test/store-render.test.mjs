@@ -149,11 +149,12 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.match(cardFor('Elite Charged TM'), /src="\/ico\/g\/elite-charged-tm\.webp"/);
   // New Store products must not show a different item's purported exact art, nor a placeholder.
   for (const label of ['Remote Raid Pass', 'Premium Battle Pass', 'Elite Charged TM Box', 'Max Mushroom x3',
-    '600 Link Charge', 'Super Incubator x2', 'Max Particle Pack + Remote Raid Pass', 'Future Unmapped Item']) {
+    '600 Link Charge', 'Max Particle Pack + Remote Raid Pass', 'Future Unmapped Item']) {
     const card = cardFor(label);
     assert.ok(card, 'source-labelled product is displayed: ' + label);
     assert.doesNotMatch(card, /<img/, 'never borrow an unrelated exact item image for ' + label);
   }
+  assert.match(cardFor('Super Incubator x2'), /src="\/ico\/i\/super-incubator\.webp" alt=""/);
   assert.equal(typeof eventHandlers.error, 'function',
     'Store handles broken exact-item icons without a browser broken-image box');
   let removed = 0;

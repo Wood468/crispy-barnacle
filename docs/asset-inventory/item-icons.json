@@ -99,6 +99,61 @@
       "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
       "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
       "reviewed": "Viewed by the implementer: red and white Poké Ball"
+    },
+    {
+      "path": "public/ico/i/rare-candy.webp",
+      "label": "Rare Candy",
+      "sha256": "3fbfe76ad3595463ad95aee225006f1df3c6ccf0836dd532d6514ac47a856757",
+      "bytes": 3958,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: rainbow glittery sphere"
+    },
+    {
+      "path": "public/ico/i/rare-candy-xl.webp",
+      "label": "Rare Candy XL",
+      "sha256": "a5fe266849c7cd896cbcb608e54af66988403a70d7b2cdd41be4e2f847e21af7",
+      "bytes": 4050,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: rainbow prism shape"
+    },
+    {
+      "path": "public/ico/i/lucky-egg.webp",
+      "label": "Lucky Egg",
+      "sha256": "1cbfcfaaf14e0bfa7a36b54a8f64b016cefa11ca402fdceec2c0b08a2d271ad7",
+      "bytes": 3774,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: pale blue speckled egg"
+    },
+    {
+      "path": "public/ico/i/egg-incubator.webp",
+      "label": "Egg Incubator",
+      "sha256": "d7da9052462de59b6b3fb17b9d3247eb26742e6c173280783d7d117371d0422e",
+      "bytes": 6828,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: blue and white glass capsule with an orange base"
+    },
+    {
+      "path": "public/ico/i/super-incubator.webp",
+      "label": "Super Incubator",
+      "sha256": "e47b5638f98ed486f2c28f704a8e3f298d63b0eec690ea7b7abca7b9edaf8602",
+      "bytes": 6150,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 png resized to 128x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: tall glass capsule with a purple base"
     }
   ]
 }
