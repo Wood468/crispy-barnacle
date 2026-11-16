@@ -28,9 +28,15 @@ test('the wrong-year Machamp and Minior images and related Eternatus image are r
     'leekduck:minior-showers-southern-delta-aquariids-2027',
     'leekduck:minior-showers-perseids-2027'
   ]) assert.equal(details[id]?.image ?? null, null, id); // a record folded into its curated twin has no image either
-  assert.equal(catalogue.find(event => event.eventId === 'leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research')?.image, null);
-  // The 2026 Eternamax Eternatus event may carry only the artwork of its own official 2026 announcement page, never an older year's image.
   const pages = JSON.parse(await readFile(new URL('../public/event-artwork.json', import.meta.url), 'utf8')).pages || {};
+  // The 2026 Machamp research may carry no image, or only the artwork of an official 2026 news page that its own
+  // official twin cites as a source (the Into the Wild banner); never an image from another year or page.
+  const machamp = catalogue.find(event => event.eventId === 'leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research');
+  const twin = catalogue.find(event => /^w-go-wild-area-gigantamax-machamp/.test(event.eventId));
+  const machampPages = (twin?.sources || []).filter(source => source.id === 'official').map(source => source.url.replace(/\/?$/, '/'));
+  const machampOwn = machampPages.filter(url => /2026/.test(url) && !/20(?!26)\d{2}/.test(url)).map(url => pages[url]?.image).filter(Boolean);
+  assert.ok((machamp?.image ?? null) === null || machampOwn.includes(machamp.image), 'Machamp image must be null or an official 2026 page image cited by its own event');
+  // The 2026 Eternamax Eternatus event may carry only the artwork of its own official 2026 announcement page, never an older year's image.
   const own = pages['https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026/']?.image || null;
   const eter = catalogue.find(event => event.eventId === 'leekduck:eternamax-eternatus-max-battles-2026')?.image ?? null;
   assert.ok(eter === null || eter === own, 'Eternatus image must be null or its own 2026 official page image');
