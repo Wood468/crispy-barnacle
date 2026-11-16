@@ -8234,13 +8234,6 @@
       "status": "single"
      },
      {
-      "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Catch 8 Pokémon | Bulbasaur Charmander Squirtle Grookey Scorbunny Sobble",
       "sources": [
        "hub"
@@ -9114,7 +9107,7 @@
       },
       {
        "type": "encounter",
-       "name": "+3 Grookey",
+       "name": "Grookey",
        "quantity": 1,
        "cpMin": 430,
        "cpMax": 465
@@ -9225,35 +9218,21 @@
        "url": "https://leekduck.com/events/dynamax-trails-2026/"
       }
      ],
-     "status": "single",
-     "eventId": "dyntrails",
-     "eventName": "Dynamax Trails",
-     "eventWindow": {
-      "start": "2026-11-16T10:00",
-      "end": "2026-11-23T20:00"
-     },
-     "checkedAt": "2026-11-16"
-    },
-    {
-     "task": "Make an Excellent Throw",
-     "category": "field",
-     "rewards": [
+     "rewardConflicts": [
       {
-       "type": "item",
-       "name": "Eternatus Candy 1 × Silver Pinap Berry",
-       "quantity": 10
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
+       "source": {
+        "id": "hub",
+        "name": "Pokémon GO Hub",
+        "trust": "community",
+        "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
+       },
+       "rewards": [
+        {
+         "type": "item",
+         "name": "Eternatus Candy 1 × Silver Pinap Berry",
+         "quantity": 10
+        }
+       ]
       }
      ],
      "status": "single",
@@ -9311,6 +9290,64 @@
      "checkedAt": "2026-11-16"
     },
     {
+     "task": "Unlock a Max Move",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Eternatus Candy",
+       "quantity": 25
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 5000
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+      }
+     ],
+     "rewardConflicts": [
+      {
+       "source": {
+        "id": "hub",
+        "name": "Pokémon GO Hub",
+        "trust": "community",
+        "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
+       },
+       "rewards": [
+        {
+         "type": "item",
+         "name": "Eternatus Candy",
+         "quantity": 10
+        },
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 5000
+        }
+       ]
+      }
+     ],
+     "status": "single",
+     "eventId": "dyntrails",
+     "eventName": "Dynamax Trails",
+     "eventWindow": {
+      "start": "2026-11-16T10:00",
+      "end": "2026-11-23T20:00"
+     },
+     "checkedAt": "2026-11-16"
+    },
+    {
      "task": "Win a Max Battle",
      "category": "field",
      "rewards": [
@@ -9351,66 +9388,21 @@
        "url": "https://leekduck.com/events/dynamax-trails-2026/"
       }
      ],
-     "status": "single",
-     "eventId": "dyntrails",
-     "eventName": "Dynamax Trails",
-     "eventWindow": {
-      "start": "2026-11-16T10:00",
-      "end": "2026-11-23T20:00"
-     },
-     "checkedAt": "2026-11-16"
-    },
-    {
-     "task": "Win a Max Battle",
-     "category": "field",
-     "rewards": [
+     "rewardConflicts": [
       {
-       "type": "item",
-       "name": "Eternatus Candy 2000 × Stardust Duraludon Drampa",
-       "quantity": 10
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "hub"
-     ],
-     "sourceRefs": [
-      {
-       "id": "hub",
-       "name": "Pokémon GO Hub",
-       "trust": "community",
-       "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
-      }
-     ],
-     "status": "single",
-     "eventId": "dyntrails",
-     "eventName": "Dynamax Trails",
-     "eventWindow": {
-      "start": "2026-11-16T10:00",
-      "end": "2026-11-23T20:00"
-     },
-     "checkedAt": "2026-11-16"
-    },
-    {
-     "task": "Complete Pass Tasks to rank up and earn the following",
-     "category": "research",
-     "rewards": [
-      {
-       "type": "item",
-       "name": ". Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
-       "quantity": 1
-      }
-     ],
-     "occurrence": 1,
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/dynamax-trails-2026/"
+       "source": {
+        "id": "hub",
+        "name": "Pokémon GO Hub",
+        "trust": "community",
+        "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
+       },
+       "rewards": [
+        {
+         "type": "item",
+         "name": "Eternatus Candy 2000 × Stardust Duraludon Drampa",
+         "quantity": 10
+        }
+       ]
       }
      ],
      "status": "single",

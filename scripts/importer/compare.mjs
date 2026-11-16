@@ -42,13 +42,28 @@ export function mergeSources(results) {
     const order = { official: 0, corroborated: 1, single: 2 };
     fields[f] = clusters.map(c => ({ text: c.text, sources: c.sources, status: c.official ? "official" : c.sources.length >= 2 ? "corroborated" : "single" })).sort((a, b) => order[a.status] - order[b.status]); { const isRk = x => /^rank \d+/i.test(x.text); let rk = fields[f].filter(isRk); /* Leek Duck's structured GO Pass table is the only rank-reward source that is parsed from markup; a prose rank line from another source (misspelt quantities, bonus text) must not sit beside it. */ if (rk.some(x => x.sources.includes("leekduck"))) rk = rk.filter(x => x.sources.includes("leekduck")); rk = rk.slice(0, 110); fields[f] = fields[f].filter(x => !isRk(x)).slice(0, 12).concat(rk); }
   }
-  const taskMap = new Map();
+  const taskMap = new Map(), byBase = new Map();
+  const normTask = task => String(task.task || "").toLowerCase().replace(/\s+/g, " ").trim();
   for (const r of sorted) for (const task of (r.fields.researchTasks || [])) {
-    const key = JSON.stringify([task.category || "research", String(task.task || "").toLowerCase().replace(/\s+/g, " ").trim(), (task.rewards || []).map(x => [x.type, x.name, x.quantity, x.cpMin, x.cpMax]), task.occurrence || 1]);
-    let item = taskMap.get(key);
-    if (!item) { item = { ...task, sources: [], sourceRefs: [], official: false }; taskMap.set(key, item); }
-    if (!item.sources.includes(r.source.id)) item.sources.push(r.source.id);
+    const base = JSON.stringify([task.category || "research", normTask(task), task.occurrence || 1]);
+    const key = JSON.stringify([task.category || "research", normTask(task), (task.rewards || []).map(x => [x.type, x.name, x.quantity, x.cpMin, x.cpMax]), task.occurrence || 1]);
     const sourceRef = { id: r.source.id, name: r.source.name || r.source.id, trust: r.source.trust || "", url: r.source.url || "" };
+    let item = taskMap.get(key);
+    if (!item) {
+      // The same task (category, text, occurrence) from a source that has not yet reported it, with rewards that differ from the earlier (more trusted, or listed first) row,
+      // is the same task with a disagreement, not a second task. A mangled lower-trust reward cell used to become a duplicate row. Ambiguous cases (several candidate rows, or the
+      // same source already gave this task) keep the old behaviour and stay separate rows.
+      const known = byBase.get(base) || [];
+      const canonical = known.length === 1 && !known[0].sources.includes(r.source.id) ? known[0] : null;
+      if (canonical) {
+        const seen = (canonical.rewardConflicts ||= []);
+        if (!seen.some(c => c.source.id === sourceRef.id && c.source.url === sourceRef.url && JSON.stringify(c.rewards) === JSON.stringify(task.rewards || []))) seen.push({ source: sourceRef, rewards: task.rewards || [] });
+        continue;
+      }
+      item = { ...task, sources: [], sourceRefs: [], official: false }; taskMap.set(key, item);
+      byBase.set(base, [...known, item]);
+    }
+    if (!item.sources.includes(r.source.id)) item.sources.push(r.source.id);
     if (!item.sourceRefs.some(s => s.id === sourceRef.id && s.url === sourceRef.url)) item.sourceRefs.push(sourceRef);
     if (r.source.trust === "official") item.official = true;
   }
