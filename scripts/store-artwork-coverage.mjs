@@ -18,7 +18,9 @@ const baselineExact=new Set([
   '/ico/i/max-potion.webp','/ico/i/max-revive.webp',
   '/ico/i/golden-razz.webp','/ico/i/silver-pinap.webp',
   '/ico/incense.webp','/ico/g/elite-fast-tm.webp',
-  '/ico/g/elite-charged-tm.webp','/ico/g/raidpass.webp'
+  '/ico/g/elite-charged-tm.webp','/ico/g/raidpass.webp',
+  /* Owner-supplied in-game pictures; provenance in docs/asset-inventory/item-icons.json, viewed by the implementer. */
+  '/ico/i/item-bag.webp','/ico/i/pokemon-storage.webp'
 ]);
 
 function remoteAsset(url) {

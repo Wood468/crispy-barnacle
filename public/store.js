@@ -14,13 +14,17 @@
     [/^incense(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/incense.webp'],
     [/^elite fast tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-fast-tm.webp'],
     [/^elite charged tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-charged-tm.webp'],
-    [/^raid pass(?:es)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/raidpass.webp']
+    [/^raid pass(?:es)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/raidpass.webp'],
+    /* Owner-supplied pictures (docs/asset-inventory/item-icons.json). Exact store names only: 'Item Bag' / 'Pokémon Storage', optionally with a '+N' upgrade suffix.
+       The third entry is the alt text: empty, the name is printed beside the picture. */
+    [/^item bag(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/item-bag.webp', ''],
+    [/^pok[eé]mon storage(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/pokemon-storage.webp', '']
   ];
   /* Exact local art only (same-origin /ico/**). With no exact asset there is no image slot at all:
      never a letter tile, a glyph, or a picture borrowed from another item. */
   function icon(label) {
     for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) {
-      return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="' + esc(label) + '" width="40" height="40" loading="lazy" decoding="async">';
+      return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="' + esc(ICO[i].length > 2 ? ICO[i][2] : label) + '" width="40" height="40" loading="lazy" decoding="async">';
     }
     return '';
   }

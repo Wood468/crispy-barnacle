@@ -54,7 +54,7 @@ test('the generic candy glyph stays as the fallback for any other candy', () => 
 });
 
 test('pictures are local webp files whose bytes match the recorded checksum and provenance', () => {
-  assert.equal(prov.entries.length, 3);
+  assert.equal(prov.entries.length, 5);
   for (const e of prov.entries) {
     const buf = fs.readFileSync(new URL(e.path, root));
     assert.equal(crypto.createHash('sha256').update(buf).digest('hex'), e.sha256, e.path);
@@ -67,10 +67,10 @@ test('pictures are local webp files whose bytes match the recorded checksum and 
     assert.match(e.provenance, /Pok.mon artwork belongs to its owners$/);
     assert.doesNotMatch(JSON.stringify(e), /licen[cs]ed? (under|to)|CC0|public domain/i);
   }
-  assert.deepEqual(prov.entries.map(e => '/' + e.path.replace(/^public\//, '')).sort(), [CANDY, XL, PINAP].sort());
+  assert.deepEqual(prov.entries.map(e => '/' + e.path.replace(/^public\//, '')).sort(), [CANDY, XL, PINAP, "/ico/i/item-bag.webp", "/ico/i/pokemon-storage.webp"].sort());
 });
 
-test('no hotlinking: the pictures are same-origin paths and the shell cache moved to v373', () => {
+test('no hotlinking: the pictures are same-origin paths and the shell cache moved to v375', () => {
   assert.doesNotMatch(detail.match(/function eternatusIcon[^\n]*/)[0], /https?:/);
   assert.ok(Number(/const SHELL_CACHE = 'gofn-shell-v(\d+)'/.exec(sw)[1]) >= 373);
 });
