@@ -1,8 +1,8 @@
 {
- "runAt": "2026-11-16T11:05:21.770Z",
+ "runAt": "2026-11-16T12:07:23.687Z",
  "artworkCoverage": {
   "selected": 27,
-  "missing": 75,
+  "missing": 74,
   "legacyUnattributed": 2,
   "bySource": {
    "Pokémon GO (official)": 22,
@@ -22,13 +22,6 @@
     "name": "Orionids Meteor Shower: Minior Debut",
     "sources": [
      "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
-    ]
-   },
-   {
-    "id": "leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research",
-    "name": "GO Wild Area: Gigantamax Machamp Power Up! Timed Research",
-    "sources": [
-     "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
     ]
    },
    {
@@ -561,7 +554,7 @@
   }
  },
  "pagesRead": 80,
- "events": 104,
+ "events": 103,
  "worldEvents": 68,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
@@ -598,6 +591,15 @@
      "headings": 0,
      "table": false,
      "researchKeywords": false
+    },
+    {
+     "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/",
+     "status": "incomplete",
+     "truncated": false,
+     "candidateRows": 0,
+     "headings": 2,
+     "table": false,
+     "sample": "<!DOCTYPE html> <html><head><meta><title>GO Wild Area: Gigantamax Machamp Power Up! Timed Research - Leek Duck | Pokémon GO News and Resources </title><link><meta><meta><meta><meta><meta><link><link><link><link><link><link><link><link><link><link><link><link><meta><link><meta><meta><meta><meta><meta><meta><meta><meta><meta><meta><meta><meta name=\"twitter:description\" content=\"There will be Timed Research available during GO Wild Area 2026. Complete it to encounter Gigantamax Machamp and earn M"
     }
    ]
   }
@@ -913,12 +915,16 @@
   {
    "event": "Into the Wild",
    "field": "bonuses",
-   "missingFrom": []
+   "missingFrom": [
+    "leekduck"
+   ]
   },
   {
    "event": "Into the Wild",
    "field": "featured",
-   "missingFrom": []
+   "missingFrom": [
+    "leekduck"
+   ]
   },
   {
    "event": "Into the Wild",
@@ -938,12 +944,16 @@
   {
    "event": "Into the Wild",
    "field": "moves",
-   "missingFrom": []
+   "missingFrom": [
+    "leekduck"
+   ]
   },
   {
    "event": "Into the Wild",
    "field": "tickets",
-   "missingFrom": []
+   "missingFrom": [
+    "leekduck"
+   ]
   },
   {
    "event": "Into the Wild",
@@ -1311,15 +1321,6 @@
      "researchPrograms": 0
     },
     {
-     "eventId": "leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research",
-     "sourceUrls": [
-      "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 2
-    },
-    {
      "eventId": "leekduck:hatch-day-december-2026",
      "sourceUrls": [
       "https://leekduck.com/events/hatch-day-december-2026/"
@@ -1422,6 +1423,15 @@
      "eventId": "leekduck:minior-showers-perseids-2027",
      "sourceUrls": [
       "https://leekduck.com/events/minior-showers-perseids-2027/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:minior-showers-southern-delta-aquariids-2027",
+     "sourceUrls": [
+      "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
      ],
      "benefits": 0,
      "featuredMoves": 0,

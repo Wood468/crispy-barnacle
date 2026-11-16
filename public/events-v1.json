@@ -11841,7 +11841,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 205,
+    "revision": 207,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -16129,6 +16129,20 @@
         "official"
        ],
        "status": "official"
+      },
+      {
+       "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "shiny": [
@@ -16145,6 +16159,13 @@
         "official"
        ],
        "status": "official"
+      },
+      {
+       "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "moves": [
@@ -16226,7 +16247,8 @@
       {
        "text": "Monday, November 9, at 10:00 a.m. to Friday, November 13, 2026, at 8:00 p.m. local time",
        "sources": [
-        "official"
+        "official",
+        "leekduck"
        ],
        "status": "official"
       },
@@ -16274,8 +16296,8 @@
      "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "bd101ed820640c5787378855ce3b12e746a27a71067d359f2cad3b98cecd61d7",
-    "revision": 34,
+    "contentHash": "62b43e57099d0a6eb4b69b3474a63df8a1331415f399b4eb6aa2b107f188af49",
+    "revision": 35,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -16808,6 +16830,20 @@
       "official"
      ],
      "status": "official"
+    },
+    {
+     "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
     }
    ],
    "passes": [
@@ -18608,6 +18644,12 @@
      "label": "G47IX",
      "trust": "community",
      "observed": "2026-10-15"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
     }
    ],
    "pokemon": [
@@ -22434,7 +22476,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/xQzYXbxguNWaaSXG5thVM5x44Luvbb5Pi8rPlYSPIV6kePCzoS_5NWzlM0yzNGIVs1NzhXIPLcg2HKS0iuizGsHZUvSS_ZcemC5-i4My5yA",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -32253,7 +32295,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 220,
+    "revision": 222,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -50785,6 +50827,20 @@
         "official"
        ],
        "status": "official"
+      },
+      {
+       "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "shiny": [
@@ -50801,6 +50857,13 @@
         "official"
        ],
        "status": "official"
+      },
+      {
+       "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "moves": [
@@ -50882,7 +50945,8 @@
       {
        "text": "Monday, November 9, at 10:00 a.m. to Friday, November 13, 2026, at 8:00 p.m. local time",
        "sources": [
-        "official"
+        "official",
+        "leekduck"
        ],
        "status": "official"
       },
@@ -50932,8 +50996,8 @@
      "end": "2026-11-15T18:00"
     },
     "imageReviewed": true,
-    "contentHash": "9d099568d7032688e3717ddb57c839525f94964c49b771a5e6d43f0511a0fff9",
-    "revision": 7,
+    "contentHash": "8957247bb4794caa15558ebe2d8a5036d3af7d66409f2421c642e1fc1b5ce8b2",
+    "revision": 8,
     "amended": false,
     "native": false,
     "collection": "season"
@@ -51405,6 +51469,20 @@
       "official"
      ],
      "status": "official"
+    },
+    {
+     "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
     }
    ],
    "passes": [
@@ -53166,6 +53244,12 @@
     {
      "url": "https://pokemongo.com/news/into-the-wild-2026",
      "name": "Event source"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
     }
    ],
    "pokemon": [
@@ -61389,7 +61473,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 196,
+    "revision": 198,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -68494,7 +68578,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 205,
+    "revision": 207,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -69000,47 +69084,315 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/xQzYXbxguNWaaSXG5thVM5x44Luvbb5Pi8rPlYSPIV6kePCzoS_5NWzlM0yzNGIVs1NzhXIPLcg2HKS0iuizGsHZUvSS_ZcemC5-i4My5yA",
    "notes": [],
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
     "conflicts": [],
     "fields": {
-     "bonuses": [],
-     "featured": [],
+     "bonuses": [
+      {
+       "text": "The Remote Raid limit will increase to 30 from Monday, November 9, to Friday, November 13, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "When you use a Coin Bag during this event, you may encounter Shiny Gimmighoul—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "When you use the Mystery Box during this event, you’ll be able to encounter Shiny Meltan—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Reach Major Milestones on your GO Pass: Into the Wild to unlock the following bonuses.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 1: Additional 5,000 XP from completed raids",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 2: 3/4 Max Particle cost for unlocking and powering up Max Moves",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 3: 1 additional Candy awarded for completing raids",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 3: 1 additional Candy XL awarded for completing raids (Trainers level 31+)",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
+     "featured": [
+      {
+       "text": "Dynamax Pokémon Debut",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "You may encounter event-themed Pokémon in the wild, including Magnemite*, Noibat*, Togedemaru*, and more!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up your GO Pass: Into the Wild to earn the following rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Encounter with Dynamax Meltan*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The GO Wild Area 2026 Tee (Purple) avatar item.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Encounters with Dynamax Meltan*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The Duraludon Pants avatar item.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Premium items, such as Incense, a Lucky Egg, and more!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
      "raids": [
       {
-       "text": "Event-exclusive Timed Research",
+       "text": "The following Pokémon will make its Pokémon GO Dynamax debut in five-star Max Battles!",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+       "text": "Dynamax Regidrago*",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
+       "text": "Dynamax Meltan*",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
+       "text": "One-Star Max Battles Ralts*",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
+      },
+      {
+       "text": "Two-Star Max Battles Machop*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Max Battles: Wednesday, November 11 Registeel*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Max Battles: Thursday, November 12 Regidrago*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Max Battles: Friday, November 13 Latias* Latios*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers will be able to earn Crowned Sword Energy or Crowned Shield Energy by defeating Crowned Sword Zacian or Crowned Shield Zamazenta in Raid Battles.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Three-Star Raids Druddigon* Orthworm*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Raids Crowned Sword Zacian* Crowned Shield Zamazenta*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Raid Hour: Monday, November 9 Crowned Sword Zacian*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
       }
      ],
      "eggs": [],
      "research": [
+      {
+       "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Once you’ve given your chosen trainee a Silver Bottle Cap, it’s time to start Hyper Training! To train, you will complete various tasks themed to the stat you plan to raise.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Attack: Battle alongside your trainee.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Once you use your Silver Bottle Cap, you’ll have 365 days to complete your Hyper Training. It’s a long and challenging course, but once you complete it your trainee will be stronger than ever!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "—The Pokémon GO team",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
       {
        "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
        "sources": [
@@ -69058,6 +69410,20 @@
      ],
      "shiny": [
       {
+       "text": "When you use a Coin Bag during this event, you may encounter Shiny Gimmighoul—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "When you use the Mystery Box during this event, you’ll be able to encounter Shiny Meltan—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
        "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
        "sources": [
         "leekduck"
@@ -69065,16 +69431,124 @@
        "status": "single"
       }
      ],
-     "moves": [],
+     "moves": [
+      {
+       "text": "When you catch the following Pokémon during the event, they will know the following attacks.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Registeel will know the Fast Attack Metal Claw.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Latias will know the Charged Attack Mist Ball.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Latios will know the Charged Attack Luster Purge.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Regidrago will know the Fast Attack Dragon Breath.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
      "costumes": [],
-     "tickets": [],
+     "tickets": [
+      {
+       "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, at 6:00 p.m. local time, the GO Pass and the GO Pass Deluxe for Into the Wild will be available in Pokémon GO!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "For US$14.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild, a paid version of the GO Pass that offers upgraded rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "For US$19.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild + 10 Ranks to also automatically earn enough GO Points to reach Rank 10.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
      "dates": [
       {
-       "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+       "text": "Monday, November 9, at 10:00 a.m. to Friday, November 13, 2026, at 8:00 p.m. local time",
        "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
+      },
+      {
+       "text": "The Remote Raid limit will increase to 30 from Monday, November 9, to Friday, November 13, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The Silver Bottle Cap earned from GO Pass Deluxe: Into the Wild will expire on Sunday, November 22, 2026, at 11:59 p.m. local time, regardless of when you claimed it, so remember to use it!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Daily Raid Hour and Max Battle Hour: 6pm to 7pm local time, 2026-11-09 to 2026-11-13.",
+       "sources": [
+        "https://pokemongo.com/news/into-the-wild-2026"
+       ],
+       "status": "verified"
       }
      ]
     },
@@ -69085,8 +69559,8 @@
      "end": "2026-11-15"
     },
     "imageReviewed": true,
-    "contentHash": "c285dfccbadcc7c9acc992c63556c87e19d1214b74259cb4bb788bfab3b0fe82",
-    "revision": 7,
+    "contentHash": "47e1c6ff1f2867e4af4637ac51baac557c68949aaa8ce94c31d8e22e355f74cf",
+    "revision": 8,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -69095,42 +69569,466 @@
    "activities": [],
    "bonuses": [
     {
-     "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
+     "text": "The Remote Raid limit will increase to 30 from Monday, November 9, to Friday, November 13, 2026.",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
+     "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "Ticket-holding Trainers participating in GO Wild Area: Global will receive a branching Special Research story starting on November 14, 2026, at 10:00 a.m. local time .",
+     "text": "When you use a Coin Bag during this event, you may encounter Shiny Gimmighoul—if you’re lucky!^",
      "sources": [
-      "hub"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "Trainers must choose between researching Steel-type or Dragon-type Pokémon. Each path awards a corresponding in-game medal and unlocks special bonuses for catching mighty Pokémon of that type.",
+     "text": "When you use the Mystery Box during this event, you’ll be able to encounter Shiny Meltan—if you’re lucky!^",
      "sources": [
-      "hub"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
+    },
+    {
+     "text": "Reach Major Milestones on your GO Pass: Into the Wild to unlock the following bonuses.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
     },
     {
      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
+    },
+    {
+     "text": "Rank 1: Additional 5,000 XP from completed raids",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rank 2: 3/4 Max Particle cost for unlocking and powering up Max Moves",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rank 3: 1 additional Candy awarded for completing raids",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rank 3: 1 additional Candy XL awarded for completing raids (Trainers level 31+)",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
     }
    ],
    "research": [
+    {
+     "task": "Catch 10 Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Horsea",
+       "cpMin": 418,
+       "cpMax": 452
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Aron",
+       "cpMin": 522,
+       "cpMax": 560
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Skrelp",
+       "cpMin": 421,
+       "cpMax": 455
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Magnemite",
+       "cpMin": 544,
+       "cpMax": 583
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Catch a Dynamax Machop",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Machop Candy",
+       "quantity": 25
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 5000
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Catch a Dynamax Ralts",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Ralts Candy",
+       "quantity": 25
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 5000
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Power up Dragon‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Bagon",
+       "cpMin": 459,
+       "cpMax": 495
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Skrelp",
+       "cpMin": 421,
+       "cpMax": 455
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Dratini",
+       "cpMin": 397,
+       "cpMax": 430
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Horsea",
+       "cpMin": 418,
+       "cpMax": 452
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Power up Steel‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Aron",
+       "cpMin": 522,
+       "cpMax": 560
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Magnemite",
+       "cpMin": 544,
+       "cpMax": 583
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Togedemaru",
+       "cpMin": 876,
+       "cpMax": 926
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Galarian Meowth",
+       "cpMin": 409,
+       "cpMax": 443
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Win a Max Battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Bagon",
+       "cpMin": 459,
+       "cpMax": 495
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Mawile",
+       "cpMin": 658,
+       "cpMax": 700
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "task": "Win a raid",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Dratini",
+       "cpMin": 397,
+       "cpMax": 430
+      },
+      {
+       "type": "item",
+       "name": "Rare Candy",
+       "quantity": 2
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Scyther",
+       "cpMin": 1104,
+       "cpMax": 1160
+      }
+     ],
+     "occurrence": 1,
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-15"
+    },
+    {
+     "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Once you’ve given your chosen trainee a Silver Bottle Cap, it’s time to start Hyper Training! To train, you will complete various tasks themed to the stat you plan to raise.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Attack: Battle alongside your trainee.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Once you use your Silver Bottle Cap, you’ll have 365 days to complete your Hyper Training. It’s a long and challenging course, but once you complete it your trainee will be stronger than ever!",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "—The Pokémon GO team",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
     {
      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
      "sources": [
@@ -69149,82 +70047,39 @@
    "passes": [],
    "tickets": [
     {
-     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+     "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, at 6:00 p.m. local time, the GO Pass and the GO Pass Deluxe for Into the Wild will be available in Pokémon GO!",
      "sources": [
-      "leekduck",
-      "hub"
+      "official"
      ],
-     "status": "corroborated"
+     "status": "official"
     },
     {
-     "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+     "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+     "text": "For US$14.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild, a paid version of the GO Pass that offers upgraded rewards.",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
+     "text": "For US$19.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild + 10 Ranks to also automatically earn enough GO Points to reach Rank 10.",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
+     "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
-    },
-    {
-     "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The following items will be available through GO Pass: Into the Wild :",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "GO Wild Area 2026 Tee (Purple) as a Free GO Pass reward",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Duraludon Pants as a Paid GO Pass Deluxe reward",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Duraludon T Shirt as part of the GO Pass Into the Wild",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
+     "status": "official"
     }
    ],
    "sources": [
@@ -69273,11 +70128,174 @@
     {
      "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/",
      "name": "Event source"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/into-the-wild-2026/"
     }
    ],
-   "pokemon": [],
-   "encounters": [],
-   "groups": {}
+   "pokemon": [
+    {
+     "key": "379:dynamax:none",
+     "speciesId": "379",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Registeel",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Registeel"
+    },
+    {
+     "key": "380:dynamax:none",
+     "speciesId": "380",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latias",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latias"
+    },
+    {
+     "key": "381:dynamax:none",
+     "speciesId": "381",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latios",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latios"
+    },
+    {
+     "key": "888:crowned-sword:none",
+     "speciesId": "888",
+     "formId": "crowned-sword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Crowned Sword Zacian",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Sword Zacian"
+    },
+    {
+     "key": "889:crowned-shield:none",
+     "speciesId": "889",
+     "formId": "crowned-shield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Crowned Shield Zamazenta",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Shield Zamazenta"
+    },
+    {
+     "key": "895:dynamax:none",
+     "speciesId": "895",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Regidrago",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Regidrago"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "379:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "380:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "381:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "895:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crowned-sword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crowned-shield:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "groups": {
+    "max": [
+     {
+      "identityKey": "379:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "380:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "381:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "895:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "raid": [
+     {
+      "identityKey": "888:crowned-sword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "889:crowned-shield:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ]
+   }
   },
   {
    "schemaVersion": 1,
@@ -75867,7 +76885,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 196,
+    "revision": 198,
     "amended": true,
     "native": false,
     "collection": "world-events"
