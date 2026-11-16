@@ -1,0 +1,38 @@
+{
+  "note": "Provenance for non-Pokemon item pictures added under public/ico/i/ from owner-supplied files. These pictures are served from our own origin only; nothing is hotlinked. No licence is claimed.",
+  "entries": [
+    {
+      "path": "public/ico/i/eternatus-candy.webp",
+      "label": "Eternatus Candy",
+      "sha256": "4a094c57e3b5cc853e7902a20e3f64e85c3dfc4c90a3fe62770e3b716754e3f4",
+      "bytes": 3784,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 webp resized to 128x128 (Lanczos), re-encoded as webp quality 88",
+      "provenance": "supplied by owner; source: Pokémon GO Hub Eternatus guide (credited to the game's artwork); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: round navy sphere with red stripes"
+    },
+    {
+      "path": "public/ico/i/eternatus-candy-xl.webp",
+      "label": "Eternatus Candy XL",
+      "sha256": "41e63a0e09868f0db2996f6586b9d455bdf8818ae04bd6d113048aa839ae9634",
+      "bytes": 4456,
+      "width": 128,
+      "height": 128,
+      "processing": "Owner-supplied 256x256 webp resized to 128x128 (Lanczos), re-encoded as webp quality 88",
+      "provenance": "supplied by owner; source: Pokémon GO Hub Eternatus guide (credited to the game's artwork); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: rounded triangular navy piece with red stripes and sparkles"
+    },
+    {
+      "path": "public/ico/i/pinap-berry.webp",
+      "label": "Pinap Berry",
+      "sha256": "60e97ca51185082a69f58aff9ae17e7bddb02d8b820a6311ec755e6e9ae6fb72",
+      "bytes": 6180,
+      "width": 109,
+      "height": 128,
+      "processing": "Owner-supplied 206x241 webp resized to 109x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (in-game picture; source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: yellow pineapple-shaped berry with wavy lines and green leaves"
+    }
+  ]
+}
