@@ -54,3 +54,29 @@ test('dash.js offers the catalogue image through the same acceptance rule when t
   assert.match(src, /GOTODAY\.verifiedBanner\(imgHost,imgHost\.img,curPage\)&&GOTODAY\.verifiedBanner\(imgHost,model\.image,modelPage\)/);
   assert.match(src, /indexOf\('cur:'\+model\.eventId\)/);
 });
+
+test('eventBanner is the verified banner of the card own image and page, or null', () => {
+  assert.equal(TODAY.eventBanner({ ...base, img: OFFICIAL, artPageUrl: OFFICIAL_PAGE }).src, OFFICIAL);
+  assert.equal(TODAY.eventBanner({ ...base, img: LD }).src, LD);
+  assert.equal(TODAY.eventBanner({ ...base, img: OFFICIAL }), null);
+  assert.equal(TODAY.eventBanner({ ...base, img: '' }), null);
+});
+
+test('Schedule card (dash.js) shows the verified banner only without featured Pokemon and outside raid/max kinds', () => {
+  const src = fs.readFileSync(new URL('../public/dash.js', import.meta.url), 'utf8');
+  assert.match(src, /GOTODAY\.eventBanner\(ev\)/);
+  assert.doesNotMatch(src.slice(src.indexOf('function bannerArt'), src.indexOf('function scheduleArt')), /GOEVENTART|resolve\(/);
+  assert.match(src, /ev\.kind === 'raid' \|\| ev\.kind === 'max' \|\| hasFeatMon\(ev\)/);
+  assert.match(src, /function scheduleArt\(ev\) \{ return bannerArt\(ev\) \|\| featArts\(ev, 3\); \}/);
+  assert.match(src, /<div class="evc-art">' \+ scheduleArt\(ev\) \+ '<\/div>/);
+  assert.match(src, /<div class="today-event-art evc-art" aria-hidden="true">' \+ featArts\(ev, 1\)/);
+  const b = src.slice(src.indexOf('function bannerArt'), src.indexOf('function scheduleArt'));
+  assert.match(b, /alt=""/); assert.match(b, /loading="lazy"/); assert.match(b, /data-err="prm"/); assert.match(b, /width="320" height="140"/);
+});
+
+test('dash.css gives the Schedule banner a fixed aspect, cover crop and a full-width row', () => {
+  const css = fs.readFileSync(new URL('../public/dash.css', import.meta.url), 'utf8');
+  assert.match(css, /\.evc-banner\{[^}]*aspect-ratio:16\/7[^}]*\}/);
+  assert.match(css, /\.evc-banner img\{[^}]*object-fit:cover/);
+  assert.match(css, /:not\(:has\(\.evc-banner\)\)\{width:88px/);
+});

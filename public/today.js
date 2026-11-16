@@ -117,9 +117,12 @@
     }
     return art;
   }
+  /* The event's own verified banner (its feed/catalogue image with its own source page), or null. The Schedule card uses this too. */
+  function eventBanner(ev) {
+    return ev && ev.img ? verifiedBanner(ev, ev.img, ev.artPageUrl || ev.link || '') : null;
+  }
   function minorBanner(ev) {
-    if (!ev.img) return '';
-    var art = verifiedBanner(ev, ev.img, ev.artPageUrl || ev.link || '');
+    var art = eventBanner(ev);
     if (!art) return '';
     return '<img class="t1-minor-banner" alt="" src="' + esc(art.src) + '" decoding="async" loading="lazy" data-err="rm" data-art-source="' + esc(art.provenance.source) + '" data-art-verified="' + esc(art.provenance.verifiedFor) + '">';
   }
@@ -255,5 +258,5 @@
     var list = rootEl.querySelectorAll('.t1-cd[data-ts]');
     for (var i = 0; i < list.length; i++) { var t = LOGIC.countdownText(+list[i].getAttribute('data-ts'), nowMs, list[i].getAttribute('data-live') === '1'); if (list[i].textContent !== t) list[i].textContent = t; }
   }
-  return { patchCountdowns: patchCountdowns, verifiedBanner: verifiedBanner, render: render, pokemonFor: pokemonFor, raidTier: raidTier, shinyBadge: shinyBadge, esc: esc };
+  return { patchCountdowns: patchCountdowns, verifiedBanner: verifiedBanner, eventBanner: eventBanner, render: render, pokemonFor: pokemonFor, raidTier: raidTier, shinyBadge: shinyBadge, esc: esc };
 }));
