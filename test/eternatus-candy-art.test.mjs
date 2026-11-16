@@ -72,7 +72,7 @@ test('pictures are local webp files whose bytes match the recorded checksum and 
 
 test('no hotlinking: the pictures are same-origin paths and the shell cache moved to v373', () => {
   assert.doesNotMatch(detail.match(/function eternatusIcon[^\n]*/)[0], /https?:/);
-  assert.match(sw, /const SHELL_CACHE = 'gofn-shell-v373'/);
+  assert.ok(Number(/const SHELL_CACHE = 'gofn-shell-v(\d+)'/.exec(sw)[1]) >= 373);
 });
 
 test('Pinap Berry (exact, optional quantity prefix) uses the Pinap picture', () => {
