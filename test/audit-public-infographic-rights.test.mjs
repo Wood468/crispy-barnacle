@@ -189,7 +189,7 @@ test('the real publisher projection reports a pending weekly candidate without p
     mkdirSync(join(temp, 'data'));
     const write = (p, value) => writeFileSync(join(temp, p), JSON.stringify(value));
     const now = Date.now();
-    const old = path('old'), newer = path('new');
+    const old = path('secret-old-week-427'), newer = path('secret-next-week-427');
     const earlier = new Date(now - 8 * 86400000).toISOString();
     const recent = new Date(now - 3600000).toISOString();
     write('public/event-info.json', { events: {} });
@@ -205,7 +205,7 @@ test('the real publisher projection reports a pending weekly candidate without p
     assert.equal(report.totals.projectedWeeklyChanges, 1);
     assert.equal(report.totals.projectedPendingWeeklyPromotions, 1);
     assert.equal(report.totals.projectedUnattributedWeeklyPromotions, 1);
-    assert.doesNotMatch(JSON.stringify(report), /old|next|\/infographics\/g47ix\//, 'no private candidate IDs leak');
+    assert.doesNotMatch(JSON.stringify(report), /\/infographics\/g47ix\/|secret-(?:old|next)-week-427/, 'no private candidate IDs leak');
   } finally {
     rmSync(temp, { recursive: true, force: true });
   }
