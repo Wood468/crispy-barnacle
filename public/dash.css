@@ -2338,5 +2338,5 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .evc.cmp:has(.evc-banner){grid-template-columns:minmax(0,1fr)}
 .evc.cmp > .evc-art:has(.evc-banner){grid-column:1/-1;width:100%;min-width:0;max-width:none;align-items:stretch}
 .evc.cmp > .evc-art:has(.evc-banner) ~ .evc-main{grid-column:1/-1}
-.evc-banner{display:block;width:100%;aspect-ratio:16/7;overflow:hidden;border-radius:var(--radius-md);background:var(--color-surface)}
-.evc-banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.evc-banner{display:block;width:100%;aspect-ratio:2/1;overflow:hidden;border-radius:var(--radius-md);background:var(--color-surface)}
+.evc-banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 10%}

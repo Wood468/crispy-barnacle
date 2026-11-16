@@ -620,7 +620,7 @@
   function bannerArt(ev) {
     if (ev.kind === 'raid' || ev.kind === 'max' || hasFeatMon(ev) || !window.GOTODAY || !GOTODAY.eventBanner) return '';
     var a = GOTODAY.eventBanner(ev);
-    return a ? '<span class="evc-banner"><img alt="" src="' + esc(a.src) + '" width="320" height="140" decoding="async" loading="lazy" data-err="prm" data-art-source="' + esc(a.provenance.source) + '" data-art-verified="' + esc(a.provenance.verifiedFor) + '"></span>' : '';
+    return a ? '<span class="evc-banner"><img alt="" src="' + esc(a.src) + '" width="320" height="160" decoding="async" loading="lazy" data-err="prm" data-art-source="' + esc(a.provenance.source) + '" data-art-verified="' + esc(a.provenance.verifiedFor) + '"></span>' : '';
   }
   function scheduleArt(ev) { return bannerArt(ev) || featArts(ev, 3); }
   /* A card with no Pokémon or special art still gets a picture: the event's kind icon straight away, upgraded to the event page's own banner when it has one. */
@@ -963,11 +963,14 @@
     }
     if (typeSel === 'soon') { // whatever week is shown, this is about the next 24 hours: what is on now, then what pays out next
       var tn = t.getTime();
-      var sn = EV.filter(function (e) { return !isHidden(e.id) && !(kindHidden(e.kind)) && startsSoon(e); }).map(function (e) { return { at: e.start.getTime(), live: phase(e, t) === 'live', html: card(e) }; });
+      var sn = EV.filter(function (e) { return !isHidden(e.id) && !(kindHidden(e.kind)) && startsSoon(e); }).map(function (e) { return { at: e.start.getTime(), live: phase(e, t) === 'live', ev: e, html: card(e) }; });
       regList().filter(function (e) { return e.start <= t && e.end > t; }).forEach(function (e) { sn.push({ at: e.start.getTime(), live: true, html: agendaRow(e, true) }); });
       if (!kindHidden('person')) VENUE.forEach(function (v) { if (venueLive(v, tn) || venueUp(v, tn)) sn.push({ at: v.ms, live: venueLive(v, tn), html: venueCard(v, venueLive(v, tn)) }); });
       sn.sort(function (a, b) { return a.at - b.at; });
       var lv = sn.filter(function (x) { return x.live; }), up = sn.filter(function (x) { return !x.live; });
+      /* Live events follow the Today order (larger first); in-person rows and venue cards stay after them in start order. */
+      var lvEv = lv.filter(function (x) { return x.ev; }), lvRest = lv.filter(function (x) { return !x.ev; });
+      lv = liveBySize(lvEv.map(function (x) { return x.ev; })).map(function (e) { return lvEv.filter(function (x) { return x.ev === e; })[0]; }).concat(lvRest);
       html = (lv.length ? '<h2 class="sec2">Happening now</h2>' + lv.map(function (x) { return x.html; }).join('') : '') + (up.length ? '<h2 class="sec2 dh">Starting in the next 24 hours</h2>' + up.map(function (x) { return x.html; }).join('') : '');
       paint(html || '<p class="empty">Nothing starts in the next 24 hours.</p>'); return;
     }
@@ -986,7 +989,7 @@
     all.sort(function (a, b) { return a.start - b.start; });
     var live = weekOff === 0 ? all.filter(function (e) { return phase(e, t) === 'live'; }) : [];
     var regionalLive = weekOff === 0 ? regList().filter(function (e) { return e.start <= t && e.end > t; }) : [];
-    var liveShort = live.filter(function (e) { return !e.long; });
+    var liveShort = liveBySize(live.filter(function (e) { return !e.long; }));
     var liveLong = live.filter(function (e) { return e.long; });
     if (liveShort.length || regionalLive.length) html += '<h2 class="sec2">Happening now</h2>' + liveShort.map(function (e) { return card(e); }).join('') + regionalLive.map(function (e) { return agendaRow(e, true); }).join('');
     if (liveLong.length) html += '<details class="dd" style="margin-top:10px"><summary>Long-running <span class="cnt">' + liveLong.length + '</span></summary><div class="body">' + liveLong.map(function (e) { return card(e, { compact: true }); }).join('') + '</div></details>';
@@ -1007,6 +1010,9 @@
     if (!html) html = weekEmptyHtml();
     paint(html);
   }
+
+  /* The "Happening now" order on Today (today-logic.js happeningNowSort), reused so Schedule lists the same events in the same order. */
+  function liveBySize(list) { var L = window.GOTODAYLOGIC; return L && L.happeningNowSort ? L.happeningNowSort(list) : list; }
 
   /* ---------- Calendar: month grid, plus a compact Day / Week / Month list, with worldwide in-person events ---------- */
   var REG = [], regSel = 'all', scopeSel = 'month', REGCOL = '#2bb3a3';
@@ -2597,7 +2603,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261118b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261116a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261113ui761'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261122a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261116a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261113ui761'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

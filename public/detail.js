@@ -360,6 +360,10 @@
     name = String(name || '');
     if (/\brare candy xl\b/i.test(name)) return { kind: 'rare-candy-xl', text: 'XL' };
     if (/\brare candy\b/i.test(name)) return { kind: 'rare-candy', text: 'RC' };
+    /* No approved picture exists for these (the only berries in /ico/i are Silver Pinap and Golden Razz, the only candy is the generic bonus icon),
+       so draw a plainly generic shape instead of guessing a wrong item picture. Species candy (Eternatus Candy) shows the candy shape, not the species. */
+    if (/\bcandy( xl)?\b/i.test(name)) return { kind: 'candy', svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" focusable="false"><ellipse cx="12" cy="12" rx="5" ry="4.2" fill="currentColor" fill-opacity=".25"/><path d="M7 12 2.8 8.6v6.8L7 12zM17 12l4.2-3.4v6.8L17 12z"/></svg>' };
+    if (/\b(berry|pinap|razz|nanab|bluk|wepar|cornn|pomeg)\b/i.test(name)) return { kind: 'berry', svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" focusable="false"><circle cx="12" cy="14" r="6.2" fill="currentColor" fill-opacity=".25"/><path d="M12 7.8c0-2 1-3.4 3-4M12 7.8c-.4-1.6-1.8-2.4-3.6-2.4"/></svg>' };
     return null;
   }
   function researchReward(item, ev) {
@@ -372,7 +376,7 @@
     }
     var icon = itemIcon(item.name);
     var glyph = icon ? null : researchItemGlyph(item.name);
-    var fallback = glyph ? '<span class="ue-reward-category" data-item-glyph="' + glyph.kind + '" aria-hidden="true">' + glyph.text + '</span>' : '<i class="ue-reward-dot"></i>';
+    var fallback = glyph ? '<span class="ue-reward-category" data-item-glyph="' + glyph.kind + '" aria-hidden="true">' + (glyph.svg || glyph.text) + '</span>' : '<i class="ue-reward-dot"></i>';
     return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : fallback) + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '\u00d7 ' : '') + esc(item.name) + '</b>' + shiny + '</span></div>';
   }
   /* Seasons and monthly GO Passes: their own layout, in sections with icons. Curated notes come from season.json; rank rows and prices from the compared write-ups. */
