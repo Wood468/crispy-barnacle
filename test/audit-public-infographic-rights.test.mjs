@@ -146,3 +146,67 @@ test('current repository public feeds can be audited offline without logging sou
   assert.equal(report.totals.explicitlyAttributedG47ixReferences + report.totals.namespaceOnlyReferences, report.publicG47ixReferences);
   assert.doesNotMatch(JSON.stringify(report), /discord\.com\/channels\/|cdn\.discordapp\.com|\/infographics\/g47ix\/discord-/i);
 });
+
+
+test('next weekly publisher selection flags pending replacement before public/weekly.json changes', () => {
+  const oldImage = path('old-week');
+  const nextImage = path('next-week');
+  const result = audit({
+    weekly: { items: [{ kind: 'week', image: oldImage }] },
+    registry: registry(
+      { stagedPath: oldImage, overview: 'week', creator: 'G47IX', decision: '' },
+      { stagedPath: nextImage, reviewStatus: 'weekly', decision: 'pending', creator: '' }),
+    projectedWeekly: { items: [{ kind: 'week', image: nextImage }] },
+  });
+  assert.equal(result.totals.pendingWeeklyReferences, 0, 'currently committed owner-selected feed is unchanged');
+  assert.equal(result.totals.projectedWeeklyChanges, 1);
+  assert.equal(result.totals.projectedPendingWeeklyPromotions, 1);
+  assert.equal(result.totals.projectedUnattributedWeeklyPromotions, 1);
+  assert.equal(result.totals.weeklyReferences, 1, 'projection does not count as public yet');
+  assert.equal(result.publicG47ixReferences, 1);
+});
+
+test('unchanged projected weekly and owner-selected replacements do not false-positive approval risk', () => {
+  const current = { kind: 'week', image: path('old') };
+  const newer = { kind: 'week', image: path('new') };
+  const candidates = registry(
+    { stagedPath: current.image, overview: 'week', creator: 'G47IX', decision: '' },
+    { stagedPath: newer.image, overview: 'week', creator: 'G47IX', decision: '' },
+  );
+  const shared = { weekly: { items: [current] }, registry: candidates };
+  let a = audit({ ...shared, projectedWeekly: { items: [current] } });
+  assert.equal(a.totals.projectedWeeklyChanges, 0);
+  a = audit({ ...shared, projectedWeekly: { items: [newer] } });
+  assert.equal(a.totals.projectedWeeklyChanges, 1);
+  assert.equal(a.totals.projectedPendingWeeklyPromotions, 0);
+  assert.equal(a.totals.projectedUnattributedWeeklyPromotions, 0);
+});
+
+test('the real publisher projection reports a pending weekly candidate without publishing it', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'gofn-audit-weekly-'));
+  try {
+    mkdirSync(join(temp, 'public'));
+    mkdirSync(join(temp, 'data'));
+    const write = (p, value) => writeFileSync(join(temp, p), JSON.stringify(value));
+    const now = Date.now();
+    const old = path('old'), newer = path('new');
+    const earlier = new Date(now - 8 * 86400000).toISOString();
+    const recent = new Date(now - 3600000).toISOString();
+    write('public/event-info.json', { events: {} });
+    write('public/weekly.json', { items: [{ kind: 'week', image: old }] });
+    write('public/infographic-queue.json', { items: [] });
+    write('data/g47ix-infographics-review.json', { candidates: [
+      { id: 'old', title: 'GO Weekly old', stagedPath: old, overview: 'week', publishedAt: earlier, decision: '' },
+      { id: 'next', title: 'GO Weekly newer', stagedPath: newer, publishedAt: recent, decision: 'pending', reviewStatus: 'weekly' },
+    ] });
+    const { report, exitCode } = runAudit(temp);
+    assert.equal(exitCode, 0);
+    assert.equal(report.totals.weeklyReferences, 1);
+    assert.equal(report.totals.projectedWeeklyChanges, 1);
+    assert.equal(report.totals.projectedPendingWeeklyPromotions, 1);
+    assert.equal(report.totals.projectedUnattributedWeeklyPromotions, 1);
+    assert.doesNotMatch(JSON.stringify(report), /old|next|\/infographics\/g47ix\//, 'no private candidate IDs leak');
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
