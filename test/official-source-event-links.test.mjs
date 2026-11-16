@@ -15,7 +15,7 @@ test('exact official page from curated global event links to one canonical ID',(
  const {byEvent,report}=link(events,new Map([[short,facets(official)]]));
  assert.equal(report.linkedPages,1);
  assert.equal(byEvent.get('wag')[0].sourceId,'official');
- assert.equal(byEvent.get('wag')[0].sourceUrl,short);
+ assert.equal(byEvent.get('wag')[0].sourceUrl,official);// provenance equals facets.sourceUrl
  assert.equal(report.ambiguousPages,0);
  assert.equal(report.publication,'audit-only');
  assert.ok(!byEvent.has('unrelated'));
@@ -113,4 +113,81 @@ test('conflicting duplicate official claims remain ambiguous independent of orde
   assert.equal(report.linkedPages,0);
   assert.equal(byEvent.size,0);
  }
+});
+
+// --- Review hardening: look-alike events and contract compatibility ---------
+const gp='https://pokemongo.com/news/';
+test('look-alike events (region variants, ended vs current, Max Monday vs Community Day) never inherit a page',()=>{
+ const page=gp+'go-wild-area-global-2026';
+ const events=[
+  {id:'wag-mx',t:'GO Wild Area: Global',start:'2026-11-14',sourceUrl:gp+'go-wild-area-mexico-city-2026'},
+  {id:'wag-ended',t:'GO Wild Area: Global',start:'2025-11-14',ended:true},
+  {id:'wag-nolink',t:'GO Wild Area: Global',start:'2026-11-14'},
+  {id:'max-monday',t:'Max Monday',start:'2026-11-16'},
+  {id:'cd',t:'Community Day',start:'2026-11-16',link:'https://leekduck.com/events/community-day/'},
+  {id:'wag',t:'GO Wild Area: Global',start:'2026-11-14',sourceUrl:page}
+ ];
+ const {byEvent,report}=link(events,new Map([[page,facets(page)]]));
+ assert.deepEqual([...byEvent.keys()],['wag']);
+ assert.equal(report.linkedPages,1);
+ // Same page with NO exact owner: nothing links regardless of identical titles/dates.
+ const none=link(events.filter(e=>e.id!=='wag'),new Map([[page,facets(page)]]));
+ assert.equal(none.byEvent.size,0);
+ assert.equal(none.report.unlinkedPages,1);
+});
+test('ended and current events both claiming one page stay blocked',()=>{
+ const page=gp+'go-pass-november-2026';
+ const {byEvent,report}=link([{id:'old',ended:true,sourceUrl:page},{id:'new',link:page}],new Map([[page,facets(page)]]));
+ assert.equal(byEvent.size,0);
+ assert.equal(report.ambiguousPages,1);
+});
+test('region variant and localized paths are different pages, never aliases',()=>{
+ const events=[{id:'wag',sourceUrl:'https://pokemongo.com/gowildarea/global'}];
+ for(const url of ['https://pokemongo.com/gowildarea/mexico-city','https://pokemongo.com/en-gb/gowildarea/global',
+   'https://pokemongo.com/es/gowildarea/global','https://pokemongo.com/gowildarea/global/extra/path']){
+  const {byEvent}=link(events,new Map([[url,facets(url)]]));
+  assert.equal(byEvent.size,0,url);
+ }
+});
+test('dot segments, backslashes and padded URLs do not normalise into an exact owner',()=>{
+ const events=[{id:'wag',sourceUrl:'https://pokemongo.com/gowildarea/global'}];
+ for(const url of ['https://pokemongo.com/news/../gowildarea/global',' https://pokemongo.com/gowildarea/global',
+   'https://pokemongo.com/gowildarea\\global','https://pokemongo.com/gowildarea/global ']){
+  const {byEvent,report}=link(events,new Map([[url,facets(url)]]));
+  assert.equal(byEvent.size,0,JSON.stringify(url));
+  assert.equal(report.rejectedPages,1,JSON.stringify(url));
+ }
+ // an event merely carrying a padded/dot-segment URL does not own the page either
+ for(const owner of ['https://pokemongo.com/news/../gowildarea/global',' https://pokemongo.com/gowildarea/global']){
+  const {byEvent}=link([{id:'x',sourceUrl:owner}],new Map([[official,facets(official)]]));
+  assert.equal(byEvent.size,0,JSON.stringify(owner));
+ }
+});
+test('events without a normalisable canonical ID are never link targets',()=>{
+ const {byEvent,report}=link([{id:'bad id!',sourceUrl:official},{id:'',sourceUrl:official}],new Map([[official,facets(official)]]));
+ assert.equal(byEvent.size,0);
+ assert.equal(report.unlinkedPages,1);
+});
+test('linked records satisfy normalizeEventSourceFacets provenance even for variant keys',async()=>{
+ const {normalizeEventSourceFacets}=await import('../scripts/importer/source-facets-contract.mjs');
+ const f={...facets(official),benefits:[{label:'Up to six free Raid Passes',kind:'raid-passes',access:'ticket',
+   source:{url:official,section:'Ticket bonuses'}}]};
+ for(const key of [official,short,'https://www.pokemongo.com/gowildarea/global/']){
+  const {byEvent}=link([{id:'wag',sourceUrl:official}],new Map([[key,f]]));
+  const out=normalizeEventSourceFacets('wag',byEvent.get('wag'));
+  assert.equal(out.benefits.length,1,key);
+  assert.deepEqual(out.warnings||[],[],key);
+ }
+});
+test('duplicate page records are chosen deterministically regardless of Map order',()=>{
+ const a=[[official,facets(official)],[short,facets(official)]];
+ const r1=link([{id:'wag',sourceUrl:official}],new Map(a)).byEvent.get('wag')[0].sourceUrl;
+ const r2=link([{id:'wag',sourceUrl:official}],new Map(a.slice().reverse())).byEvent.get('wag')[0].sourceUrl;
+ assert.equal(r1,r2);
+});
+test('linking is read-only: frozen events and facets are never mutated',()=>{
+ const deep=o=>{if(o&&typeof o==='object'){Object.values(o).forEach(deep);Object.freeze(o);}return o;};
+ const events=deep([{id:'wag',sourceUrl:official,sources:[{id:'official',url:official}]}]);
+ const map=new Map([[official,deep(facets(official))]]);
+ assert.equal(link(events,map).report.linkedPages,1);
 });
