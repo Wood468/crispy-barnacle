@@ -33,6 +33,28 @@
       "processing": "Owner-supplied 206x241 webp resized to 109x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
       "provenance": "supplied by owner (in-game picture; source page not recorded); Pokémon artwork belongs to its owners",
       "reviewed": "Viewed by the implementer: yellow pineapple-shaped berry with wavy lines and green leaves"
+    },
+    {
+      "path": "public/ico/i/item-bag.webp",
+      "label": "Item Bag",
+      "sha256": "876e09e73ad7a6a40b922d2d7cd67f6d6a833b01446003923d5b3ec9c42485ae",
+      "bytes": 6788,
+      "width": 108,
+      "height": 128,
+      "processing": "Owner-supplied 191x227 webp resized to 108x128 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (in-game picture; source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: light-blue backpack with a Poké Ball logo and green and yellow stripes"
+    },
+    {
+      "path": "public/ico/i/pokemon-storage.webp",
+      "label": "Pokémon Storage",
+      "sha256": "483df1bfa9ad7e598f5fc5e94ef042647cd399262364512d863187d0f1eb71ce",
+      "bytes": 5446,
+      "width": 128,
+      "height": 82,
+      "processing": "Owner-supplied 256x163 webp resized to 128x82 (Lanczos, aspect kept), re-encoded as webp quality 88",
+      "provenance": "supplied by owner (in-game picture; source page not recorded); Pokémon artwork belongs to its owners",
+      "reviewed": "Viewed by the implementer: flat device with a Pikachu outline on its screen and a green button"
     }
   ]
 }
