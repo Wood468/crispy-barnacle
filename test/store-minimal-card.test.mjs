@@ -58,7 +58,9 @@ test('exact local item art renders as a same-origin lazy image; no image slot ot
   const potion = named(cards, 'Max Potions x10');
   assert.match(potion, /<img class="sp-i" src="\/ico\/i\/max-potion\.webp" alt="Max Potions x10" width="40" height="40" loading="lazy" decoding="async">/);
   assert.match(named(cards, 'Raid Pass'), /<img class="sp-i" src="\/ico\/g\/raidpass\.webp" alt="Raid Pass"/);
-  for (const name of ['Lucky Egg x8', '110 PokéCoins', 'Remote Raid Pass x2', 'Future Unmapped Item', 'Elite Charged TM Box']) {
+  assert.match(named(cards, 'Lucky Egg x8'), /<img class="sp-i" src="\/ico\/i\/lucky-egg\.webp" alt=""/);
+  assert.match(named(cards, 'Remote Raid Pass x2'), /src="\/ico\/i\/remote-raid-pass\.webp" alt=""/);
+  for (const name of ['110 PokéCoins', 'Future Unmapped Item', 'Elite Charged TM Box']) {
     const card = named(cards, name);
     assert.ok(card, name);
     assert.doesNotMatch(card, /<img/, 'no exact image, so no image slot: ' + name);

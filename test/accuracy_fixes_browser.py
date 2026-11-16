@@ -130,16 +130,15 @@ with sync_playwright() as p:
         assert overflow['dialog'] <= 2 and overflow['document'] <= 2, (width, overflow)
         print(f'PASS Into the Wild 7/7 Field Research DOM/rewards/CP at {width}px, overflow={overflow}')
         # Source-backed Into the Wild task "Win a raid" lists 2× Rare Candy.
-        # The approved asset list has no exact Rare Candy item picture, so the
-        # readable RC glyph must appear, not a fake regular-Candy image/dot.
+        # The owner-supplied exact Rare Candy picture is shown (empty alt, decorative), not a glyph or dot.
         rare = page.locator('#evd-s-research .research-reward-item', has_text='Rare Candy').first
         assert rare.count() == 1 and rare.is_visible(), (width, 'Rare Candy research reward hidden')
         assert '2× Rare Candy' in rare.inner_text(), (width, rare.inner_text())
-        symbol = rare.locator('.ue-reward-category[data-item-glyph="rare-candy"]')
-        assert symbol.count() == 1 and symbol.inner_text() == 'RC', (width, rare.inner_html())
-        box = symbol.bounding_box()
-        assert box and box['width'] >= 34 and box['height'] >= 34, (width, box)
-        assert rare.locator('.ue-reward-item-icon img, .ue-reward-dot').count() == 0, (width, 'ambiguous item art/dot')
+        img = rare.locator('.ue-reward-item-icon img[src="/ico/i/rare-candy.webp"]')
+        assert img.count() == 1 and img.is_visible(), (width, rare.inner_html())
+        box = img.bounding_box()
+        assert box and box['width'] >= 20 and box['height'] >= 20, (width, box)
+        assert rare.locator('.ue-reward-category, .ue-reward-dot').count() == 0, (width, 'glyph/dot beside exact art')
         page.locator('#evd #evd-h-research').scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
         shot(page, f'accuracy-research-count-{width}')

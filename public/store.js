@@ -18,7 +18,32 @@
     /* Owner-supplied pictures (docs/asset-inventory/item-icons.json). Exact store names only: 'Item Bag' / 'Pokémon Storage', optionally with a '+N' upgrade suffix.
        The third entry is the alt text: empty, the name is printed beside the picture. */
     [/^item bag(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/item-bag.webp', ''],
-    [/^pok[eé]mon storage(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/pokemon-storage.webp', '']
+    [/^pok[eé]mon storage(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/pokemon-storage.webp', ''],
+    /* Owner-supplied pictures (docs/asset-inventory/item-icons.json). Exact names only, optional '×N'/'xN' quantity suffix; no bundles, packs or other balls. */
+    [/^star pieces?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/star-piece.webp', ''],
+    [/^pok[eé] balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/poke-ball.webp', ''],
+    [/^great balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/great-ball.webp', ''],
+    [/^ultra balls?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/ultra-ball.webp', ''],
+    /* Owner-supplied pictures, exact names only. Rare Candy and Rare Candy XL are separate pictures and never match each other or species candy. */
+    [/^rare candy(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/rare-candy.webp', ''],
+    [/^rare candy xl(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/rare-candy-xl.webp', ''],
+    [/^lucky eggs?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/lucky-egg.webp', ''],
+    [/^egg incubators?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/egg-incubator.webp', ''],
+    [/^super incubators?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/super-incubator.webp', ''],
+    /* Owner-supplied pictures, exact names only: plain Revive/Potion never match Max Revive/Max Potion (which keep their own icons) and vice versa. */
+    [/^nanab berr(?:y|ies)(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/nanab-berry.webp', ''],
+    [/^max mushrooms?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/max-mushroom.webp', ''],
+    [/^revives?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/revive.webp', ''],
+    [/^potions?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/potion.webp', ''],
+    [/^hyper potions?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/hyper-potion.webp', ''],
+    [/^super potions?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/super-potion.webp', ''],
+    [/^remote raid pass(?:es)?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/remote-raid-pass.webp', ''],
+    /* Owner-supplied pictures, exact names only (no leading quantity, no combined 'A + B' labels, no other Lure Module kinds). */
+    [/^max particle packs?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/max-particle-pack.webp', ''],
+    [/^max particles(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/max-particle-pack.webp', ''],
+    [/^lure modules?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/lure-module.webp', ''],
+    [/^link charges?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/link-charge.webp', ''],
+    [/^premium battle passe?s?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/premium-battle-pass.webp', '']
   ];
   /* Exact local art only (same-origin /ico/**). With no exact asset there is no image slot at all:
      never a letter tile, a glyph, or a picture borrowed from another item. */
