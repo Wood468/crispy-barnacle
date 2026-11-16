@@ -243,6 +243,13 @@
     GOEventRegistry.events().forEach(function(model){
       var matching=EV.find(function(e){return e.id===model.eventId||e.id==='cur:'+model.eventId||(model.aliases||[]).indexOf(e.id)>=0||(e.aliasIds||[]).indexOf(model.eventId)>=0;});
       /* The same event shows the same banner on Today as in Details: a curated card without art takes the catalogue record's verified image. */
+      /* The feed's own image can be missing or fail the exact-event check while the catalogue holds the official banner (the catalogue id may only be reachable as "cur:<id>" through aliasIds). Offer the catalogue image when the current one does not verify. */
+      var imgHost=matching||EV.find(function(e){return (e.aliasIds||[]).indexOf('cur:'+model.eventId)>=0;});
+      if(imgHost&&model.image&&imgHost.img&&window.GOTODAY&&GOTODAY.verifiedBanner){
+        var curPage=imgHost.artPageUrl||imgHost.link||'',srcs=(model.sources||[]).map(function(s){return s&&s.url;}).filter(Boolean);
+        var modelPage=(model.internalValidation&&model.internalValidation.artSourceUrl)||srcs.filter(function(u){return /^https:\/\/(?:www\.)?pokemongo\.com\//i.test(u);})[0]||srcs[0]||'';
+        if(!GOTODAY.verifiedBanner(imgHost,imgHost.img,curPage)&&GOTODAY.verifiedBanner(imgHost,model.image,modelPage)){imgHost.img=model.image;imgHost.artPageUrl=modelPage;}
+      }
       if(matching&&!matching.img&&model.image){matching.img=model.image;if(!matching.artPageUrl)matching.artPageUrl=(model.internalValidation&&model.internalValidation.artSourceUrl)||((model.sources||[]).map(function(s){return s&&s.url;}).filter(Boolean)[0])||'';}
       if(matching&&model.schedule){
         var published=GOEventRegistry.display(model);
