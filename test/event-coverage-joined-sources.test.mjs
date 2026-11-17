@@ -16,7 +16,9 @@ test('declared exact source IDs supply source-backed coverage without a canonica
   assert.equal(e.checks.sourceEncounters,true);
   assert.equal(e.checks.sourceTimeDetails,true);
   assert.deepEqual(e.sources,['https://example.org/one']);
-  assert.equal(report.researchReviewCount,0);
+  assert.equal(report.researchReviewCount,1);
+  assert.equal(report.researchReview[0].id,'source:one');
+  assert.ok(!report.researchReview.some(item=>item.id==='event'), 'joined structured tasks must satisfy the canonical event');
   assert.equal(report.sourceJoinReviewCount,0);
 });
 test('missing aliases are review-only and cannot invent source coverage',()=>{
