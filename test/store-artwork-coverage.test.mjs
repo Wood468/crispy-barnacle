@@ -8,7 +8,7 @@ import {auditStoreArtwork,remoteAsset,iconPaths,validateIcon,snapshotArtworkRows
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const store=readFileSync(resolve(root,'public/store.js'),'utf8');
-const log=JSON.parse(readFileSync(resolve(root,'public/store-log.json'),'utf8'));
+const log=JSON.parse(readFileSync(resolve(root,'test/fixtures/store-artwork-reused.json'),'utf8'));
 
 test('only exact existing WebP icons are accepted, not misleading item substitutions',()=>{
   const paths=iconPaths(store);
