@@ -1167,6 +1167,8 @@ async function tgInbox(request, env) {
 const INGEST_MAX_BYTES = 256 * 1024, INGEST_MAX_ITEMS = 400, INGEST_MIN_GAP_MS = 5 * 60 * 1000;
 const INGEST_PAST_MS = 15 * 60 * 1000, INGEST_FUTURE_MS = 5 * 60 * 1000;
 const INGEST_TABLE = "CREATE TABLE IF NOT EXISTS store_ingest (id INTEGER PRIMARY KEY CHECK(id = 1), received INTEGER, fetched TEXT, body TEXT)";
+const INGEST_IMG_ORIGIN = "https://assets.pgo.webstore.nianticlabs.com"; // the only Store image host already in IMAGE_CSP_HOSTS
+const ingestImg = u => { if (!ingestStr(u, 600)) return false; try { const x = new URL(u); return x.origin === INGEST_IMG_ORIGIN && !x.username && !x.password; } catch { return false; } };
 const ingestStr = (v, max) => typeof v === "string" && v.length <= max;
 // Keep only the known snapshot fields, bounded; anything else is dropped. Returns null when the shape is unacceptable.
 function cleanIngest(v) {
@@ -1179,7 +1181,8 @@ function cleanIngest(v) {
     const o = { name: i.name, section: i.section };
     if (i.price != null) o.price = i.price;
     for (const k of ["tag", "limit", "left", "href"]) { if (i[k] == null) continue; if (!ingestStr(i[k], 300)) return null; o[k] = i[k]; }
-    if (i.imgs != null) { if (!Array.isArray(i.imgs) || i.imgs.length > 6 || !i.imgs.every(u => ingestStr(u, 600))) return null; o.imgs = i.imgs; }
+    if (o.href && !/^\/purchase\/[\w\-/?=&%.]*$/.test(o.href)) return null; // a relative store path only: no host, scheme or "//"
+    if (i.imgs != null) { if (!Array.isArray(i.imgs) || i.imgs.length > 6 || !i.imgs.every(ingestImg)) return null; o.imgs = i.imgs; }
     items.push(o);
   }
   const e = v.completeness; let completeness;
@@ -1195,16 +1198,21 @@ async function storeIngest(request, env) {
   if (!env.DB || typeof env.STORE_INGEST_KEY !== "string" || env.STORE_INGEST_KEY.length < 32) return json({ error: "Not switched on." }, 404);
   const method = request.method;
   if (method !== "GET" && method !== "POST") return json({ error: "Method not allowed." }, 405);
-  await env.DB.prepare(INGEST_TABLE).run();
-  if (method === "GET") { // public store data, same as store-current-snapshot.json
-    const row = await env.DB.prepare("SELECT received, body FROM store_ingest WHERE id = 1").first();
+  if (method === "GET") { // public storefront data (raw snapshot, so it includes standalone SKUs the filtered public file omits)
+    const read = () => env.DB.prepare("SELECT received, body FROM store_ingest WHERE id = 1").first();
+    let row;
+    try { row = await read(); } catch (e) {
+      if (!/no such table/i.test(String(e && e.message))) throw e;
+      await env.DB.prepare(INGEST_TABLE).run(); row = await read();
+    }
     if (!row) return json({ error: "Not found." }, 404);
     // x-store-received lets the watcher tell "the reader stopped uploading" from "the store did not change".
-    return new Response(row.body, { headers: { "content-type": "application/json", "cache-control": "no-store", "x-store-received": new Date(row.received).toISOString() } });
+    return new Response(row.body, { headers: { "content-type": "application/json", "cache-control": "public, max-age=60", "x-store-received": new Date(row.received).toISOString() } });
   }
   const given = String(request.headers.get("x-ingest-key") || "");
   if (!given || !(await same(given, env.STORE_INGEST_KEY))) { await ensure(env); return authFailure(request, env, "key"); }
   if (!/^application\/json\b/i.test(request.headers.get("content-type") || "")) return json({ error: "Bad request." }, 415);
+  await env.DB.prepare(INGEST_TABLE).run();
   const now = Date.now();
   const prev = await env.DB.prepare("SELECT received, fetched FROM store_ingest WHERE id = 1").first();
   if (prev && prev.received > now - INGEST_MIN_GAP_MS) return json({ error: "Too soon." }, 429);
