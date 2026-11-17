@@ -38,10 +38,20 @@ export function safeLinkLabel(raw) {
 async function alive(url) {
   for (const method of ["HEAD", "GET"]) {
     try {
-      const r = await fetch(url, { method, redirect: "follow", headers: { "user-agent": "Mozilla/5.0 (go-field-notes link check)" }, signal: AbortSignal.timeout(20000) });
+      let target = url, r;
+      for (let hop = 0; hop <= 5; hop++) {
+        r = await fetch(target, { method, redirect: "manual", headers: { "user-agent": "Mozilla/5.0 (go-field-notes link check)" }, signal: AbortSignal.timeout(20000) });
+        if (![301, 302, 303, 307, 308].includes(r.status)) break;
+        const location = r.headers.get("location");
+        if (!location) return "redirect without location";
+        const next = publicSourceUrl(new URL(location, target).href);
+        if (!next) return "redirect to excluded or unsafe URL";
+        target = next;
+        if (hop === 5) return "too many redirects";
+      }
       if (r.ok) return null;
       if (method === "GET") return "HTTP " + r.status;
-    } catch (e) { if (method === "GET") return String(e && e.message || e).slice(0, 80); }
+    } catch { if (method === "GET") return "network error"; }
   }
   return null;
 }
