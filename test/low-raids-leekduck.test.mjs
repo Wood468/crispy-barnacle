@@ -39,7 +39,7 @@ test("parse: HTML page with the same record shape", () => {
 
 test("match: only when the 5-star set is exactly the rotation's, and the rotation has not ended", () => {
   assert.equal(matchRotation(ROT, ["Darkrai", "Cresselia"], NOW).s, "2026-11-16T06:00");
-  assert.equal(matchRotation(ROT, ["Deoxys (Speed Forme)", "Deoxys (Attack Forme)"], NOW).s, "2026-11-25T06:00");
+  assert.equal(matchRotation(ROT, ["Deoxys (Speed Forme)", "Deoxys (Attack Forme)"], NOW), null, "future source window not active");
   assert.equal(matchRotation(ROT, ["Cresselia"], NOW), null, "a subset is not a match");
   assert.equal(matchRotation(ROT, ["Cresselia", "Darkrai", "Mewtwo"], NOW), null, "a superset is not a match");
   assert.equal(matchRotation(ROT, ["Crowned Sword Zacian", "Crowned Shield Zamazenta"], NOW), null, "ended rotation");
@@ -136,4 +136,16 @@ test("real public/data.json: the 16-24 Nov rotation can be filled by an exact-se
   assert.equal(r.wrote, true);
   const now = JSON.parse(readFileSync(f, "utf8")); delete now.rotation.find(x => x.s === target.s).low;
   assert.deepEqual(now, was);
+});
+
+test("current Leek Duck page never writes low-tier raids to a future same-boss rotation", async () => {
+  const future = { s: "2026-11-25T06:00", e: "2026-12-01T22:00", five: "Cresselia and Darkrai" };
+  assert.equal(matchRotation([future], ["Cresselia", "Darkrai"], NOW), null);
+  assert.equal(matchRotation([ROT[1], future], ["Cresselia", "Darkrai"], NOW), ROT[1],
+    "future duplicate does not make the active matching source ambiguous");
+  const f = dataFor([future]), before = readFileSync(f, "utf8");
+  const result = await leekDuckStage({ dataFile: f, html: page(week()), now: NOW });
+  assert.equal(result.wrote, false);
+  assert.equal(result.status, "skip");
+  assert.equal(readFileSync(f, "utf8"), before, "current source must not contaminate future roster");
 });
