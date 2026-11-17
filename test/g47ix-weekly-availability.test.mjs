@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -171,6 +171,30 @@ test('end-to-end CLI on complete R2 restore failure leaves committed weekly byte
       'no media: CLI throws before overwriting the last-good feed');
     assert.doesNotMatch(run.stderr, /\/infographics\/g47ix\/|discord\.com/,
       'failure message must not leak source URLs or media identifiers');
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('a symlinked file or parent directory cannot masquerade as locally restored weekly media', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'gofn-weekly-symlink-'));
+  try {
+    const publicRoot = join(temp, 'public');
+    mkdirSync(join(publicRoot, 'infographics', 'g47ix'), { recursive: true });
+    writeFileSync(join(temp, 'private.webp'), 'PRIVATE_NONEMPTY_BYTES');
+    symlinkSync(join(temp, 'private.webp'), join(publicRoot, 'infographics', 'g47ix', 'linked.webp'));
+    assert.equal(weeklyLocalAssetReady(media('linked'), publicRoot), false,
+      'file symlinks must not be treated as R2-restored public image bytes');
+
+    const other = join(temp, 'elsewhere');
+    mkdirSync(other);
+    writeFileSync(join(other, 'linked.webp'), 'OUTSIDE_BYTES');
+    const secondRoot = join(temp, 'separate-public');
+    mkdirSync(join(secondRoot, 'infographics'), { recursive: true });
+    symlinkSync(other, join(secondRoot, 'infographics', 'g47ix'), 'dir');
+    assert.equal(weeklyLocalAssetReady(media('linked'), secondRoot), false,
+      'a linked namespace parent must not escape the expected public asset tree');
+    assert.equal(weeklyLocalAssetReady(media('linked'), join(temp, 'missing')), false);
   } finally {
     rmSync(temp, { recursive: true, force: true });
   }
