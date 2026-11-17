@@ -29,3 +29,13 @@ test('valid source-derived raid-hour date still raises missing-curation issue',(
  const details={events:{x:{name:'Raid Hour',sources:[{url:'https://leekduck.com/events/raidhour20280229/'}]}}};
  assert.deepEqual(types(audit({raidHour:[]},details)),['source-raid-hour-not-curated']);
 });
+
+test('timestamp-based rotations retain legitimate gap diagnostics',()=>{
+ const r=audit({rotation:[{s:'2026-11-10T06:00',e:'2026-11-13T20:00',five:'A'},{s:'2026-11-16T06:00',e:'2026-11-20T20:00',five:'B'}]});
+ assert.deepEqual(r,[{type:'rotation-gap',from:'2026-11-13T20:00',to:'2026-11-16T06:00'}]);
+});
+test('invalid timestamp calendar days and clock times cannot form valid windows',()=>{
+ const r=audit({rotation:[{s:'2026-02-30T10:00',e:'2026-03-01T10:00',five:'A'},{s:'2026-04-01T25:00',e:'2026-04-02T10:00',five:'B'}]});
+ assert.equal(types(r).filter(x=>x==='invalid-window').length,2);
+ assert.ok(!types(r).includes('rotation-gap'));
+});
