@@ -4,7 +4,7 @@
 // Unsure candidates are left in the queue with their OCR text and reason. The workflow opens a pull request;
 // nothing reaches main without the owner merging it.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { writeFileSync, readFileSync, statSync } from "node:fs";
+import { writeFileSync, readFileSync, lstatSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -367,7 +367,12 @@ export function weeklyLocalAssetReady(stagedPath, root = "public") {
   const p = String(stagedPath || "");
   if (!/^\/infographics\/g47ix\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i.test(p)) return false;
   try {
-    const file = statSync(join(root, p.slice(1)));
+    // Reject links at every on-disk component: statSync follows symlinks
+    // and could mistake a linked outside file for restored public artwork.
+    if (!lstatSync(root).isDirectory() ||
+        !lstatSync(join(root, "infographics")).isDirectory() ||
+        !lstatSync(join(root, "infographics", "g47ix")).isDirectory()) return false;
+    const file = lstatSync(join(root, p.slice(1)));
     return file.isFile() && file.size > 0;
   } catch { return false; }
 }
