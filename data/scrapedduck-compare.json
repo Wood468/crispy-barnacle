@@ -1,13 +1,19 @@
 {
- "updated": "2026-11-16T19:36:48.340Z",
+ "updated": "2026-11-17T03:54:13.325Z",
  "state": "ok",
- "scrapedDuckEvents": 44,
+ "scrapedDuckEvents": 45,
  "missingHere": [
   {
    "name": "Raid Day",
    "type": "raid-day",
    "start": "2026-12-19T14:00:00.000",
    "link": "https://leekduck.com/events/raid-day-december-2026/"
+  },
+  {
+   "name": "Pokémon GO and Duolingo Timed Research",
+   "type": "timed-research",
+   "start": "2026-11-17T10:00:00.000",
+   "link": "https://leekduck.com/events/duolingo-timed-research-2026/"
   }
  ],
  "missingThere": [
@@ -70,11 +76,6 @@
    "id": "w-pokemon-go-x-esa-transinne",
    "name": "Pokémon GO x ESA: Transinne",
    "start": "2026-10-04"
-  },
-  {
-   "id": "w-mexicraneo-exhibit-paseo-de-la-reforma",
-   "name": "Mexicráneo Exhibit: Mexico City",
-   "start": "2026-10-17"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
