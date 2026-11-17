@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17T04:50:18.648Z",
+ "updated": "2026-11-17T21:04:15.971Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
@@ -10,9 +10,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/YUIF2HkGZlw3tWumDXClx0cVYphD-ugVYTs5VBU5-ccb5o-1UWVTy8NYqJboA-fVPrmtncsb7Ql_6eebA8I-YyxFtIHO2yIiMwmb5qlg3JA",
     "checkedFor": "GO Wild Area: Global",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -257,8 +257,7 @@
      {
       "text": "Trainers may even encounter Shiny mighty Pokémon, if they’re lucky! Using the event-exclusive GO Safari Ball when trying to capture these Pokémon will greatly improve your chance of success.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -353,8 +352,7 @@
      {
       "text": "During the event, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, Reshiram, Zekrom, Kyurem, and Gigantamax Duraludon will all have a chance to have a new Special Background!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -470,8 +468,7 @@
      {
       "text": "10:00 a.m. to 6:00 p.m. local time",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -508,64 +505,8 @@
    "conflicts": [],
    "gaps": [
     {
-     "field": "bonuses",
-     "missingFrom": [
-      "official",
-      "official",
-      "official"
-     ]
-    },
-    {
-     "field": "featured",
-     "missingFrom": [
-      "official",
-      "official",
-      "official"
-     ]
-    },
-    {
-     "field": "raids",
-     "missingFrom": [
-      "official",
-      "official",
-      "official"
-     ]
-    },
-    {
-     "field": "eggs",
-     "missingFrom": [
-      "official",
-      "official",
-      "official"
-     ]
-    },
-    {
-     "field": "research",
-     "missingFrom": [
-      "official",
-      "official",
-      "official"
-     ]
-    },
-    {
      "field": "shiny",
      "missingFrom": []
-    },
-    {
-     "field": "moves",
-     "missingFrom": [
-      "official",
-      "official",
-      "official"
-     ]
-    },
-    {
-     "field": "tickets",
-     "missingFrom": [
-      "official",
-      "official",
-      "official"
-     ]
     },
     {
      "field": "dates",
@@ -2633,9 +2574,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/2H2wVXVBCkoOjc8Swmtz67KAxNbWQMwkqSezJmyAOFnzlfervIkFR-rJJ6nZfqWtZmG4eXJwD7-Is2-TdjJXH2q2nAPFAk8lj7Lz_5TWtTYo",
     "checkedFor": "GO Pass: November",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3585,9 +3526,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
     "checkedFor": "GO Wild Area: Sendai",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -5974,9 +5915,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/xQzYXbxguNWaaSXG5thVM5x44Luvbb5Pi8rPlYSPIV6kePCzoS_5NWzlM0yzNGIVs1NzhXIPLcg2HKS0iuizGsHZUvSS_ZcemC5-i4My5yA",
     "checkedFor": "Into the Wild",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -6953,7 +6894,7 @@
    "name": "Minior Showers: Leonids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "hub",
@@ -7122,7 +7063,7 @@
    "name": "Orionids Meteor Shower: Minior Debut",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "hub",
@@ -7595,9 +7536,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/HyFWaQMZqtZNT3Sb3uFeHyWMBFI8bB_4hNQ2NLrpfBGrH1YijjIr1n0ZNC0YlNAZHPpfiWTq0zzgT9MRUFzlMoEjN4ENEm0AlnuJFZRA9CQ",
     "checkedFor": "Super Mega Raid Day",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -7610,6 +7551,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/clefable-super-mega-raid-day-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/super-mega-raid-day-november-2026/"
     }
    ],
    "fields": {
@@ -7832,14 +7779,36 @@
     {
      "field": "bonuses",
      "missingFrom": [
+      "leekduck",
       "leekduck"
      ]
     },
     {
+     "field": "featured",
+     "missingFrom": []
+    },
+    {
+     "field": "raids",
+     "missingFrom": []
+    },
+    {
      "field": "research",
      "missingFrom": [
+      "leekduck",
       "leekduck"
      ]
+    },
+    {
+     "field": "shiny",
+     "missingFrom": []
+    },
+    {
+     "field": "tickets",
+     "missingFrom": []
+    },
+    {
+     "field": "dates",
+     "missingFrom": []
     }
    ],
    "researchTasks": [],
@@ -7856,9 +7825,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/1ZxNwH9PkuqgUPjvwhCrCNSTSDktinzgCcLJEkm4tu41LlE_7OdyfM4GkR9qd9atoN_Tairx5bQ6IxBBOULlCO29cCM4qTuvsE4dm-RFup0",
     "checkedFor": "Dynamax Trails",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -7898,16 +7867,14 @@
      {
       "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
       "sources": [
-       "official",
-       "hub"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "More Power Spots than usual will be active.",
       "sources": [
-       "official",
-       "hub"
+       "official"
       ],
       "status": "official"
      },
@@ -7915,8 +7882,7 @@
       "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
       "sources": [
        "official",
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
       "status": "official"
      },
@@ -7956,31 +7922,9 @@
       "status": "official"
      },
      {
-      "text": "The event features the following bonuses:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Eternatus returns!",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Rank 15: 2× Catch Stardust",
       "sources": [
-       "official",
-       "hub"
+       "official"
       ],
       "status": "official"
      },
@@ -7994,8 +7938,7 @@
      {
       "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
       "sources": [
-       "official",
-       "hub"
+       "official"
       ],
       "status": "official"
      },
@@ -8019,8 +7962,7 @@
       "text": "You may encounter event-themed Pokémon in the wild, including any Pokémon* that has debuted in Dynamax Max Battles!",
       "sources": [
        "official",
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
       "status": "official"
      },
@@ -8106,8 +8048,7 @@
      {
       "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
       "sources": [
-       "official",
-       "hub"
+       "official"
       ],
       "status": "official"
      },
@@ -8146,13 +8087,6 @@
        "leekduck"
       ],
       "status": "single"
-     },
-     {
-      "text": "Expect more Power Spots active than usual, GO Pass and GO Pass Deluxe, themed wild encounters, and Max Battles galore! Here’s everything you need to know about the event.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
      }
     ],
     "eggs": [],
@@ -8175,42 +8109,37 @@
      {
       "text": "Power up Pokémon 8 times POSSIBLE REWARDS Magikarp Max CP 117 Min CP 99 Feebas Max CP 117 Min CP 99 ×3 Pinap Berry ×3",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Explore 1 km POSSIBLE REWARDS Eevee Max CP 459 Min CP 424 ×2000 Stardust ×2000",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Win a Max Battle POSSIBLE REWARDS Drampa Max CP 1249 Min CP 1191 Duraludon Max CP 1314 Min CP 1255 ×10 Eternatus Candy ×10 ×2000 Stardust ×2000",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Unlock a Max Move POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×5000 Stardust ×5000",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Make an Excellent Throw POSSIBLE REWARDS ×25 Eternatus Candy ×25 ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Power up Pokémon 10 times — 100 GO Points",
@@ -8232,13 +8161,6 @@
        "leekduck"
       ],
       "status": "single"
-     },
-     {
-      "text": "Catch 8 Pokémon | Bulbasaur Charmander Squirtle Grookey Scorbunny Sobble",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
      }
     ],
     "shiny": [],
@@ -8255,16 +8177,14 @@
      {
       "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
       "sources": [
-       "official",
-       "hub"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
       "sources": [
-       "official",
-       "hub"
+       "official"
       ],
       "status": "official"
      },
@@ -8286,26 +8206,23 @@
      {
       "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Complete Pass Tasks to rank up and earn the following rewards. Ranks 101 through 300 award Eternatus Candy, Eternatus Candy XL, and Stardust.",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Encounter Eternatus and Dynamax Pokémon, and earn Eternatus Candy!",
@@ -8325,13 +8242,6 @@
       "text": "Toxtricity (Low Key Form)",
       "sources": [
        "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From Monday, November 16, 2026, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time , the GO Pass and GO Pass Deluxe for Dynamax Trails will be available in Pokémon GO.",
-      "sources": [
-       "hub"
       ],
       "status": "single"
      },
@@ -9048,8 +8958,7 @@
       "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
       "sources": [
        "official",
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
       "status": "official"
      },
@@ -9218,23 +9127,6 @@
        "url": "https://leekduck.com/events/dynamax-trails-2026/"
       }
      ],
-     "rewardConflicts": [
-      {
-       "source": {
-        "id": "hub",
-        "name": "Pokémon GO Hub",
-        "trust": "community",
-        "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
-       },
-       "rewards": [
-        {
-         "type": "item",
-         "name": "Eternatus Candy 1 × Silver Pinap Berry",
-         "quantity": 10
-        }
-       ]
-      }
-     ],
      "status": "single",
      "eventId": "dyntrails",
      "eventName": "Dynamax Trails",
@@ -9316,23 +9208,6 @@
        "url": "https://leekduck.com/events/dynamax-trails-2026/"
       }
      ],
-     "rewardConflicts": [
-      {
-       "source": {
-        "id": "hub",
-        "name": "Pokémon GO Hub",
-        "trust": "community",
-        "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
-       },
-       "rewards": [
-        {
-         "type": "item",
-         "name": "Eternatus Candy 5000 × Stardust",
-         "quantity": 10
-        }
-       ]
-      }
-     ],
      "status": "single",
      "eventId": "dyntrails",
      "eventName": "Dynamax Trails",
@@ -9381,23 +9256,6 @@
        "name": "Leek Duck",
        "trust": "community",
        "url": "https://leekduck.com/events/dynamax-trails-2026/"
-      }
-     ],
-     "rewardConflicts": [
-      {
-       "source": {
-        "id": "hub",
-        "name": "Pokémon GO Hub",
-        "trust": "community",
-        "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
-       },
-       "rewards": [
-        {
-         "type": "item",
-         "name": "Eternatus Candy 2000 × Stardust Duraludon Drampa",
-         "quantity": 10
-        }
-       ]
       }
      ],
      "status": "single",
@@ -11542,9 +11400,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/t5O4uk87m4uBdjNiiMgMq9nKNOkWyt3lNxwPc4dEqi8nL2ORXDgmO91Dc8orIGjysTupi4Jfr9F1FQq5jp36L68z7XZlddd8Kq-CSJQJEVfk",
     "checkedFor": "November Community Day",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -11748,9 +11606,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/6P6KzIHu36YynVJ4Bn6-2y_98P8qbfr5VP6aBOsIC83pPQ6NifL2ZrIWrF12RCzi-yJzdpuVsboYspq5mfkvph2B5OJslcoYMaHnNM8ua8og",
     "checkedFor": "Super Mega Raid Day",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -11941,9 +11799,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/4QN-7EtDk7S7dxL9bKLbsUF7lbTaUTntnGzOG8qDk4xxOQFyY4dKt3tQQ2msv37JhacLDFrawLGXVAv_kv3tzE_kTXiIh_HbskFdKhNCHjlh",
     "checkedFor": "Halloween 2026, Part Two",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -12205,9 +12063,9 @@
     "imageUrl": "https://lh3.googleusercontent.com/_-kCe3YnQqLlPgLfqe6BZN6v8dIhuuhVzbOSgExE5XjKL__BcqBCbch1V2Z4fOEh18nYEX6O5rqBgWmNmU7kmvy92Yd2u8RBIxDbe79p3kU",
     "checkedFor": "Halloween 2026, Part One",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -12480,51 +12338,11 @@
    "encounters": [],
    "encounterConflicts": []
   },
-  "leekduck:max-mondays-2026-11-16": {
-   "name": "[Canceled] Max Monday",
-   "image": null,
-   "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/max-mondays-2026-11-16/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "There is no Max Monday on November 16, 2026. The Dynamax Trails event is happening instead, so there are no Max Monday-specific bonuses, such as the guaranteed Rare Candy XL.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": [],
-   "pokemon": [],
-   "encounters": [],
-   "encounterConflicts": []
-  },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12572,7 +12390,7 @@
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12671,7 +12489,7 @@
    "name": "Eternamax Eternatus Returns",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12761,9 +12579,9 @@
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-21-november-communityday2026/pawniard-november-cd-2026.jpg",
     "checkedFor": "Pawniard Community Day",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13069,7 +12887,7 @@
    "name": "Dynamax Espurr during Max Monday",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13152,7 +12970,7 @@
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13276,7 +13094,7 @@
    "name": "Mega Banette in Mega Raids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13367,7 +13185,7 @@
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13415,7 +13233,7 @@
    "name": "Noibat Spotlight Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13481,9 +13299,9 @@
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2",
     "checkedFor": "Twilight Wishes",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13991,7 +13809,7 @@
    "name": "Dynamax Cryogonal during Max Monday",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14079,9 +13897,9 @@
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-08-season-24-twilight-trails/season-24-twilight-trails.jpg",
     "checkedFor": "Twilight Trails",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14785,7 +14603,7 @@
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14854,7 +14672,7 @@
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15037,7 +14855,7 @@
    "name": "Mega Metagross in Mega Raids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15135,7 +14953,7 @@
    "name": "Max Battle Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15183,7 +15001,7 @@
    "name": "December Community Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15223,7 +15041,7 @@
    "name": "Minior Showers: Geminids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15320,7 +15138,7 @@
    "name": "Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15368,7 +15186,7 @@
    "name": "Hatch Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15412,18 +15230,18 @@
    "encounters": [],
    "encounterConflicts": []
   },
-  "leekduck:pokemon-x-adidas-2026": {
-   "name": "adidas × Pokémon Timed Research",
+  "leekduck:duolingo-timed-research-2026": {
+   "name": "Pokémon GO and Duolingo Timed Research",
    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-17-duolingo-timed-research-2026/duolingo-timed-research-2026.jpg",
    "imageProvenance": {
     "source": "Leek Duck",
     "sourceUrl": "https://leekduck.com/events/duolingo-timed-research-2026/",
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-17-duolingo-timed-research-2026/duolingo-timed-research-2026.jpg",
-    "checkedFor": "adidas × Pokémon Timed Research",
+    "checkedFor": "Pokémon GO and Duolingo Timed Research",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15432,10 +15250,10 @@
      "url": "https://leekduck.com/events/duolingo-timed-research-2026/"
     },
     {
-     "id": "leekduck",
-     "name": "Leek Duck",
+     "id": "hub",
+     "name": "Pokémon GO Hub",
      "trust": "community",
-     "url": "https://leekduck.com/events/pokemon-x-adidas-2026/"
+     "url": "https://pokemongohub.net/post/event/pokemon-go-x-duolingo-duos-pokemon-party-timed-research-language-tag/"
     }
    ],
    "fields": {
@@ -15444,6 +15262,14 @@
     "raids": [],
     "eggs": [],
     "research": [
+     {
+      "text": "Complete tasks to earn XP, Stardust, and encounters with the following Pokémon that have a Special Background.",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
      {
       "text": "Duo’s Pokémon Party, the limited-time Duolingo quest, starts on Tuesday, November 17, 2026, at 10:00 a.m. JST (Monday, November 16, at 5:00 p.m. PST).",
       "sources": [
@@ -15487,12 +15313,140 @@
       "status": "single"
      },
      {
-      "text": "Complete tasks to earn XP, Stardust, and encounters with the following Pokémon that have a Special Background.",
+      "text": "After obtaining the Timed Research, the associated tasks must be completed, and their rewards must be claimed before Thursday, December 31, 2026, at 11:59 p.m. local time.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": []
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
+  },
+  "leekduck:january-communitydayclassic2027": {
+   "name": "January Community Day Classic",
+   "image": null,
+   "imageProvenance": null,
+   "updated": "2026-11-17T21:04:15.971Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/january-communitydayclassic2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
       "sources": [
        "leekduck"
       ],
       "status": "single"
-     },
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
+  },
+  "leekduck:super-mega-raid-day-january-2027": {
+   "name": "Super Mega Raid Day",
+   "image": null,
+   "imageProvenance": null,
+   "updated": "2026-11-17T21:04:15.971Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
+  },
+  "leekduck:pokemon-x-adidas-2026": {
+   "name": "adidas × Pokémon Timed Research",
+   "image": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
+   "imageProvenance": {
+    "source": "Leek Duck",
+    "sourceUrl": "https://leekduck.com/events/pokemon-x-adidas-2026/",
+    "imageUrl": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
+    "checkedFor": "adidas × Pokémon Timed Research",
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
+   },
+   "updated": "2026-11-17T21:04:15.971Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-x-adidas-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [
      {
       "text": "Celebrate the adidas × Pokémon collection with Timed Research at participating adidas and retail stores worldwide!",
       "sources": [
@@ -15552,103 +15506,6 @@
     "dates": []
    },
    "conflicts": [],
-   "gaps": [
-    {
-     "field": "shiny",
-     "missingFrom": []
-    },
-    {
-     "field": "costumes",
-     "missingFrom": []
-    }
-   ],
-   "researchTasks": [],
-   "pokemon": [],
-   "encounters": [],
-   "encounterConflicts": []
-  },
-  "leekduck:january-communitydayclassic2027": {
-   "name": "January Community Day Classic",
-   "image": null,
-   "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/january-communitydayclassic2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": [],
-   "pokemon": [],
-   "encounters": [],
-   "encounterConflicts": []
-  },
-  "leekduck:super-mega-raid-day-january-2027": {
-   "name": "Super Mega Raid Day",
-   "image": null,
-   "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
    "gaps": [],
    "researchTasks": [],
    "pokemon": [],
@@ -15659,7 +15516,7 @@
    "name": "January Community Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15699,7 +15556,7 @@
    "name": "Max Battle Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15747,7 +15604,7 @@
    "name": "Super Mega Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15795,7 +15652,7 @@
    "name": "February Community Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15835,7 +15692,7 @@
    "name": "Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15883,7 +15740,7 @@
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15923,7 +15780,7 @@
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15963,7 +15820,7 @@
    "name": "Pokémon GO Tour: Alola - Global 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16003,7 +15860,7 @@
    "name": "Minior Showers: Eta Aquariids 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16107,7 +15964,7 @@
    "name": "Minior Showers: Southern Delta Aquariids 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16211,7 +16068,7 @@
    "name": "Minior Showers: Perseids 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16304,51 +16161,11 @@
    "encounters": [],
    "encounterConflicts": []
   },
-  "leekduck:gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup": {
-   "name": "Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
-   "image": null,
-   "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "The Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup will run from November 10, 2026, at 1:00 p.m. to November 17, 2026, at 1:00 p.m. PT.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": [],
-   "pokemon": [],
-   "encounters": [],
-   "encounterConflicts": []
-  },
   "leekduck:gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup": {
    "name": "Ultra League, Master League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16384,10 +16201,50 @@
    "encounters": [],
    "encounterConflicts": []
   },
+  "leekduck:gbl-twilight-trails_master-league_mega-catch-cup-great-league-edition": {
+   "name": "Master League and Mega Catch Cup: Great League Edition | Twilight Trails",
+   "image": null,
+   "imageProvenance": null,
+   "updated": "2026-11-17T21:04:15.971Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-catch-cup-great-league-edition/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "The Master League and Mega Catch Cup: Great League Edition will run from November 24, 2026, at 1:00 p.m. to December 1, 2026, at 1:00 p.m. PT.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
+  },
   "official:pokemon-run-30-2026": {
    "name": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -16403,7 +16260,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/c7e36ASB48bmKd_kOL4e61NU9Y3EPaXd0xmQJldeDAa9zn-W9CSwx6Taf_ENgLcx8K7RE3yP62zaLqwkUSACC6GUcEua_kus5gsm_xoljQ",
     "checkedFor": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [
@@ -16671,7 +16528,7 @@
   "official:save-the-date-go-tour-2027": {
    "name": "Save the Date: Pokémon GO Tour 2027",
    "researchTasks": [],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -16687,7 +16544,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/ZD_ZnJIVRb8a2RWD8L9wF4UR3f0fBAT2ZKk9lLB58yOlXhKOrghIstmijArGABhFlVacGQU56R514Pl0NsA9tTqEpGxbIo4D4oipystojQ",
     "checkedFor": "Save the Date: Pokémon GO Tour 2027",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [],
@@ -16729,7 +16586,7 @@
   "official:european-space-agency-event": {
    "name": "Pokémon GO partners with the European Space Agency",
    "researchTasks": [],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -16745,7 +16602,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/7CITEYsKb4CAwdYOln7q7h5K6U1cIVu2cnWRbDZtixs10PkfYfHzPn5Iz9wwbMFE3bosgBEiKnZlEZJZmGiyl-YqYRKHlIL8d7VAzR4DjA",
     "checkedFor": "Pokémon GO partners with the European Space Agency",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [],
@@ -17219,7 +17076,7 @@
      "checkedAt": "2026-11-17"
     }
    ],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "leekduck",
@@ -17235,7 +17092,7 @@
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-mexico-city/key-art.jpg",
     "checkedFor": "Pokémon GO Wild Area 2026: Mexico City",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [
@@ -19747,7 +19604,7 @@
   "official:festival-of-lights-2026": {
    "name": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -19763,7 +19620,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/CecgAXRzLOF4ifTP3Ufl01if11xzdVEI6R169xxEXw095LM8_lhhWydeV5VNDpXF9Ax-U8N1Zxq6SlKpwsft03DRYjsekc05qpxF8EyqcnU",
     "checkedFor": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [
@@ -19945,7 +19802,7 @@
   "official:gowildarea-global-2026-osaka-gameplay-update": {
    "name": "Notice Regarding Gameplay in Osaka During Pokémon GO Wild Area: Global",
    "researchTasks": [],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -19961,7 +19818,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/bup0wWISTZ3O0vrWPQWqhldwW4KfZ5NK5ryVAi4WH9QbIhTbOruURsTgNo1YkmRqIHNjE8y_1rwotBus0gXX6_F--7Aww_qvO-Aw-yTgw9M",
     "checkedFor": "Notice Regarding Gameplay in Osaka During Pokémon GO Wild Area: Global",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [],
@@ -20015,7 +19872,7 @@
   "official:save-the-date-s25": {
    "name": "Save the dates for next Season’s Community Days! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -20031,7 +19888,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/GMESDlJRw5GMsmroW_oK6TLXA4OerLjNY43b0JkjCoSXrez97CwCflnTBTh-uzMhJZYQvQbtA8nK8YPEknYHu0tearwDyBVUoi8",
     "checkedFor": "Save the dates for next Season’s Community Days! — Pokémon GO",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [],
@@ -20142,7 +19999,7 @@
   "official:gowildarea-2026-timed-research": {
    "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -20158,7 +20015,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/ou9s1BeQ2dxKpKmtjCjzqmE7LInbAzbD6UxkhtK6DMHRPpfxjkCxIfoVyfWpulXpmXnCCuTOluKKw_e_5n6yMhRFnYOq4OBwe5KoWt4HCeU",
     "checkedFor": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [],
@@ -20264,7 +20121,7 @@
   "official:gowildarea-mexicocity-friday-update": {
    "name": "Friday experience update for Pokémon GO Wild Area: Mexico City",
    "researchTasks": [],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -20280,7 +20137,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/HTRHhRfsm0cILX-H3EJ03aILmCzRB95KY8pzCeLzd2yJQg7vTbr-OpzV9t1Vg8mAoqx6ztvEgeDtnwHfa6i4qepx0eHl1DnGl-1hXA8ONkk",
     "checkedFor": "Friday experience update for Pokémon GO Wild Area: Mexico City",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [],
@@ -20344,7 +20201,7 @@
   "official:city-safari-boston-rescheduled": {
    "name": "Pokémon GO City Safari: Boston Update",
    "researchTasks": [],
-   "updated": "2026-11-17T04:50:18.648Z",
+   "updated": "2026-11-17T21:04:15.971Z",
    "sources": [
     {
      "id": "official",
@@ -20360,7 +20217,7 @@
     "imageUrl": "https://lh3.googleusercontent.com/5SAHXmMPUCpY_TUiDA81oiN00LXrIbsOXN9CTFtZbjI4pz_0RbQr0tmSACr1JErfEvZqM131RfCU8-LA2uskPRaP7YAom1uS216jhW_JpQ",
     "checkedFor": "Pokémon GO City Safari: Boston Update",
     "checkedAt": "2026-11-17",
-    "retrievedAt": "2026-11-17T04:50:18.648Z"
+    "retrievedAt": "2026-11-17T21:04:15.971Z"
    },
    "fields": {
     "bonuses": [],
@@ -20398,6 +20255,166 @@
     },
     "conflicts": []
    }
+  },
+  "leekduck:max-mondays-2026-11-16": {
+   "name": "[Canceled] Max Monday",
+   "researchTasks": [],
+   "updated": "2026-11-17T21:04:15.971Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-mondays-2026-11-16/"
+    }
+   ],
+   "image": null,
+   "imageProvenance": null,
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "There is no Max Monday on November 16, 2026. The Dynamax Trails event is happening instead, so there are no Max Monday-specific bonuses, such as the guaranteed Rare Candy XL.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "researchTasks": []
+   },
+   "normalizedEvent": {
+    "schemaVersion": 1,
+    "eventId": "leekduck:max-mondays-2026-11-16",
+    "aliases": [],
+    "family": "max-battles",
+    "title": "[Canceled] Max Monday",
+    "dateText": "There is no Max Monday on November 16, 2026. The Dynamax Trails event is happening instead, so there are no Max Monday-specific bonuses, such as the guaranteed Rare Candy XL.",
+    "completeness": "partial",
+    "lifecycle": "announced",
+    "attendance": "",
+    "location": null,
+    "image": null,
+    "notes": [],
+    "internalValidation": {
+     "warnings": [],
+     "lifecycleDeclared": false,
+     "native": true,
+     "fields": {
+      "bonuses": [],
+      "featured": [],
+      "raids": [],
+      "eggs": [],
+      "research": [],
+      "shiny": [],
+      "moves": [],
+      "costumes": [],
+      "tickets": [],
+      "dates": [
+       {
+        "text": "There is no Max Monday on November 16, 2026. The Dynamax Trails event is happening instead, so there are no Max Monday-specific bonuses, such as the guaranteed Rare Candy XL."
+       }
+      ]
+     },
+     "legacyDates": {
+      "start": "",
+      "end": ""
+     },
+     "conflicts": []
+    },
+    "schedule": null,
+    "activities": [],
+    "bonuses": [],
+    "research": [],
+    "passes": [],
+    "tickets": [],
+    "sources": [
+     {
+      "id": "leekduck",
+      "name": "Leek Duck",
+      "trust": "community",
+      "url": "https://leekduck.com/events/max-mondays-2026-11-16/"
+     }
+    ],
+    "pokemon": [],
+    "encounters": [],
+    "groups": {}
+   },
+   "pokemon": [],
+   "encounters": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "There is no Max Monday on November 16, 2026. The Dynamax Trails event is happening instead, so there are no Max Monday-specific bonuses, such as the guaranteed Rare Candy XL."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": []
+   }
+  },
+  "leekduck:gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup": {
+   "name": "Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
+   "image": null,
+   "imageProvenance": null,
+   "updated": "2026-11-17T13:54:57.870Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "The Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup will run from November 10, 2026, at 1:00 p.m. to November 17, 2026, at 1:00 p.m. PT.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",

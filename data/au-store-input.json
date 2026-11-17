@@ -1,7 +1,7 @@
 {
   "observed": "2026-11-17",
   "items": [
-    {"label": "GO Pass Deluxe: November Ultra Box", "price": "A$22.99", "confirm": true},
-    {"label": "GO Pass Deluxe: November + 10 Ranks", "price": "A$14.99", "confirm": true}
+    {"label": "Pokémon GO Pawniard Community Day Ticket", "price": "A$2.99", "unlisted": true, "note": "owner-observed in AU store; not yet in snapshot"},
+    {"label": "GO Pass Deluxe: Dynamax Trails", "price": "A$7.99", "unlisted": true, "note": "owner-observed in AU store; not yet in snapshot"}
   ]
 }

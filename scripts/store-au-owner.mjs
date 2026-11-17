@@ -45,7 +45,15 @@ export function applyOwnerInput(data, input, snapshot, opts = {}) {
     if (amount === null) { errors.push(where + ': price must be an explicit A$ amount like "A$12.99"'); continue; }
     if (amount < MIN || amount > MAX) { errors.push(where + ': A$' + amount + ' is outside the plausible range A$' + MIN + ' to A$' + MAX); continue; }
     if (known.get(key) === null) { errors.push(where + ': label matches more than one catalogue product'); continue; }
-    if (!known.has(key) && !current.has(key)) { errors.push(where + ': not a name in the current Store snapshot or the Australian catalogue'); continue; }
+    // Explicit opt-in for an owner-observed item the snapshot has not seen yet. Needs a note, and the name must not already be in the snapshot (then it is a normal item).
+    const unlisted = row.unlisted === true;
+    if (row.unlisted !== undefined && !unlisted) { errors.push(where + ': "unlisted" must be true or omitted'); continue; }
+    if (unlisted) {
+      const note = typeof row.note === 'string' ? row.note.trim() : '';
+      if (!note || note.length > 200) { errors.push(where + ': "unlisted" items need a "note" (1-200 characters) saying why it is not in the snapshot'); continue; }
+      if (current.has(key)) { errors.push(where + ': is in the current Store snapshot; remove "unlisted"'); continue; }
+    }
+    if (!known.has(key) && !current.has(key) && !unlisted) { errors.push(where + ': not a name in the current Store snapshot or the Australian catalogue'); continue; }
     const product = known.get(key) || slug(row.label.trim());
     if (!known.has(key) && !/^store-[a-z0-9-]{3,110}$/.test(product)) { errors.push(where + ': cannot derive a product id'); continue; }
     const mine = au.filter(p => p.product === product).sort((a, b) => String(b.observed).localeCompare(String(a.observed)));
@@ -60,7 +68,8 @@ export function applyOwnerInput(data, input, snapshot, opts = {}) {
       if ((ratio > MAX_RATIO || ratio < 1 / MAX_RATIO) && row.confirm !== true) { errors.push(where + ': A$' + amount + ' is more than ' + MAX_RATIO + 'x different from the last verified A$' + last.amount + '; add "confirm": true to that item if this is correct'); continue; }
     }
     additions.push({product, label: last ? last.label : row.label.trim(), group: last?.group || groupOf(row.label), currency: 'AUD', amount, region: 'AU', verified: true,
-      source: 'Pokémon GO Web Store (Australian storefront, read by the owner)', url: 'https://store.pokemongo.com/', observed});
+      source: 'Pokémon GO Web Store (Australian storefront, read by the owner)', url: 'https://store.pokemongo.com/', observed,
+      ...(unlisted ? {note: row.note.trim()} : {})});
   }
   if (errors.length) return reject(errors);
   return {data: {...data, prices: [...prices, ...additions]}, changed: additions.length, errors: []};

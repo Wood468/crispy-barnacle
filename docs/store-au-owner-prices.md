@@ -20,6 +20,7 @@ The hourly store watch runs on a US runner and sees US$ prices, so it can never 
 How it is checked (all-or-nothing; any problem rejects everything and prints why):
 - `price` must be an explicit `A$x.xx` between A$0.50 and A$500. `$`, `AU$`, `Rp`, `₹` are rejected.
 - `label` must exactly match an offer in `public/store-current-snapshot.json` or an existing Australian catalogue entry (case-insensitive). No duplicates.
+- Exception, opt-in per item: for something you saw in the Australian store that the snapshot has not seen yet, add `"unlisted": true` and a `"note"` (1-200 characters, stored on the entry), e.g. `{"label": "GO Pass Deluxe: Dynamax Trails", "price": "A$7.99", "unlisted": true, "note": "owner-observed in AU store; not yet in snapshot"}`. Without the flag the rule above applies unchanged; a label that is already in the snapshot is rejected (drop the flag); every other check below still applies. The label is your best guess at the store wording, and the id is derived from it. If a later snapshot item uses different wording it will not attach to this entry automatically.
 - `observed` must be a real date, not in the future, at most 14 days old, and not older than the price already recorded.
 - A price more than 3x higher or lower than the last verified one needs `"confirm": true` on that item.
 - Re-entering the same price on a later date is fine: it refreshes the date. The same price on the same date is a no-op; a different price on the same date is rejected.

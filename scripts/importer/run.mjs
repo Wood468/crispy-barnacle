@@ -391,6 +391,37 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt =
 // Never let that copy drop an exactly matched, published source-backed activity
 // schedule: its typed Raid / Max Hour bosses are authoritative for form IDs.
 // This is an exact canonical-ID join, not a name or species guess.
+// Once an event has ended, a third-party write-up (Leek Duck removes its page afterwards) can fall off discovery.
+// The re-import then rebuilt the event from the remaining sources only and silently deleted everything that page
+// supplied (encounters, Pokémon, field rows), emptying a finished event's detail page. Carry forward what a
+// vanished source id contributed: its source entry, its attributed field rows, and the structured encounters and
+// Pokémon (which carry no per-source attribution, so only when this run produced none). Live events never reach it.
+export function preserveEndedSourceData(out, old, byEvent, { now: runAt = new Date().toISOString() } = {}) {
+  const today = day(runAt);
+  for (const [id, { event }] of byEvent) {
+    const now = out[id], before = old[id];
+    if (!now || !before || !event || !event.end || day(event.end) >= today) continue;
+    const present = new Set((now.sources || []).map(source => source.id));
+    const lost = (before.sources || []).filter(source => source && !present.has(source.id) && !(now.sources || []).some(kept => kept.url === source.url));
+    if (!lost.length) continue;
+    const ids = new Set(lost.map(source => source.id));
+    now.sources = [...(now.sources || []), ...lost];
+    now.fields ||= {};
+    for (const [key, rows] of Object.entries(before.fields || {})) {
+      if (!Array.isArray(rows)) continue;
+      const have = new Set((now.fields[key] || []).map(row => row && row.text));
+      const keep = rows.filter(row => row && Array.isArray(row.sources) && row.sources.some(sid => ids.has(sid)) && !have.has(row.text));
+      if (keep.length) now.fields[key] = [...(now.fields[key] || []), ...keep];
+    }
+    if (!(now.encounters || []).length && (before.encounters || []).length) {
+      now.encounters = before.encounters;
+      now.pokemon = before.pokemon || now.pokemon;
+      if (before.encounterConflicts) now.encounterConflicts = before.encounterConflicts;
+    }
+  }
+  return out;
+}
+
 export function sourceBackedActivitiesFor(id, event, curatedById) {
   const record=curatedById.get(id);
   const curated=record&&Array.isArray(record.activities)?record.activities:[];
@@ -572,6 +603,7 @@ async function main() {
   } catch (error) { console.warn("Curated activity reconciliation skipped:", error.message); }
   preserveGoPassRows(out, old, byEvent);
   preserveUnfetchedResearchTasks(out, old, byEvent, { now, report: researchRetention });
+  preserveEndedSourceData(out, old, byEvent, { now });
   // A feed-derived twin record (leekduck:<slug>) whose every source page is now read into the curated record is a duplicate: keeping it would show every task and Pokémon twice.
   const claimedUrls = new Set([...byEvent.values()].flatMap(group => group.results.map(result => normUrl(result.source.url))));
   let sameRulings = []; try { sameRulings = JSON.parse(await readFile("data/event-aliases.json", "utf8")).same || []; } catch { /* no rulings */ }

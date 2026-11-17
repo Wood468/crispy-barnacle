@@ -1,12 +1,12 @@
 {
- "runAt": "2026-11-17T04:50:18.648Z",
+ "runAt": "2026-11-17T21:04:15.971Z",
  "artworkCoverage": {
-  "selected": 27,
-  "missing": 76,
+  "selected": 28,
+  "missing": 77,
   "legacyUnattributed": 2,
   "bySource": {
    "Pokémon GO (official)": 22,
-   "Leek Duck": 5
+   "Leek Duck": 6
   },
   "missingEvents": [
    {
@@ -22,13 +22,6 @@
     "name": "Orionids Meteor Shower: Minior Debut",
     "sources": [
      "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
-    ]
-   },
-   {
-    "id": "leekduck:max-mondays-2026-11-16",
-    "name": "[Canceled] Max Monday",
-    "sources": [
-     "https://leekduck.com/events/max-mondays-2026-11-16/"
     ]
    },
    {
@@ -242,17 +235,31 @@
     ]
    },
    {
-    "id": "leekduck:gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup",
-    "name": "Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
-    "sources": [
-     "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/"
-    ]
-   },
-   {
     "id": "leekduck:gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup",
     "name": "Ultra League, Master League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
     "sources": [
      "https://leekduck.com/events/gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup/"
+    ]
+   },
+   {
+    "id": "leekduck:gbl-twilight-trails_master-league_mega-catch-cup-great-league-edition",
+    "name": "Master League and Mega Catch Cup: Great League Edition | Twilight Trails",
+    "sources": [
+     "https://leekduck.com/events/gbl-twilight-trails_master-league_mega-catch-cup-great-league-edition/"
+    ]
+   },
+   {
+    "id": "leekduck:max-mondays-2026-11-16",
+    "name": "[Canceled] Max Monday",
+    "sources": [
+     "https://leekduck.com/events/max-mondays-2026-11-16/"
+    ]
+   },
+   {
+    "id": "leekduck:gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup",
+    "name": "Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
+    "sources": [
+     "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/"
     ]
    },
    {
@@ -559,7 +566,7 @@
    "error": ""
   },
   "leekduck": {
-   "listed": 42,
+   "listed": 41,
    "error": ""
   },
   "hub": {
@@ -568,12 +575,47 @@
   }
  },
  "pagesRead": 80,
- "events": 105,
+ "events": 107,
  "worldEvents": 68,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
  "researchRetention": [
+  {
+   "id": "wag",
+   "name": "GO Wild Area: Global",
+   "oldTasks": 16,
+   "retained": true,
+   "reason": "event-ended-kept",
+   "sources": [
+    {
+     "url": "https://pokemongo.com/news/gowa-global-europe-2026/",
+     "status": "none",
+     "truncated": false,
+     "candidateRows": 0,
+     "headings": 0,
+     "table": false,
+     "sample": "<li>Photo opportunities to capture the memories </li><li>Fun activities with local Community Ambassadors and their communities </li><li>Pokémon GO event pins and prints (while supplies last) </li><li>Timed Research when you check in at the official meetup </li></ul><p>We are also partnering with local Community Ambassadors to add more PokéStops, Gyms, and Powerspots near the event area for these community meetups. </p></div></div><div class=\"_containerBlock_1p4ol_2\"><div class=\"_headlineWrapper_1p4ol_37\"><h2 class=\"_containerHeadline_1p4ol_53 _size:blog-heading-h2_\">Karlsruhe Timetable </h2></"
+    },
+    {
+     "url": "https://pokemongo.com/en/gowildarea/global/",
+     "status": "none",
+     "truncated": false,
+     "candidateRows": 0,
+     "headings": 0,
+     "table": false
+    },
+    {
+     "url": "https://pokemongo.com/news/community-meetups-go-wild-area-2026-details-asia-pacific/",
+     "status": "none",
+     "truncated": false,
+     "candidateRows": 0,
+     "headings": 0,
+     "table": false,
+     "sample": "body_13f4f_161 _markdown_13f4f_273\"><p>Get ready for a Pokémon GO pop-up event with interactive fun and giveaways, available while supplies last! There will be photo opportunities to capture the memo Timed Research when you check in, with rewards like a Pokémon encounter and items! </p><p>The best way to experience Pokémon GO Wild Area is in-person. Meet you out there, Trainers! </p></div><div class=\"_IconFootnotesBlock_v388d_2\"><div class=\"_IconFootnotesBlockFootnote_v388d_8\"></div></div></div></div><div class=\"_containerBlock_1p4ol_2\"><div class=\"_size:body_13f4f_161 _markdown_13f4f_273\"><p>"
+    }
+   ]
+  },
   {
    "id": "into",
    "name": "Into the Wild",
@@ -708,6 +750,11 @@
    "source": "official",
    "title": "Pokémon GO City Safari: Boston Update",
    "url": "https://pokemongo.com/news/city-safari-boston-rescheduled/"
+  },
+  {
+   "source": "leekduck",
+   "title": "[Canceled] Max Monday",
+   "url": "https://leekduck.com/events/max-mondays-2026-11-16/"
   }
  ],
  "intl": {
@@ -787,71 +834,8 @@
  "gaps": [
   {
    "event": "GO Wild Area: Global",
-   "field": "bonuses",
-   "missingFrom": [
-    "official",
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
-   "field": "featured",
-   "missingFrom": [
-    "official",
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
-   "field": "raids",
-   "missingFrom": [
-    "official",
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
-   "field": "eggs",
-   "missingFrom": [
-    "official",
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
-   "field": "research",
-   "missingFrom": [
-    "official",
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
    "field": "shiny",
    "missingFrom": []
-  },
-  {
-   "event": "GO Wild Area: Global",
-   "field": "moves",
-   "missingFrom": [
-    "official",
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
-   "field": "tickets",
-   "missingFrom": [
-    "official",
-    "official",
-    "official"
-   ]
   },
   {
    "event": "GO Wild Area: Global",
@@ -987,24 +971,41 @@
    "event": "Super Mega Raid Day",
    "field": "bonuses",
    "missingFrom": [
+    "leekduck",
     "leekduck"
    ]
   },
   {
    "event": "Super Mega Raid Day",
+   "field": "featured",
+   "missingFrom": []
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "raids",
+   "missingFrom": []
+  },
+  {
+   "event": "Super Mega Raid Day",
    "field": "research",
    "missingFrom": [
+    "leekduck",
     "leekduck"
    ]
   },
   {
-   "event": "adidas × Pokémon Timed Research",
+   "event": "Super Mega Raid Day",
    "field": "shiny",
    "missingFrom": []
   },
   {
-   "event": "adidas × Pokémon Timed Research",
-   "field": "costumes",
+   "event": "Super Mega Raid Day",
+   "field": "tickets",
+   "missingFrom": []
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "dates",
    "missingFrom": []
   },
   {
@@ -1205,14 +1206,14 @@
   "publication": "audit-only",
   "sourceId": "leekduck",
   "eligiblePages": 44,
-  "pagesWithFacets": 9,
+  "pagesWithFacets": 8,
   "duplicates": 0,
   "skippedLarge": 0,
   "counts": {
-   "benefits": 69,
-   "featuredMoves": 7,
-   "researchPrograms": 22,
-   "unconfirmed": 1
+   "benefits": 50,
+   "featuredMoves": 0,
+   "researchPrograms": 18,
+   "unconfirmed": 0
   },
   "examples": [
    {
@@ -1226,12 +1227,6 @@
     "benefitCount": 19,
     "featuredMoveCount": 0,
     "researchProgramCount": 3
-   },
-   {
-    "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
-    "benefitCount": 19,
-    "featuredMoveCount": 7,
-    "researchProgramCount": 4
    },
    {
     "sourceUrl": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/",
@@ -1281,8 +1276,8 @@
    "rejectedPages": 0,
    "unlinkedExamples": [
     {
-     "sourceUrl": "https://leekduck.com/events/duolingo-timed-research-2026",
-     "expectedAlias": "leekduck:duolingo-timed-research-2026"
+     "sourceUrl": "https://leekduck.com/events/max-mondays-2026-11-16",
+     "expectedAlias": "leekduck:max-mondays-2026-11-16"
     }
    ],
    "ambiguousExamples": [],
@@ -1322,6 +1317,15 @@
      "benefits": 0,
      "featuredMoves": 0,
      "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:duolingo-timed-research-2026",
+     "sourceUrls": [
+      "https://leekduck.com/events/duolingo-timed-research-2026/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 4
     },
     {
      "eventId": "leekduck:dynamax-trails-2026",
@@ -1396,15 +1400,6 @@
      "researchPrograms": 0
     },
     {
-     "eventId": "leekduck:max-mondays-2026-11-16",
-     "sourceUrls": [
-      "https://leekduck.com/events/max-mondays-2026-11-16/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
-    },
-    {
      "eventId": "leekduck:max-mondays-2026-11-23",
      "sourceUrls": [
       "https://leekduck.com/events/max-mondays-2026-11-23/"
@@ -1470,11 +1465,11 @@
    ],
    "normalizedCounts": {
     "events": 43,
-    "benefits": 69,
-    "featuredMoves": 7,
+    "benefits": 50,
+    "featuredMoves": 0,
     "researchPrograms": 18,
     "disputed": 0,
-    "unconfirmed": 1,
+    "unconfirmed": 0,
     "warnings": 0
    }
   }
