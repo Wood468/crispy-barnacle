@@ -54,3 +54,10 @@ test('invalid timezone offset and fractional suffix remain review-only findings'
   {id:'fraction',t:'Bad fractional',s:'2026-11-18T10:00:00.1234Z',e:'2026-11-18T12:00Z'}]);
  assert.deepEqual(r.odd.map(x=>x.id),['offset','fraction']);
 });
+
+test('same-day inverted curated clock windows are flagged without penalizing valid windows',()=>{
+ const r=check([], [{id:'reverse',t:'Reverse',s:'2026-11-18T18:00',e:'2026-11-18T10:00'},
+  {id:'forward',t:'Forward',s:'2026-11-18T10:00',e:'2026-11-18T18:00'}]);
+ assert.deepEqual(r.odd.map(x=>x.id),['reverse']);
+ assert.equal(r.odd[0].why,'ends before it starts');
+});
