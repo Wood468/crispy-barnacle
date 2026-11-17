@@ -4,7 +4,7 @@
 // Unsure candidates are left in the queue with their OCR text and reason. The workflow opens a pull request;
 // nothing reaches main without the owner merging it.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { writeFileSync, readFileSync } from "node:fs";
+import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -298,9 +298,16 @@ export function comingMonth(c, now) {
   const ahead = (idx - cur + 12) % 12;
   return ahead >= 1 && ahead <= 6;
 }
-export function buildWeekly(reg, now = Date.now()) {
+export function buildWeekly(reg, now = Date.now(), { assetReady = null } = {}) {
+  // Optional workflow-only readiness gate. Tests and other callers that do
+  // not pass a callback retain the historical date/approval selection rules.
+  // A restored local file does not establish public redistribution permission.
+  const ready = c => {
+    if (typeof assetReady !== "function") return true;
+    try { return assetReady(c.stagedPath) === true; } catch { return false; }
+  };
   const clean = t => String(t || "").replace(/^tr\s+/i, "").replace(/\s+/g, " ").trim().slice(0, 80);
-  const pick = (test, days, max, kind, label) => (reg.candidates || []).filter(c => c.stagedPath && c.decision !== "rejected" && !(kind === "month" && comingMonth(c, now)) && (c.overview === kind || (test(c) && !c.overview && Date.parse(c.publishedAt || "") > now - days * 864e5)))
+  const pick = (test, days, max, kind, label) => (reg.candidates || []).filter(c => c.stagedPath && c.decision !== "rejected" && !(kind === "month" && comingMonth(c, now)) && (c.overview === kind || (test(c) && !c.overview && Date.parse(c.publishedAt || "") > now - days * 864e5)) && ready(c))
     .sort((a, b) => (Date.parse(b.publishedAt) || 0) - (Date.parse(a.publishedAt) || 0)).slice(0, max)
     .map(c => ({ id: c.id, kind, title: kind === "month" ? label(c) : clean(c.title), image: c.stagedPath, post: publicSourceUrl(c.url), publishedAt: c.publishedAt }));
   const monthName = c => { const m = String(c.title || "").concat(" ", String(c.imageUrl || "").split("?")[0]).match(new RegExp("(" + MONTH_NAMES + ")[ _-]*content", "i")); return m ? "Month overview: " + m[1].slice(0, 1).toUpperCase() + m[1].slice(1).toLowerCase() : "Month overview"; };
@@ -334,6 +341,16 @@ export function buildQueue(reg) {
     guesses: withAi(c, (c.eventMatch && c.eventMatch.alternatives) || (c.eventMatch ? [{ eventId: c.eventMatch.eventId, eventTitle: c.eventMatch.eventTitle, score: c.eventMatch.score }] : []))
   }));
   return { updated: new Date().toISOString(), items };
+}
+
+// The scheduled publisher restores media from R2 before calling main(). A
+// registry stagedPath alone is NOT evidence of a restored file. Keep the
+// weekly output on the newest usable image, not a broken reference. This only
+// checks availability; it does not change any owner review or rights decision.
+export function weeklyLocalAssetReady(stagedPath, root = "public") {
+  const p = String(stagedPath || "");
+  if (!/^\/infographics\/g47ix\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i.test(p)) return false;
+  return existsSync(join(root, p.slice(1)));
 }
 
 async function main() {
@@ -393,7 +410,12 @@ async function main() {
   }
   await writeFile(REG, JSON.stringify(sanitizeRegistrySources(reg), null, 2) + "\n");
   await writeFile(QUEUE, JSON.stringify(buildQueue(reg), null, 1) + "\n");
-  await writeFile(WEEKLY, JSON.stringify(buildWeekly(reg), null, 1) + "\n");
+  const asOf = Date.now();
+  const unguardedWeekly = buildWeekly(reg, asOf);
+  const safeWeekly = buildWeekly(reg, asOf, { assetReady: p => weeklyLocalAssetReady(p) });
+  const unready = unguardedWeekly.items.filter(item => !safeWeekly.items.some(ok => ok.kind === item.kind && ok.id === item.id)).length;
+  if (unready) console.warn("Weekly infographic: " + unready + " selected picture(s) held because their local files were not restored. No missing art URL published.");
+  await writeFile(WEEKLY, JSON.stringify(safeWeekly, null, 1) + "\n");
   await writeFile(INFO, JSON.stringify(sanitizePublicInfographicSources(info), null, 2) + "\n");
   console.log(proposed.length ? "Proposed:\n" + proposed.join("\n") : "Nothing confident enough to propose.");
 }
