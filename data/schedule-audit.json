@@ -1,8 +1,14 @@
 {
- "checked": "2026-11-16T22:35:01.504Z",
- "compared": 44,
+ "checked": "2026-11-17T04:40:39.068Z",
+ "compared": 45,
  "problems": [],
  "missing": [
+  {
+   "slug": "duolingo-timed-research-2026",
+   "type": "timed-research",
+   "start": "2026-11-17T01:00:00+00:00",
+   "end": "2026-12-31T23:59:00"
+  },
   {
    "slug": "minior-showers-eta-aquariids-2027",
    "type": "event",

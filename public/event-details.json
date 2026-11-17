@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T22:34:57.452Z",
+ "updated": "2026-11-17T04:40:34.847Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
@@ -9,10 +9,10 @@
     "sourceUrl": "https://pokemongo.com/en/gowildarea/global/",
     "imageUrl": "https://lh3.googleusercontent.com/YUIF2HkGZlw3tWumDXClx0cVYphD-ugVYTs5VBU5-ccb5o-1UWVTy8NYqJboA-fVPrmtncsb7Ql_6eebA8I-YyxFtIHO2yIiMwmb5qlg3JA",
     "checkedFor": "GO Wild Area: Global",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -625,7 +625,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -679,7 +679,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch 2 mighty Pokémon",
@@ -737,7 +737,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch 2 mighty Pokémon",
@@ -795,7 +795,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch 4 different species of Dragon‑type Pokémon",
@@ -835,7 +835,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch 4 different species of Steel‑type Pokémon",
@@ -875,7 +875,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Hatch an Egg",
@@ -922,7 +922,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Hatch an Egg",
@@ -969,7 +969,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Make an Excellent Throw",
@@ -1005,7 +1005,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -1052,7 +1052,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -1099,7 +1099,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Spin 5 PokéStops or Gyms",
@@ -1145,7 +1145,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -1192,7 +1192,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -1239,7 +1239,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Win 2 Max Battles",
@@ -1281,7 +1281,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Win 2 raids",
@@ -1323,7 +1323,7 @@
       "start": "2026-11-14T10:00",
       "end": "2026-11-15T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     }
    ],
    "pokemon": [
@@ -2632,10 +2632,10 @@
     "sourceUrl": "https://pokemongo.com/news/go-pass-november-2026/",
     "imageUrl": "https://lh3.googleusercontent.com/2H2wVXVBCkoOjc8Swmtz67KAxNbWQMwkqSezJmyAOFnzlfervIkFR-rJJ6nZfqWtZmG4eXJwD7-Is2-TdjJXH2q2nAPFAk8lj7Lz_5TWtTYo",
     "checkedFor": "GO Pass: November",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3584,10 +3584,10 @@
     "sourceUrl": "https://pokemongo.com/en/gowildarea/sendai/",
     "imageUrl": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
     "checkedFor": "GO Wild Area: Sendai",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -4142,7 +4142,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -4185,7 +4185,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch a Hisuian Sliggoo",
@@ -4218,7 +4218,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Explore 2 km",
@@ -4253,7 +4253,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Hatch an Egg",
@@ -4293,7 +4293,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Make an Excellent Throw",
@@ -4329,7 +4329,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -4362,7 +4362,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -4409,7 +4409,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -4443,7 +4443,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -4484,7 +4484,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Win 2 raids",
@@ -4527,7 +4527,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Win a Max Battle",
@@ -4569,7 +4569,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     }
    ],
    "pokemon": [
@@ -5973,10 +5973,10 @@
     "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026/",
     "imageUrl": "https://lh3.googleusercontent.com/xQzYXbxguNWaaSXG5thVM5x44Luvbb5Pi8rPlYSPIV6kePCzoS_5NWzlM0yzNGIVs1NzhXIPLcg2HKS0iuizGsHZUvSS_ZcemC5-i4My5yA",
     "checkedFor": "Into the Wild",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -6953,7 +6953,7 @@
    "name": "Minior Showers: Leonids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "hub",
@@ -7122,7 +7122,7 @@
    "name": "Orionids Meteor Shower: Minior Debut",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "hub",
@@ -7362,7 +7362,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Star Piece",
@@ -7393,7 +7393,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Claim Reward!",
@@ -7424,7 +7424,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Star Piece",
@@ -7455,7 +7455,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Star Piece",
@@ -7486,7 +7486,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Star Piece",
@@ -7517,7 +7517,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Star Piece",
@@ -7548,7 +7548,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Star Piece",
@@ -7579,7 +7579,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     }
    ],
    "pokemon": [],
@@ -7594,10 +7594,10 @@
     "sourceUrl": "https://pokemongo.com/news/clefable-super-mega-raid-day-2026/",
     "imageUrl": "https://lh3.googleusercontent.com/HyFWaQMZqtZNT3Sb3uFeHyWMBFI8bB_4hNQ2NLrpfBGrH1YijjIr1n0ZNC0YlNAZHPpfiWTq0zzgT9MRUFzlMoEjN4ENEm0AlnuJFZRA9CQ",
     "checkedFor": "Super Mega Raid Day",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -7855,10 +7855,10 @@
     "sourceUrl": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026/",
     "imageUrl": "https://lh3.googleusercontent.com/1ZxNwH9PkuqgUPjvwhCrCNSTSDktinzgCcLJEkm4tu41LlE_7OdyfM4GkR9qd9atoN_Tairx5bQ6IxBBOULlCO29cCM4qTuvsE4dm-RFup0",
     "checkedFor": "Dynamax Trails",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -9146,7 +9146,7 @@
       "start": "2026-11-16T10:00",
       "end": "2026-11-23T20:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Explore 1 km",
@@ -9184,7 +9184,7 @@
       "start": "2026-11-16T10:00",
       "end": "2026-11-23T20:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Make an Excellent Throw",
@@ -9242,7 +9242,7 @@
       "start": "2026-11-16T10:00",
       "end": "2026-11-23T20:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Power up Pokémon 8 times",
@@ -9287,7 +9287,7 @@
       "start": "2026-11-16T10:00",
       "end": "2026-11-23T20:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Unlock a Max Move",
@@ -9340,7 +9340,7 @@
       "start": "2026-11-16T10:00",
       "end": "2026-11-23T20:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Win a Max Battle",
@@ -9407,7 +9407,7 @@
       "start": "2026-11-16T10:00",
       "end": "2026-11-23T20:00"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     }
    ],
    "pokemon": [
@@ -11541,10 +11541,10 @@
     "sourceUrl": "https://pokemongo.com/news/communityday-november-2026-pawniard/",
     "imageUrl": "https://lh3.googleusercontent.com/t5O4uk87m4uBdjNiiMgMq9nKNOkWyt3lNxwPc4dEqi8nL2ORXDgmO91Dc8orIGjysTupi4Jfr9F1FQq5jp36L68z7XZlddd8Kq-CSJQJEVfk",
     "checkedFor": "November Community Day",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -11747,10 +11747,10 @@
     "sourceUrl": "https://pokemongo.com/news/chandelure-super-mega-raid-day-2026/",
     "imageUrl": "https://lh3.googleusercontent.com/6P6KzIHu36YynVJ4Bn6-2y_98P8qbfr5VP6aBOsIC83pPQ6NifL2ZrIWrF12RCzi-yJzdpuVsboYspq5mfkvph2B5OJslcoYMaHnNM8ua8og",
     "checkedFor": "Super Mega Raid Day",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -11940,10 +11940,10 @@
     "sourceUrl": "https://pokemongo.com/news/halloween-part-2-2026/",
     "imageUrl": "https://lh3.googleusercontent.com/4QN-7EtDk7S7dxL9bKLbsUF7lbTaUTntnGzOG8qDk4xxOQFyY4dKt3tQQ2msv37JhacLDFrawLGXVAv_kv3tzE_kTXiIh_HbskFdKhNCHjlh",
     "checkedFor": "Halloween 2026, Part Two",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -12204,10 +12204,10 @@
     "sourceUrl": "https://pokemongo.com/news/halloween-part-1-2026/",
     "imageUrl": "https://lh3.googleusercontent.com/_-kCe3YnQqLlPgLfqe6BZN6v8dIhuuhVzbOSgExE5XjKL__BcqBCbch1V2Z4fOEh18nYEX6O5rqBgWmNmU7kmvy92Yd2u8RBIxDbe79p3kU",
     "checkedFor": "Halloween 2026, Part One",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -12480,265 +12480,11 @@
    "encounters": [],
    "encounterConflicts": []
   },
-  "spirits": {
-   "name": "Dynamax Uxie, Mesprit and Azelf",
-   "image": "https://lh3.googleusercontent.com/lKvMVkt13VprgaVCCdWqglwACCNc_F4rLJMuuZg_MqZSHjDIkEm3dldHcnyv7OPdDmJYAdfYC9xZef00Jfna7R1B8QJLLBMOigqW_89obec",
-   "imageProvenance": {
-    "source": "Pokémon GO (official)",
-    "sourceUrl": "https://pokemongo.com/news/dynamax-uxie-mesprit-azelf-max-battle-day-2026/",
-    "imageUrl": "https://lh3.googleusercontent.com/lKvMVkt13VprgaVCCdWqglwACCNc_F4rLJMuuZg_MqZSHjDIkEm3dldHcnyv7OPdDmJYAdfYC9xZef00Jfna7R1B8QJLLBMOigqW_89obec",
-    "checkedFor": "Dynamax Uxie, Mesprit and Azelf",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
-   },
-   "updated": "2026-11-16T22:34:57.452Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "The following bonuses will be active during the event.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Max Particle collection limit increased to 1,600",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "All Power Spots will host Dynamax Battles",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Power Spots will refresh more frequently",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Additional Power Spots will be active",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "8× Max Particles from Power Spots",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Two additional Special Trades can be made for a maximum of three for the day",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "From October 23 at 5:00 p.m. to October 24 at 8:00 p.m. PDT (GMT −7), the daily Remote Raid Pass limit will increase from 10 to 20",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "2× Max Particles from exploring*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "1/4 Adventuring distance to receive Max Particles**",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Dynamax Debut!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "raids": [
-     {
-      "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "The following Pokémon will make their Pokémon GO Dynamax debut in five-star Max Battles!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Dynamax Uxie*: Appearing in the Asia-Pacific region",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Dynamax Mesprit*: Appearing in Europe, the Middle East, Africa, and India",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Dynamax Azelf*: Appearing in the Americas and Greenland",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Max Battles will take great teamwork and only appear at Power Spots that sporadically appear in different locations, so we’re making it easier to find both these battles and other Trainers to help you take them on!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "You can visit the Map to see the locations where Max Battles might appear during an event, in addition to those in progress.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Timed Research rewards include the following.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "1 Max Mushroom",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "6,400 Max Particles",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "You’ll also receive the following bonus.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "2× XP from Max Battles",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "This Timed Research will be effective on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "The Dynamax Uxie, Mesprit, and Azelf Battle Day Ultra Ticket Box will be available for US$4.99 (or the equivalent pricing tier in your local currency) and includes an event ticket and 800 Max Particles!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Check it out in the Pokémon GO Web Store soon!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "—The Pokémon GO team",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "From October 23 at 5:00 p.m. to October 24 at 8:00 p.m. PDT (GMT −7), the daily Remote Raid Pass limit will increase from 10 to 20",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": [],
-   "pokemon": [],
-   "encounters": [],
-   "encounterConflicts": []
-  },
   "leekduck:max-mondays-2026-11-16": {
    "name": "[Canceled] Max Monday",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12778,7 +12524,7 @@
    "name": "Cresselia and Darkrai Raid Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12826,7 +12572,7 @@
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -12925,7 +12671,7 @@
    "name": "Eternamax Eternatus Returns",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13014,10 +12760,10 @@
     "sourceUrl": "https://leekduck.com/events/november-communityday2026/",
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-21-november-communityday2026/pawniard-november-cd-2026.jpg",
     "checkedFor": "Pawniard Community Day",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13225,7 +12971,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch 5 Pokemon while in a Party",
@@ -13258,7 +13004,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch 50 Pokemon",
@@ -13291,7 +13037,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     }
    ],
    "pokemon": [
@@ -13323,7 +13069,7 @@
    "name": "Dynamax Espurr during Max Monday",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13406,7 +13152,7 @@
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13435,6 +13181,13 @@
      },
      {
       "text": "There will also be a Raid Hour featuring Cresselia and Darkrai from 6:00 p.m. to 7:00 p.m. local time on November 18.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Cresselia 100% IV CP Level 20 1633 Level 25 2041 Weather boosted in",
       "sources": [
        "leekduck"
       ],
@@ -13523,7 +13276,7 @@
    "name": "Mega Banette in Mega Raids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13614,7 +13367,7 @@
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13662,7 +13415,7 @@
    "name": "Noibat Spotlight Hour",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -13727,10 +13480,10 @@
     "sourceUrl": "https://leekduck.com/events/twilight-wishes-2026/",
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2",
     "checkedFor": "Twilight Wishes",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14238,7 +13991,7 @@
    "name": "Dynamax Cryogonal during Max Monday",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -14325,10 +14078,10 @@
     "sourceUrl": "https://leekduck.com/events/season-24-twilight-trails/",
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-08-season-24-twilight-trails/season-24-twilight-trails.jpg",
     "checkedFor": "Twilight Trails",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15032,7 +14785,7 @@
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15101,7 +14854,7 @@
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15284,7 +15037,7 @@
    "name": "Mega Metagross in Mega Raids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15382,7 +15135,7 @@
    "name": "Max Battle Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15430,7 +15183,7 @@
    "name": "December Community Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15470,7 +15223,7 @@
    "name": "Minior Showers: Geminids",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15567,7 +15320,7 @@
    "name": "Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15615,7 +15368,7 @@
    "name": "Hatch Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15659,107 +15412,25 @@
    "encounters": [],
    "encounterConflicts": []
   },
-  "leekduck:january-communitydayclassic2027": {
-   "name": "January Community Day Classic",
-   "image": null,
-   "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/january-communitydayclassic2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": [],
-   "pokemon": [],
-   "encounters": [],
-   "encounterConflicts": []
-  },
-  "leekduck:super-mega-raid-day-january-2027": {
-   "name": "Super Mega Raid Day",
-   "image": null,
-   "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": [],
-   "pokemon": [],
-   "encounters": [],
-   "encounterConflicts": []
-  },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "image": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-17-duolingo-timed-research-2026/duolingo-timed-research-2026.jpg",
    "imageProvenance": {
     "source": "Leek Duck",
-    "sourceUrl": "https://leekduck.com/events/pokemon-x-adidas-2026/",
-    "imageUrl": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
+    "sourceUrl": "https://leekduck.com/events/duolingo-timed-research-2026/",
+    "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-17-duolingo-timed-research-2026/duolingo-timed-research-2026.jpg",
     "checkedFor": "adidas × Pokémon Timed Research",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/duolingo-timed-research-2026/"
+    },
     {
      "id": "leekduck",
      "name": "Leek Duck",
@@ -15773,6 +15444,55 @@
     "raids": [],
     "eggs": [],
     "research": [
+     {
+      "text": "Duo’s Pokémon Party, the limited-time Duolingo quest, starts on Tuesday, November 17, 2026, at 10:00 a.m. JST (Monday, November 16, at 5:00 p.m. PST).",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Join Duo’s Pokémon Party in Duolingo by December 21.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Do at least one lesson a day on seven different days by December 29.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Redeem your offer code in the Pokémon GO Web Store .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Offer codes are unique to each Duolingo learner, so there is no shared code to redeem.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Practice a new language with Professor Willow while you complete Pokémon GO tasks. Choose a language, and the research tasks will appear in that language. Look out for Professor Willow’s hints if you get stuck on a task!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete tasks to earn XP, Stardust, and encounters with the following Pokémon that have a Special Background.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
      {
       "text": "Celebrate the adidas × Pokémon collection with Timed Research at participating adidas and retail stores worldwide!",
       "sources": [
@@ -15832,6 +15552,103 @@
     "dates": []
    },
    "conflicts": [],
+   "gaps": [
+    {
+     "field": "shiny",
+     "missingFrom": []
+    },
+    {
+     "field": "costumes",
+     "missingFrom": []
+    }
+   ],
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
+  },
+  "leekduck:january-communitydayclassic2027": {
+   "name": "January Community Day Classic",
+   "image": null,
+   "imageProvenance": null,
+   "updated": "2026-11-17T04:40:34.847Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/january-communitydayclassic2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
+  },
+  "leekduck:super-mega-raid-day-january-2027": {
+   "name": "Super Mega Raid Day",
+   "image": null,
+   "imageProvenance": null,
+   "updated": "2026-11-17T04:40:34.847Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
    "gaps": [],
    "researchTasks": [],
    "pokemon": [],
@@ -15842,7 +15659,7 @@
    "name": "January Community Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15882,7 +15699,7 @@
    "name": "Max Battle Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15930,7 +15747,7 @@
    "name": "Super Mega Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -15978,7 +15795,7 @@
    "name": "February Community Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16018,7 +15835,7 @@
    "name": "Raid Day",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16066,7 +15883,7 @@
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16106,7 +15923,7 @@
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16146,7 +15963,7 @@
    "name": "Pokémon GO Tour: Alola - Global 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16186,7 +16003,7 @@
    "name": "Minior Showers: Eta Aquariids 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16290,7 +16107,7 @@
    "name": "Minior Showers: Southern Delta Aquariids 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16394,7 +16211,7 @@
    "name": "Minior Showers: Perseids 2027",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16491,7 +16308,7 @@
    "name": "Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16531,7 +16348,7 @@
    "name": "Ultra League, Master League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
    "image": null,
    "imageProvenance": null,
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -16570,7 +16387,7 @@
   "official:pokemon-run-30-2026": {
    "name": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -16585,8 +16402,8 @@
     "sourceUrl": "https://pokemongo.com/news/pokemon-run-30-2026/",
     "imageUrl": "https://lh3.googleusercontent.com/c7e36ASB48bmKd_kOL4e61NU9Y3EPaXd0xmQJldeDAa9zn-W9CSwx6Taf_ENgLcx8K7RE3yP62zaLqwkUSACC6GUcEua_kus5gsm_xoljQ",
     "checkedFor": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [
@@ -16854,7 +16671,7 @@
   "official:save-the-date-go-tour-2027": {
    "name": "Save the Date: Pokémon GO Tour 2027",
    "researchTasks": [],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -16869,8 +16686,8 @@
     "sourceUrl": "https://pokemongo.com/news/save-the-date-go-tour-2027/",
     "imageUrl": "https://lh3.googleusercontent.com/ZD_ZnJIVRb8a2RWD8L9wF4UR3f0fBAT2ZKk9lLB58yOlXhKOrghIstmijArGABhFlVacGQU56R514Pl0NsA9tTqEpGxbIo4D4oipystojQ",
     "checkedFor": "Save the Date: Pokémon GO Tour 2027",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [],
@@ -16912,7 +16729,7 @@
   "official:european-space-agency-event": {
    "name": "Pokémon GO partners with the European Space Agency",
    "researchTasks": [],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -16927,8 +16744,8 @@
     "sourceUrl": "https://pokemongo.com/news/european-space-agency-event/",
     "imageUrl": "https://lh3.googleusercontent.com/7CITEYsKb4CAwdYOln7q7h5K6U1cIVu2cnWRbDZtixs10PkfYfHzPn5Iz9wwbMFE3bosgBEiKnZlEZJZmGiyl-YqYRKHlIL8d7VAzR4DjA",
     "checkedFor": "Pokémon GO partners with the European Space Agency",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [],
@@ -17064,7 +16881,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -17099,7 +16916,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Win 2 raids",
@@ -17138,7 +16955,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Win a Max Battle",
@@ -17177,7 +16994,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -17208,7 +17025,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Catch a Hisuian Sliggoo",
@@ -17229,7 +17046,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Hatch an Egg",
@@ -17257,7 +17074,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -17292,7 +17109,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -17321,7 +17138,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Explore 2 km",
@@ -17344,7 +17161,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -17366,7 +17183,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     },
     {
      "task": "Make an Excellent Throw",
@@ -17399,10 +17216,10 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-16"
+     "checkedAt": "2026-11-17"
     }
    ],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "leekduck",
@@ -17417,8 +17234,8 @@
     "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
     "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-mexico-city/key-art.jpg",
     "checkedFor": "Pokémon GO Wild Area 2026: Mexico City",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [
@@ -19930,7 +19747,7 @@
   "official:festival-of-lights-2026": {
    "name": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -19945,8 +19762,8 @@
     "sourceUrl": "https://pokemongo.com/news/festival-of-lights-2026/",
     "imageUrl": "https://lh3.googleusercontent.com/CecgAXRzLOF4ifTP3Ufl01if11xzdVEI6R169xxEXw095LM8_lhhWydeV5VNDpXF9Ax-U8N1Zxq6SlKpwsft03DRYjsekc05qpxF8EyqcnU",
     "checkedFor": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [
@@ -20128,7 +19945,7 @@
   "official:gowildarea-global-2026-osaka-gameplay-update": {
    "name": "Notice Regarding Gameplay in Osaka During Pokémon GO Wild Area: Global",
    "researchTasks": [],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -20143,8 +19960,8 @@
     "sourceUrl": "https://pokemongo.com/news/gowildarea-global-2026-osaka-gameplay-update/",
     "imageUrl": "https://lh3.googleusercontent.com/bup0wWISTZ3O0vrWPQWqhldwW4KfZ5NK5ryVAi4WH9QbIhTbOruURsTgNo1YkmRqIHNjE8y_1rwotBus0gXX6_F--7Aww_qvO-Aw-yTgw9M",
     "checkedFor": "Notice Regarding Gameplay in Osaka During Pokémon GO Wild Area: Global",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [],
@@ -20198,7 +20015,7 @@
   "official:save-the-date-s25": {
    "name": "Save the dates for next Season’s Community Days! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -20213,8 +20030,8 @@
     "sourceUrl": "https://pokemongo.com/news/save-the-date-s25/",
     "imageUrl": "https://lh3.googleusercontent.com/GMESDlJRw5GMsmroW_oK6TLXA4OerLjNY43b0JkjCoSXrez97CwCflnTBTh-uzMhJZYQvQbtA8nK8YPEknYHu0tearwDyBVUoi8",
     "checkedFor": "Save the dates for next Season’s Community Days! — Pokémon GO",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [],
@@ -20325,7 +20142,7 @@
   "official:gowildarea-2026-timed-research": {
    "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
    "researchTasks": [],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -20340,8 +20157,8 @@
     "sourceUrl": "https://pokemongo.com/news/gowildarea-2026-timed-research/",
     "imageUrl": "https://lh3.googleusercontent.com/ou9s1BeQ2dxKpKmtjCjzqmE7LInbAzbD6UxkhtK6DMHRPpfxjkCxIfoVyfWpulXpmXnCCuTOluKKw_e_5n6yMhRFnYOq4OBwe5KoWt4HCeU",
     "checkedFor": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [],
@@ -20447,7 +20264,7 @@
   "official:gowildarea-mexicocity-friday-update": {
    "name": "Friday experience update for Pokémon GO Wild Area: Mexico City",
    "researchTasks": [],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -20462,8 +20279,8 @@
     "sourceUrl": "https://pokemongo.com/news/gowildarea-mexicocity-friday-update/",
     "imageUrl": "https://lh3.googleusercontent.com/HTRHhRfsm0cILX-H3EJ03aILmCzRB95KY8pzCeLzd2yJQg7vTbr-OpzV9t1Vg8mAoqx6ztvEgeDtnwHfa6i4qepx0eHl1DnGl-1hXA8ONkk",
     "checkedFor": "Friday experience update for Pokémon GO Wild Area: Mexico City",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [],
@@ -20527,7 +20344,7 @@
   "official:city-safari-boston-rescheduled": {
    "name": "Pokémon GO City Safari: Boston Update",
    "researchTasks": [],
-   "updated": "2026-11-16T22:34:57.452Z",
+   "updated": "2026-11-17T04:40:34.847Z",
    "sources": [
     {
      "id": "official",
@@ -20542,8 +20359,8 @@
     "sourceUrl": "https://pokemongo.com/news/city-safari-boston-rescheduled/",
     "imageUrl": "https://lh3.googleusercontent.com/5SAHXmMPUCpY_TUiDA81oiN00LXrIbsOXN9CTFtZbjI4pz_0RbQr0tmSACr1JErfEvZqM131RfCU8-LA2uskPRaP7YAom1uS216jhW_JpQ",
     "checkedFor": "Pokémon GO City Safari: Boston Update",
-    "checkedAt": "2026-11-16",
-    "retrievedAt": "2026-11-16T22:34:57.452Z"
+    "checkedAt": "2026-11-17",
+    "retrievedAt": "2026-11-17T04:40:34.847Z"
    },
    "fields": {
     "bonuses": [],
@@ -20581,6 +20398,260 @@
     },
     "conflicts": []
    }
+  },
+  "spirits": {
+   "name": "Dynamax Uxie, Mesprit and Azelf",
+   "image": "https://lh3.googleusercontent.com/lKvMVkt13VprgaVCCdWqglwACCNc_F4rLJMuuZg_MqZSHjDIkEm3dldHcnyv7OPdDmJYAdfYC9xZef00Jfna7R1B8QJLLBMOigqW_89obec",
+   "imageProvenance": {
+    "source": "Pokémon GO (official)",
+    "sourceUrl": "https://pokemongo.com/news/dynamax-uxie-mesprit-azelf-max-battle-day-2026/",
+    "imageUrl": "https://lh3.googleusercontent.com/lKvMVkt13VprgaVCCdWqglwACCNc_F4rLJMuuZg_MqZSHjDIkEm3dldHcnyv7OPdDmJYAdfYC9xZef00Jfna7R1B8QJLLBMOigqW_89obec",
+    "checkedFor": "Dynamax Uxie, Mesprit and Azelf",
+    "checkedAt": "2026-11-16",
+    "retrievedAt": "2026-11-16T22:34:57.452Z"
+   },
+   "updated": "2026-11-16T22:34:57.452Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "The following bonuses will be active during the event.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Max Particle collection limit increased to 1,600",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "All Power Spots will host Dynamax Battles",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Power Spots will refresh more frequently",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Additional Power Spots will be active",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "8× Max Particles from Power Spots",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Two additional Special Trades can be made for a maximum of three for the day",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "From October 23 at 5:00 p.m. to October 24 at 8:00 p.m. PDT (GMT −7), the daily Remote Raid Pass limit will increase from 10 to 20",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "2× Max Particles from exploring*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1/4 Adventuring distance to receive Max Particles**",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Dynamax Debut!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The following Pokémon will make their Pokémon GO Dynamax debut in five-star Max Battles!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Dynamax Uxie*: Appearing in the Asia-Pacific region",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Dynamax Mesprit*: Appearing in Europe, the Middle East, Africa, and India",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Dynamax Azelf*: Appearing in the Americas and Greenland",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Max Battles will take great teamwork and only appear at Power Spots that sporadically appear in different locations, so we’re making it easier to find both these battles and other Trainers to help you take them on!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "You can visit the Map to see the locations where Max Battles might appear during an event, in addition to those in progress.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Timed Research rewards include the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1 Max Mushroom",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "6,400 Max Particles",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "You’ll also receive the following bonus.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "2× XP from Max Battles",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "This Timed Research will be effective on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The Dynamax Uxie, Mesprit, and Azelf Battle Day Ultra Ticket Box will be available for US$4.99 (or the equivalent pricing tier in your local currency) and includes an event ticket and 800 Max Particles!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Check it out in the Pokémon GO Web Store soon!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "From October 23 at 5:00 p.m. to October 24 at 8:00 p.m. PDT (GMT −7), the daily Remote Raid Pass limit will increase from 10 to 20",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",

@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-16T22:34:57.452Z",
+ "runAt": "2026-11-17T04:40:34.847Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 76,
@@ -555,11 +555,11 @@
  },
  "sources": {
   "official": {
-   "listed": 20,
+   "listed": 19,
    "error": ""
   },
   "leekduck": {
-   "listed": 41,
+   "listed": 42,
    "error": ""
   },
   "hub": {
@@ -720,7 +720,7 @@
    "error": ""
   },
   "zh_hant": {
-   "listed": 28,
+   "listed": 29,
    "error": ""
   },
   "de": {
@@ -998,6 +998,16 @@
    ]
   },
   {
+   "event": "adidas × Pokémon Timed Research",
+   "field": "shiny",
+   "missingFrom": []
+  },
+  {
+   "event": "adidas × Pokémon Timed Research",
+   "field": "costumes",
+   "missingFrom": []
+  },
+  {
    "event": "Dynamax Machop during Max Monday",
    "field": "bonuses",
    "missingFrom": [
@@ -1194,14 +1204,14 @@
   "schemaVersion": 1,
   "publication": "audit-only",
   "sourceId": "leekduck",
-  "eligiblePages": 43,
-  "pagesWithFacets": 8,
+  "eligiblePages": 44,
+  "pagesWithFacets": 9,
   "duplicates": 0,
   "skippedLarge": 0,
   "counts": {
    "benefits": 69,
    "featuredMoves": 7,
-   "researchPrograms": 18,
+   "researchPrograms": 22,
    "unconfirmed": 1
   },
   "examples": [
@@ -1248,6 +1258,12 @@
     "researchProgramCount": 1
    },
    {
+    "sourceUrl": "https://leekduck.com/events/duolingo-timed-research-2026/",
+    "benefitCount": 0,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 4
+   },
+   {
     "sourceUrl": "https://leekduck.com/events/pokemon-x-adidas-2026/",
     "benefitCount": 0,
     "featuredMoveCount": 0,
@@ -1257,13 +1273,18 @@
   "errors": [],
   "canonicalLinks": {
    "publication": "staging-only",
-   "eligiblePages": 43,
+   "eligiblePages": 44,
    "linkedPages": 43,
-   "unlinkedPages": 0,
+   "unlinkedPages": 1,
    "ambiguousPages": 0,
    "duplicatePages": 0,
    "rejectedPages": 0,
-   "unlinkedExamples": [],
+   "unlinkedExamples": [
+    {
+     "sourceUrl": "https://leekduck.com/events/duolingo-timed-research-2026",
+     "expectedAlias": "leekduck:duolingo-timed-research-2026"
+    }
+   ],
    "ambiguousExamples": [],
    "linkedExamples": [
     {
