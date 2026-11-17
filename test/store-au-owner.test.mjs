@@ -101,6 +101,33 @@ test('a fresh owner-supplied November price makes one priced planner card (no un
   assert.ok(nov[0].contents.length > 0);
   assert.ok(rows.some(x => x.label === 'GO Pass Deluxe: November Ultra Box' && x.unpricedOfficial), 'unpriced offers stay honestly unpriced');
 });
+test('unlisted: an item the snapshot has not seen is accepted only with the explicit flag and a note', () => {
+  const row = {label:'Brand Unseen Ticket', price:'A$2.99'};
+  assert.match(apply(input([row])).errors[0], /not a name in the current Store snapshot/); // default rejection unchanged
+  const note = 'owner-observed in AU store; not yet in snapshot';
+  const ok = apply(input([{...row, unlisted:true, note}]));
+  assert.deepEqual(ok.errors, []);
+  const e = ok.data.prices.at(-1);
+  assert.equal(e.product, 'store-brand-unseen-ticket'); assert.equal(e.amount, 2.99); assert.equal(e.note, note);
+  assert.equal(e.verified, true); assert.equal(e.observed, '2026-11-14'); assert.equal(e.group, 'Tickets');
+  assert.ok(!('note' in apply(input([{label:'GO Pass Deluxe: November', price:'A$12.99'}])).data.prices.at(-1)));
+});
+test('unlisted does not relax any other check', () => {
+  const note = 'n';
+  const bad = [
+    [{label:'Brand Unseen Ticket', price:'A$2.99', unlisted:true}],                      // note required
+    [{label:'Brand Unseen Ticket', price:'A$2.99', unlisted:true, note:'  '}],
+    [{label:'Brand Unseen Ticket', price:'A$2.99', unlisted:'yes', note}],               // must be boolean true
+    [{label:'Brand Unseen Ticket', price:'$2.99', unlisted:true, note}],                 // A$ format
+    [{label:'Brand Unseen Ticket', price:'A$0.10', unlisted:true, note}],                // range
+    [{label:'Brand Unseen Ticket', price:'A$900', unlisted:true, note}],
+    [{label:'Brand Unseen Ticket', price:'A$2.99', unlisted:true, note},{label:'brand unseen ticket', price:'A$2.99', unlisted:true, note}], // duplicate
+    [{label:'GO Pass Deluxe: November', price:'A$12.99', unlisted:true, note}],           // already in snapshot: use the normal path
+    [{label:'Lucky Egg x8', price:'A$50', unlisted:true, note}],                          // ratio check still applies
+  ];
+  for (const items of bad) { const r = apply(input(items)); assert.ok(r.errors.length, JSON.stringify(items)); assert.equal(r.changed, 0); }
+  assert.ok(apply({observed:'2026-10-01', items:[{label:'Brand Unseen Ticket', price:'A$2.99', unlisted:true, note}]}).errors.length, 'date window still applies');
+});
 test('the committed owner input file (if any) is valid against the committed data', () => {
   if (!fs.existsSync(new URL('../data/au-store-input.json', import.meta.url))) return;
   const input = JSON.parse(fs.readFileSync(new URL('../data/au-store-input.json', import.meta.url), 'utf8'));
