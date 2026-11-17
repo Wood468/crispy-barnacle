@@ -4,7 +4,7 @@
 // Unsure candidates are left in the queue with their OCR text and reason. The workflow opens a pull request;
 // nothing reaches main without the owner merging it.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { writeFileSync, readFileSync, existsSync } from "node:fs";
+import { writeFileSync, readFileSync, statSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -350,7 +350,10 @@ export function buildQueue(reg) {
 export function weeklyLocalAssetReady(stagedPath, root = "public") {
   const p = String(stagedPath || "");
   if (!/^\/infographics\/g47ix\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i.test(p)) return false;
-  return existsSync(join(root, p.slice(1)));
+  try {
+    const file = statSync(join(root, p.slice(1)));
+    return file.isFile() && file.size > 0;
+  } catch { return false; }
 }
 
 async function main() {
