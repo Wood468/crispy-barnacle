@@ -51,7 +51,7 @@ export function auditEvents(curated,details){
   const sourceJoinReview=curatedEvents.flatMap(event=>{
     const declared=Array.isArray(event.detailIds)?[...new Set(event.detailIds.filter(
       id=>typeof id==='string'&&id.trim()
-    )).map(id=>id.trim()))]:[];
+    ).map(id=>id.trim()))]:[];
     const missingDetailIds=declared.filter(id=>!Object.hasOwn(sourceEvents,id));
     if(!missingDetailIds.length)return [];
     return [{
