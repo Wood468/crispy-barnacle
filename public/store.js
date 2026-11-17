@@ -326,7 +326,7 @@
       + '<p class="sp-results" data-sp-results aria-live="polite"></p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
       + '<details class="sp-compare-more sp-review"><summary>Data review</summary>' + review + '</details>'
-      + '<p class="sp-foot" data-sp-foot><span data-sp-fx-note></span>Prices are dated observations, not live checkout quotes. <span aria-hidden="true">~</span> older · est. estimate · ? unconfirmed</p></details>';
+      + '<p class="sp-foot" data-sp-foot>Prices are dated observations, not live checkout quotes. <span aria-hidden="true">~</span> older · est. estimate · ? unconfirmed <span data-sp-fx-note></span></p></details>';
   }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
@@ -364,7 +364,7 @@
           if (!el.querySelectorAll) return;
           var note = el.querySelector && el.querySelector('[data-sp-fx-note]');
           var dates = ['IDR', 'INR'].map(function (c) { return quotes && quotes[c] && quotes[c].observed; }).filter(Boolean).sort();
-          if (note && dates.length) note.textContent = 'A$ equivalents are approximate (rates as of ' + dates[0] + '). ';
+          if (note && dates.length) note.textContent = '· A$ equivalents are approximate (rates as of ' + dates[0] + ')';
           el.querySelectorAll('[data-sp-aud-currency]').forEach(function (node) {
             var currency = node.getAttribute('data-sp-aud-currency');
             var min = Number(node.getAttribute('data-sp-aud-min'));

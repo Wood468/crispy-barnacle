@@ -111,7 +111,7 @@ test('cards show only name and region prices; none of the removed provenance tex
     assert.doesNotMatch(card, bad, 'forbidden text ' + bad + ' in card: ' + text(card));
   const defaultView = html.replace(/<details class="sp-compare-more sp-review"[\s\S]*?<\/details>\s*<p class="sp-foot"[\s\S]*?<\/p>/, '');
   assert.equal((html.match(/data-sp-foot/g) || []).length, 1, 'one short footer line');
-  assert.match(html, /<p class="sp-foot" data-sp-foot><span data-sp-fx-note><\/span>Prices are dated observations, not live checkout quotes\./);
+  assert.match(html, /<p class="sp-foot" data-sp-foot>Prices are dated observations, not live checkout quotes\./);
   for (const bad of FORBIDDEN) assert.doesNotMatch(defaultView, bad, 'forbidden text on default view: ' + bad);
   assert.doesNotMatch(html, /class="sp-intro"|sp-source-id-note|sp-offer-contents|sp-product-group/);
   assert.doesNotMatch(defaultView, /regional prices are/i);
