@@ -32,3 +32,14 @@ test('malformed suffixes and invalid century leap days cannot bypass validation'
   {id:'century',name:'Century',start:'2100-02-29',end:'2100-03-01'}]);
  assert.deepEqual(r.odd.map(x=>x.id),['suffix','century']);
 });
+
+test('curated ISO local timestamps remain valid and preserve cross-list matching',()=>{
+ const r=check([{id:'world',name:'GO Wild Area Sendai',start:'2026-11-18',end:'2026-11-19'}],
+  [{id:'curated',t:'GO Wild Area Sendai',s:'2026-11-18T10:00',e:'2026-11-19T18:00'}]);
+ assert.deepEqual(r.odd,[]);
+});
+test('invalid curated timestamp clock and suffix are reviewable',()=>{
+ const r=check([], [{id:'clock',t:'Invalid hour',s:'2026-11-18T29:00',e:'2026-11-19T18:00'},
+  {id:'suffix',t:'Invalid suffix',s:'2026-11-18T10:00oops',e:'2026-11-19T18:00'}]);
+ assert.deepEqual(r.odd.map(x=>x.id),['clock','suffix']);
+});
