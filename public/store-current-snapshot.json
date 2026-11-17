@@ -1,68 +1,52 @@
 {
  "version": 1,
- "updated": "2026-11-15T17:43:29.724Z",
+ "updated": "2026-11-17T21:47:40.917Z",
  "items": [
-  {
-   "name": "GO Pass Deluxe: Into the Wild + 10 Ranks Ultra Box",
-   "href": "/purchase/item/web-event-pass-gowa-26-plus-10rank-webonly",
-   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/safari_box-3105cd1d398d/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
-   "endsAt": "2026-11-16T06:31:59.716Z",
-   "goneAt": null
-  },
   {
    "name": "GO Pass Deluxe: November Ultra Box",
    "href": "/purchase/item/web-event-pass-plusrank-november-26-ultra",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle3.sprite.a-da6f21e79d79/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
+   "goneAt": null
+  },
+  {
+   "name": "GO Pass Deluxe: Dynamax Trails",
+   "href": "/purchase/item/web-event-pass-gowa-leadout-26",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/genericbox_c1-af8d1a2b0020/w256.webp",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
+   "endsAt": "2026-11-24T21:47:40.917Z",
    "goneAt": null
   },
   {
    "name": "GO Pass Deluxe: November + 10 Ranks",
    "href": "/purchase/item/web-event-pass-plusrank-november-26",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle2.sprite.a-8ac3715a5394/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
   {
-   "name": "GO Pass Deluxe: Into the Wild + 10 Ranks",
-   "href": "/purchase/item/web-event-pass-gowa-26-plus-10rank",
-   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/safari_box-3105cd1d398d/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
-   "endsAt": "2026-11-16T06:31:59.716Z",
+   "name": "Pawniard Community Day Ultra Ticket Box",
+   "href": "/purchase/item/web-pawniard-cd-ultra",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.small.2-22dd61ad0ef2/w256.webp",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
+   "endsAt": "2026-11-22T21:47:40.917Z",
    "goneAt": null
   },
   {
    "name": "GO Pass Deluxe: November",
    "href": "/purchase/item/web-event-pass-base-november-26",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle1.sprite.a-2d087dfb6a85/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
-   "goneAt": null
-  },
-  {
-   "name": "GO Pass Deluxe: Into the Wild",
-   "href": "/purchase/item/web-event-pass-gowa-26",
-   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/safari_box-3105cd1d398d/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
-   "endsAt": "2026-11-16T06:31:59.716Z",
-   "goneAt": null
-  },
-  {
-   "name": "Pokémon GO Wild Area 2026: Global Ultra Ticket Box",
-   "href": "/purchase/item/web-gowa-global-2026-ticket",
-   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/genericbox_b1-a1f81b732c06/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
-   "endsAt": "2026-11-16T04:54:55.507Z",
    "goneAt": null
   },
   {
    "name": "Seasonal Delights Box",
    "href": "/purchase/item/web-seasonal-delights-2024-box",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle1.sprite.d-a7a801673287/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -70,7 +54,7 @@
    "name": "Lucky Egg",
    "href": "/purchase/item/web-luckyegg-bundle-8",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/luckyegg.5-38934dded957/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -78,7 +62,7 @@
    "name": "Star Piece",
    "href": "/purchase/item/web-starpiece-bundle",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/08_%20x3-254e18c77a42/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -86,7 +70,7 @@
    "name": "Remote Raid Pass",
    "href": "/purchase/item/web-remote-raidpass-bundle",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/raid_pass_blue%20(1)-ab35f313e6c2/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -94,7 +78,7 @@
    "name": "Pokémon Storage",
    "href": "/purchase/item/web-pokemon-storage-bundle",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_pokemon_storage_upgrade-289699e03393/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -102,7 +86,7 @@
    "name": "Item Bag",
    "href": "/purchase/item/web-item-storage-bundle",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_item_storage_upgrade-20cd05ec3eaa/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -110,7 +94,7 @@
    "name": "Egg Incubator",
    "href": "/purchase/item/web-basic-incubator-3pack",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_incubator_basic-12b107ebf517/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -118,7 +102,7 @@
    "name": "600 Link Charge + 3 Remote Raid Pass",
    "href": "/purchase/item/web-nc-600-rrp-3",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/xEnergyStack3RRP-320c9f88c8f9/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -126,7 +110,7 @@
    "name": "Super Incubator",
    "href": "/purchase/item/web-super-incubator-2pack",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/Incubator_Super-bb6b3349e0a5/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -134,7 +118,7 @@
    "name": "Max Revive",
    "href": "/purchase/item/web-max-revive-6",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_max_revive-7998834abd5d/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -142,7 +126,7 @@
    "name": "600 Link Charge",
    "href": "/purchase/item/web-nc-600",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/xEnergyStack-ffa9863d0d54/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -150,7 +134,7 @@
    "name": "Premium Battle Pass",
    "href": "/purchase/item/web-premium-battle-pass-3",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_paid_raid_ticket-583080af6a8c/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -158,7 +142,7 @@
    "name": "Max Particle Pack",
    "href": "/purchase/item/web-mp-pack.6",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_mp_replenish-0c1ab1b9c061/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -166,7 +150,7 @@
    "name": "Max Mushroom",
    "href": "/purchase/item/web-max-mushroom-3",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_max_boost-62af949f3236/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -174,7 +158,7 @@
    "name": "3 Max Particle Pack + 3 Remote Raid Pass",
    "href": "/purchase/item/web-3mp-3rrp-bundle",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/3_mp_rrp-a6b80455eb01/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -182,7 +166,7 @@
    "name": "Max Particle Pack + Remote Raid Pass",
    "href": "/purchase/item/web-1mp-1rrp-bundle",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/1_mp_rrp-7ac164099940/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -190,7 +174,7 @@
    "name": "Silver Pinap Berries",
    "href": "/purchase/item/web-10-silver-pinap",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_golden_pinap_berry-51f50aeeda30/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -198,7 +182,7 @@
    "name": "Golden Razz Berries",
    "href": "/purchase/item/web-15-gold-razz",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_golden_razz_berry-1f4331a9388c/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -206,7 +190,7 @@
    "name": "Max Potions",
    "href": "/purchase/item/web-10-max-potions",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/ITEM_MAX_POTION-a3caeba9993f/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -214,7 +198,7 @@
    "name": "2,900 PokéCoins",
    "href": "/purchase/item/web-coin-bundle-medium-thanksgiving-26",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-medium_thanksgiving-6e47e8297e55/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -222,7 +206,7 @@
    "name": "6,000 PokéCoins",
    "href": "/purchase/item/web-coin-bundle-large-thanksgiving-26",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-large_thanksgiving-ced1469c22c9/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -230,7 +214,7 @@
    "name": "16,500 PokéCoins",
    "href": "/purchase/item/web-coin-bundle-xlarge-thanksgiving-26",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-xlarge_thanksgiving-045a9cf30012/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -238,7 +222,7 @@
    "name": "110 PokéCoins",
    "href": "/purchase/item/coin-bundle-xxsmall",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-xxsmall-1ba8ba467515/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -246,7 +230,7 @@
    "name": "600 PokéCoins",
    "href": "/purchase/item/coin-bundle-xsmall",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-xsmall-58c20d49afe3/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -254,7 +238,7 @@
    "name": "1,300 PokéCoins",
    "href": "/purchase/item/coin-bundle-small_v2",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-small_v2-b29577dd6d19/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -262,7 +246,7 @@
    "name": "2,700 PokéCoins",
    "href": "/purchase/item/coin-bundle-medium_v2",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-medium_v2-6e47e8297e55/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -270,7 +254,7 @@
    "name": "5,600 PokéCoins",
    "href": "/purchase/item/coin-bundle-large-v2",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-large-v2-ced1469c22c9/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   },
@@ -278,7 +262,7 @@
    "name": "15,500 PokéCoins",
    "href": "/purchase/item/coin-bundle-xlarge",
    "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-xlarge-045a9cf30012/w256.webp",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null,
    "goneAt": null
   }

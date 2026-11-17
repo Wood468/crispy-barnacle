@@ -1,20 +1,5 @@
 {
  "items": {
-  "/purchase/item/web-event-pass-gowa-26-plus-10rank-webonly": {
-   "name": "GO Pass Deluxe: Into the Wild + 10 Ranks Ultra Box",
-   "images": [
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/safari_box-3105cd1d398d/w256.webp",
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_gowa_2026_event_01-31c1e2c017e8/w64.webp",
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_event_pass_point_go_wild_area_01-4519eced2d84/w64.webp"
-   ],
-   "price": "$24.99",
-   "section": "LIMITED_TIME",
-   "tag": "",
-   "limit": "",
-   "firstSeen": "2026-11-09T06:31:59.716Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
-   "endsAt": "2026-11-16T06:31:59.716Z"
-  },
   "/purchase/item/web-event-pass-plusrank-november-26-ultra": {
    "name": "GO Pass Deluxe: November Ultra Box",
    "images": [
@@ -22,13 +7,28 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_event_0238-31c1e2c017e8/w64.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_event_pass_point_monthly_03-4519eced2d84/w64.webp"
    ],
-   "price": "$14.99",
+   "price": "A$22.99",
    "section": "LIMITED_TIME",
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
-   "firstSeen": "2026-10-30T19:23:58.318Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
+  },
+  "/purchase/item/web-event-pass-gowa-leadout-26": {
+   "name": "GO Pass Deluxe: Dynamax Trails",
+   "images": [
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/genericbox_c1-af8d1a2b0020/w256.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_gowa_2026_event_02-31c1e2c017e8/w64.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_ultra_ball-cbbb04b4daf8/w64.webp"
+   ],
+   "price": "A$7.99",
+   "section": "LIMITED_TIME",
+   "tag": "LIMITED-TIME ONLY",
+   "limit": "Can only be purchased 1 time.",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
+   "endsAt": "2026-11-24T21:47:40.917Z"
   },
   "/purchase/item/web-event-pass-plusrank-november-26": {
    "name": "GO Pass Deluxe: November + 10 Ranks",
@@ -37,28 +37,28 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_event_0238-31c1e2c017e8/w64.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_event_pass_point_monthly_03-4519eced2d84/w64.webp"
    ],
-   "price": "$9.99",
+   "price": "A$14.99",
    "section": "LIMITED_TIME",
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
-   "firstSeen": "2026-10-30T19:23:58.318Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
-  "/purchase/item/web-event-pass-gowa-26-plus-10rank": {
-   "name": "GO Pass Deluxe: Into the Wild + 10 Ranks",
+  "/purchase/item/web-pawniard-cd-ultra": {
+   "name": "Pawniard Community Day Ultra Ticket Box",
    "images": [
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/safari_box-3105cd1d398d/w256.webp",
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_gowa_2026_event_01-31c1e2c017e8/w64.webp",
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_event_pass_point_go_wild_area_01-4519eced2d84/w64.webp"
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.small.2-22dd61ad0ef2/w256.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_event_ticket_s24_nov21_community-51c2e97a489c/w64.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_ultra_ball-cbbb04b4daf8/w64.webp"
    ],
-   "price": "$19.99",
+   "price": "A$2.99",
    "section": "LIMITED_TIME",
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
-   "firstSeen": "2026-11-09T06:31:59.716Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
-   "endsAt": "2026-11-16T06:31:59.716Z"
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
+   "endsAt": "2026-11-22T21:47:40.917Z"
   },
   "/purchase/item/web-event-pass-base-november-26": {
    "name": "GO Pass Deluxe: November",
@@ -67,43 +67,13 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_event_0238-31c1e2c017e8/w64.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_ultra_ball-cbbb04b4daf8/w64.webp"
    ],
-   "price": "$7.99",
+   "price": "A$12.99",
    "section": "LIMITED_TIME",
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
-   "firstSeen": "2026-10-30T19:23:58.318Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
-  },
-  "/purchase/item/web-event-pass-gowa-26": {
-   "name": "GO Pass Deluxe: Into the Wild",
-   "images": [
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/safari_box-3105cd1d398d/w256.webp",
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_gowa_2026_event_01-31c1e2c017e8/w64.webp",
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_ultra_ball-cbbb04b4daf8/w64.webp"
-   ],
-   "price": "$14.99",
-   "section": "LIMITED_TIME",
-   "tag": "LIMITED-TIME ONLY",
-   "limit": "Can only be purchased 1 time.",
-   "firstSeen": "2026-11-09T06:31:59.716Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
-   "endsAt": "2026-11-16T06:31:59.716Z"
-  },
-  "/purchase/item/web-gowa-global-2026-ticket": {
-   "name": "Pokémon GO Wild Area 2026: Global Ultra Ticket Box",
-   "images": [
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/genericbox_b1-a1f81b732c06/w256.webp",
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_event_ticket_s24_nov9_gowaol-2a65b0ad9617/w64.webp",
-    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_paid_raid_ticket-583080af6a8c/w64.webp"
-   ],
-   "price": "$11.99",
-   "section": "LIMITED_TIME",
-   "tag": "LIMITED-TIME ONLY",
-   "limit": "Can only be purchased 1 time.",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
-   "endsAt": "2026-11-16T04:54:55.507Z"
   },
   "/purchase/item/web-seasonal-delights-2024-box": {
    "name": "Seasonal Delights Box",
@@ -116,8 +86,8 @@
    "section": "BUNDLE",
    "tag": "",
    "limit": "Can only be purchased 3 times.",
-   "firstSeen": "2026-11-09T06:31:59.716Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-luckyegg-bundle-8": {
@@ -126,12 +96,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/luckyegg.5-38934dded957/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_lucky_egg-feaf5f82a636/w64.webp"
    ],
-   "price": "$4.99",
+   "price": "A$7.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-starpiece-bundle": {
@@ -140,12 +110,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/08_%20x3-254e18c77a42/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_star_piece-18779140310e/w64.webp"
    ],
-   "price": "$5.99",
+   "price": "A$9.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-remote-raidpass-bundle": {
@@ -154,12 +124,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/raid_pass_blue%20(1)-ab35f313e6c2/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_remote_raid_ticket-af11fc2ef1e4/w64.webp"
    ],
-   "price": "$2.99",
+   "price": "A$4.49",
    "section": "ITEMS",
    "tag": "POPULAR",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-pokemon-storage-bundle": {
@@ -168,12 +138,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_pokemon_storage_upgrade-289699e03393/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_pokemon_storage_upgrade-289699e03393/w64.webp"
    ],
-   "price": "$1.99",
+   "price": "A$2.99",
    "section": "ITEMS",
    "tag": "POPULAR",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-item-storage-bundle": {
@@ -182,12 +152,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_item_storage_upgrade-20cd05ec3eaa/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_item_storage_upgrade-20cd05ec3eaa/w64.webp"
    ],
-   "price": "$1.99",
+   "price": "A$2.99",
    "section": "ITEMS",
    "tag": "POPULAR",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-basic-incubator-3pack": {
@@ -196,12 +166,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_incubator_basic-12b107ebf517/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_incubator_basic-12b107ebf517/w64.webp"
    ],
-   "price": "$2.99",
+   "price": "A$4.49",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-nc-600-rrp-3": {
@@ -211,12 +181,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_enhanced_currency-5aead479b400/w64.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_remote_raid_ticket-af11fc2ef1e4/w64.webp"
    ],
-   "price": "$7.99",
+   "price": "A$12.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-super-incubator-2pack": {
@@ -225,12 +195,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/Incubator_Super-bb6b3349e0a5/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_incubator_super-5ba221453551/w64.webp"
    ],
-   "price": "$2.99",
+   "price": "A$4.49",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-max-revive-6": {
@@ -239,12 +209,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_max_revive-7998834abd5d/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_max_revive-7998834abd5d/w64.webp"
    ],
-   "price": "$1.99",
+   "price": "A$2.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-nc-600": {
@@ -253,12 +223,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/xEnergyStack-ffa9863d0d54/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_enhanced_currency-5aead479b400/w64.webp"
    ],
-   "price": "$2.99",
+   "price": "A$4.49",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-premium-battle-pass-3": {
@@ -267,12 +237,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_paid_raid_ticket-583080af6a8c/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_paid_raid_ticket-583080af6a8c/w64.webp"
    ],
-   "price": "$2.99",
+   "price": "A$4.49",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-mp-pack.6": {
@@ -281,12 +251,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_mp_replenish-0c1ab1b9c061/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_mp_replenish-0c1ab1b9c061/w64.webp"
    ],
-   "price": "$7.99",
+   "price": "A$12.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-max-mushroom-3": {
@@ -295,12 +265,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_max_boost-62af949f3236/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_max_boost-62af949f3236/w64.webp"
    ],
-   "price": "$9.99",
+   "price": "A$14.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-3mp-3rrp-bundle": {
@@ -310,12 +280,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_mp_replenish-0c1ab1b9c061/w64.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_remote_raid_ticket-af11fc2ef1e4/w64.webp"
    ],
-   "price": "$7.99",
+   "price": "A$12.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-1mp-1rrp-bundle": {
@@ -325,12 +295,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_mp_replenish-0c1ab1b9c061/w64.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_remote_raid_ticket-af11fc2ef1e4/w64.webp"
    ],
-   "price": "$2.99",
+   "price": "A$4.49",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-10-silver-pinap": {
@@ -339,12 +309,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_golden_pinap_berry-51f50aeeda30/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_golden_pinap_berry-51f50aeeda30/w64.webp"
    ],
-   "price": "$1.99",
+   "price": "A$2.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-15-gold-razz": {
@@ -353,12 +323,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_golden_razz_berry-1f4331a9388c/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_golden_razz_berry-1f4331a9388c/w64.webp"
    ],
-   "price": "$1.99",
+   "price": "A$2.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-10-max-potions": {
@@ -367,12 +337,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/ITEM_MAX_POTION-a3caeba9993f/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_max_potion-a3caeba9993f/w64.webp"
    ],
-   "price": "$1.99",
+   "price": "A$2.99",
    "section": "ITEMS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-coin-bundle-medium-thanksgiving-26": {
@@ -381,12 +351,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-medium_thanksgiving-6e47e8297e55/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/pokecoin-93ed73903621/w64.webp"
    ],
-   "price": "$19.99",
+   "price": "A$30.99",
    "section": "POKECOINS",
    "tag": "",
    "limit": "Can only be purchased 1 time.",
-   "firstSeen": "2026-11-11T06:23:26.963Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-coin-bundle-large-thanksgiving-26": {
@@ -395,12 +365,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-large_thanksgiving-ced1469c22c9/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/pokecoin-93ed73903621/w64.webp"
    ],
-   "price": "$39.99",
+   "price": "A$62.99",
    "section": "POKECOINS",
    "tag": "",
    "limit": "Can only be purchased 1 time.",
-   "firstSeen": "2026-11-11T06:23:26.963Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/web-coin-bundle-xlarge-thanksgiving-26": {
@@ -409,12 +379,12 @@
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-xlarge_thanksgiving-045a9cf30012/w256.webp",
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/pokecoin-93ed73903621/w64.webp"
    ],
-   "price": "$99.99",
+   "price": "A$159.99",
    "section": "POKECOINS",
    "tag": "BEST VALUE",
    "limit": "Can only be purchased 1 time.",
-   "firstSeen": "2026-11-11T06:23:26.963Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-xxsmall": {
@@ -422,12 +392,12 @@
    "images": [
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-xxsmall-1ba8ba467515/w256.webp"
    ],
-   "price": "$0.99",
+   "price": "A$1.59",
    "section": "POKECOINS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-xsmall": {
@@ -435,12 +405,12 @@
    "images": [
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-xsmall-58c20d49afe3/w256.webp"
    ],
-   "price": "$4.99",
+   "price": "A$7.99",
    "section": "POKECOINS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-small_v2": {
@@ -448,12 +418,12 @@
    "images": [
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-small_v2-b29577dd6d19/w256.webp"
    ],
-   "price": "$9.99",
+   "price": "A$14.99",
    "section": "POKECOINS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-medium_v2": {
@@ -461,12 +431,12 @@
    "images": [
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-medium_v2-6e47e8297e55/w256.webp"
    ],
-   "price": "$19.99",
+   "price": "A$30.99",
    "section": "POKECOINS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-large-v2": {
@@ -474,12 +444,12 @@
    "images": [
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-large-v2-ced1469c22c9/w256.webp"
    ],
-   "price": "$39.99",
+   "price": "A$62.99",
    "section": "POKECOINS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-xlarge": {
@@ -487,12 +457,12 @@
    "images": [
     "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/coin-bundle-xlarge-045a9cf30012/w256.webp"
    ],
-   "price": "$99.99",
+   "price": "A$159.99",
    "section": "POKECOINS",
    "tag": "",
    "limit": "",
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-11-15T17:43:29.724Z",
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-17T21:47:40.917Z",
    "endsAt": null
   }
  },
@@ -687,11 +657,12 @@
   }
  },
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-11-17T14:25:51.323Z",
- "currency": "$",
+ "updated": "2026-11-17T21:47:40.917Z",
+ "currency": "A$",
+ "lastCompleteAt": "2026-11-17T21:47:40.917Z",
  "lastObservation": {
-  "at": "2026-11-17T14:25:51.323Z",
-  "status": "held",
-  "reason": "incomplete-snapshot"
- }
+  "at": "2026-11-17T21:47:40.917Z",
+  "status": "complete"
+ },
+ "lastPublishedAt": "2026-11-17T21:47:40.917Z"
 }
