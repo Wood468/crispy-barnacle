@@ -1197,9 +1197,10 @@ async function storeIngest(request, env) {
   if (method !== "GET" && method !== "POST") return json({ error: "Method not allowed." }, 405);
   await env.DB.prepare(INGEST_TABLE).run();
   if (method === "GET") { // public store data, same as store-current-snapshot.json
-    const row = await env.DB.prepare("SELECT body FROM store_ingest WHERE id = 1").first();
+    const row = await env.DB.prepare("SELECT received, body FROM store_ingest WHERE id = 1").first();
     if (!row) return json({ error: "Not found." }, 404);
-    return new Response(row.body, { headers: { "content-type": "application/json", "cache-control": "no-store" } });
+    // x-store-received lets the watcher tell "the reader stopped uploading" from "the store did not change".
+    return new Response(row.body, { headers: { "content-type": "application/json", "cache-control": "no-store", "x-store-received": new Date(row.received).toISOString() } });
   }
   const given = String(request.headers.get("x-ingest-key") || "");
   if (!given || !(await same(given, env.STORE_INGEST_KEY))) { await ensure(env); return authFailure(request, env, "key"); }

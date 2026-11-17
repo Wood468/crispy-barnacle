@@ -44,6 +44,7 @@ test("valid A$ snapshot: 200, row stored, GET returns it with no-store", async (
   assert.equal(stored.id, 1); assert.ok(stored.received >= now); assert.equal(stored.fetched, new Date(now).toISOString());
   const g = await call(env, { method: "GET", key: null });
   assert.equal(g.status, 200); assert.equal(g.headers.get("cache-control"), "no-store");
+  assert.equal(g.headers.get("x-store-received"), new Date(stored.received).toISOString());
   const body = await g.json();
   assert.equal(body.items.length, 4); assert.equal(body.items[0].price, "A$1.99");
   assert.ok(!JSON.stringify(body).includes(KEY));
