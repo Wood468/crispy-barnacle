@@ -75,8 +75,27 @@
       }));
     } catch (_) { /* Storage disabled, full or private: do not affect display. */ }
   }
-  function fallbackQuotes(ownerFx, now) {
-    var result = owner(ownerFx, now), saved = stored(now);
+  /* Committed reference file (public/fx-rates.json): { base:'AUD', rates:{IDR,INR} units per 1 AUD,
+     asOf, source }. Offline fallback only; hidden once older than 45 days so a stale rate never misleads. */
+  var COMMITTED_MAX_AGE = 45 * DAY;
+  function committed(file, now) {
+    if (!file || file.base !== 'AUD' || !file.rates) return {};
+    var t = Date.parse(file.asOf), age = (now == null ? Date.now() : now) - t;
+    if (!Number.isFinite(age) || age < -DAY || age > COMMITTED_MAX_AGE) return {};
+    var out = {};
+    ['IDR', 'INR'].forEach(function (currency) {
+      var unitsPerAud = Number(file.rates[currency]);
+      if (Number.isFinite(unitsPerAud) && unitsPerAud > 0 && unitsPerAud < 1e9)
+        out[currency] = { audPerUnit: 1 / unitsPerAud, observed: observedDate(file.asOf),
+          source: String(file.source || 'Committed FX reference') };
+    });
+    return out;
+  }
+  function fallbackQuotes(ownerFx, now, committedFx) {
+    var result = owner(ownerFx, now), saved = stored(now), base = committed(committedFx, now);
+    ['IDR', 'INR'].forEach(function (currency) {
+      if (!result[currency] && base[currency]) result[currency] = base[currency];
+    });
     if (saved) ['IDR', 'INR'].forEach(function (currency) {
       /* Prefer the most recent source, not a fabricated blended conversion. */
       if (!result[currency] || Date.parse(saved[currency].observed) >= Date.parse(result[currency].observed))
@@ -86,9 +105,11 @@
   }
   /* Never let a blocked third-party FX request hold the AUD references
      indefinitely. A timeout retains only independently dated, fresh proof. */
-  function retrieve(fetchImpl, ownerFx, now, maxWaitMs) {
-    var fallback = fallbackQuotes(ownerFx, now);
-    if (typeof fetchImpl !== 'function') return Promise.resolve(fallback);
+  function retrieve(fetchImpl, ownerFx, now, maxWaitMs, committedFx) {
+    /* committedFx may be a promise (the same-origin file is fetched in parallel). */
+    var fallbackP = Promise.resolve(committedFx).catch(function () { return null; })
+      .then(function (file) { return fallbackQuotes(ownerFx, now, file); });
+    if (typeof fetchImpl !== 'function') return fallbackP;
     var wait = Number.isFinite(maxWaitMs) && maxWaitMs >= 0
       ? Math.min(3000, maxWaitMs) : 3000;
     var timer;
@@ -102,12 +123,12 @@
     }).then(function (json) {
       var verified = fromApi(json, now);
       if (verified) remember(json, now);
-      return verified || fallback;
-    }).catch(function () { return fallback; });
+      return verified || fallbackP;
+    }).catch(function () { return fallbackP; });
     return Promise.race([live, new Promise(function (resolve) {
-      timer = setTimeout(function () { resolve(fallback); }, wait);
+      timer = setTimeout(function () { resolve(fallbackP); }, wait);
     })]).finally(function () { clearTimeout(timer); });
   }
-  return { ENDPOINT: ENDPOINT, CACHE_KEY: CACHE_KEY, owner: owner, fromApi: fromApi,
+  return { ENDPOINT: ENDPOINT, CACHE_KEY: CACHE_KEY, owner: owner, committed: committed, COMMITTED_MAX_AGE: COMMITTED_MAX_AGE, fromApi: fromApi,
     amount: amount, display: display, retrieve: retrieve };
 });

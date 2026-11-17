@@ -71,7 +71,7 @@ test('pictures are local webp files whose bytes match the recorded checksum and 
   assert.deepEqual(prov.entries.map(e => '/' + e.path.replace(/^public\//, '')).sort(), [CANDY, XL, PINAP, "/ico/i/item-bag.webp", "/ico/i/pokemon-storage.webp", "/ico/i/star-piece.webp", "/ico/i/poke-ball.webp", "/ico/i/great-ball.webp", "/ico/i/ultra-ball.webp", "/ico/i/rare-candy.webp", "/ico/i/rare-candy-xl.webp", "/ico/i/lucky-egg.webp", "/ico/i/egg-incubator.webp", "/ico/i/super-incubator.webp", "/ico/i/nanab-berry.webp", "/ico/i/max-mushroom.webp", "/ico/i/revive.webp", "/ico/i/potion.webp", "/ico/i/hyper-potion.webp", "/ico/i/super-potion.webp", "/ico/i/remote-raid-pass.webp", "/ico/i/max-particle-pack.webp", "/ico/i/lure-module.webp", "/ico/i/link-charge.webp", "/ico/i/premium-battle-pass.webp"].sort());
 });
 
-test('no hotlinking: the pictures are same-origin paths and the shell cache moved to v377', () => {
+test('no hotlinking: the pictures are same-origin paths and the shell cache moved to v378', () => {
   assert.doesNotMatch(detail.match(/function eternatusIcon[^\n]*/)[0], /https?:/);
   assert.ok(Number(/const SHELL_CACHE = 'gofn-shell-v(\d+)'/.exec(sw)[1]) >= 373);
 });

@@ -1,0 +1,6 @@
+{
+  "base": "AUD",
+  "rates": { "IDR": 12300.40, "INR": 62.93 },
+  "asOf": "2026-11-17",
+  "source": "Google Finance (Morningstar), supplied by owner"
+}
