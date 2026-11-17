@@ -216,3 +216,27 @@ test("every 400 carries a fixed-vocabulary reason code and never echoes the inpu
   // every code in the vocabulary is exercised above
   assert.deepEqual([...new Set(Object.values(cases).map(c => c[1]))].sort(), [...REASONS].sort());
 });
+
+test("an empty evidence section (0 cards, 0 items) is tolerated; real section mismatches still fail", () => {
+  const now = Date.now();
+  const mk = (counts, name = n => n) => { // counts: {SECTION: n}
+    const its = []; let k = 0;
+    for (const [sec, n] of Object.entries(counts)) for (let j = 0; j < n; j++, k++) its.push({ name: "Item " + k, section: sec, href: "/purchase/item/i" + k, price: "A$" + (k + 1) + ".99", imgs: ["https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/i" + k + "/w256.webp"] });
+    return its;
+  };
+  const ev = (its, sections, over = {}) => ({ items: its, fetched: new Date(now).toISOString(), completeness: { ...withEvidence(its).completeness, sections, ...over } });
+  const its = mk({ POKECOINS: 9, ITEMS: 18, BUNDLE: 1, LIMITED_TIME: 5 });
+  const sec = [["POKECOINS", 9], ["ITEMS", 18], ["BUNDLE", 1], ["LIMITED_TIME", 5], ["ML_BUNDLE", 0]].map(([name, count]) => ({ name, count }));
+  const owner = ev(its, sec);
+  assert.equal(owner.items.length, 33); assert.equal(owner.completeness.cards, 33); assert.equal(owner.completeness.sections.length, 5);
+  assert.equal(validateAuIngest(owner, now), null);
+  assert.equal(watch.deriveCompleteness(owner).complete, true);
+  assert.equal(watch.deriveCompleteness(ev(its, sec.slice(0, 4))).complete, true); // unchanged: no empty section at all
+  const bad = s => watch.deriveCompleteness(s).reason;
+  assert.equal(bad(ev(its, sec.filter(s => s.name !== "BUNDLE"))), "section-count-mismatch"); // item section missing from evidence
+  assert.equal(bad(ev(its, sec.map(s => (s.name === "ITEMS" ? { ...s, count: 17 } : s)))), "section-count-mismatch"); // count differs
+  assert.equal(bad(ev(its, sec.map(s => (s.name === "BUNDLE" ? { ...s, count: 0 } : s)))), "section-count-mismatch"); // items in a zero-count section
+  assert.equal(bad(ev(its, [...sec.slice(0, 4), { name: "ML_BUNDLE", count: 2 }])), "section-count-mismatch"); // count>0 with no items
+  assert.equal(bad(ev(its, [...sec, { name: "ML_BUNDLE", count: 0 }])), "garbled-sections"); // duplicate id
+  assert.equal(bad(ev(its, [...sec, { name: "", count: 0 }])), "garbled-sections");
+});

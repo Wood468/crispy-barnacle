@@ -57,13 +57,16 @@ export function deriveCompleteness(snap) {
   if (!Number.isInteger(e.cards) || e.cards !== items.length) return no("card-count-mismatch");
   const tally = new Map();
   for (const i of items) tally.set(i.section, (tally.get(i.section) || 0) + 1);
-  const seen = new Set();
+  const seen = new Set(), nonEmpty = new Set();
   for (const sct of e.sections) {
     if (!sct || typeof sct.name !== "string" || !sct.name || seen.has(sct.name) || !Number.isInteger(sct.count) || sct.count < 0) return no("garbled-sections");
     seen.add(sct.name);
     if ((tally.get(sct.name) || 0) !== sct.count) return no("section-count-mismatch");
+    if (sct.count > 0) nonEmpty.add(sct.name);
   }
-  if (seen.size !== tally.size) return no("section-count-mismatch");
+  // A rendered section with 0 cards (the page shows an empty section) has no items, so it need not match an item section;
+  // every kept item's section must still be an evidence section (a zero-count one fails the count check above).
+  if (nonEmpty.size !== tally.size) return no("section-count-mismatch");
   return { complete: true };
 }
 

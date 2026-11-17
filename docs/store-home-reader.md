@@ -43,7 +43,7 @@ A 400 reply is `{"error":"Bad request.","reason":"<code>"}`. The code comes from
 | `evidence` | `completeness` is missing, or is not schema 1 from producer `store_snapshot.py` |
 | `load_unstable` | evidence says the scroll did not settle (`loadComplete` false or fewer than 2 stable passes) |
 | `cards_mismatch` | evidence `cards` differs from the number of items (for example nameless cards were dropped) |
-| `section_mismatch` | per-section counts in the evidence differ from the items |
+| `section_mismatch` | per-section counts in the evidence differ from the items, or an item's section is missing from the evidence (an evidence section with 0 cards and no items is fine) |
 | `completeness` | the evidence block is malformed (no sections, bad section names or counts) |
 | `fetched_format` | `fetched` is not `YYYY-MM-DDTHH:MM:SSZ` |
 | `fetched_window` | `fetched` is more than 15 minutes old or more than 5 minutes ahead of the Worker clock |
