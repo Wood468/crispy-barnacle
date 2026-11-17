@@ -275,7 +275,7 @@ export function storeCurrentSnapshot(state) {
   const clean = (key, entry, retired) => ({
     name: String(entry.name || "").slice(0, 160),
     href: /^\/purchase\/item\/[a-z0-9_.-]+$/i.test(key) ? key : null,
-    image: safeImage((entry.images || [])[0]),
+    image: (Array.isArray(entry.images) ? entry.images : []).map(safeImage).find(Boolean) || null,
     lastSeen: entry.lastSeen || null,
     endsAt: entry.endsAt || null,
     goneAt: retired ? entry.goneAt || null : null
