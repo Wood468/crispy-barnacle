@@ -24,6 +24,7 @@ bucket_name = "go-field-notes-images"
 # Secret (set in the Cloudflare dashboard, never here): SYNC_PIN, the PIN that unlocks syncing your marks.
 # Secret (write-only, dashboard only, never here; >= 32 random characters): STORE_INGEST_KEY, the key the Melbourne Home Assistant
 # add-on sends in the x-ingest-key header to POST the A$ store snapshot to /api/store-ingest. Unset means the route answers 404.
+# Redeploy (push to main) after adding or changing STORE_INGEST_KEY so the Worker picks it up.
 
 # Datamine watch: 20:30 UTC daily (7:30 am Melbourne during AEDT; 6:30 am during AEST).
 [triggers]
