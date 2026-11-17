@@ -2,12 +2,8 @@
 // Run after the public store snapshot. No inferred currencies or fuzzy matches.
 import {readFile, writeFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
-export function parseAUD(price) {
-  const m = /^A\$\s*([\d,]+(?:\.\d{2})?)$/.exec(String(price || '').trim());
-  if (!m) return null;
-  const n = Number(m[1].replace(/,/g,''));
-  return Number.isFinite(n) && n > 0 ? n : null;
-}
+import {parseAUD} from '../src/store-validate.js';
+export { parseAUD };
 export function updatePrices(data, snapshot) {
   const prices = data.prices || [];
   const known = new Map();

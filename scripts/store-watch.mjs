@@ -5,6 +5,10 @@
 // Usage: node scripts/store-watch.mjs snapshot.json   (state is kept in data/store-state.json)
 import { readFile, writeFile } from "node:fs/promises";
 import { routed } from "../src/tgroute.js";
+import { currencyOf, validateStoreObservation, deriveCompleteness, EVIDENCE_PRODUCER } from "../src/store-validate.js";
+
+// Pure validators live in src/store-validate.js (shared with the Worker ingest route); re-exported so existing imports keep working.
+export { currencyOf, validateStoreObservation, deriveCompleteness, EVIDENCE_PRODUCER };
 
 const STATE = process.env.STORE_STATE || "data/store-state.json";
 const STORE = "https://store.pokemongo.com";
@@ -38,13 +42,6 @@ export function endsAtFrom(left, nowIso, prev) {
   return new Date(est).toISOString();
 }
 
-// The store occasionally changes its display currency based on request geography. Treat a whole-store currency flip as
-// a temporary presentation change, not dozens of individual price changes.
-export const currencyOf = price => {
-  const value = String(price || "").trim();
-  const firstDigit = value.search(/\d/);
-  return firstDigit < 0 ? "" : value.slice(0, firstDigit).trim();
-};
 const CURRENCY_HOLD_MS = 72 * 36e5;
 export function dominantCurrency(prices) {
   const counts = new Map();
@@ -55,57 +52,7 @@ export function dominantCurrency(prices) {
   return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
 }
 
-/* Catalogue presence (name, section, link, images, end time) does not depend on price, and the page legitimately shows
-   cards with no currency symbol (PokeCoin-priced cards render a bare number, free cards may render text or nothing).
-   So a missing price/currency is NOT invalid. Only the items that DO carry a currency symbol take part in the
-   whole-store checks: two different symbols still hold the observation (mixed-currency), and the dominant-currency
-   flip hold in diffStore is unchanged. Items without a currency never change a saved price (see diffStore). */
-export function validateStoreObservation(snap) {
-  if (!Array.isArray(snap?.items) || snap.items.length < 3) return "empty-or-short-snapshot";
-  const seen = new Set();
-  const currencies = new Set();
-  for (const i of snap.items) {
-    if (!i || typeof i !== "object" || typeof i.name !== "string" || !i.name.trim() ||
-        (typeof i.price !== "string" && i.price != null) ||
-        typeof i.section !== "string" || !i.section.trim() ||
-        (typeof i.href !== "string" && typeof i.href !== "undefined")) return "invalid-sku";
-    const k = key(i);
-    if (!k || seen.has(k)) return "duplicate-sku";
-    seen.add(k);
-    const currency = currencyOf(i.price);
-    if (currency) currencies.add(currency);
-  }
-  if (currencies.size > 1) return "mixed-currency";
-  return null;
-}
-
 const LARGE_DROP_MIN = 3;
-const EVIDENCE_PRODUCER = "store_snapshot.py";
-/* Completeness is never taken from a flag. The producer (scripts/store_snapshot.py) emits an evidence block; it is
-   checked against the items actually observed. Evidence is "complete" only if the scrape scrolled until two
-   consecutive passes added nothing, every rendered card became a named item, and the per-section counts match the items.
-   Limitation: the storefront exposes no stated total, so this proves the scrape was stable and internally consistent,
-   not that the page hid nothing. */
-export function deriveCompleteness(snap) {
-  const e = snap && snap.completeness, items = snap && snap.items;
-  const no = reason => ({ complete: false, reason });
-  if (!e || typeof e !== "object" || Array.isArray(e) || !Array.isArray(items)) return no("no-evidence");
-  if (e.schema !== 1 || e.producer !== EVIDENCE_PRODUCER) return no("unsupported-evidence");
-  if (e.loadComplete !== true || !Number.isInteger(e.stablePasses) || e.stablePasses < 2) return no("load-not-stable");
-  if (!Array.isArray(e.sections) || !e.sections.length) return no("no-sections");
-  if (!Number.isInteger(e.cards) || e.cards !== items.length) return no("card-count-mismatch");
-  const tally = new Map();
-  for (const i of items) tally.set(i.section, (tally.get(i.section) || 0) + 1);
-  const seen = new Set();
-  for (const sct of e.sections) {
-    if (!sct || typeof sct.name !== "string" || !sct.name || seen.has(sct.name) || !Number.isInteger(sct.count) || sct.count < 0) return no("garbled-sections");
-    seen.add(sct.name);
-    if ((tally.get(sct.name) || 0) !== sct.count) return no("section-count-mismatch");
-  }
-  if (seen.size !== tally.size) return no("section-count-mismatch");
-  return { complete: true };
-}
-
 export function diffStore(prev, snap, nowIso) {
   const invalid = validateStoreObservation(snap);
   if (invalid) return {
