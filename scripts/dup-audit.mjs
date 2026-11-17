@@ -28,7 +28,7 @@ const dateIssue = e => {
   };
   const start = day(e.start), end = day(e.end ?? e.start);
   if (!validDay(start) || !validDay(end)) return "invalid calendar date";
-  if (end < start) return "ends before it starts";
+  if (end < start || (end === start && typeof e.start === "string" && typeof e.end === "string" && e.start.includes("T") && e.end.includes("T") && Date.parse(e.end) < Date.parse(e.start))) return "ends before it starts";
   if ((Date.parse(end) - Date.parse(start)) / 864e5 > 3 * 365) return "runs longer than 3 years (typo year?)";
   return null;
 };
