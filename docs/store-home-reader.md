@@ -19,4 +19,9 @@ curl -fsS -H "x-ingest-key: $KEY" -H "content-type: application/json" \
 
 `POST /api/store-ingest` is inert (404) until the owner creates the `STORE_INGEST_KEY` secret (at least 32 characters). It only stores a snapshot that is complete (producer evidence checks out), has at least 3 items, at least half of them with an explicit `A$` price, no other currency symbol, https-only images, and a `fetched` time within the last 15 minutes (not more than 5 minutes ahead) and newer than the stored one. At most one accepted upload per 5 minutes; wrong keys are throttled per address (10 per 10 minutes) and globally (25 per 10 minutes). Limits: 256 KB, 400 items. A rejected upload leaves the stored snapshot unchanged and the reply never echoes the input.
 
-`GET /api/store-ingest` returns the latest stored snapshot (`cache-control: no-store`, plus an `x-store-received` header with the time of the last accepted upload, no auth: it is public store data, like `store-current-snapshot.json`), or 404 if there is none.
+`GET /api/store-ingest` returns the latest stored raw snapshot (`cache-control: public, max-age=60`, plus an `x-store-received` header with the time of the last accepted upload), or 404 if there is none. It needs no key: it is public storefront data, but being the raw snapshot it includes standalone SKUs that the filtered `store-current-snapshot.json` leaves out.
+
+## Add-on rules
+
+- Treat HTTP 409 and 429 as success ("already have a newer or very recent snapshot"). Do not retry in a loop; just wait for the next hourly run.
+- A wrong key counts against the shared per-address failure bucket (the same one the sync PIN uses). Repeated wrong-key uploads from home can make a mistyped PIN from the same address return 429 for 10 minutes. Test the key once by hand before enabling the schedule.

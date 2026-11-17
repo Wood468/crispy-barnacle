@@ -14,9 +14,9 @@ const call = (env, { method = "POST", key = KEY, body, headers = {}, path = "/ap
   method, headers: { "content-type": "application/json", "cf-connecting-ip": ip || "10.1.0." + (++ipN % 250), ...(key ? { "x-ingest-key": key } : {}), ...headers },
   body: method === "GET" ? undefined : (typeof body === "string" ? body : JSON.stringify(body))
 }), env, ctx);
-const items = (price = i => "A$" + (i + 1) + ".99") => ["a", "b", "c", "d"].map((n, i) => ({ name: "Item " + n, section: "box", href: "/purchase/" + n, price: price(i), imgs: ["https://example.com/" + n + ".png"] }));
+const items = (price = i => "A$" + (i + 1) + ".99") => ["a", "b", "c", "d"].map((n, i) => ({ name: "Item " + n, section: "box", href: "/purchase/" + n, price: price(i), imgs: ["https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/" + n + "/w256.webp"] }));
 const snap = (now, over = {}, its = items()) => ({ ...withEvidence(its), fetched: new Date(now).toISOString(), items: its, ...over });
-const row = env => env.DB.raw.prepare("SELECT * FROM store_ingest").get();
+const row = env => { try { return env.DB.raw.prepare("SELECT * FROM store_ingest").get(); } catch { return undefined; } };
 
 test("unset or short key: route is inert (404), even with a matching header", async () => {
   for (const k of [undefined, "", "short"]) {
@@ -43,7 +43,7 @@ test("valid A$ snapshot: 200, row stored, GET returns it with no-store", async (
   const stored = row(env);
   assert.equal(stored.id, 1); assert.ok(stored.received >= now); assert.equal(stored.fetched, new Date(now).toISOString());
   const g = await call(env, { method: "GET", key: null });
-  assert.equal(g.status, 200); assert.equal(g.headers.get("cache-control"), "no-store");
+  assert.equal(g.status, 200); assert.equal(g.headers.get("cache-control"), "public, max-age=60");
   assert.equal(g.headers.get("x-store-received"), new Date(stored.received).toISOString());
   const body = await g.json();
   assert.equal(body.items.length, 4); assert.equal(body.items[0].price, "A$1.99");
@@ -105,7 +105,15 @@ test("US$, mixed, bare-number, incomplete, invalid and over-limit snapshots are 
     incomplete: { ...snap(now), completeness: undefined },
     flagOnly: { ...snap(now), completeness: { complete: true } },
     tooShort: snap(now, {}, items().slice(0, 2)),
-    httpImg: snap(now, {}, items().map(i => ({ ...i, imgs: ["http://example.com/a.png"] }))),
+    httpImg: snap(now, {}, items().map(i => ({ ...i, imgs: ["http://assets.pgo.webstore.nianticlabs.com/a.webp"] }))),
+    otherHostImg: snap(now, {}, items().map(i => ({ ...i, imgs: ["https://example.com/a.png"] }))),
+    lookalikeImg: snap(now, {}, items().map(i => ({ ...i, imgs: ["https://assets.pgo.webstore.nianticlabs.com.evil.test/a.webp"] }))),
+    credImg: snap(now, {}, items().map(i => ({ ...i, imgs: ["https://u:p@assets.pgo.webstore.nianticlabs.com/a.webp"] }))),
+    hrefAt: snap(now, {}, items().map(i => ({ ...i, href: "@evil.test/purchase/x" }))),
+    hrefProtoRel: snap(now, {}, items().map(i => ({ ...i, href: "//evil.test/purchase/x" }))),
+    hrefJs: snap(now, {}, items().map(i => ({ ...i, href: "javascript:alert(1)" }))),
+    hrefAbs: snap(now, {}, items().map(i => ({ ...i, href: "https://evil.test/purchase/x" }))),
+    hrefOtherPath: snap(now, {}, items().map(i => ({ ...i, href: "/account/x" }))),
     longName: snap(now, {}, items().map((i, n) => (n ? i : { ...i, name: "n".repeat(201) }))),
     notObject: [1, 2, 3],
     tooMany: snap(now, {}, Array.from({ length: 401 }, (_, i) => ({ name: "I" + i, section: "box", href: "/p/" + i, price: "A$1.00" })))
@@ -131,4 +139,31 @@ test("security: the key is never read from the query string or any other header,
   const ok = await call(env, { body: snap(now), path: "/api/store-ingest?junk=1" });
   assert.equal(ok.status, 200); assert.ok(!(await ok.text()).includes(KEY));
   const g = await call(env, { method: "GET", key: KEY }); assert.ok(!(await g.text()).includes(KEY));
+});
+
+test("a wrong ingest key fills the shared bucket but the correct x-pin still works; wording is 'key' for ingest and unchanged for PINs", async () => {
+  const env = mkEnv({ SYNC_PIN: "1234" });
+  let last;
+  for (let n = 0; n < 10; n++) { last = await call(env, { key: "wrong", body: snap(Date.now()), ip: "7.7.7.7" }); assert.equal(last.status, 401); assert.deepEqual(await last.json(), { error: "Wrong key." }); }
+  const t = await call(env, { key: "wrong", body: snap(Date.now()), ip: "7.7.7.7" });
+  assert.equal(t.status, 429); assert.equal((await t.json()).error, "Too many wrong keys from this address. Try again in 10 minutes.");
+  const pin = (p) => worker.fetch(new Request("https://x.test/api/dex", { headers: { "x-pin": p, "cf-connecting-ip": "7.7.7.7" } }), env, ctx);
+  assert.equal((await pin("1234")).status, 200);
+  const env2 = mkEnv({ SYNC_PIN: "1234" });
+  const pin2 = (p) => worker.fetch(new Request("https://x.test/api/dex", { headers: { "x-pin": p, "cf-connecting-ip": "8.8.8.8" } }), env2, ctx);
+  const w = await pin2("0000"); assert.equal(w.status, 401); assert.deepEqual(await w.json(), { error: "Wrong PIN." });
+  for (let n = 0; n < 9; n++) await pin2("0000");
+  const l = await pin2("0000"); assert.equal(l.status, 429); assert.deepEqual(await l.json(), { error: "Too many wrong PINs from this address. Try again in 10 minutes." });
+});
+
+test("two concurrent identical POSTs yield exactly one 200", async () => {
+  const env = mkEnv(), b = snap(Date.now());
+  const rs = await Promise.all([call(env, { body: b }), call(env, { body: b })]);
+  assert.deepEqual(rs.map(r => r.status).filter(c => c === 200), [200]);
+  assert.ok(rs.every(r => [200, 409, 429].includes(r.status)));
+});
+
+test("GET does not need the table to exist yet (404, then created lazily)", async () => {
+  const env = mkEnv();
+  assert.equal((await call(env, { method: "GET", key: null })).status, 404);
 });
