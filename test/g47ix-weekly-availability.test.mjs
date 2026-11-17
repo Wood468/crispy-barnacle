@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { buildWeekly, weeklyLocalAssetReady } from '../scripts/g47ix-publish.mjs';
+import { buildWeekly, weeklyLocalAssetReady, selectWeeklyForPublication } from '../scripts/g47ix-publish.mjs';
 
 const now = Date.parse('2026-11-17T00:00:00Z');
 const media = id => '/infographics/g47ix/' + id + '.webp';
@@ -91,8 +91,36 @@ test('real local path requires nonempty restored media bytes and rejects travers
 
 test('scheduled CLI uses local restored-file guard, without modifying registry or rights policy', () => {
   const source = readFileSync(new URL('../scripts/g47ix-publish.mjs', import.meta.url), 'utf8');
-  assert.match(source, /const safeWeekly = buildWeekly\(reg, asOf, \{ assetReady: p => weeklyLocalAssetReady\(p\) \}\)/);
+  assert.match(source, /const \{ weekly: safeWeekly, held \} = selectWeeklyForPublication\(reg, asOf, p => weeklyLocalAssetReady\(p\)\)/);
   assert.match(source, /await writeFile\(WEEKLY, JSON\.stringify\(safeWeekly, null, 1\)/);
   assert.match(source, /selected picture\(s\) held because their local files were not restored/);
   assert.doesNotMatch(source, /assetReady: .*mediaFromR2|assetReady: .*download\(/, 'no image fetch performed by this guard');
+});
+
+test('publisher keeps last-known-good weekly when new media is missing but old bytes exist', () => {
+  const reg = { candidates: [old, newest, month] };
+  const before = JSON.stringify(reg);
+  const { weekly, held } = selectWeeklyForPublication(reg, now,
+    p => p === old.stagedPath || p === month.stagedPath);
+  assert.deepEqual(weekly.items.map(x => x.id), ['t2', 'nov']);
+  assert.equal(held, 1, 'newest weekly was withheld in favour of restored older artwork');
+  assert.equal(JSON.stringify(reg), before, 'the source and review statuses are never mutated');
+});
+
+test('complete and partial R2 outages halt publication before changing the last-known-good public feed', () => {
+  const reg = { candidates: [old, newest, month] };
+  assert.throws(() => selectWeeklyForPublication(reg, now, () => false),
+    /previous public feed retained/);
+  assert.throws(() => selectWeeklyForPublication(reg, now, p => p === month.stagedPath),
+    /previous public feed retained/, 'missing weekly cannot be silently omitted when month still exists');
+  assert.throws(() => selectWeeklyForPublication(reg, now, p => p === old.stagedPath),
+    /previous public feed retained/, 'missing month cannot be silently omitted when week is restored');
+  assert.deepEqual(selectWeeklyForPublication({ candidates: [] }, now, () => false).weekly.items, [],
+    'no available candidate in registry is different from an interrupted restore');
+});
+
+test('publisher legacy callers have unchanged weekly ranking without a local-file callback', () => {
+  const result = selectWeeklyForPublication({ candidates: [old, newest] }, now, undefined);
+  assert.equal(result.weekly.items[0].id, 't16');
+  assert.equal(result.held, 0);
 });
