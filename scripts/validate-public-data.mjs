@@ -84,8 +84,20 @@ const rotations = data && data.rotation;
 if (rotations != null) {
   if (!Array.isArray(rotations)) fail("public/data.json rotation", "expected an array");
   else {
-    const validLocalTime = value => typeof value === "string" &&
-      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value) && !Number.isNaN(Date.parse(value));
+    // Date.parse normalizes some impossible calendar dates (e.g. Feb 30).
+    // Rotation values are *local wall-clock* times, not UTC instants: validate
+    // their written Gregorian fields without applying the runner's timezone.
+    const validLocalTime = value => {
+      const match = typeof value === "string" &&
+        /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(value);
+      if (!match) return false;
+      const [, yyyy, mm, dd, hh, min] = match;
+      const year = Number(yyyy), month = Number(mm), day = Number(dd);
+      if (year < 1 || month < 1 || month > 12 || Number(hh) > 23 || Number(min) > 59) return false;
+      const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+      const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      return day >= 1 && day <= days[month - 1];
+    };
     for (const [i, row] of rotations.entries()) {
       const where = `public/data.json rotation[${i}]`;
       if (!row || typeof row !== "object" || Array.isArray(row)) { fail(where, "expected a rotation object"); continue; }
