@@ -43,7 +43,8 @@ test("match: only when the 5-star set is exactly the rotation's, and the rotatio
   assert.equal(matchRotation(ROT, ["Cresselia"], NOW), null, "a subset is not a match");
   assert.equal(matchRotation(ROT, ["Cresselia", "Darkrai", "Mewtwo"], NOW), null, "a superset is not a match");
   assert.equal(matchRotation(ROT, ["Crowned Sword Zacian", "Crowned Shield Zamazenta"], NOW), null, "ended rotation");
-  assert.equal(matchRotation([ROT[1], { ...ROT[1], s: "2026-11-17T06:00" }], ["Cresselia", "Darkrai"], NOW), null, "ambiguous");
+  assert.equal(matchRotation([ROT[1], { ...ROT[1], s: "2026-11-17T06:00" }], ["Cresselia", "Darkrai"], NOW), ROT[1], "a future duplicate is not currently ambiguous");
+  assert.equal(matchRotation([ROT[1], { ...ROT[1], s: "2026-11-15T06:00" }], ["Cresselia", "Darkrai"], NOW), null, "two active matching rotations remain ambiguous");
 });
 
 test("write: a matching page fills the empty block, with provenance, touching nothing else", async () => {
