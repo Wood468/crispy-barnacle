@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { buildWeekly, weeklyLocalAssetReady, selectWeeklyForPublication } from '../scripts/g47ix-publish.mjs';
 
 const now = Date.parse('2026-11-17T00:00:00Z');
@@ -123,4 +124,54 @@ test('publisher legacy callers have unchanged weekly ranking without a local-fil
   const result = selectWeeklyForPublication({ candidates: [old, newest] }, now, undefined);
   assert.equal(result.weekly.items[0].id, 't16');
   assert.equal(result.held, 0);
+});
+
+test('end-to-end CLI preserves old weekly when newest is missing; restores newest when bytes return', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'gofn-weekly-cli-'));
+  try {
+    mkdirSync(join(temp, 'data')); mkdirSync(join(temp, 'public', 'infographics', 'g47ix'), { recursive: true });
+    const write = (file, value) => writeFileSync(join(temp, file), JSON.stringify(value));
+    write('data/g47ix-infographics-review.json', { candidates: [old, newest] });
+    write('public/event-info.json', { events: {} });
+    write('public/data.json', { events: [], rotation: [] });
+    write('public/weekly.json', { updated: '2026-11-09', items: [{ kind: 'week', id: 't2', image: old.stagedPath }] });
+    writeFileSync(join(temp, old.stagedPath.slice(1)), 'VALID_LOCAL_OLD');
+    const script = new URL('../scripts/g47ix-publish.mjs', import.meta.url).pathname;
+    const invoke = () => spawnSync(process.execPath, [script], { cwd: temp, encoding: 'utf8', timeout: 15000 });
+    let run = invoke();
+    assert.equal(run.status, 0, (run.stderr || '') + (run.stdout || ''));
+    let weekly = JSON.parse(readFileSync(join(temp, 'public/weekly.json'), 'utf8'));
+    assert.equal(weekly.items[0].id, 't2', 'CLI does not publish missing T16');
+    assert.match(run.stderr, /selected picture\(s\) held/);
+    writeFileSync(join(temp, newest.stagedPath.slice(1)), 'VALID_LOCAL_NEW');
+    run = invoke();
+    assert.equal(run.status, 0, (run.stderr || '') + (run.stdout || ''));
+    weekly = JSON.parse(readFileSync(join(temp, 'public/weekly.json'), 'utf8'));
+    assert.equal(weekly.items[0].id, 't16', 'CLI chooses newest once local bytes exist');
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('end-to-end CLI on complete R2 restore failure leaves committed weekly bytes unchanged', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'gofn-weekly-cli-failure-'));
+  try {
+    mkdirSync(join(temp, 'data')); mkdirSync(join(temp, 'public', 'infographics', 'g47ix'), { recursive: true });
+    const write = (file, value) => writeFileSync(join(temp, file), JSON.stringify(value));
+    write('data/g47ix-infographics-review.json', { candidates: [old, newest] });
+    write('public/event-info.json', { events: {} });
+    write('public/data.json', { events: [], rotation: [] });
+    const prior = JSON.stringify({ updated: '2026-11-09', items: [{ kind: 'week', id: 't2', image: old.stagedPath }] });
+    writeFileSync(join(temp, 'public/weekly.json'), prior);
+    const script = new URL('../scripts/g47ix-publish.mjs', import.meta.url).pathname;
+    const run = spawnSync(process.execPath, [script], { cwd: temp, encoding: 'utf8', timeout: 15000 });
+    assert.equal(run.status, 1, (run.stderr || '') + (run.stdout || ''));
+    assert.match(run.stderr, /previous public feed retained/);
+    assert.equal(readFileSync(join(temp, 'public/weekly.json'), 'utf8'), prior,
+      'no media: CLI throws before overwriting the last-good feed');
+    assert.doesNotMatch(run.stderr, /\/infographics\/g47ix\/|discord\.com/,
+      'failure message must not leak source URLs or media identifiers');
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
 });
