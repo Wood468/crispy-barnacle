@@ -687,10 +687,10 @@
   }
  },
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-11-16T22:04:18.306Z",
+ "updated": "2026-11-17T04:29:29.914Z",
  "currency": "$",
  "lastObservation": {
-  "at": "2026-11-16T22:04:18.306Z",
+  "at": "2026-11-17T04:29:29.914Z",
   "status": "held",
   "reason": "incomplete-snapshot"
  }
