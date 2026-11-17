@@ -21,7 +21,7 @@ export function officialSkuImage(value) {
     const u = new URL(value);
     if (u.protocol !== "https:" || u.hostname !== "assets.pgo.webstore.nianticlabs.com" ||
         u.username || u.password || u.port || u.search || u.hash) return null;
-    if (!/^\\/pgo\\/image_variants\\/v1\\/sku_assets\\/[a-z0-9_.%()\\-]+\\/w(?:64|128|256|512)\\.webp$/i.test(u.pathname)) return null;
+    if (!/^\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()\-]+\/w(?:64|128|256|512)\.webp$/i.test(u.pathname)) return null;
     return u.href;
   } catch { return null; }
 }
