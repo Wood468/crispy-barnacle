@@ -58,7 +58,7 @@ async function alive(url) {
 export async function main() {
   const all = new Set();
   for (const f of FILES) { try { urlsIn(JSON.parse(await readFile(f, "utf8")), all); } catch { /* file optional */ } }
-  const list = [...all].filter(u => !/michaelpuff\.com|cdn\.discordapp|example\./.test(u));
+  const list = [...new Set([...all].map(publicSourceUrl).filter(Boolean))];
   const bad = [];
   const queue = [...list];
   await Promise.all(Array.from({ length: 8 }, async () => { for (let u; (u = queue.pop());) { const why = await alive(u); if (why) bad.push(safeLinkLabel(u) + " (" + why + ")"); } }));
