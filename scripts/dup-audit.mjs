@@ -13,7 +13,7 @@ const rd = async (f, d) => { try { return JSON.parse(await readFile(f, "utf8"));
 const label = e => ({ id: e.id, name: e.name, place: e.place || "", start: String(e.start || "").slice(0, 10), end: String(e.end || "").slice(0, 10), list: e.list });
 
 const validDay = value => {
-  if (typeof value !== "string" || !/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return false;
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(value + "T00:00:00Z");
   return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
 };
