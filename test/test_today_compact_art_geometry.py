@@ -210,7 +210,7 @@ def test_hidden_done_restore_rows_geometry():
 
 
 def test_compact_card_without_featured_pokemon_has_banner_or_no_gap():
-    """Real renderer + CSS: a compact card with no featured Pokemon shows its exact official banner inside the 44px slot,
+    """Real renderer + CSS: a compact card with no featured Pokemon shows its exact official banner at full card width (2/1),
     and with no verified image the slot is removed (title starts at the card's left padding, no blank gap)."""
     from playwright.sync_api import sync_playwright
     with sync_playwright() as playwright:
@@ -237,7 +237,7 @@ def test_compact_card_without_featured_pokemon_has_banner_or_no_gap():
                   const withArt = [...document.querySelectorAll('.t1-minor')].find(c => c.querySelector('.t1-minor-banner'));
                   const noArt = [...document.querySelectorAll('.t1-minor')].find(c => !c.querySelector('.t1-minor-art'));
                   const out = {haveBoth: !!withArt && !!noArt};
-                  if (withArt) { const slot = withArt.querySelector('.t1-minor-art'); out.slotSized = r(slot).width <= 44.5 && r(slot).width >= 30; out.titleRightOfSlot = r(withArt.querySelector('.t1-title')).left >= r(slot).right - 1; }
+                  if (withArt) { const slot = withArt.querySelector('.t1-minor-art'); const c = r(withArt), ar = r(slot).width / r(slot).height; out.slotFullWidth = Math.abs(r(slot).width - c.width) <= 2; out.slotIsTwoToOne = Math.abs(ar - 2) < 0.05; out.titleBelowSlot = r(withArt.querySelector('.t1-title')).top >= r(slot).bottom - 1; }
                   if (noArt) { const t = r(noArt.querySelector('.t1-title')), c = r(noArt); out.noGap = t.left - c.left < 24; out.noEmptyChild = !noArt.querySelector('.t1-minor-art'); out.menuInside = r(noArt.querySelector('.t1-more')).right <= c.right + 1; }
                   out.noOverflow = document.documentElement.scrollWidth <= innerWidth + 1;
                   return out;
