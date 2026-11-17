@@ -8,6 +8,33 @@ export function urlsIn(value, out = new Set()) {
   else if (value && typeof value === "object") Object.values(value).forEach(v => urlsIn(v, out));
   return out;
 }
+// Only probe public HTTPS links. Match excluded domains on parsed hostnames,
+// never URL substrings (which can occur in attacker-controlled paths).
+export function publicSourceUrl(raw) {
+  try {
+    const u = new URL(raw);
+    if (u.protocol !== "https:" || u.username || u.password) return null;
+    const host = u.hostname.toLowerCase().replace(/\.$/, "");
+    if (!host || host === "localhost" || host.endsWith(".localhost") ||
+        host === "michaelpuff.com" || host.endsWith(".michaelpuff.com") ||
+        host === "cdn.discordapp.com" || host.endsWith(".cdn.discordapp.com") ||
+        host === "example.com" || host.endsWith(".example.com") ||
+        host === "example.org" || host.endsWith(".example.org") ||
+        host === "example.net" || host.endsWith(".example.net") ||
+        host.endsWith(".local") || host.endsWith(".internal") ||
+        /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host) ||
+        host.includes(":")) return null;
+    // Do not forward URLs containing credentials or signed-token query strings.
+    if ([...u.searchParams.keys()].some(k => /(?:token|key|secret|password|signature|auth|credential|access)/i.test(k))) return null;
+    u.hash = "";
+    return u.href;
+  } catch { return null; }
+}
+// Diagnostics never expose URL query values or fragments.
+export function safeLinkLabel(raw) {
+  try { const u = new URL(raw); return u.origin + u.pathname; }
+  catch { return "[invalid URL]"; }
+}
 async function alive(url) {
   for (const method of ["HEAD", "GET"]) {
     try {
@@ -24,7 +51,7 @@ export async function main() {
   const list = [...all].filter(u => !/michaelpuff\.com|cdn\.discordapp|example\./.test(u));
   const bad = [];
   const queue = [...list];
-  await Promise.all(Array.from({ length: 8 }, async () => { for (let u; (u = queue.pop());) { const why = await alive(u); if (why) bad.push(u + " (" + why + ")"); } }));
+  await Promise.all(Array.from({ length: 8 }, async () => { for (let u; (u = queue.pop());) { const why = await alive(u); if (why) bad.push(safeLinkLabel(u) + " (" + why + ")"); } }));
   console.log("Checked " + list.length + " links, " + bad.length + " not opening.");
   for (const b of bad) console.log("::warning title=Link::" + b);
   const t = process.env.TELEGRAM_BOT_TOKEN, dest = route(process.env, "system");
