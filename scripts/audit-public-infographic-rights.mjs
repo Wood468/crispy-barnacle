@@ -6,7 +6,7 @@
  * Usage: node scripts/audit-public-infographic-rights.mjs [--fail-on-public]
  * Strict mode is opt-in until Release Lead + rights/security approval.
  */
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, lstatSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildWeekly } from './g47ix-publish.mjs';
@@ -141,8 +141,19 @@ export function runAudit(directory = process.cwd(), strict = false, options = {}
     // Use the existing publisher contract read-only. Do not independently
     // duplicate eligibility, month rollover, or tie-breaking policy here.
     projectedWeekly: buildWeekly(registry),
-    hasLocalMedia: p => /^\/infographics\/g47ix\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i.test(p)
-      && existsSync(resolve(directory, 'public' + p)), 
+    hasLocalMedia: p => {
+      // Match scheduled publication: an existing path is not enough. Reject
+      // empty files, directories and symbolic links (including parent links).
+      if (!/^\/infographics\/g47ix\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i.test(p)) return false;
+      try {
+        const base = resolve(directory, 'public');
+        if (!lstatSync(base).isDirectory() ||
+            !lstatSync(resolve(base, 'infographics')).isDirectory() ||
+            !lstatSync(resolve(base, 'infographics/g47ix')).isDirectory()) return false;
+        const file = lstatSync(resolve(base, '.' + p));
+        return file.isFile() && file.size > 0;
+      } catch { return false; }
+    },
   });
   const missing = !!options.failOnMissingLocalWeekly && report.totals.projectedWeeklyMissingLocalFiles > 0;
   return { report, exitCode: strict && report.requiresRightsReview ? 2 : missing ? 3 : 0 };
