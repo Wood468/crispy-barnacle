@@ -30,9 +30,9 @@ export function publicSourceUrl(raw) {
     return u.href;
   } catch { return null; }
 }
-// Diagnostics never expose URL query values or fragments.
+// Diagnostics expose only the origin: paths may also embed tokens or private identifiers.
 export function safeLinkLabel(raw) {
-  try { const u = new URL(raw); return u.origin + u.pathname; }
+  try { const u = new URL(raw); return u.origin; }
   catch { return "[invalid URL]"; }
 }
 export async function alive(url) {
