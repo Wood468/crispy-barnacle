@@ -35,7 +35,7 @@ export function safeLinkLabel(raw) {
   try { const u = new URL(raw); return u.origin + u.pathname; }
   catch { return "[invalid URL]"; }
 }
-async function alive(url) {
+export async function alive(url) {
   for (const method of ["HEAD", "GET"]) {
     try {
       let target = url, r;
