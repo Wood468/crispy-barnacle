@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -293,6 +293,42 @@ test('CLI opt-in missing-local-weekly gate reports aggregate only and exits 3', 
     assert.equal(cli.status, 3);
     assert.equal(JSON.parse(cli.stdout).totals.projectedWeeklyMissingLocalFiles, 1);
     assert.doesNotMatch(cli.stdout + cli.stderr, /opaque-media-id|\/infographics\/g47ix\//);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('strict weekly preflight rejects empty, directory and linked paths before reporting restored media', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'gofn-audit-media-types-'));
+  try {
+    const folder = join(temp, 'public', 'infographics', 'g47ix');
+    mkdirSync(folder, { recursive: true });
+    mkdirSync(join(temp, 'data'));
+    const target = path('reviewed-asset');
+    const file = join(folder, 'reviewed-asset.webp');
+    const write = (p, value) => writeFileSync(join(temp, p), JSON.stringify(value));
+    write('public/event-info.json', { events: {} });
+    write('public/weekly.json', { items: [] });
+    write('public/infographic-queue.json', { items: [] });
+    write('data/g47ix-infographics-review.json', { candidates: [{
+      id: 'candidate', title: 'GO Weekly', stagedPath: target, overview: 'week',
+      publishedAt: new Date().toISOString(), decision: '',
+    }] });
+    const missing = () => runAudit(temp, false, { failOnMissingLocalWeekly: true });
+    assert.equal(missing().exitCode, 3, 'missing remains unverified');
+    writeFileSync(file, '');
+    assert.equal(missing().exitCode, 3, 'zero-byte file is not a restored picture');
+    rmSync(file);
+    mkdirSync(file);
+    assert.equal(missing().exitCode, 3, 'directory ending in .webp is not a picture');
+    rmSync(file, { recursive: true });
+    writeFileSync(join(temp, 'outside.webp'), 'PRIVATE_BYTES');
+    symlinkSync(join(temp, 'outside.webp'), file);
+    assert.equal(missing().exitCode, 3, 'symlink outside public cannot count as restored media');
+    rmSync(file);
+    writeFileSync(file, 'NONEMPTY_LOCAL_BYTES');
+    assert.equal(missing().exitCode, 0, 'a real nonempty regular file passes local availability only');
+    assert.equal(missing().report.localFileCheckPerformed, true);
   } finally {
     rmSync(temp, { recursive: true, force: true });
   }
