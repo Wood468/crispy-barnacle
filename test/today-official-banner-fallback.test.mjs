@@ -80,3 +80,14 @@ test('dash.css gives the Schedule banner a fixed aspect, cover crop and a full-w
   assert.match(css, /\.evc-banner img\{[^}]*object-fit:cover/);
   assert.match(css, /:not\(:has\(\.evc-banner\)\)\{width:88px/);
 });
+
+test('a verified banner gets the large banner card (2/1 image with explicit size); unverified and special-art cards stay compact rows', () => {
+  const big = card({ ...base, img: OFFICIAL, artPageUrl: OFFICIAL_PAGE });
+  assert.match(big, /t1-minor t1-minor--banner|t1-minor--banner/);
+  assert.match(big, /<img class="t1-minor-banner"[^>]* width="320" height="160"[^>]* loading="lazy"/);
+  const small = card({ ...base, img: OFFICIAL, artPageUrl: '' });
+  assert.doesNotMatch(small, /t1-minor--banner|t1-minor-banner/);
+  const css = fs.readFileSync(new URL('../public/today.css', import.meta.url), 'utf8');
+  assert.match(css, /\.t1-minor--banner[^{]*\{[^}]*aspect-ratio:2\/1/);
+  assert.match(css, /object-position:50% 10%/);
+});
