@@ -105,3 +105,64 @@ test('converted A$ leads visually; local price stays prominent when no conversio
   const base = css.match(/\.storep-regional \.sp-local-price\{([^}]*)\}/)[1];
   assert.match(base, /font-weight:750/, 'native/estimate/no-FX local prices stay bold by default');
 });
+
+/* Committed fallback rate file (public/fx-rates.json). */
+const FILE = JSON.parse(fs.readFileSync(new URL('../public/fx-rates.json', import.meta.url), 'utf8'));
+const FRESH = Date.parse('2026-11-18T00:00:00Z');
+
+test('committed fx-rates.json is AUD-based with dated IDR and INR rates', () => {
+  assert.equal(FILE.base, 'AUD');
+  assert.ok(FILE.rates.IDR > 1000 && FILE.rates.INR > 10);
+  assert.match(FILE.asOf, /^\d{4}-\d{2}-\d{2}$/);
+  assert.ok(FILE.source);
+});
+
+test('committed fallback converts IDR and INR when the live provider is unavailable', async () => {
+  const quotes = await FX.retrieve(() => Promise.reject(Error('offline')), undefined, FRESH, undefined, FILE);
+  assert.equal(FX.display({ amount: 76000, currency: 'IDR' }, quotes).text, '≈ A$6.18');
+  assert.equal(FX.display({ amount: 439, currency: 'INR' }, quotes).text, '≈ A$6.98');
+  assert.equal(quotes.INR.observed, '2026-11-17');
+});
+
+test('committed fallback accepts a promised file and ignores a failed one', async () => {
+  const ok = await FX.retrieve(null, undefined, FRESH, undefined, Promise.resolve(FILE));
+  assert.ok(ok.INR);
+  assert.deepEqual(await FX.retrieve(null, undefined, FRESH, undefined, Promise.reject(Error('x'))), {});
+  assert.deepEqual(await FX.retrieve(null, undefined, FRESH), {});
+});
+
+test('estimate ranges convert to an A$ range', () => {
+  const quotes = FX.committed(FILE, FRESH);
+  assert.equal(FX.display({ min: 68000, max: 84000, currency: 'IDR' }, quotes).text, '≈ A$5.53–A$6.83');
+  assert.equal(FX.display({ min: 400, max: 500, currency: 'INR' }, quotes).text, '≈ A$6.36–A$7.95');
+});
+
+test('stale committed rates (over 45 days) hide the A$ line', () => {
+  const day = 86400000, asOf = Date.parse(FILE.asOf);
+  assert.ok(FX.committed(FILE, asOf + 45 * day).IDR);
+  assert.deepEqual(FX.committed(FILE, asOf + 46 * day), {});
+  assert.equal(FX.display({ amount: 1000, currency: 'IDR' }, FX.committed(FILE, asOf + 90 * day)), null);
+});
+
+test('unparseable prices or malformed files hide the A$ line', () => {
+  const quotes = FX.committed(FILE, FRESH);
+  assert.equal(FX.display({ amount: 'abc', currency: 'IDR' }, quotes), null);
+  assert.equal(FX.display({ amount: NaN, currency: 'INR' }, quotes), null);
+  assert.equal(FX.display({ amount: 0, currency: 'INR' }, quotes), null);
+  assert.deepEqual(FX.committed({ base: 'USD', rates: { IDR: 1, INR: 1 }, asOf: '2026-11-17' }, FRESH), {});
+  assert.deepEqual(FX.committed({ base: 'AUD', rates: { IDR: 0, INR: 'x' }, asOf: '2026-11-17' }, FRESH), {});
+  assert.deepEqual(FX.committed({ base: 'AUD', rates: FILE.rates, asOf: 'nope' }, FRESH), {});
+});
+
+test('amounts round to cents', () => {
+  const quotes = FX.committed(FILE, FRESH);
+  assert.equal(FX.display({ amount: 12300, currency: 'IDR' }, quotes).text, '≈ A$1.00');
+  assert.equal(FX.display({ amount: 63, currency: 'INR' }, quotes).text, '≈ A$1.00');
+});
+
+test('Store renders est. ranges with an A$ range placeholder and a rates-as-of footer note', () => {
+  const src = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
+  assert.match(src, /data-sp-aud-max/);
+  assert.match(src, /A\$ equivalents are approximate \(rates as of /);
+  assert.match(src, /\/fx-rates\.json/);
+});

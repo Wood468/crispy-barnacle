@@ -95,11 +95,13 @@
   function when(iso) { var d = new Date(iso + 'T00:00:00Z'); return isNaN(d) ? String(iso) : d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); }
   /* The approximate A$ reference goes ABOVE the native amount. It is an empty node until a fresh
      reference rate is available (hidden by CSS while empty); exchange-rate provenance lives in its title only.
-     Modelled estimates are ranges, so they carry no A$ line. */
+     Modelled estimate ranges carry an A$ range (min and max). */
   function audPlaceholder(p, quotes) {
     var FX = window.GOStoreFX;
-    var amount = FX && FX.display ? FX.display({ currency: p.currency, amount: p.amount }, quotes) : null;
-    var attrs = ' data-sp-aud-currency="' + esc(p.currency) + '" data-sp-aud-min="' + esc(p.amount) + '"';
+    var lo = p.basis === 'estimate' ? p.min : p.amount, hi = p.basis === 'estimate' ? p.max : null;
+    var amount = FX && FX.display ? FX.display({ currency: p.currency, min: lo, max: hi }, quotes) : null;
+    var attrs = ' data-sp-aud-currency="' + esc(p.currency) + '" data-sp-aud-min="' + esc(lo) + '"'
+      + (hi != null ? ' data-sp-aud-max="' + esc(hi) + '"' : '');
     var title = amount ? 'Reference exchange rate: ' + amount.source + ', ' + amount.observed + '; not a checkout price' : '';
     return '<strong class="sp-aud-equivalent"' + attrs + (title ? ' title="' + esc(title) + '"' : '') + '>'
       + esc(amount ? amount.text : '') + '</strong>';
@@ -113,7 +115,8 @@
     else if (p.basis === 'estimate') {
       /* The one honesty marker: only a modelled value carries "est." */
       extra = ' data-sp-basis="estimate"';
-      body = '<b class="sp-local-price"><span class="sp-est-mark" title="Estimate, not a checkout price"><span aria-hidden="true">est.</span><span class="sr-only">Estimated </span></span> '
+      body = (p.currency === 'AUD' ? '' : audPlaceholder(p, quotes))
+        + '<b class="sp-local-price"><span class="sp-est-mark" title="Estimate, not a checkout price"><span aria-hidden="true">est.</span><span class="sr-only">Estimated </span></span> '
         + esc(R.fmt(p.min, p.currency) + '–' + Number(p.max).toLocaleString('en-AU', { maximumFractionDigits: 0 })) + '</b>';
     } else {
       /* VoiceOver reads the A$ reference before the original local price; no local-only aria-label masks it. */
@@ -323,7 +326,7 @@
       + '<p class="sp-results" data-sp-results aria-live="polite"></p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
       + '<details class="sp-compare-more sp-review"><summary>Data review</summary>' + review + '</details>'
-      + '<p class="sp-foot" data-sp-foot>Prices are dated observations, not live checkout quotes. <span aria-hidden="true">~</span> older · est. estimate · ? unconfirmed</p></details>';
+      + '<p class="sp-foot" data-sp-foot>Prices are dated observations, not live checkout quotes. <span aria-hidden="true">~</span> older · est. estimate · ? unconfirmed <span data-sp-fx-note></span></p></details>';
   }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
@@ -353,8 +356,15 @@
          preserving search, disclosure and coin controls while offline. */
       if (window.GOStoreFX && Array.isArray(d.regional) && d.regional.length) {
         var fetcher = typeof window.fetch === 'function' ? window.fetch.bind(window) : null;
-        window.GOStoreFX.retrieve(fetcher, d.fx).then(function (quotes) {
+        var committedFx = fetcher ? Promise.race([
+          fetcher('/fx-rates.json').then(function (r) { return r && r.ok ? r.json() : null; }).catch(function () { return null; }),
+          new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 1600); })
+        ]) : null;
+        window.GOStoreFX.retrieve(fetcher, d.fx, undefined, undefined, committedFx).then(function (quotes) {
           if (!el.querySelectorAll) return;
+          var note = el.querySelector && el.querySelector('[data-sp-fx-note]');
+          var dates = ['IDR', 'INR'].map(function (c) { return quotes && quotes[c] && quotes[c].observed; }).filter(Boolean).sort();
+          if (note && dates.length) note.textContent = '· A$ equivalents are approximate (rates as of ' + dates[0] + ')';
           el.querySelectorAll('[data-sp-aud-currency]').forEach(function (node) {
             var currency = node.getAttribute('data-sp-aud-currency');
             var min = Number(node.getAttribute('data-sp-aud-min'));
