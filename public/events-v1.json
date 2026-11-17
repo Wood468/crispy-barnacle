@@ -78453,11 +78453,212 @@
     "lifecycleDeclared": false,
     "conflicts": [],
     "fields": {
-     "bonuses": [],
-     "featured": [],
-     "raids": [],
-     "eggs": [],
-     "research": [],
+     "bonuses": [
+      {
+       "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Daily Discoveries will be paused from November 9 at 12:01 a.m. through November 15, 2026, at 11:59 p.m. local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Spin 5 PokéStops or Gyms POSSIBLE REWARDS ×3 Great Ball ×3 ×5 Poké Ball ×5 ×500 Stardust ×500 ×2 Ultra Ball ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "featured": [
+      {
+       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All Trainers can attract these mighty Pokémon on both event days. These encounters exclude Daily Adventure Incense.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Alolan Exeggutor",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "raids": [
+      {
+       "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "If you’re lucky, you may encounter a Shiny one!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "For Global, Dynamax Dialga appears on Saturday, November 14 , and Dynamax Palkia appears on Sunday, November 15 .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Starting with GO Wild Area 2026, Dynamax Battle lobbies offer Battle to match automatically with other Trainers or Private Group to join an existing group using its group code.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Event raids begin at 5:00 a.m. local time each day, five hours before the rest of the event starts at 10:00 a.m.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Modern Jacket Machamp 100% IV CP Level 20 1746 Level 25 2183 Weather boosted in Counters",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [
+      {
+       "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "research": [
+      {
+       "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon and other rewards. The tasks change with the rotating Habitat Hours.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 2 mighty Pokémon POSSIBLE REWARDS Mighty Aggron Max CP 1285 Min CP 1227 Mighty Ferrothorn Max CP 995 Min CP 943 Mighty Magnezone Max CP 1373 Min CP 1313 Mighty Scizor Max CP 1286 Min CP 1227",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 10 Steel‑type Pokémon POSSIBLE REWARDS Ferroseed Max CP 403 Min CP 370 Magnemite Max CP 583 Min CP 544 Piplup Max CP 460 Min CP 426 Shieldon Max CP 381 Min CP 348",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 4 different species of Steel‑type Pokémon POSSIBLE REWARDS Duraludon Max CP 1314 Min CP 1255 Lucario Max CP 1158 Min CP 1102",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Make an Excellent Throw POSSIBLE REWARDS ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Spin 5 PokéStops or Gyms POSSIBLE REWARDS ×3 Great Ball ×3 ×5 Poké Ball ×5 ×500 Stardust ×500 ×2 Ultra Ball ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 10 Dragon‑type Pokémon POSSIBLE REWARDS Charmander Max CP 420 Min CP 387 Skrelp Max CP 455 Min CP 421 Swablu Max CP 353 Min CP 322 Trapinch Max CP 546 Min CP 507",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 2 mighty Pokémon POSSIBLE REWARDS Mighty Alolan Exeggutor Max CP 1292 Min CP 1233 Mighty Haxorus Max CP 1540 Min CP 1475 Mighty Kingdra Max CP 1132 Min CP 1077 Mighty Noivern Max CP 1184 Min CP 1129",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
      "shiny": [
       {
        "text": "Looking to enhance your GO Wild Area weekend with exclusive Special Research, additional bonuses, and an increased chance of encountering Shiny Pokémon? Purchase a global event ticket from the Pokémon GO Web Store !",
@@ -78472,9 +78673,52 @@
         "official"
        ],
        "status": "official"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on both event days. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Lucky Trainers may encounter Shiny Pokémon. Completing Black Kyurem and White Kyurem raids awards Fusion Energy. Kyurem encountered in raids may know the Charged Attack Glaciate .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
-     "moves": [],
+     "moves": [
+      {
+       "text": "Certain Pokémon caught or evolved during the event will know the following featured attacks:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
      "costumes": [
       {
        "text": "Photo opportunities to capture the memories",
@@ -78538,9 +78782,101 @@
         "official"
        ],
        "status": "official"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
-     "tickets": [],
+     "tickets": [
+      {
+       "text": "These benefits apply from 10:00 a.m. to 6:00 p.m. local time on both event days. The ticketed Raid Pass and Max Particle limits replace the free limits.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders can also attract the following Unown on both days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim the event Special Research beginning November 14, 2026, at 10:00 a.m. local time . Choose a Steel-type or Dragon-type path ; your choice determines certain rewards and bonuses.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Steel Scholar medal: Earn 1 additional Candy XL for catching Steel-type mighty Pokémon (Trainers level 31+) and 1,000 additional Stardust for catching Steel-type mighty Pokémon.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Completing the event Special Research also awards a new avatar pose , or Duraludon stickers if you already have the pose.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers who attended an in-person GO Wild Area event can also receive this research by purchasing a separate Global ticket.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Both paths start with the same first step:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The ticket covers both November 14 and 15 and includes the ticket holder bonuses, branching Special Research, additional Incense encounters, and hourly GO Safari Ball Supply Balloons described above.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Purchase the Global ticket .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
      "dates": [
       {
        "text": "10:00 a.m. to 6:00 p.m. local time",
@@ -78555,6 +78891,27 @@
         "official"
        ],
        "status": "official"
+      },
+      {
+       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The wild mighty Pokémon lineup changes each day. Mighty Pokémon reportedly appear slightly more often in the last 15 minutes of each event day, from 5:45 p.m. to 6:00 p.m. local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
@@ -78567,9 +78924,9 @@
      "end": "2026-11-15T18:00"
     },
     "imageReviewed": true,
-    "contentHash": "7c93aea7946c2e35dba6f1a1814e3b9389cb587a85417e1afcaf54ed663f5589",
-    "revision": 24,
-    "amended": false,
+    "contentHash": "6663449a17686d44ce3edf854728fdb9292282e86bbc09ec3eda554f954b7d3b",
+    "revision": 25,
+    "amended": true,
     "native": false,
     "collection": "events"
    },
@@ -79357,6 +79714,90 @@
       "end": "2026-11-15T18:00"
      },
      "checkedAt": "2026-11-17"
+    },
+    {
+     "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon and other rewards. The tasks change with the rotating Habitat Hours.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch 2 mighty Pokémon POSSIBLE REWARDS Mighty Aggron Max CP 1285 Min CP 1227 Mighty Ferrothorn Max CP 995 Min CP 943 Mighty Magnezone Max CP 1373 Min CP 1313 Mighty Scizor Max CP 1286 Min CP 1227",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch 10 Steel‑type Pokémon POSSIBLE REWARDS Ferroseed Max CP 403 Min CP 370 Magnemite Max CP 583 Min CP 544 Piplup Max CP 460 Min CP 426 Shieldon Max CP 381 Min CP 348",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch 4 different species of Steel‑type Pokémon POSSIBLE REWARDS Duraludon Max CP 1314 Min CP 1255 Lucario Max CP 1158 Min CP 1102",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Make an Excellent Throw POSSIBLE REWARDS ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Spin 5 PokéStops or Gyms POSSIBLE REWARDS ×3 Great Ball ×3 ×5 Poké Ball ×5 ×500 Stardust ×500 ×2 Ultra Ball ×2",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch 10 Dragon‑type Pokémon POSSIBLE REWARDS Charmander Max CP 420 Min CP 387 Skrelp Max CP 455 Min CP 421 Swablu Max CP 353 Min CP 322 Trapinch Max CP 546 Min CP 507",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch 2 mighty Pokémon POSSIBLE REWARDS Mighty Alolan Exeggutor Max CP 1292 Min CP 1233 Mighty Haxorus Max CP 1540 Min CP 1475 Mighty Kingdra Max CP 1132 Min CP 1077 Mighty Noivern Max CP 1184 Min CP 1129",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
     }
    ],
    "passes": [],
@@ -82044,7 +82485,469 @@
     "warnings": [],
     "lifecycleDeclared": false,
     "conflicts": [],
-    "fields": {},
+    "fields": {
+     "bonuses": [
+      {
+       "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Daily Discoveries will be paused from November 9 at 12:01 a.m. through November 15, 2026, at 11:59 p.m. local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Spin 5 PokéStops or Gyms POSSIBLE REWARDS ×3 Great Ball ×3 ×5 Poké Ball ×5 ×500 Stardust ×500 ×2 Ultra Ball ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "featured": [
+      {
+       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All Trainers can attract these mighty Pokémon on both event days. These encounters exclude Daily Adventure Incense.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Alolan Exeggutor",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "raids": [
+      {
+       "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "If you’re lucky, you may encounter a Shiny one!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "For Global, Dynamax Dialga appears on Saturday, November 14 , and Dynamax Palkia appears on Sunday, November 15 .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Starting with GO Wild Area 2026, Dynamax Battle lobbies offer Battle to match automatically with other Trainers or Private Group to join an existing group using its group code.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Event raids begin at 5:00 a.m. local time each day, five hours before the rest of the event starts at 10:00 a.m.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Modern Jacket Machamp 100% IV CP Level 20 1746 Level 25 2183 Weather boosted in Counters",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [
+      {
+       "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "research": [
+      {
+       "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon and other rewards. The tasks change with the rotating Habitat Hours.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 2 mighty Pokémon POSSIBLE REWARDS Mighty Aggron Max CP 1285 Min CP 1227 Mighty Ferrothorn Max CP 995 Min CP 943 Mighty Magnezone Max CP 1373 Min CP 1313 Mighty Scizor Max CP 1286 Min CP 1227",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 10 Steel‑type Pokémon POSSIBLE REWARDS Ferroseed Max CP 403 Min CP 370 Magnemite Max CP 583 Min CP 544 Piplup Max CP 460 Min CP 426 Shieldon Max CP 381 Min CP 348",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 4 different species of Steel‑type Pokémon POSSIBLE REWARDS Duraludon Max CP 1314 Min CP 1255 Lucario Max CP 1158 Min CP 1102",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Make an Excellent Throw POSSIBLE REWARDS ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Spin 5 PokéStops or Gyms POSSIBLE REWARDS ×3 Great Ball ×3 ×5 Poké Ball ×5 ×500 Stardust ×500 ×2 Ultra Ball ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 10 Dragon‑type Pokémon POSSIBLE REWARDS Charmander Max CP 420 Min CP 387 Skrelp Max CP 455 Min CP 421 Swablu Max CP 353 Min CP 322 Trapinch Max CP 546 Min CP 507",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 2 mighty Pokémon POSSIBLE REWARDS Mighty Alolan Exeggutor Max CP 1292 Min CP 1233 Mighty Haxorus Max CP 1540 Min CP 1475 Mighty Kingdra Max CP 1132 Min CP 1077 Mighty Noivern Max CP 1184 Min CP 1129",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "shiny": [
+      {
+       "text": "Looking to enhance your GO Wild Area weekend with exclusive Special Research, additional bonuses, and an increased chance of encountering Shiny Pokémon? Purchase a global event ticket from the Pokémon GO Web Store !",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers may even encounter Shiny mighty Pokémon, if they’re lucky! Using the event-exclusive GO Safari Ball when trying to capture these Pokémon will greatly improve your chance of success.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on both event days. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Lucky Trainers may encounter Shiny Pokémon. Completing Black Kyurem and White Kyurem raids awards Fusion Energy. Kyurem encountered in raids may know the Charged Attack Glaciate .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "moves": [
+      {
+       "text": "Certain Pokémon caught or evolved during the event will know the following featured attacks:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "costumes": [
+      {
+       "text": "Photo opportunities to capture the memories",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Fun activities with local Community Ambassadors and their communities",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Pokémon GO event pins and prints (while supplies last)",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Timed Research when you check in at the official meetup",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "We are also partnering with local Community Ambassadors to add more PokéStops, Gyms, and Powerspots near the event area for these community meetups.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Look at the drip on Machamp! Machamp wearing a modern jacket* will appear in three-star raids on Saturday and Sunday.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "During the event, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, Reshiram, Zekrom, Kyurem, and Gigantamax Duraludon will all have a chance to have a new Special Background!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The best way to experience Pokémon GO Wild Area is in-person. Meet you out there, Trainers!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "—The Pokémon GO team",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "tickets": [
+      {
+       "text": "These benefits apply from 10:00 a.m. to 6:00 p.m. local time on both event days. The ticketed Raid Pass and Max Particle limits replace the free limits.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders can also attract the following Unown on both days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim the event Special Research beginning November 14, 2026, at 10:00 a.m. local time . Choose a Steel-type or Dragon-type path ; your choice determines certain rewards and bonuses.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Steel Scholar medal: Earn 1 additional Candy XL for catching Steel-type mighty Pokémon (Trainers level 31+) and 1,000 additional Stardust for catching Steel-type mighty Pokémon.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Completing the event Special Research also awards a new avatar pose , or Duraludon stickers if you already have the pose.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers who attended an in-person GO Wild Area event can also receive this research by purchasing a separate Global ticket.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Both paths start with the same first step:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The ticket covers both November 14 and 15 and includes the ticket holder bonuses, branching Special Research, additional Incense encounters, and hourly GO Safari Ball Supply Balloons described above.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Purchase the Global ticket .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "dates": [
+      {
+       "text": "10:00 a.m. to 6:00 p.m. local time",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Please note that Daily Discoveries will not take place from November 9 at 12:01 a.m. to November 15, 2026, at 11:59 p.m. local time.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The wild mighty Pokémon lineup changes each day. Mighty Pokémon reportedly appear slightly more often in the last 15 minutes of each event day, from 5:45 p.m. to 6:00 p.m. local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
     "info": [],
     "detailRefs": [],
     "legacyDates": {

@@ -31,14 +31,221 @@
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/community-meetups-go-wild-area-2026-details-asia-pacific/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/"
     }
    ],
    "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
+    "bonuses": [
+     {
+      "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on both event days.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Daily Discoveries will be paused from November 9 at 12:01 a.m. through November 15, 2026, at 11:59 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on both event days.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Spin 5 PokéStops or Gyms POSSIBLE REWARDS ×3 Great Ball ×3 ×5 Poké Ball ×5 ×500 Stardust ×500 ×2 Ultra Ball ×2",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "All Trainers can attract these mighty Pokémon on both event days. These encounters exclude Daily Adventure Incense.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Alolan Exeggutor",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "For Global, Dynamax Dialga appears on Saturday, November 14 , and Dynamax Palkia appears on Sunday, November 15 .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Starting with GO Wild Area 2026, Dynamax Battle lobbies offer Battle to match automatically with other Trainers or Private Group to join an existing group using its group code.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Event raids begin at 5:00 a.m. local time each day, five hours before the rest of the event starts at 10:00 a.m.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Modern Jacket Machamp 100% IV CP Level 20 1746 Level 25 2183 Weather boosted in Counters",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [
+     {
+      "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "research": [
+     {
+      "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon and other rewards. The tasks change with the rotating Habitat Hours.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 2 mighty Pokémon POSSIBLE REWARDS Mighty Aggron Max CP 1285 Min CP 1227 Mighty Ferrothorn Max CP 995 Min CP 943 Mighty Magnezone Max CP 1373 Min CP 1313 Mighty Scizor Max CP 1286 Min CP 1227",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 10 Steel‑type Pokémon POSSIBLE REWARDS Ferroseed Max CP 403 Min CP 370 Magnemite Max CP 583 Min CP 544 Piplup Max CP 460 Min CP 426 Shieldon Max CP 381 Min CP 348",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 4 different species of Steel‑type Pokémon POSSIBLE REWARDS Duraludon Max CP 1314 Min CP 1255 Lucario Max CP 1158 Min CP 1102",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Make an Excellent Throw POSSIBLE REWARDS ×1 Golden Razz Berry ×1 ×1 Silver Pinap Berry ×1",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Onix Max CP 472 Min CP 435 Skarmory Max CP 903 Min CP 854",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Win 2 Max Battles POSSIBLE REWARDS Mighty Metagross Max CP 1625 Min CP 1559 Mighty Tinkaton Max CP 964 Min CP 914",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Hatch an Egg POSSIBLE REWARDS Beldum Max CP 418 Min CP 385 Bronzor Max CP 258 Min CP 229 Drilbur Max CP 589 Min CP 549",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Spin 5 PokéStops or Gyms POSSIBLE REWARDS ×3 Great Ball ×3 ×5 Poké Ball ×5 ×500 Stardust ×500 ×2 Ultra Ball ×2",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Alolan Diglett Max CP 292 Min CP 264 Alolan Sandshrew Max CP 554 Min CP 516 Galarian Stunfisk Max CP 926 Min CP 876",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 10 Dragon‑type Pokémon POSSIBLE REWARDS Charmander Max CP 420 Min CP 387 Skrelp Max CP 455 Min CP 421 Swablu Max CP 353 Min CP 322 Trapinch Max CP 546 Min CP 507",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 2 mighty Pokémon POSSIBLE REWARDS Mighty Alolan Exeggutor Max CP 1292 Min CP 1233 Mighty Haxorus Max CP 1540 Min CP 1475 Mighty Kingdra Max CP 1132 Min CP 1077 Mighty Noivern Max CP 1184 Min CP 1129",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
     "shiny": [
      {
       "text": "Looking to enhance your GO Wild Area weekend with exclusive Special Research, additional bonuses, and an increased chance of encountering Shiny Pokémon? Purchase a global event ticket from the Pokémon GO Web Store !",
@@ -53,9 +260,52 @@
        "official"
       ],
       "status": "official"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on both event days. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Lucky Trainers may encounter Shiny Pokémon. Completing Black Kyurem and White Kyurem raids awards Fusion Energy. Kyurem encountered in raids may know the Charged Attack Glaciate .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
-    "moves": [],
+    "moves": [
+     {
+      "text": "Certain Pokémon caught or evolved during the event will know the following featured attacks:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
     "costumes": [
      {
       "text": "Photo opportunities to capture the memories",
@@ -119,9 +369,101 @@
        "official"
       ],
       "status": "official"
+     },
+     {
+      "text": "Machamp wearing a modern jacket appears in three-star raids on both event days and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
-    "tickets": [],
+    "tickets": [
+     {
+      "text": "These benefits apply from 10:00 a.m. to 6:00 p.m. local time on both event days. The ticketed Raid Pass and Max Particle limits replace the free limits.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Ticket holders can also attract the following Unown on both days.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim the event Special Research beginning November 14, 2026, at 10:00 a.m. local time . Choose a Steel-type or Dragon-type path ; your choice determines certain rewards and bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Steel Scholar medal: Earn 1 additional Candy XL for catching Steel-type mighty Pokémon (Trainers level 31+) and 1,000 additional Stardust for catching Steel-type mighty Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Completing the event Special Research also awards a new avatar pose , or Duraludon stickers if you already have the pose.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers who attended an in-person GO Wild Area event can also receive this research by purchasing a separate Global ticket.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Both paths start with the same first step:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "After it, you’ll pick your path. Choose wisely: you can select only one path, and you’ll stay on it until the end of the research.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The ticket covers both November 14 and 15 and includes the ticket holder bonuses, branching Special Research, additional Incense encounters, and hourly GO Safari Ball Supply Balloons described above.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Purchase the Global ticket .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
     "dates": [
      {
       "text": "10:00 a.m. to 6:00 p.m. local time",
@@ -136,6 +478,27 @@
        "official"
       ],
       "status": "official"
+     },
+     {
+      "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The wild mighty Pokémon lineup changes each day. Mighty Pokémon reportedly appear slightly more often in the last 15 minutes of each event day, from 5:45 p.m. to 6:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ]
    },
@@ -904,8 +1267,1302 @@
      "checkedAt": "2026-11-17"
     }
    ],
-   "pokemon": [],
-   "encounters": [],
+   "pokemon": [
+    {
+     "key": "103:alola:none",
+     "speciesId": "103",
+     "formId": "alola",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Alolan Exeggutor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Alolan Exeggutor"
+    },
+    {
+     "key": "129:base:none",
+     "speciesId": "129",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magikarp",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magikarp"
+    },
+    {
+     "key": "137:base:none",
+     "speciesId": "137",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Porygon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Porygon"
+    },
+    {
+     "key": "147:base:none",
+     "speciesId": "147",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dratini",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dratini"
+    },
+    {
+     "key": "184:base:none",
+     "speciesId": "184",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Azumarill",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Azumarill"
+    },
+    {
+     "key": "201:d:none",
+     "speciesId": "201",
+     "formId": "d",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown D",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown D"
+    },
+    {
+     "key": "201:i:none",
+     "speciesId": "201",
+     "formId": "i",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown I",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown I"
+    },
+    {
+     "key": "201:l:none",
+     "speciesId": "201",
+     "formId": "l",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown L",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown L"
+    },
+    {
+     "key": "201:w:none",
+     "speciesId": "201",
+     "formId": "w",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown W",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown W"
+    },
+    {
+     "key": "207:base:none",
+     "speciesId": "207",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Gligar",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Gligar"
+    },
+    {
+     "key": "212:base:none",
+     "speciesId": "212",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Scizor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Scizor"
+    },
+    {
+     "key": "213:base:none",
+     "speciesId": "213",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Shuckle",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Shuckle"
+    },
+    {
+     "key": "227:base:none",
+     "speciesId": "227",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Skarmory",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Skarmory"
+    },
+    {
+     "key": "230:base:none",
+     "speciesId": "230",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kingdra",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kingdra"
+    },
+    {
+     "key": "27:alola:none",
+     "speciesId": "27",
+     "formId": "alola",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Alolan Sandshrew",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Alolan Sandshrew"
+    },
+    {
+     "key": "299:base:none",
+     "speciesId": "299",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Nosepass",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Nosepass"
+    },
+    {
+     "key": "304:base:none",
+     "speciesId": "304",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aron"
+    },
+    {
+     "key": "306:base:none",
+     "speciesId": "306",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aggron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aggron"
+    },
+    {
+     "key": "328:base:none",
+     "speciesId": "328",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Trapinch",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Trapinch"
+    },
+    {
+     "key": "330:base:none",
+     "speciesId": "330",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Flygon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Flygon"
+    },
+    {
+     "key": "333:base:none",
+     "speciesId": "333",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Swablu",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Swablu"
+    },
+    {
+     "key": "339:base:none",
+     "speciesId": "339",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Barboach",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Barboach"
+    },
+    {
+     "key": "371:base:none",
+     "speciesId": "371",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Bagon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Bagon"
+    },
+    {
+     "key": "374:base:none",
+     "speciesId": "374",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Beldum",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Beldum"
+    },
+    {
+     "key": "380:base:none",
+     "speciesId": "380",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Latias",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Latias"
+    },
+    {
+     "key": "381:base:none",
+     "speciesId": "381",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Latios",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Latios"
+    },
+    {
+     "key": "393:base:none",
+     "speciesId": "393",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Piplup",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Piplup"
+    },
+    {
+     "key": "395:base:none",
+     "speciesId": "395",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Empoleon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Empoleon"
+    },
+    {
+     "key": "410:base:none",
+     "speciesId": "410",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Shieldon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Shieldon"
+    },
+    {
+     "key": "436:base:none",
+     "speciesId": "436",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Bronzor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Bronzor"
+    },
+    {
+     "key": "443:base:none",
+     "speciesId": "443",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Gible",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Gible"
+    },
+    {
+     "key": "448:base:none",
+     "speciesId": "448",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Lucario",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Lucario"
+    },
+    {
+     "key": "462:base:none",
+     "speciesId": "462",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magnezone",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magnezone"
+    },
+    {
+     "key": "4:base:none",
+     "speciesId": "4",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Charmander",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Charmander"
+    },
+    {
+     "key": "50:alola:none",
+     "speciesId": "50",
+     "formId": "alola",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Alolan Diglett",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Alolan Diglett"
+    },
+    {
+     "key": "529:base:none",
+     "speciesId": "529",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Drilbur",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Drilbur"
+    },
+    {
+     "key": "534:base:none",
+     "speciesId": "534",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Conkeldurr",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Conkeldurr"
+    },
+    {
+     "key": "597:base:none",
+     "speciesId": "597",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Ferroseed",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Ferroseed"
+    },
+    {
+     "key": "599:base:none",
+     "speciesId": "599",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Klink",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Klink"
+    },
+    {
+     "key": "602:base:none",
+     "speciesId": "602",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Tynamo",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Tynamo"
+    },
+    {
+     "key": "610:base:none",
+     "speciesId": "610",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Axew",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Axew"
+    },
+    {
+     "key": "618:galar:none",
+     "speciesId": "618",
+     "formId": "galar",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Galarian Stunfisk",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Galarian Stunfisk"
+    },
+    {
+     "key": "631:base:none",
+     "speciesId": "631",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Heatmor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Heatmor"
+    },
+    {
+     "key": "632:base:none",
+     "speciesId": "632",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Durant",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Durant"
+    },
+    {
+     "key": "633:base:none",
+     "speciesId": "633",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deino",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deino"
+    },
+    {
+     "key": "635:base:none",
+     "speciesId": "635",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hydreigon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hydreigon"
+    },
+    {
+     "key": "643:base:none",
+     "speciesId": "643",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Reshiram",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Reshiram"
+    },
+    {
+     "key": "644:base:none",
+     "speciesId": "644",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zekrom",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zekrom"
+    },
+    {
+     "key": "646:black:none",
+     "speciesId": "646",
+     "formId": "black",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kyurem (Black)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kyurem (Black)"
+    },
+    {
+     "key": "646:white:none",
+     "speciesId": "646",
+     "formId": "white",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kyurem (White)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kyurem (White)"
+    },
+    {
+     "key": "679:base:none",
+     "speciesId": "679",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Honedge",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Honedge"
+    },
+    {
+     "key": "690:base:none",
+     "speciesId": "690",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Skrelp",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Skrelp"
+    },
+    {
+     "key": "696:base:none",
+     "speciesId": "696",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Tyrunt",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Tyrunt"
+    },
+    {
+     "key": "698:base:none",
+     "speciesId": "698",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Amaura",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Amaura"
+    },
+    {
+     "key": "704:base:none",
+     "speciesId": "704",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Goomy",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Goomy"
+    },
+    {
+     "key": "707:base:none",
+     "speciesId": "707",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Klefki",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Klefki"
+    },
+    {
+     "key": "714:base:none",
+     "speciesId": "714",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Noibat",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Noibat"
+    },
+    {
+     "key": "776:base:none",
+     "speciesId": "776",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Turtonator",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Turtonator"
+    },
+    {
+     "key": "780:base:none",
+     "speciesId": "780",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Drampa",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Drampa"
+    },
+    {
+     "key": "782:base:none",
+     "speciesId": "782",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Jangmo-o",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Jangmo-o"
+    },
+    {
+     "key": "81:base:none",
+     "speciesId": "81",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magnemite",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magnemite"
+    },
+    {
+     "key": "821:base:none",
+     "speciesId": "821",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Rookidee",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Rookidee"
+    },
+    {
+     "key": "850:base:none",
+     "speciesId": "850",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Sizzlipede",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Sizzlipede"
+    },
+    {
+     "key": "884:base:none",
+     "speciesId": "884",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Duraludon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Duraludon"
+    },
+    {
+     "key": "90:base:none",
+     "speciesId": "90",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Shellder",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Shellder"
+    },
+    {
+     "key": "957:base:none",
+     "speciesId": "957",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Tinkatink",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Tinkatink"
+    },
+    {
+     "key": "95:base:none",
+     "speciesId": "95",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Onix",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Onix"
+    },
+    {
+     "key": "996:base:none",
+     "speciesId": "996",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Frigibax",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Frigibax"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "679:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "707:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "780:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "884:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "103:alola:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "184:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "201:d:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:i:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:l:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:w:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "212:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "230:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "306:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "330:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "380:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "381:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "395:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "462:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "534:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "635:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "643:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "644:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "646:black:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "646:white:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "129:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "137:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "147:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "207:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "213:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "227:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "27:alola:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "299:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "304:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "328:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "333:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "339:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "371:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "374:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "393:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "4:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "410:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "436:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "443:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "448:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "50:alola:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "529:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "597:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "599:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "602:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "610:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "618:galar:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "631:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "632:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "633:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "690:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "696:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "698:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "704:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "714:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "776:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "782:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "81:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "821:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "850:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "90:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "95:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "957:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "996:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
    "encounterConflicts": []
   },
   "gopassnov": {
