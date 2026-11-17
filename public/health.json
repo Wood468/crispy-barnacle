@@ -1,25 +1,25 @@
 {
- "updated": "2026-11-17T14:40:43.596Z",
+ "updated": "2026-11-17T22:59:28.651Z",
  "jobs": [
   {
    "id": "event-importer.yml",
    "name": "Event importer",
    "everyH": 1,
-   "lastSuccess": "2026-11-17T13:55:31.000Z",
+   "lastSuccess": "2026-11-17T22:43:25.000Z",
    "state": "fresh"
   },
   {
    "id": "source-watch.yml",
    "name": "Source feed watcher",
    "everyH": 3,
-   "lastSuccess": "2026-11-17T03:54:18.000Z",
-   "state": "stale"
+   "lastSuccess": "2026-11-17T16:00:28.000Z",
+   "state": "fresh"
   },
   {
    "id": "location-discovery.yml",
    "name": "Community location discovery",
    "everyH": 6,
-   "lastSuccess": "2026-11-17T07:49:37.000Z",
+   "lastSuccess": "2026-11-17T20:50:45.000Z",
    "state": "fresh"
   },
   {
@@ -40,7 +40,7 @@
    "id": "store-watch.yml",
    "name": "Store watcher",
    "everyH": 1,
-   "lastSuccess": "2026-11-17T14:25:57.000Z",
+   "lastSuccess": "2026-11-17T22:53:00.000Z",
    "state": "fresh"
   },
   {
@@ -61,7 +61,7 @@
    "id": "discord_sync.yml",
    "name": "Discord reader",
    "everyH": 2,
-   "lastSuccess": "2026-11-17T10:26:49.000Z",
+   "lastSuccess": "2026-11-17T20:40:45.000Z",
    "state": "fresh"
   },
   {
@@ -75,9 +75,16 @@
    "id": "worker-cron",
    "name": "Worker hourly jobs",
    "everyH": 1,
-   "lastSuccess": "2026-11-17T14:30:47.536Z",
+   "lastSuccess": "2026-11-17T22:30:47.858Z",
    "state": "fresh",
    "detail": "Discord forwarding: nothing new"
+  },
+  {
+   "id": "store-snapshot-age",
+   "name": "Store snapshot age",
+   "everyH": 24,
+   "lastSuccess": "2026-11-17T22:52:53.432Z",
+   "state": "fresh"
   },
   {
    "id": "ai-heartbeat-event-check",

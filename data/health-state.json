@@ -1,6 +1,5 @@
 {
  "alerted": [
-  "source-watch.yml",
   "g47ix-infographics.yml",
   "ai-heartbeat-event-check",
   "ai-heartbeat-pipeline",
