@@ -225,16 +225,67 @@ export async function send(m, token, chat) {
   if (m.photo && await tg(token, "sendPhoto", { chat_id: chat, photo: m.photo, caption: m.text, reply_markup: markup })) return true;
   return tg(token, "sendMessage", { chat_id: chat, text: m.text, reply_markup: markup, disable_web_page_preview: true });
 }
+
+// ---- Home-reader input guards (the snapshot now comes from the Melbourne add-on via /api/store-ingest) ----
+const FRESH_MAX_MS = 6 * 36e5, STALE_PUBLIC_MS = 3 * 864e5, STALE_ALERT_GAP_MS = 24 * 36e5;
+// Refuse a snapshot that is missing a time or older than 6 hours: an old upload must never be read as today's store.
+export function assertFreshSnapshot(snap, nowMs = Date.now(), maxAgeMs = FRESH_MAX_MS) {
+  const at = Date.parse(snap && snap.fetched);
+  if (!Number.isFinite(at) || nowMs - at > maxAgeMs) throw new Error("stale snapshot");
+}
+// Why the home reader looks silent, or null. publicUpdated: `updated` of public/store-current-snapshot.json (ISO);
+// receivedMs: when the Worker last accepted an upload (null when it never has, or could not be asked).
+export function staleReason({ publicUpdated, receivedMs }, nowMs = Date.now()) {
+  const upd = Date.parse(publicUpdated);
+  if (!Number.isFinite(upd) || nowMs - upd > STALE_PUBLIC_MS) return "the published store snapshot is more than 3 days old";
+  if (!Number.isFinite(receivedMs) || nowMs - receivedMs > FRESH_MAX_MS) return "the Melbourne reader has not uploaded for more than 6 hours";
+  return null;
+}
+// At most one stale alert per 24 hours, remembered in state.staleAlertAt (cleared by the next good run rebuilding state).
+export function shouldSendStaleAlert(state, nowMs = Date.now()) {
+  const last = Date.parse(state && state.staleAlertAt);
+  return !(Number.isFinite(last) && nowMs - last < STALE_ALERT_GAP_MS);
+}
+// Rebaseline: forget the saved catalogue so the next complete snapshot becomes the baseline (first: true, nothing is announced).
+export const rebaselinePrev = prev => ({ watchStart: prev && prev.watchStart, gone: (prev && prev.gone) || {} });
+
+async function staleAlert() {
+  const now = Date.now(), st = await readJson(STATE, null) || {};
+  const pub = await readJson(process.env.STORE_CURRENT_SNAPSHOT || "public/store-current-snapshot.json", {});
+  let receivedMs = null;
+  try {
+    const r = await fetch(process.env.STORE_INGEST_URL || "https://pogo.michaelpuff.com/api/store-ingest", { signal: AbortSignal.timeout(15000) });
+    if (r.ok) receivedMs = Date.parse(r.headers.get("x-store-received"));
+  } catch { /* unreachable counts as silent */ }
+  const why = staleReason({ publicUpdated: pub.updated, receivedMs }, now);
+  if (!why) { console.log("Store snapshot is fresh."); return; }
+  if (!shouldSendStaleAlert(st, now)) { console.log("Stale (" + why + "); already alerted within 24 hours."); return; }
+  console.log("Stale: " + why);
+  const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
+  if (process.env.DRY_RUN === "true" || !token || !chat) { console.log("Not sending the stale alert."); return; }
+  await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", {
+    method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify({ chat_id: chat, text: "🛒 Store watch: " + why + ". Check the Home Assistant store add-on. I will say this at most once a day.", disable_web_page_preview: true })
+  });
+  await writeFile(STATE, JSON.stringify({ ...st, staleAlertAt: new Date(now).toISOString() }, null, 1) + "\n");
+}
 async function main() {
   if (process.argv[2] === "--stamp-publication") {
     const st = await readJson(STATE, null);
     if (st) await writeFile(STATE, JSON.stringify(stampPublication(st, new Date().toISOString()), null, 1) + "\n");
     return;
   }
+  if (process.argv[2] === "--stale-alert") return staleAlert();
+  if (process.argv[2] === "--check-fresh") { assertFreshSnapshot(await readJson(process.argv[3], null)); return; }
   const snap = await readJson(process.argv[2], null);
   if (!snap || !snap.items || snap.items.length < 3) throw new Error("No usable snapshot");
+  assertFreshSnapshot(snap);
+  const rebaseline = process.env.STORE_REBASELINE === "1";
   const prev = await readJson(STATE, null), now = new Date().toISOString();
-  const d = diffStore(prev, snap, now), msgs = buildMessages(d);
+  const d = diffStore(rebaseline ? rebaselinePrev(prev) : prev, snap, now);
+  if (rebaseline && (d.held || d.state.lastObservation.status !== "complete")) throw new Error("rebaseline refused: snapshot is not a complete valid observation");
+  const msgs = rebaseline ? [] : buildMessages(d);
+  if (rebaseline) console.log("Rebaseline: saving " + snap.items.length + " items as the new baseline; no messages sent.");
   const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
   if (d.reset) {
     console.log("Store has stayed in " + d.reset.to + " for 72 hours; taking it as the new baseline.");

@@ -144,6 +144,12 @@ export function equivalentEventDetails(expected, deployed) {
   return JSON.stringify(stableEventData(expected)) === JSON.stringify(stableEventData(deployed));
 }
 
+// The published Store snapshot must not go stale (the Melbourne reader uploads it; a silent reader must be noticed).
+export function storeSnapshotProblem(snapshot, nowMs = Date.now(), maxAgeMs = 3 * 864e5) {
+  const at = Date.parse(snapshot && snapshot.updated);
+  return Number.isFinite(at) && nowMs - at <= maxAgeMs ? null : "published store snapshot is older than 3 days";
+}
+
 export async function runChecks() {
   const problems = [];
   let homeHtml = "";
@@ -178,6 +184,7 @@ export async function runChecks() {
   await check("data.json", async () => { const d = await json("/data.json"); if (!Array.isArray(d.events) || !d.events.length) throw new Error("no events"); });
   await check("world-events.json", async () => { const d = await json("/world-events.json"); if (!Array.isArray(d.events)) throw new Error("no events list"); });
   await check("prices.json", async () => { await json("/prices.json"); });
+  await check("store snapshot age", async () => { const p = storeSnapshotProblem(await json("/store-current-snapshot.json")); if (p) throw new Error(p); });
   await check("event-details.json production parity", async () => {
     const checkedIn = JSON.parse(readFileSync(new URL("../public/event-details.json", import.meta.url), "utf8"));
     const deployed = await json("/event-details.json");
