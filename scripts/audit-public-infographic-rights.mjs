@@ -6,7 +6,7 @@
  * Usage: node scripts/audit-public-infographic-rights.mjs [--fail-on-public]
  * Strict mode is opt-in until Release Lead + rights/security approval.
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildWeekly } from './g47ix-publish.mjs';
@@ -24,7 +24,7 @@ const g47ixEntry = (entry, mediaPath) =>
  * IDs, CDN URLs, filenames or OCR. Approval and permission are separate: even
  * a reviewed/published candidate cannot establish public redistribution rights.
  */
-export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queue = {}, registry = {}, projectedWeekly = {} } = {}) {
+export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queue = {}, registry = {}, projectedWeekly = {}, hasLocalMedia = null } = {}) {
   const totals = {
     eventReferences: 0,
     bossGuideReferences: 0,
@@ -40,6 +40,7 @@ export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queu
     projectedWeeklyChanges: 0,
     projectedPendingWeeklyPromotions: 0,
     projectedUnattributedWeeklyPromotions: 0,
+    projectedWeeklyMissingLocalFiles: 0,
   };
   const paths = new Set();
   const recorded = (entry, mediaPath, category) => {
@@ -96,6 +97,12 @@ export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queu
   for (const graphic of list(projectedWeekly?.items)) {
     if (!graphic || !g47ixEntry(graphic, graphic.image)) continue;
     const imagePath = pathOnly(graphic.image);
+    // Local files may be restored from R2 by the publisher workflow. A missing
+    // checkout file is a deterministic validation problem in that environment,
+    // NOT proof that the private R2 object or live image does not exist.
+    if (typeof hasLocalMedia === 'function' && !hasLocalMedia(imagePath)) {
+      totals.projectedWeeklyMissingLocalFiles++;
+    }
     if (currentByKind.get(graphic.kind) === imagePath) continue;
     totals.projectedWeeklyChanges++;
     const candidate = indexed.get(imagePath);
@@ -117,12 +124,13 @@ export function auditPublicInfographicRights({ eventInfo = {}, weekly = {}, queu
     classification: 'G47IX-attributed-or-g47ix-namespace-reference-not-creator-proof-licence-or-live-access',
     publicG47ixReferences: publicReferences,
     requiresRightsReview: publicReferences > 0,
+    localFileCheckPerformed: typeof hasLocalMedia === 'function',
     totals,
-    note: "Projected promotions describe a future publisher run, not currently deployed images. The g47ix namespace may hold other creators' images; attribution/approval do not imply public redistribution permission.",
+    note: "Missing local files are not evidence of missing R2 objects; projected promotions are not live. The g47ix namespace may include other creators' images; no public redistribution rights are inferred.",
   };
 }
 
-export function runAudit(directory = process.cwd(), strict = false) {
+export function runAudit(directory = process.cwd(), strict = false, options = {}) {
   const read = file => JSON.parse(readFileSync(resolve(directory, file), 'utf8'));
   const registry = read('data/g47ix-infographics-review.json');
   const report = auditPublicInfographicRights({
@@ -133,20 +141,23 @@ export function runAudit(directory = process.cwd(), strict = false) {
     // Use the existing publisher contract read-only. Do not independently
     // duplicate eligibility, month rollover, or tie-breaking policy here.
     projectedWeekly: buildWeekly(registry),
+    hasLocalMedia: p => /^\/infographics\/g47ix\/[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i.test(p)
+      && existsSync(resolve(directory, 'public' + p)), 
   });
-  return { report, exitCode: strict && report.requiresRightsReview ? 2 : 0 };
+  const missing = !!options.failOnMissingLocalWeekly && report.totals.projectedWeeklyMissingLocalFiles > 0;
+  return { report, exitCode: strict && report.requiresRightsReview ? 2 : missing ? 3 : 0 };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
   if (args.includes('--help')) {
-    console.log('Usage: node scripts/audit-public-infographic-rights.mjs [--fail-on-public]\nRead-only, redacted aggregate audit. --fail-on-public is opt-in pending rights/security policy approval.');
-  } else if (args.some(x => x !== '--fail-on-public')) {
+    console.log('Usage: node scripts/audit-public-infographic-rights.mjs [--fail-on-public] [--fail-on-missing-local-weekly]\nRead-only aggregate audit. Both failure modes are opt-in. Run the local-file check after restoring media from R2.');
+  } else if (args.some(x => x !== '--fail-on-public' && x !== '--fail-on-missing-local-weekly')) {
     console.error('Unknown option. Run with --help.');
     process.exitCode = 2;
   } else {
     try {
-      const { report, exitCode } = runAudit(process.cwd(), args.includes('--fail-on-public'));
+      const { report, exitCode } = runAudit(process.cwd(), args.includes('--fail-on-public'), { failOnMissingLocalWeekly: args.includes('--fail-on-missing-local-weekly') });
       console.log(JSON.stringify(report, null, 2));
       process.exitCode = exitCode;
     } catch (error) {
