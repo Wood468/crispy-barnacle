@@ -22,7 +22,7 @@ export function publicSourceUrl(raw) {
         host === "example.org" || host.endsWith(".example.org") ||
         host === "example.net" || host.endsWith(".example.net") ||
         host.endsWith(".local") || host.endsWith(".internal") ||
-        /^\\d+\\.\\d+\\.\\d+\\.\\d+$/.test(host) ||
+        /^\d+\.\d+\.\d+\.\d+$/.test(host) ||
         host.includes(":")) return null;
     // Do not forward URLs containing credentials or signed-token query strings.
     if ([...u.searchParams.keys()].some(k => /(?:token|key|secret|password|signature|auth|credential|access)/i.test(k))) return null;
