@@ -135,7 +135,7 @@ test('end-to-end CLI preserves old weekly when newest is missing; restores newes
     write('public/event-info.json', { events: {} });
     write('public/data.json', { events: [], rotation: [] });
     write('public/weekly.json', { updated: '2026-11-09', items: [{ kind: 'week', id: 't2', image: old.stagedPath }] });
-    writeFileSync(join(temp, old.stagedPath.slice(1)), 'VALID_LOCAL_OLD');
+    writeFileSync(join(temp, 'public', old.stagedPath.slice(1)), 'VALID_LOCAL_OLD');
     const script = new URL('../scripts/g47ix-publish.mjs', import.meta.url).pathname;
     const invoke = () => spawnSync(process.execPath, [script], { cwd: temp, encoding: 'utf8', timeout: 15000 });
     let run = invoke();
@@ -143,7 +143,7 @@ test('end-to-end CLI preserves old weekly when newest is missing; restores newes
     let weekly = JSON.parse(readFileSync(join(temp, 'public/weekly.json'), 'utf8'));
     assert.equal(weekly.items[0].id, 't2', 'CLI does not publish missing T16');
     assert.match(run.stderr, /selected picture\(s\) held/);
-    writeFileSync(join(temp, newest.stagedPath.slice(1)), 'VALID_LOCAL_NEW');
+    writeFileSync(join(temp, 'public', newest.stagedPath.slice(1)), 'VALID_LOCAL_NEW');
     run = invoke();
     assert.equal(run.status, 0, (run.stderr || '') + (run.stdout || ''));
     weekly = JSON.parse(readFileSync(join(temp, 'public/weekly.json'), 'utf8'));
