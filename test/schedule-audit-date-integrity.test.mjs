@@ -29,7 +29,8 @@ test('accepts valid upcoming overseas events and retains regional scope', () => 
   assert.equal(added[0].end, '2026-11-22');
 });
 test('accepts a valid leap day and rejects an impossible century leap day', () => {
-  assert.equal(run([entry('leap-day', '2028-02-29', '2028-02-29')]).length, 0); // outside forecast horizon
+  const leapWorld = [];
+  assert.equal(addMissing(leapWorld, [entry('leap-day', '2028-02-29', '2028-02-29')], new Date('2028-02-20T00:00:00Z')).length, 1);
   assert.deepEqual(run([entry('bad-century', '2100-02-29', '2100-03-01')]), []);
 });
 test('keeps current date-window limits and duplicate protections', () => {
