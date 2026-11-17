@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { auditEvents } from '../scripts/event-coverage-audit.mjs';
 
 test('declared exact source IDs supply source-backed coverage without a canonical detail record', () => {
-  const report=auditEvents({events:[{id:'event',t:'Event',detailIds:['source:one','source:two']}]},{events:{
+  const report=auditEvents({events:[{id:'event',t:'Event',detailIds:[' source:one ','source:two']}]},{events:{
     'source:one':{sources:[{url:'https://example.org/one'}],fields:{research:[{text:'Catch five',status:'official'}],featured:[{text:'Pikachu',status:'official'}]}},
     'source:two':{image:'https://example.org/image.png',imageProvenance:{sourceUrl:'https://example.org/two'},researchTasks:[{task:'Catch five'}],fields:{dates:[{text:'Nov 20',status:'official'}]}}
   }});
