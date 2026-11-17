@@ -316,6 +316,22 @@ export function buildWeekly(reg, now = Date.now(), { assetReady = null } = {}) {
   return { updated: new Date(now).toISOString(), items };
 }
 
+// A transient R2 restore failure must never erase a previously published kind.
+// If the desired kind has no locally readable candidate at all, stop before
+// writing the weekly feed; GitHub keeps the previous committed public JSON.
+// If an older candidate's local bytes are available, it remains the fallback.
+// This routine never changes approval or public/private media policy.
+export function selectWeeklyForPublication(reg, now, assetReady) {
+  const expected = buildWeekly(reg, now);
+  const weekly = buildWeekly(reg, now, { assetReady });
+  const missingKinds = expected.items.filter(e => !weekly.items.some(a => a.kind === e.kind));
+  if (missingKinds.length) {
+    throw new Error("Weekly infographic publication held: selected artwork not restored locally; previous public feed retained.");
+  }
+  const held = expected.items.filter(e => !weekly.items.some(a => a.kind === e.kind && a.id === e.id)).length;
+  return { weekly, held };
+}
+
 // World and in-person events (public/world-events.json) as the same shape the matcher reads. They are only ever used for suggestions a person confirms.
 export function worldAsEvents(world) {
   return ((world && world.events) || []).filter(w => w && w.id && w.name).map(w => ({ id: w.id, t: w.name, s: (w.start || "") + "T00:00", e: (w.end || w.start || "") + "T23:59", p: [w.place || "", w.area || ""] }));
@@ -414,10 +430,8 @@ async function main() {
   await writeFile(REG, JSON.stringify(sanitizeRegistrySources(reg), null, 2) + "\n");
   await writeFile(QUEUE, JSON.stringify(buildQueue(reg), null, 1) + "\n");
   const asOf = Date.now();
-  const unguardedWeekly = buildWeekly(reg, asOf);
-  const safeWeekly = buildWeekly(reg, asOf, { assetReady: p => weeklyLocalAssetReady(p) });
-  const unready = unguardedWeekly.items.filter(item => !safeWeekly.items.some(ok => ok.kind === item.kind && ok.id === item.id)).length;
-  if (unready) console.warn("Weekly infographic: " + unready + " selected picture(s) held because their local files were not restored. No missing art URL published.");
+  const { weekly: safeWeekly, held } = selectWeeklyForPublication(reg, asOf, p => weeklyLocalAssetReady(p));
+  if (held) console.warn("Weekly infographic: " + held + " selected picture(s) held because their local files were not restored. No missing art URL published.");
   await writeFile(WEEKLY, JSON.stringify(safeWeekly, null, 1) + "\n");
   await writeFile(INFO, JSON.stringify(sanitizePublicInfographicSources(info), null, 2) + "\n");
   console.log(proposed.length ? "Proposed:\n" + proposed.join("\n") : "Nothing confident enough to propose.");
