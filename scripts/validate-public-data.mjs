@@ -249,8 +249,8 @@ if (ext) {
       if (!x.id || seen.has(x.id)) fail(where, "needs a unique id"); else seen.add(x.id);
       for (const k of ["name", "when", "price"]) if (!x[k]) fail(where, `${k} is required`);
       try { if (new URL(x.url).protocol !== "https:") fail(where, "url must use HTTPS"); } catch { fail(where, "url is not a valid URL"); }
-      if (!day.test(x.eventEnd || "")) fail(where, "eventEnd must be YYYY-MM-DD, or the entry would never expire");
       const isDay = value => typeof value === "string" && day.test(value) && !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
+      if (!isDay(x.eventEnd)) fail(where, "eventEnd must be a real YYYY-MM-DD date, or the entry would never expire");
       const isInstant = value => {
         const m = typeof value === "string" && /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?(Z|[+-]\d{2}:\d{2})$/.exec(value);
         if (!m || !isDay(m[1]) || Number(m[2]) > 23 || Number(m[3]) > 59 || Number(m[4] || 0) > 59) return false;
