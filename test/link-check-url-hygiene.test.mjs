@@ -30,7 +30,8 @@ for (const url of [
 test('deduplicates extracted nested links and redacts diagnostic queries and fragments', () => {
   const urls = urlsIn({ a: ['https://leekduck.com/events/a?token=secret', { b: 'https://leekduck.com/events/a?token=secret' }] });
   assert.equal(urls.size, 1);
-  assert.equal(safeLinkLabel('https://leekduck.com/events/a?token=secret#fragment'), 'https://leekduck.com/events/a');
+  assert.equal(safeLinkLabel('https://leekduck.com/events/a?token=secret#fragment'), 'https://leekduck.com');
+  assert.equal(safeLinkLabel('https://leekduck.com/private/token-in-path'), 'https://leekduck.com');
   assert.equal(safeLinkLabel('not a url'), '[invalid URL]');
 });
 
