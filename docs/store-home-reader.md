@@ -56,3 +56,10 @@ A 400 reply is `{"error":"Bad request.","reason":"<code>"}`. The code comes from
 
 - Treat HTTP 409 and 429 as success ("already have a newer or very recent snapshot"). Do not retry in a loop; just wait for the next hourly run.
 - A wrong key counts against the shared per-address failure bucket (the same one the sync PIN uses). Repeated wrong-key uploads from home can make a mistyped PIN from the same address return 429 for 10 minutes. Test the key once by hand before enabling the schedule.
+
+## Switching the watcher over (order matters)
+
+1. The ingest endpoint is deployed, `STORE_INGEST_KEY` is set, the add-on is uploading, and `GET /api/store-ingest` returns a recent snapshot.
+2. Merge the `store-watch.yml` change.
+3. Only when the owner says so, run "Web store watch" once manually with `rebaseline=true` **and `dry_run=false`**. Manual runs default to `dry_run=true`, which saves nothing, so a rebaseline with the default would change nothing. The run saves the A$ snapshot as the new baseline and sends no Telegram messages.
+4. After that, scheduled runs are normal. If the reader goes quiet (no accepted upload for 6 hours, or no complete observation for 3 days) one system-topic message is sent, at most once per 24 hours.

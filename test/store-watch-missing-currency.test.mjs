@@ -103,7 +103,7 @@ test("CLI dry run prints a non-secret hold reason with counts, and accepts a cur
   const { join } = await import("node:path");
   const dir = mkdtempSync(join(tmpdir(), "sw-"));
   const run = snap => {
-    const f = join(dir, "snap.json"); writeFileSync(f, JSON.stringify(snap));
+    const f = join(dir, "snap.json"); writeFileSync(f, JSON.stringify({ fetched: new Date().toISOString(), ...snap })); // the watcher refuses snapshots without a recent fetched time
     return spawnSync(process.execPath, ["scripts/store-watch.mjs", f], { encoding: "utf8", env: { ...process.env, DRY_RUN: "true", STORE_STATE: join(dir, "absent-state.json"), TELEGRAM_BOT_TOKEN: "", TELEGRAM_CHAT_ID: "" } });
   };
   const ok = run({ ...withEvidence(usd(4).map(i => ({ ...i, price: "" }))) });

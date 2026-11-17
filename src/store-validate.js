@@ -92,3 +92,11 @@ export function validateAuIngest(snap, nowMs = Date.now()) {
   if (snap.items.length < 3 || priced * 2 < snap.items.length) return "too-few-prices";
   return null;
 }
+
+// When did the store last yield a COMPLETE, non-held observation? (`updated` also moves on held runs, so it cannot show staleness.)
+// Falls back to the last observation if that was complete, else null.
+export function lastCompleteAt(state) {
+  if (state && state.lastCompleteAt) return state.lastCompleteAt;
+  const o = state && state.lastObservation;
+  return o && o.status === "complete" && o.at ? o.at : null;
+}

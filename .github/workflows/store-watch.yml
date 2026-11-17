@@ -8,6 +8,9 @@ on:
       dry_run:
         description: "Only print what would be sent and do not save the state"
         default: "true"
+      rebaseline:
+        description: "Treat the next snapshot as the new baseline (nothing is announced). Use once after switching to the Melbourne reader"
+        default: "false"
 
 permissions:
   contents: write
@@ -26,26 +29,31 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
-        with:
-          python-version: "3.12"
-      - name: Install a browser
-        run: |
-          pip install playwright
-          python -m playwright install --with-deps chromium
       - name: Test regional price safeguards
         run: node --test test/store-au-prices.test.mjs test/regional-prices.test.cjs test/regional-observations.test.mjs
       - name: Audit known publisher-only listings and missing regional prices
         run: |
           node --test test/store-catalogue-audit.test.mjs
           node scripts/store-catalogue-audit.mjs
+      # The Melbourne Home Assistant add-on uploads the A$ snapshot to the Worker (this runner's US address sees the US store).
+      # No usable upload (missing, or older than 6 hours) skips this run's store processing; the stale alert below reports it.
       - name: Read the store
-        run: python scripts/store_snapshot.py /tmp/store-snapshot.json
+        id: read
+        run: |
+          if curl --fail-with-body -sS --max-time 30 --retry 2 https://pogo.michaelpuff.com/api/store-ingest -o /tmp/store-snapshot.json && node scripts/store-watch.mjs --check-fresh /tmp/store-snapshot.json; then
+            echo "fresh=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "fresh=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::No fresh Melbourne store snapshot; skipping store processing this run"
+          fi
       - name: Refresh verified Australian catalogue when snapshot explicitly uses A$
+        if: ${{ steps.read.outputs.fresh == 'true' }}
         run: node scripts/store-au-prices.mjs /tmp/store-snapshot.json
       - name: Regional price review (no screenshots, never fails the watch)
+        if: ${{ steps.read.outputs.fresh == 'true' }}
         run: node scripts/regional-price-review.mjs || true
       - name: Tell me about anything new
+        if: ${{ steps.read.outputs.fresh == 'true' }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -55,12 +63,24 @@ jobs:
           TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
           TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          STORE_REBASELINE: ${{ github.event.inputs.rebaseline == 'true' && '1' || '' }}
         run: node scripts/store-watch.mjs /tmp/store-snapshot.json
+      # One Telegram message (system topic) if the published snapshot is over 3 days old or the reader has not uploaded for 6 hours;
+      # at most once per 24 hours (state.staleAlertAt, committed by the save step below).
+      - name: Warn if the snapshot has gone stale
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: node scripts/store-watch.mjs --stale-alert
       # Read only: inspect ALL newly fetched purchase SKUs, including standalone
       # items that are intentionally absent from the filtered public Store log.
       # Never approve, publish or substitute publisher image candidates.
       - name: Audit Store product artwork candidates (report only)
         continue-on-error: true
+        if: ${{ steps.read.outputs.fresh == 'true' }}
         run: |
           node --test test/store-artwork-coverage.test.mjs
           node scripts/store-artwork-coverage.mjs /tmp/store-snapshot.json
