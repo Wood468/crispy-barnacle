@@ -27,14 +27,14 @@ test("pictures are unique, capped, shiny kept", () => {
   assert.ok(p.some(x => /shiny=1/.test(x.url)));
   assert.equal(new Set(p.map(x => x.url)).size, p.length);
 });
-const item = (name, price, href, extra = {}) => ({ name, price, href, section: "LIMITED_TIME", tag: "LIMITED-TIME ONLY", limit: "Can only be purchased 1 time.", imgs: ["/box.png", "/badge.png"], ...extra });
+const item = (name, price, href, extra = {}) => ({ name, price, href, section: "LIMITED_TIME", tag: "LIMITED-TIME ONLY", limit: "Can only be purchased 1 time.", imgs: ["https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/box/w256.webp", "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge/w256.webp"], ...extra });
 test("store messages: emoji, picture, one per item, quiet when unchanged", () => {
   const a = item("GO Pass Deluxe: October", "A$12.99", "/purchase/item/web-pass-oct"), b = item("Sandile Hatch Day Ultra Ticket Box", "A$2.99", "/purchase/item/web-sandile"), c = item("Egg", "A$3.00", "/purchase/item/web-egg", { section: "ITEMS", tag: "" });
   const d1 = diffStore(null, { items: [a, b, c] }, "t1");
   const first = buildMessages(d1);
   assert.equal(first.length, 2); // first run: only limited-time items
   assert.equal(first[0].text, "🎫 ON SALE NOW · GO Pass\n\n✨ GO Pass Deluxe: October\n💰 A$12.99\n⏳ Limited time only\n🔒 Limit: 1 time");
-  assert.equal(first[0].photo, "/badge.png");
+  assert.equal(first[0].photo, "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge/w256.webp");
   assert.equal(buildMessages(diffStore(d1.state, { items: [a, b, c] }, "t2")).length, 0);
   const d3 = diffStore(d1.state, { items: [a, b, { ...c, price: "A$3.50" }, item("GO Pass Deluxe: Fall", "A$7.99", "/purchase/item/web-fall")] }, "t3");
   const m = buildMessages(d3);
