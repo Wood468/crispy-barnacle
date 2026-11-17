@@ -74,3 +74,42 @@ test('rejects valid dates in reverse chronological order', () => {
   assert.equal(run.status, 1, run.output);
   assert.match(run.output, /rotation end must be after start/);
 });
+
+function validateExternalTicket(eventEnd) {
+  const root = mkdtempSync(join(tmpdir(), 'gofn-external-ticket-calendar-'));
+  try {
+    const dir = join(root, 'public');
+    mkdirSync(dir);
+    writeFileSync(join(dir, 'data.json'), JSON.stringify({ events: [] }));
+    writeFileSync(join(dir, 'tickets-external.json'), JSON.stringify({
+      items: [{
+        id: 'expiry-test', name: 'Calendar fixture', when: 'Fixture',
+        price: 'Fixture', url: 'https://example.test/ticket',
+        eventEnd,
+      }],
+    }));
+    const run = spawnSync(process.execPath, [script], {
+      cwd: root, encoding: 'utf8', timeout: 20000,
+      env: { ...process.env, TZ: 'Pacific/Auckland' },
+    });
+    assert.equal(run.signal, null, 'validator must not time out');
+    return { status: run.status, output: run.stdout + run.stderr };
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+}
+
+for (const eventEnd of ['2026-02-30', '2025-02-29', '2026-00-01', '2026-13-01', '2026-04-31', '2026-11-00']) {
+  test('rejects impossible external ticket expiry ' + eventEnd, () => {
+    const run = validateExternalTicket(eventEnd);
+    assert.equal(run.status, 1, run.output);
+    assert.match(run.output, /eventEnd must be a real YYYY-MM-DD date/);
+  });
+}
+for (const eventEnd of ['2024-02-29', '2000-02-29', '2026-11-17']) {
+  test('accepts real external ticket expiry ' + eventEnd, () => {
+    const run = validateExternalTicket(eventEnd);
+    assert.equal(run.status, 0, run.output);
+    assert.match(run.output, /Data validation passed/);
+  });
+}
