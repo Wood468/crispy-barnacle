@@ -5,7 +5,7 @@
 // Usage: node scripts/store-watch.mjs snapshot.json   (state is kept in data/store-state.json)
 import { readFile, writeFile } from "node:fs/promises";
 import { routed } from "../src/tgroute.js";
-import { currencyOf, validateStoreObservation, deriveCompleteness, EVIDENCE_PRODUCER } from "../src/store-validate.js";
+import { currencyOf, validateStoreObservation, deriveCompleteness, EVIDENCE_PRODUCER, lastCompleteAt } from "../src/store-validate.js";
 
 // Pure validators live in src/store-validate.js (shared with the Worker ingest route); re-exported so existing imports keep working.
 export { currencyOf, validateStoreObservation, deriveCompleteness, EVIDENCE_PRODUCER };
@@ -149,6 +149,7 @@ export function diffStore(prev, snap, nowIso) {
   return {
     state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso, currency: cur || base,
       ...(prev?.lastPublishedAt ? { lastPublishedAt: prev.lastPublishedAt } : {}),
+      ...(evidence.complete ? { lastCompleteAt: nowIso } : lastCompleteAt(prev) ? { lastCompleteAt: lastCompleteAt(prev) } : {}),
       ...(Object.keys(pendingGone).length ? { pendingGone } : {}),
       lastObservation: observed(evidence.complete ? "complete" : "unverified", evidence.complete ? "" : evidence.reason) },
     added, changed, gone, first: !prev || !prev.items, reset
@@ -235,8 +236,10 @@ export function assertFreshSnapshot(snap, nowMs = Date.now(), maxAgeMs = FRESH_M
 }
 // Why the home reader looks silent, or null. publicUpdated: `updated` of public/store-current-snapshot.json (ISO);
 // receivedMs: when the Worker last accepted an upload (null when it never has, or could not be asked).
-export function staleReason({ publicUpdated, receivedMs }, nowMs = Date.now()) {
-  const upd = Date.parse(publicUpdated);
+// lastComplete: when the last COMPLETE non-held observation was saved (held runs also bump `updated`, so they must not hide staleness);
+// publicUpdated is only the fallback when no complete observation is recorded yet.
+export function staleReason({ publicUpdated, lastComplete, receivedMs }, nowMs = Date.now()) {
+  const upd = Date.parse(lastComplete || publicUpdated);
   if (!Number.isFinite(upd) || nowMs - upd > STALE_PUBLIC_MS) return "the published store snapshot is more than 3 days old";
   if (!Number.isFinite(receivedMs) || nowMs - receivedMs > FRESH_MAX_MS) return "the Melbourne reader has not uploaded for more than 6 hours";
   return null;
@@ -257,17 +260,22 @@ async function staleAlert() {
     const r = await fetch(process.env.STORE_INGEST_URL || "https://pogo.michaelpuff.com/api/store-ingest", { signal: AbortSignal.timeout(15000) });
     if (r.ok) receivedMs = Date.parse(r.headers.get("x-store-received"));
   } catch { /* unreachable counts as silent */ }
-  const why = staleReason({ publicUpdated: pub.updated, receivedMs }, now);
+  const why = staleReason({ publicUpdated: pub.updated, lastComplete: lastCompleteAt(st), receivedMs }, now);
   if (!why) { console.log("Store snapshot is fresh."); return; }
   if (!shouldSendStaleAlert(st, now)) { console.log("Stale (" + why + "); already alerted within 24 hours."); return; }
   console.log("Stale: " + why);
   const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
   if (process.env.DRY_RUN === "true" || !token || !chat) { console.log("Not sending the stale alert."); return; }
-  await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", {
-    method: "POST", headers: { "content-type": "application/json" },
-    body: JSON.stringify({ chat_id: chat, text: "🛒 Store watch: " + why + ". Check the Home Assistant store add-on. I will say this at most once a day.", disable_web_page_preview: true })
-  });
-  await writeFile(STATE, JSON.stringify({ ...st, staleAlertAt: new Date(now).toISOString() }, null, 1) + "\n");
+  let r = null;
+  try {
+    r = await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ chat_id: chat, text: "🛒 Store watch: " + why + ". Check the Home Assistant store add-on. I will say this at most once a day.", disable_web_page_preview: true })
+    });
+  } catch { /* unreachable: treated as not sent */ }
+  // Remember the alert only after Telegram accepted it, and never create a state file holding nothing but the marker.
+  if (r && r.ok && st.items) await writeFile(STATE, JSON.stringify({ ...st, staleAlertAt: new Date(now).toISOString() }, null, 1) + "\n");
+  else console.log("Stale alert not saved (send failed or no saved store state).");
 }
 async function main() {
   if (process.argv[2] === "--stamp-publication") {

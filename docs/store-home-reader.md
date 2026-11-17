@@ -25,3 +25,10 @@ curl -fsS -H "x-ingest-key: $KEY" -H "content-type: application/json" \
 
 - Treat HTTP 409 and 429 as success ("already have a newer or very recent snapshot"). Do not retry in a loop; just wait for the next hourly run.
 - A wrong key counts against the shared per-address failure bucket (the same one the sync PIN uses). Repeated wrong-key uploads from home can make a mistyped PIN from the same address return 429 for 10 minutes. Test the key once by hand before enabling the schedule.
+
+## Switching the watcher over (order matters)
+
+1. Merge and deploy the ingest endpoint, create the `STORE_INGEST_KEY` secret, enable the add-on, and confirm `GET /api/store-ingest` returns a recent snapshot.
+2. Merge the `store-watch.yml` change.
+3. Run "Web store watch" manually once with `rebaseline=true` **and `dry_run=false`**. Manual runs default to `dry_run=true`, which does not save anything, so a rebaseline with the default dry-run would change nothing. The rebaseline run saves the A$ snapshot as the new baseline and sends no Telegram messages.
+4. After that, scheduled runs are normal. If the reader goes quiet (no accepted upload for 6 hours, or no complete observation for 3 days) one system-topic message is sent, at most once per 24 hours.

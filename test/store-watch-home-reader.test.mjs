@@ -4,6 +4,7 @@ import { spawnSync } from "node:child_process";
 import { mkdtempSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { lastCompleteAt } from "../src/store-validate.js";
 import { assertFreshSnapshot, staleReason, shouldSendStaleAlert, rebaselinePrev, diffStore, buildMessages } from "../scripts/store-watch.mjs";
 import { judgeStoreSnapshot } from "../scripts/health.mjs";
 import { storeSnapshotProblem } from "../scripts/uptime.mjs";
@@ -96,11 +97,34 @@ test("health and uptime judge snapshot age (stale after 3 days)", () => {
 
 test("workflow reads the Worker (no browser), has a rebaseline input, a stale alert, and keeps its permissions", () => {
   const wf = read(new URL("../.github/workflows/store-watch.yml", import.meta.url), "utf8");
-  assert.match(wf, /curl --fail-with-body -sS https:\/\/pogo\.michaelpuff\.com\/api\/store-ingest -o \/tmp\/store-snapshot\.json/);
+  assert.match(wf, /curl --fail-with-body -sS --max-time 30 --retry 2 https:\/\/pogo\.michaelpuff\.com\/api\/store-ingest -o \/tmp\/store-snapshot\.json/);
   assert.ok(!/playwright|store_snapshot\.py|setup-python/.test(wf));
   assert.match(wf, /rebaseline:\s*\n\s*description: .*\n\s*default: "false"/);
   assert.match(wf, /STORE_REBASELINE: \$\{\{ github\.event\.inputs\.rebaseline == 'true' && '1' \|\| '' \}\}/);
   assert.match(wf, /node scripts\/store-watch\.mjs --stale-alert/);
   assert.match(wf, /permissions:\n  contents: write\n/);
   assert.ok(!/STORE_INGEST_KEY/.test(wf), "the write key is never used by GitHub");
+});
+
+test("held-forever: uploads arrive hourly but every one is held, so the last COMPLETE time ages and the alert fires", () => {
+  const t0 = "2026-11-10T00:00:00.000Z", now = Date.parse("2026-11-17T00:00:00Z");
+  let st = diffStore(null, snapOf(mk(["Ticket A", "Ticket B", "Box C"]), t0), t0).state;
+  assert.equal(st.lastCompleteAt, t0);
+  // every later upload is invalid (duplicate SKU): held, `updated` moves, lastCompleteAt must not
+  for (let h = 1; h <= 5; h++) { const at = new Date(Date.parse(t0) + h * 36e5 * 24).toISOString(); const dup = mk(["Ticket A", "Ticket B", "Box C"]); dup[2] = dup[1]; const d = diffStore(st, snapOf(dup, at), at); assert.ok(d.held); st = d.state; }
+  assert.equal(st.lastCompleteAt, t0); assert.ok(Date.parse(st.updated) > Date.parse(t0));
+  assert.match(staleReason({ publicUpdated: st.updated, lastComplete: lastCompleteAt(st), receivedMs: now - 36e5 }, now), /3 days/);
+  assert.equal(staleReason({ publicUpdated: st.updated, receivedMs: now - 36e5 }, now), null, "fallback only when no complete time is known");
+  assert.equal(lastCompleteAt({ lastObservation: { status: "complete", at: t0 } }), t0);
+  assert.equal(lastCompleteAt({ lastObservation: { status: "held", at: t0 } }), null);
+  assert.equal(judgeStoreSnapshot(lastCompleteAt(st), now).state, "stale");
+});
+
+test("--stale-alert never writes the marker when the send fails, nor creates a state holding only the marker", () => {
+  const dir = mkdtempSync(join(tmpdir(), "sw-")), old = new Date(Date.now() - 5 * 864e5).toISOString();
+  writeFileSync(join(dir, "cur.json"), JSON.stringify({ updated: old }));
+  const go = () => spawnSync(process.execPath, ["scripts/store-watch.mjs", "--stale-alert"], { encoding: "utf8", env: { PATH: process.env.PATH, STORE_STATE: join(dir, "state.json"), STORE_CURRENT_SNAPSHOT: join(dir, "cur.json"), STORE_INGEST_URL: "http://127.0.0.1:9/x", TELEGRAM_BOT_TOKEN: "x", TELEGRAM_CHAT_ID: "1", DRY_RUN: "false", HTTPS_PROXY: "http://127.0.0.1:9" } });
+  let r = go(); assert.equal(r.status, 0, r.stderr); assert.equal(existsSync(join(dir, "state.json")), false);
+  writeFileSync(join(dir, "state.json"), JSON.stringify({ items: { a: {} } }));
+  r = go(); assert.equal(r.status, 0, r.stderr); assert.equal(JSON.parse(readFileSync(join(dir, "state.json"), "utf8")).staleAlertAt, undefined);
 });

@@ -40,7 +40,7 @@ jobs:
       - name: Read the store
         id: read
         run: |
-          if curl --fail-with-body -sS https://pogo.michaelpuff.com/api/store-ingest -o /tmp/store-snapshot.json && node scripts/store-watch.mjs --check-fresh /tmp/store-snapshot.json; then
+          if curl --fail-with-body -sS --max-time 30 --retry 2 https://pogo.michaelpuff.com/api/store-ingest -o /tmp/store-snapshot.json && node scripts/store-watch.mjs --check-fresh /tmp/store-snapshot.json; then
             echo "fresh=true" >> "$GITHUB_OUTPUT"
           else
             echo "fresh=false" >> "$GITHUB_OUTPUT"
