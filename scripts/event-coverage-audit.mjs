@@ -13,7 +13,7 @@ export function auditEvents(curated,details){
     // A canonical event may declare exact source-detail IDs without having its own
     // detail object. Join only those explicit IDs; never infer matches from titles.
     const declared=Array.isArray(event.detailIds)?event.detailIds.filter(
-      key=>typeof key==='string'&&key.trim()&&Object.hasOwn(sourceEvents,key)):[];
+      key=>typeof key==='string'&&key.trim()).map(key=>key.trim()).filter(key=>Object.hasOwn(sourceEvents,key)):[];
     const joined=[event.id,...declared].filter((key,index,keys)=>keys.indexOf(key)===index)
       .filter(key=>Object.hasOwn(sourceEvents,key))
       .map(key=>sourceEvents[key]).filter(source=>source&&typeof source==='object');
