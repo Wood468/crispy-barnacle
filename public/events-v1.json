@@ -11660,7 +11660,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 217,
+    "revision": 219,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -20269,6 +20269,190 @@
      "label": "G47IX",
      "trust": "community",
      "observed": "2026-10-14"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:duolingo-timed-research-2026",
+   "aliases": [],
+   "family": "other",
+   "title": "Pokémon GO and Duolingo Timed Research",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-17-duolingo-timed-research-2026/duolingo-timed-research-2026.jpg",
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [
+      {
+       "text": "Complete tasks to earn XP, Stardust, and encounters with the following Pokémon that have a Special Background.",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Duo’s Pokémon Party, the limited-time Duolingo quest, starts on Tuesday, November 17, 2026, at 10:00 a.m. JST (Monday, November 16, at 5:00 p.m. PST).",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Join Duo’s Pokémon Party in Duolingo by December 21.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Do at least one lesson a day on seven different days by December 29.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Redeem your offer code in the Pokémon GO Web Store .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Offer codes are unique to each Duolingo learner, so there is no shared code to redeem.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Practice a new language with Professor Willow while you complete Pokémon GO tasks. Choose a language, and the research tasks will appear in that language. Look out for Professor Willow’s hints if you get stuck on a task!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "After obtaining the Timed Research, the associated tasks must be completed, and their rewards must be claimed before Thursday, December 31, 2026, at 11:59 p.m. local time.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": []
+    },
+    "info": [],
+    "detailRefs": [
+     "leekduck:duolingo-timed-research-2026"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "236a1dde1590462c84ac50a1ad2658170dd4a7eee9cfd11cfee8ef792261eaa4",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [
+    {
+     "text": "Complete tasks to earn XP, Stardust, and encounters with the following Pokémon that have a Special Background.",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Duo’s Pokémon Party, the limited-time Duolingo quest, starts on Tuesday, November 17, 2026, at 10:00 a.m. JST (Monday, November 16, at 5:00 p.m. PST).",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Join Duo’s Pokémon Party in Duolingo by December 21.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Do at least one lesson a day on seven different days by December 29.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Redeem your offer code in the Pokémon GO Web Store .",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Offer codes are unique to each Duolingo learner, so there is no shared code to redeem.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Practice a new language with Professor Willow while you complete Pokémon GO tasks. Choose a language, and the research tasks will appear in that language. Look out for Professor Willow’s hints if you get stuck on a task!",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "After obtaining the Timed Research, the associated tasks must be completed, and their rewards must be claimed before Thursday, December 31, 2026, at 11:59 p.m. local time.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/duolingo-timed-research-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/pokemon-go-x-duolingo-duos-pokemon-party-timed-research-language-tag/"
     }
    ],
    "pokemon": [],
@@ -32323,7 +32507,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 232,
+    "revision": 234,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -33252,7 +33436,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-17-duolingo-timed-research-2026/duolingo-timed-research-2026.jpg",
+   "image": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -33264,56 +33448,6 @@
      "raids": [],
      "eggs": [],
      "research": [
-      {
-       "text": "Complete tasks to earn XP, Stardust, and encounters with the following Pokémon that have a Special Background.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Duo’s Pokémon Party, the limited-time Duolingo quest, starts on Tuesday, November 17, 2026, at 10:00 a.m. JST (Monday, November 16, at 5:00 p.m. PST).",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Join Duo’s Pokémon Party in Duolingo by December 21.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Do at least one lesson a day on seven different days by December 29.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Redeem your offer code in the Pokémon GO Web Store .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Offer codes are unique to each Duolingo learner, so there is no shared code to redeem.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Practice a new language with Professor Willow while you complete Pokémon GO tasks. Choose a language, and the research tasks will appear in that language. Look out for Professor Willow’s hints if you get stuck on a task!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
       {
        "text": "Celebrate the adidas × Pokémon collection with Timed Research at participating adidas and retail stores worldwide!",
        "sources": [
@@ -33381,8 +33515,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "8ce83c194090acac4ecb4ed41f69c7b17bf5c68d46036ab5591f91839c6a0e82",
-    "revision": 5,
+    "contentHash": "29c1cde3d3a9a83f683b63534efc0c95f55c6b93a759b7266ef23e9551004265",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -33391,56 +33525,6 @@
    "activities": [],
    "bonuses": [],
    "research": [
-    {
-     "text": "Complete tasks to earn XP, Stardust, and encounters with the following Pokémon that have a Special Background.",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Duo’s Pokémon Party, the limited-time Duolingo quest, starts on Tuesday, November 17, 2026, at 10:00 a.m. JST (Monday, November 16, at 5:00 p.m. PST).",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Join Duo’s Pokémon Party in Duolingo by December 21.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Do at least one lesson a day on seven different days by December 29.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Redeem your offer code in the Pokémon GO Web Store .",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Offer codes are unique to each Duolingo learner, so there is no shared code to redeem.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Practice a new language with Professor Willow while you complete Pokémon GO tasks. Choose a language, and the research tasks will appear in that language. Look out for Professor Willow’s hints if you get stuck on a task!",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
     {
      "text": "Celebrate the adidas × Pokémon collection with Timed Research at participating adidas and retail stores worldwide!",
      "sources": [
@@ -61620,7 +61704,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 208,
+    "revision": 210,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -68544,7 +68628,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 217,
+    "revision": 219,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -76851,7 +76935,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 208,
+    "revision": 210,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -78926,7 +79010,7 @@
     "imageReviewed": true,
     "contentHash": "6663449a17686d44ce3edf854728fdb9292282e86bbc09ec3eda554f954b7d3b",
     "revision": 25,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "events"
    },

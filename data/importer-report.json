@@ -1,12 +1,12 @@
 {
- "runAt": "2026-11-17T13:54:57.870Z",
+ "runAt": "2026-11-17T21:04:15.971Z",
  "artworkCoverage": {
-  "selected": 27,
+  "selected": 28,
   "missing": 77,
   "legacyUnattributed": 2,
   "bySource": {
    "Pokémon GO (official)": 22,
-   "Leek Duck": 5
+   "Leek Duck": 6
   },
   "missingEvents": [
    {
@@ -235,13 +235,6 @@
     ]
    },
    {
-    "id": "leekduck:gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup",
-    "name": "Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
-    "sources": [
-     "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/"
-    ]
-   },
-   {
     "id": "leekduck:gbl-twilight-trails_ultra-league_master-league-mega-edition_2026-go-laic-cup",
     "name": "Ultra League, Master League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
     "sources": [
@@ -260,6 +253,13 @@
     "name": "[Canceled] Max Monday",
     "sources": [
      "https://leekduck.com/events/max-mondays-2026-11-16/"
+    ]
+   },
+   {
+    "id": "leekduck:gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup",
+    "name": "Great League, Ultra League: Mega Edition, and 2026 GO LAIC Cup | Twilight Trails",
+    "sources": [
+     "https://leekduck.com/events/gbl-twilight-trails_great-league_ultra-league-mega-edition_2026-go-laic-cup/"
     ]
    },
    {
@@ -575,7 +575,7 @@
   }
  },
  "pagesRead": 80,
- "events": 106,
+ "events": 107,
  "worldEvents": 68,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
@@ -971,29 +971,42 @@
    "event": "Super Mega Raid Day",
    "field": "bonuses",
    "missingFrom": [
+    "leekduck",
     "leekduck"
    ]
   },
   {
    "event": "Super Mega Raid Day",
+   "field": "featured",
+   "missingFrom": []
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "raids",
+   "missingFrom": []
+  },
+  {
+   "event": "Super Mega Raid Day",
    "field": "research",
    "missingFrom": [
+    "leekduck",
     "leekduck"
    ]
   },
   {
-   "event": "adidas × Pokémon Timed Research",
+   "event": "Super Mega Raid Day",
    "field": "shiny",
-   "missingFrom": [
-    "hub"
-   ]
+   "missingFrom": []
   },
   {
-   "event": "adidas × Pokémon Timed Research",
-   "field": "costumes",
-   "missingFrom": [
-    "hub"
-   ]
+   "event": "Super Mega Raid Day",
+   "field": "tickets",
+   "missingFrom": []
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "dates",
+   "missingFrom": []
   },
   {
    "event": "Dynamax Machop during Max Monday",
@@ -1192,7 +1205,7 @@
   "schemaVersion": 1,
   "publication": "audit-only",
   "sourceId": "leekduck",
-  "eligiblePages": 43,
+  "eligiblePages": 44,
   "pagesWithFacets": 8,
   "duplicates": 0,
   "skippedLarge": 0,
@@ -1255,17 +1268,13 @@
   "errors": [],
   "canonicalLinks": {
    "publication": "staging-only",
-   "eligiblePages": 43,
-   "linkedPages": 41,
-   "unlinkedPages": 2,
+   "eligiblePages": 44,
+   "linkedPages": 43,
+   "unlinkedPages": 1,
    "ambiguousPages": 0,
    "duplicatePages": 0,
    "rejectedPages": 0,
    "unlinkedExamples": [
-    {
-     "sourceUrl": "https://leekduck.com/events/duolingo-timed-research-2026",
-     "expectedAlias": "leekduck:duolingo-timed-research-2026"
-    },
     {
      "sourceUrl": "https://leekduck.com/events/max-mondays-2026-11-16",
      "expectedAlias": "leekduck:max-mondays-2026-11-16"
@@ -1308,6 +1317,15 @@
      "benefits": 0,
      "featuredMoves": 0,
      "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:duolingo-timed-research-2026",
+     "sourceUrls": [
+      "https://leekduck.com/events/duolingo-timed-research-2026/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 4
     },
     {
      "eventId": "leekduck:dynamax-trails-2026",
@@ -1443,22 +1461,13 @@
      "benefits": 0,
      "featuredMoves": 0,
      "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:november-communityday2026",
-     "sourceUrls": [
-      "https://leekduck.com/events/november-communityday2026/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 2
     }
    ],
    "normalizedCounts": {
-    "events": 41,
+    "events": 43,
     "benefits": 50,
     "featuredMoves": 0,
-    "researchPrograms": 14,
+    "researchPrograms": 18,
     "disputed": 0,
     "unconfirmed": 0,
     "warnings": 0
