@@ -39,6 +39,9 @@ jobs:
         id: baseline
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Restore pictures from R2
+        env:
+          # Halt public G47IX discovery when R2 transfer/credentials fail; no inferred image availability.
+          R2_SYNC_STRICT_RESTORE: '1'
         run: bash scripts/r2-sync.sh restore
       - name: Install ImageMagick and OCR tools
         run: |
