@@ -15,8 +15,8 @@ export function auditRaidCoverage(data, details) {
     const row=rotation[i], next=rotation[i+1];
     if (!row.s || !row.e || !row.five) issues.push({type:'incomplete-rotation',index:i});
     if (!validDay(row.s) || !validDay(row.e) || row.e <= row.s) issues.push({type:'invalid-window',index:i});
-    if (next && validDay(next.s) && validDay(row.e) && next.s > row.e) issues.push({type:'rotation-gap',from:row.e,to:next.s});
-    if (next && validDay(next.s) && validDay(row.e) && next.s < row.e) issues.push({type:'rotation-overlap',from:next.s,to:row.e});
+    if (next && validDay(row.s) && validDay(row.e) && row.e > row.s && validDay(next.s) && validDay(next.e) && next.e > next.s && next.s > row.e) issues.push({type:'rotation-gap',from:row.e,to:next.s});
+    if (next && validDay(row.s) && validDay(row.e) && row.e > row.s && validDay(next.s) && validDay(next.e) && next.e > next.s && next.s < row.e) issues.push({type:'rotation-overlap',from:next.s,to:row.e});
   }
   const hours=data.raidHour||[];
   const seen=new Set();
