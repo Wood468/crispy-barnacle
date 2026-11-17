@@ -43,3 +43,14 @@ test('invalid curated timestamp clock and suffix are reviewable',()=>{
   {id:'suffix',t:'Invalid suffix',s:'2026-11-18T10:00oops',e:'2026-11-19T18:00'}]);
  assert.deepEqual(r.odd.map(x=>x.id),['clock','suffix']);
 });
+
+test('valid fractional seconds and timezone offsets do not trigger false date warnings',()=>{
+ const r=check([], [{id:'fraction',t:'Fractional',s:'2026-11-18T10:00:00.123+11:00',e:'2026-11-18T12:30:15.999+11:00'},
+  {id:'utc',t:'UTC',s:'2026-11-18T10:00:00Z',e:'2026-11-18T12:00:00Z'}]);
+ assert.deepEqual(r.odd,[]);
+});
+test('invalid timezone offset and fractional suffix remain review-only findings',()=>{
+ const r=check([], [{id:'offset',t:'Bad offset',s:'2026-11-18T10:00+25:00',e:'2026-11-18T12:00Z'},
+  {id:'fraction',t:'Bad fractional',s:'2026-11-18T10:00:00.1234Z',e:'2026-11-18T12:00Z'}]);
+ assert.deepEqual(r.odd.map(x=>x.id),['offset','fraction']);
+});
