@@ -16,6 +16,7 @@ const call = (env, { method = "POST", key = KEY, body, headers = {}, path = "/ap
 }), env, ctx);
 const items = (price = i => "A$" + (i + 1) + ".99") => ["a", "b", "c", "d"].map((n, i) => ({ name: "Item " + n, section: "box", href: "/purchase/" + n, price: price(i), imgs: ["https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/" + n + "/w256.webp"] }));
 const snap = (now, over = {}, its = items()) => ({ ...withEvidence(its), fetched: new Date(now).toISOString(), items: its, ...over });
+const REASONS = ["json", "shape", "too_many_items", "string_len", "href", "img_host", "sku", "duplicate_sku", "items_min", "priced_min", "currency", "evidence", "load_unstable", "cards_mismatch", "section_mismatch", "completeness", "fetched_format", "fetched_window"];
 const row = env => { try { return env.DB.raw.prepare("SELECT * FROM store_ingest").get(); } catch { return undefined; } };
 
 test("unset or short key: route is inert (404), even with a matching header", async () => {
@@ -118,7 +119,7 @@ test("US$, mixed, bare-number, incomplete, invalid and over-limit snapshots are 
     notObject: [1, 2, 3],
     tooMany: snap(now, {}, Array.from({ length: 401 }, (_, i) => ({ name: "I" + i, section: "box", href: "/p/" + i, price: "A$1.00" })))
   };
-  for (const [name, b] of Object.entries(bad)) { const r = await call(env, { body: b }); assert.equal(r.status, 400, name); assert.deepEqual(await r.json(), { error: "Bad request." }, name); }
+  for (const [name, b] of Object.entries(bad)) { const r = await call(env, { body: b }); assert.equal(r.status, 400, name); const j = await r.json(); assert.equal(j.error, "Bad request.", name); assert.deepEqual(Object.keys(j), ["error", "reason"], name); assert.ok(REASONS.includes(j.reason), name); }
   assert.deepEqual(row(env), before);
 });
 
@@ -166,4 +167,52 @@ test("two concurrent identical POSTs yield exactly one 200", async () => {
 test("GET does not need the table to exist yet (404, then created lazily)", async () => {
   const env = mkEnv();
   assert.equal((await call(env, { method: "GET", key: null })).status, 404);
+});
+
+test("every 400 carries a fixed-vocabulary reason code and never echoes the input", async () => {
+  const now = Date.now(), SECRET = "ZZ-secret-marker-ZZ";
+  const withIt = (f) => items().map(f);
+  const ev = over => ({ ...snap(now), completeness: { ...snap(now).completeness, ...over } });
+  const cases = {
+    json: ["{not json", "json"],
+    notObject: [[1], "shape"], noItems: [{ fetched: new Date(now).toISOString() }, "shape"],
+    itemNotObject: [snap(now, {}, [...items(), 5]), "shape"],
+    nameType: [snap(now, {}, withIt((i, n) => (n ? i : { ...i, name: 7 }))), "shape"],
+    imgsNotArray: [snap(now, {}, withIt(i => ({ ...i, imgs: "x" }))), "shape"],
+    tooMany: [snap(now, {}, Array.from({ length: 401 }, (_, i) => ({ name: "I" + i, section: "box", href: "/purchase/" + i, price: "A$1.00" }))), "too_many_items"],
+    nameLen: [snap(now, {}, withIt((i, n) => (n ? i : { ...i, name: SECRET + "n".repeat(201) }))), "string_len"],
+    hrefLen: [snap(now, {}, withIt((i, n) => (n ? i : { ...i, href: "/purchase/" + "a".repeat(300) }))), "string_len"],
+    href: [snap(now, {}, withIt((i, n) => (n ? i : { ...i, href: "/purchase/" + SECRET + "+x" }))), "href"],
+    hrefAbs: [snap(now, {}, withIt(i => ({ ...i, href: "https://evil.test/purchase/x" }))), "href"],
+    imgHttp: [snap(now, {}, withIt(i => ({ ...i, imgs: ["http://assets.pgo.webstore.nianticlabs.com/a.webp"] }))), "img_host"],
+    imgOther: [snap(now, {}, withIt(i => ({ ...i, imgs: ["https://" + SECRET + ".example/a.png"] }))), "img_host"],
+    imgData: [snap(now, {}, withIt(i => ({ ...i, imgs: ["data:image/gif;base64,R0lGOD"] }))), "img_host"],
+    sku: [snap(now, {}, withIt(i => ({ ...i, section: "" }))), "sku"],
+    dup: [snap(now, {}, withIt(i => ({ ...i, href: "/purchase/same" }))), "duplicate_sku"],
+    itemsMin: [snap(now, {}, items().slice(0, 2)), "items_min"],
+    pricedMin: [snap(now, {}, items(i => (i === 0 ? "A$1.99" : ""))), "priced_min"],
+    usd: [snap(now, {}, items(i => "US$" + (i + 1) + ".99")), "currency"],
+    mixed: [snap(now, {}, items(i => (i === 0 ? "US$1.99" : "A$2.99"))), "currency"],
+    noEvidence: [{ ...snap(now), completeness: undefined }, "evidence"],
+    otherProducer: [ev({ producer: "other.py" }), "evidence"],
+    evidenceNotObject: [{ ...snap(now), completeness: "yes" }, "completeness"],
+    unstable: [ev({ stablePasses: 1 }), "load_unstable"],
+    cards: [ev({ cards: 5 }), "cards_mismatch"],
+    sections: [ev({ sections: [{ name: "box", count: 3 }] }), "section_mismatch"],
+    garbled: [ev({ sections: [{ name: "", count: 4 }] }), "completeness"],
+    fetchedFormat: [snap(now, { fetched: "yesterday" }), "fetched_format"],
+    fetchedType: [snap(now, { fetched: 12345 }), "shape"],
+    fetchedOld: [snap(now, { fetched: new Date(now - 16 * 60000).toISOString() }), "fetched_window"],
+    fetchedFuture: [snap(now, { fetched: new Date(now + 6 * 60000).toISOString() }), "fetched_window"]
+  };
+  for (const [name, [body, reason]] of Object.entries(cases)) {
+    const env = mkEnv(), r = await call(env, { body });
+    assert.equal(r.status, 400, name);
+    const text = await r.text();
+    assert.deepEqual(JSON.parse(text), { error: "Bad request.", reason }, name);
+    assert.ok(!text.includes("secret-marker"), name);
+    assert.equal(row(env), undefined, name);
+  }
+  // every code in the vocabulary is exercised above
+  assert.deepEqual([...new Set(Object.values(cases).map(c => c[1]))].sort(), [...REASONS].sort());
 });
