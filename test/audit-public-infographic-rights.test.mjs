@@ -210,3 +210,90 @@ test('the real publisher projection reports a pending weekly candidate without p
     rmSync(temp, { recursive: true, force: true });
   }
 });
+
+
+test('missing next-week artwork is reported and opt-in rejected before validator errors', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'gofn-audit-restored-media-'));
+  try {
+    mkdirSync(join(temp, 'public', 'infographics', 'g47ix'), { recursive: true });
+    mkdirSync(join(temp, 'data'));
+    const write = (p, value) => writeFileSync(join(temp, p), JSON.stringify(value));
+    const old = path('older-selected'), newer = path('new-approved-with-missing-bytes');
+    const stamp = new Date().toISOString();
+    write('public/event-info.json', { events: {} });
+    write('public/weekly.json', { items: [{ kind: 'week', image: old }] });
+    write('public/infographic-queue.json', { items: [] });
+    write('data/g47ix-infographics-review.json', { candidates: [
+      { id: 'older', title: 'GO Weekly previous', stagedPath: old,
+        publishedAt: new Date(Date.now() - 8 * 864e5).toISOString(), overview: 'week', decision: '' },
+      { id: 'new', title: 'GO Weekly new', stagedPath: newer,
+        publishedAt: stamp, overview: 'week', decision: '' },
+    ] });
+    writeFileSync(join(temp, 'public', old.slice(1)), 'OLDER_BYTES');
+    const first = runAudit(temp);
+    assert.equal(first.exitCode, 0, 'report-only must not block automatically');
+    assert.equal(first.report.totals.projectedWeeklyMissingLocalFiles, 1);
+    assert.equal(first.report.totals.projectedPendingWeeklyPromotions, 0, 'manually reviewed does not imply bytes exist');
+    assert.equal(first.report.localFileCheckPerformed, true);
+    assert.equal(runAudit(temp, false, { failOnMissingLocalWeekly: true }).exitCode, 3);
+    assert.equal(runAudit(temp, true, { failOnMissingLocalWeekly: true }).exitCode, 2,
+      'public redistribution rights gate is independent of missing-local gate');
+    writeFileSync(join(temp, 'public', newer.slice(1)), 'RESTORED_FROM_R2_BYTES');
+    const restored = runAudit(temp, false, { failOnMissingLocalWeekly: true });
+    assert.equal(restored.exitCode, 0, 'local R2 restore satisfies the local-only preflight');
+    assert.equal(restored.report.totals.projectedWeeklyMissingLocalFiles, 0);
+    const raw = JSON.stringify(first.report);
+    assert.doesNotMatch(raw, /new-approved-with-missing-bytes|older-selected|RESTORED_FROM_R2_BYTES/,
+      'report output must not expose asset IDs or bytes');
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('local image preflight rejects traversals and treats R2 reachability as unknown', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'gofn-audit-media-safety-'));
+  try {
+    mkdirSync(join(temp, 'data')); mkdirSync(join(temp, 'public'));
+    const write = (p, value) => writeFileSync(join(temp, p), JSON.stringify(value));
+    const bad = '/infographics/g47ix/../../secret.webp';
+    write('public/event-info.json', { events: {} });
+    write('public/weekly.json', { items: [] });
+    write('public/infographic-queue.json', { items: [] });
+    write('data/g47ix-infographics-review.json', { candidates: [
+      { id: 'unsafe', title: 'GO Weekly', stagedPath: bad,
+        publishedAt: new Date().toISOString(), reviewStatus: 'weekly' },
+    ] });
+    const report = runAudit(temp).report;
+    assert.equal(report.totals.projectedWeeklyMissingLocalFiles, 1);
+    assert.equal(report.localFileCheckPerformed, true);
+    assert.doesNotMatch(JSON.stringify(report), /secret\.webp/);
+    // Pure function without filesystem callback must not claim a missing R2 object.
+    const pure = audit({ projectedWeekly: { items: [{ kind: 'week', image: path('unknown-r2') }] } });
+    assert.equal(pure.localFileCheckPerformed, false);
+    assert.equal(pure.totals.projectedWeeklyMissingLocalFiles, 0);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('CLI opt-in missing-local-weekly gate reports aggregate only and exits 3', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'gofn-audit-cli-local-'));
+  try {
+    mkdirSync(join(temp, 'public')); mkdirSync(join(temp, 'data'));
+    const write = (p, value) => writeFileSync(join(temp, p), JSON.stringify(value));
+    write('public/event-info.json', { events: {} });
+    write('public/weekly.json', { items: [] });
+    write('public/infographic-queue.json', { items: [] });
+    write('data/g47ix-infographics-review.json', { candidates: [
+      { id: 'missing', title: 'GO Weekly', stagedPath: path('opaque-media-id'),
+        publishedAt: new Date().toISOString(), reviewStatus: 'weekly' },
+    ] });
+    const url = new URL('../scripts/audit-public-infographic-rights.mjs', import.meta.url);
+    const cli = spawnSync(process.execPath, [url.pathname, '--fail-on-missing-local-weekly'], { cwd: temp, encoding: 'utf8' });
+    assert.equal(cli.status, 3);
+    assert.equal(JSON.parse(cli.stdout).totals.projectedWeeklyMissingLocalFiles, 1);
+    assert.doesNotMatch(cli.stdout + cli.stderr, /opaque-media-id|\/infographics\/g47ix\//);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
