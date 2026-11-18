@@ -6,7 +6,7 @@ const workflow = readFileSync(new URL('../.github/workflows/store-watch.yml', im
 
 function step(name) {
   const escaped = name.replace(/[.*+?^\x24{}()|[\]\\]/g, '\\$&');
-  const match = workflow.match(new RegExp('^      - name: ' + escaped + '\\n([\\s\\S]*?)(?=^      - name: |^    [a-zA-Z_-]+:|\\Z)', 'm'));
+  const match = workflow.match(new RegExp('^      - name: ' + escaped + '\\n([\\s\\S]*?)(?=^      - name: |^    [a-zA-Z_-]+:|$(?![\\s\\S]))', 'm'));
   assert.ok(match, 'missing workflow step: ' + name);
   return match[1];
 }
