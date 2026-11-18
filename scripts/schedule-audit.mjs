@@ -57,7 +57,7 @@ function matchWorld(w, theirs) {
     try {
       const url = new URL(String(source && source.url || ""));
       if (url.protocol !== "https:" || url.hostname !== "leekduck.com") return [];
-      const match = /^\\/events\\/([^/]+)\\/?$/.exec(url.pathname);
+      const match = url.pathname.match(new RegExp("^/events/([^/]+)/?$"));
       return match ? [match[1]] : [];
     } catch { return []; }
   }));
