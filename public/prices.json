@@ -915,19 +915,6 @@
       "observed": "2026-11-17"
     },
     {
-      "product": "store-pok-mon-go-pawniard-community-day-ticket",
-      "label": "Pokémon GO Pawniard Community Day Ticket",
-      "group": "Tickets",
-      "currency": "AUD",
-      "amount": 2.99,
-      "region": "AU",
-      "verified": true,
-      "source": "Pokémon GO Web Store (Australian storefront, read by the owner)",
-      "url": "https://store.pokemongo.com/",
-      "observed": "2026-11-17",
-      "note": "owner-observed in AU store; not yet in snapshot"
-    },
-    {
       "product": "store-go-pass-deluxe-dynamax-trails",
       "label": "GO Pass Deluxe: Dynamax Trails",
       "group": "Tickets",

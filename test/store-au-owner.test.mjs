@@ -136,3 +136,38 @@ test('the committed owner input file (if any) is valid against the committed dat
   const r = applyOwnerInput(data, input, snap, {today: input.observed});
   assert.deepEqual(r.errors, []);
 });
+test('supersedes: opt-in removal of one stale AU entry when its replacement is added; nothing else is touched', () => {
+  const data = base();
+  data.prices.push({product:'store-brand-new-box-guess',label:'Brand New Box Guess',group:'Boxes',currency:'AUD',amount:2.99,region:'AU',verified:true,observed:'2026-11-13'},
+    {product:'store-brand-new-box-guess',label:'Brand New Box Guess',group:'Boxes',currency:'IDR',amount:30000,region:'ID',verified:true,observed:'2026-11-13'});
+  const without = apply(input([{label:'Brand New Box', price:'A$2.99'}]), data);
+  assert.equal(without.data.prices.length, data.prices.length + 1, 'no field: nothing removed');
+  const r = apply(input([{label:'Brand New Box', price:'A$2.99', supersedes:'brand new box guess'}]), data);
+  assert.deepEqual(r.errors, []);
+  assert.equal(r.removed, 1);
+  assert.equal(r.data.prices.some(p => p.product === 'store-brand-new-box-guess' && p.region === 'AU'), false);
+  assert.equal(r.data.prices.some(p => p.product === 'store-brand-new-box-guess' && p.currency === 'IDR'), true, 'other regions of that product stay');
+  assert.ok(r.data.prices.some(p => p.product === 'store-brand-new-box' && p.amount === 2.99));
+  assert.equal(r.data.prices.length, data.prices.length);
+  // replacement already recorded the same day (no-op add): the stale entry is still retired
+  const again = apply(input([{label:'Brand New Box', price:'A$2.99', supersedes:'Brand New Box Guess'}]), r.data);
+  assert.ok(again.errors.length, 'superseded entry no longer exists');
+});
+test('supersedes: validated, all-or-nothing', () => {
+  const data = base();
+  data.prices.push({product:'store-old-guess',label:'Old Guess',group:'Boxes',currency:'AUD',amount:2.99,region:'AU',verified:true,observed:'2026-11-13'});
+  const bad = [
+    {label:'Brand New Box', price:'A$2.99', supersedes:'Does Not Exist'},
+    {label:'Brand New Box', price:'A$2.99', supersedes:''},
+    {label:'Brand New Box', price:'A$2.99', supersedes:5},
+    {label:'Brand New Box', price:'A$3.99', supersedes:'Old Guess'},
+    {label:'Brand New Box', price:'A$3.99', supersedes:'Old Guess', supersedesNote:''},
+    {label:'Lucky Egg x8', price:'A$7.99', supersedes:'Lucky Egg x8'}
+  ];
+  for (const row of bad) { const r = apply(input([row]), data); assert.ok(r.errors.length, JSON.stringify(row)); assert.equal(r.changed, 0); assert.equal(r.data, data); }
+  const both = apply(input([{label:'Brand New Box', price:'A$2.99', supersedes:'Old Guess'}, {label:'Old Guess', price:'A$2.99'}]), data);
+  assert.ok(both.errors.length, 'cannot supersede another item of the same input');
+  const diff = apply(input([{label:'Brand New Box', price:'A$3.99', supersedes:'Old Guess', supersedesNote:'owner corrected the label and price'}]), data);
+  assert.deepEqual(diff.errors, []);
+  assert.equal(diff.removed, 1);
+});
