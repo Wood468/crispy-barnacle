@@ -40,6 +40,8 @@ export function projectPublicStoreSnapshot(raw, approvedHrefs, nowMs = Date.now(
       producer: raw.completeness.producer,
       loadComplete: raw.completeness.loadComplete,
       stablePasses: raw.completeness.stablePasses,
+      passes: raw.completeness.passes,
+      maxPasses: raw.completeness.maxPasses,
       cards: raw.completeness.cards,
       sections: raw.completeness.sections.map(section => ({
         name: section.name, count: section.count
