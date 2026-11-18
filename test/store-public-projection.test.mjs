@@ -53,3 +53,28 @@ test("drops unapproved image metadata without leaking URLs or diagnostics", () =
   assert.equal(out.items[0].imgs.length, 1);
   assert.ok(!JSON.stringify(out).includes("evil.test"));
 });
+
+test("public projection does not mutate authenticated raw evidence or approved identities", () => {
+  const raw = make();
+  const before = structuredClone(raw);
+  const approvedBefore = [...allow];
+  const projected = projectPublicStoreSnapshot(raw, allow);
+  assert.ok(projected);
+  assert.deepEqual(raw, before);
+  assert.deepEqual([...allow], approvedBefore);
+  assert.equal(projected.items[0].href, raw.items[0].href);
+  assert.equal(projected.completeness.cards, raw.completeness.cards);
+  assert.equal(projected.completeness.passes, raw.completeness.passes);
+  assert.equal(projected.completeness.maxPasses, raw.completeness.maxPasses);
+});
+
+test("approved standalone offers remain eligible when explicitly present in the trusted set", () => {
+  const raw = make();
+  raw.items[3].name = "Standalone ticket";
+  raw.items[3].section = "ticket";
+  raw.completeness = withEvidence(raw.items).completeness;
+  const projected = projectPublicStoreSnapshot(raw, allow);
+  assert.ok(projected);
+  assert.equal(projected.items[3].name, "Standalone ticket");
+  assert.equal(deriveCompleteness(projected).complete, true);
+});
