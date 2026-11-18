@@ -153,3 +153,20 @@ test('malformed optional source links and prose rows cannot crash coverage audit
  assert.equal(malformed.events[0].checks.sourceBonuses,false);
  assert.deepEqual(malformed.events[0].sources,[]);
 });
+
+test('non-array research and encounter values cannot fabricate source coverage',()=>{
+ const report=auditEvents({events:[{id:'malformed',t:'Malformed'}]},{events:{
+  malformed:{researchTasks:'not real tasks',encounters:'not encounters',pokemon:{length:1},
+   fields:{research:[{text:0}],featured:[{title:0}]}}
+ }});
+ const checks=report.events[0].checks;
+ assert.equal(checks.sourceResearch,false);
+ assert.equal(checks.structuredResearch,false);
+ assert.equal(checks.sourceEncounters,false);
+ assert.equal(report.researchReviewCount,0);
+ const valid=auditEvents({events:[{id:'valid',t:'Valid'}]},{events:{
+  valid:{researchTasks:[{task:'Catch 5'}],encounters:[{species:'Pikachu'}]}}
+ }});
+ assert.equal(valid.events[0].checks.structuredResearch,true);
+ assert.equal(valid.events[0].checks.sourceEncounters,true);
+});
