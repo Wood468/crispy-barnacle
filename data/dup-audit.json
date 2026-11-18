@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17T22:43:11.709Z",
+ "updated": "2026-11-18T03:54:59.742Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -31,25 +31,6 @@
  "crossList": [
   {
    "keep": {
-    "id": "dyntrails",
-    "name": "Dynamax Trails",
-    "place": "",
-    "start": "2026-11-16",
-    "end": "2026-11-23",
-    "list": "curated"
-   },
-   "dupe": {
-    "id": "w-dynamax-trails",
-    "name": "Dynamax Trails",
-    "place": "",
-    "start": "2026-11-16",
-    "end": "2026-11-23",
-    "list": "world"
-   },
-   "why": "same dates, 2 shared words (100%)"
-  },
-  {
-   "keep": {
     "id": "eternamax",
     "name": "Eternamax Eternatus Returns",
     "place": "",
@@ -66,25 +47,6 @@
     "list": "world"
    },
    "why": "same dates, 2 shared words (100%)"
-  },
-  {
-   "keep": {
-    "id": "twilightwishes",
-    "name": "Twilight Wishes",
-    "place": "",
-    "start": "2026-11-24",
-    "end": "2026-11-30",
-    "list": "curated"
-   },
-   "dupe": {
-    "id": "w-twilight-wishes",
-    "name": "Twilight Wishes",
-    "place": "",
-    "start": "2026-11-24",
-    "end": "2026-11-30",
-    "list": "world"
-   },
-   "why": "ruled by you"
   }
  ],
  "maybe": [
