@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-18T11:42:59.846Z",
+ "updated": "2026-11-18T20:31:42.053Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 3
+   "items": 4
   },
   {
    "id": "miners-assets",
@@ -27,8 +27,23 @@
    "items": 2
   }
  ],
- "gaps": 0,
+ "gaps": 1,
  "items": [
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Hisuian Goodra and Magnet Bomb Magnezone&#8230; Any Use in PvP?",
+   "link": "https://pokemongohub.net/post/pvp/hisuian-goodra-and-magnet-bomb-magnezone-any-use-in-pvp/",
+   "date": "2026-11-18T14:56:47.000Z",
+   "summary": "With this year&#8217;s GO Wild Area events wrapped up, you may find yourself with some shiny, Steely new toys that you&#8217;re itching to try out in PvP battles. But SHOULD you look to deploy the new",
+   "pokemon": [
+    "Magnezone",
+    "Goodra"
+   ],
+   "notInOurData": [
+    "Magnezone"
+   ]
+  },
   {
    "source": "hub",
    "trust": "community",

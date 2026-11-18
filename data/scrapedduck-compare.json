@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18T11:43:00.086Z",
+ "updated": "2026-11-18T20:31:42.265Z",
  "state": "ok",
  "scrapedDuckEvents": 44,
  "missingHere": [
@@ -14,12 +14,6 @@
    "type": "timed-research",
    "start": "2026-11-17T10:00:00.000",
    "link": "https://leekduck.com/events/duolingo-timed-research-2026/"
-  },
-  {
-   "name": "adidas × Pokémon Timed Research",
-   "type": "research",
-   "start": "2026-09-25T10:00:00.000",
-   "link": "https://leekduck.com/events/pokemon-x-adidas-2026/"
   }
  ],
  "missingThere": [
