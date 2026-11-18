@@ -90,3 +90,31 @@ test("Leek Duck cannot automatically overwrite dates attached to an official eve
   const alerts = newAlerts({ problems: [], worldFixes: [], worldConflicts: result.conflicts, missing: [] }, []);
   assert.match(alerts[0].text, /left unchanged for review/i);
 });
+
+test("world recurring titles cannot silently adopt dates from another occurrence", () => {
+  const theirs = [{ slug: "super-mega-raid-day-november-2026", start: "2026-11-28T14:00:00", end: "2026-11-28T17:00:00", local: true }];
+  const world = [{ id: "w-october", name: "Super Mega Raid Day", start: "2026-10-31", end: "2026-10-31", sources: [] }];
+  const result = auditWorld(world, theirs);
+  assert.deepEqual(result, { fixes: [], conflicts: [] });
+  assert.equal(world[0].start, "2026-10-31");
+});
+
+test("world date reschedules require the exact Leek Duck HTTPS event URL", () => {
+  const theirs = [{ slug: "super-mega-raid-day-november-2026", start: "2026-11-28T14:00:00", end: "2026-11-28T17:00:00", local: true }];
+  const make = url => [{ id: "w-raid", name: "Super Mega Raid Day", start: "2026-10-31", end: "2026-10-31", sources: [{ url }] }];
+  for (const url of [
+    "https://evil.example/events/super-mega-raid-day-november-2026/",
+    "http://leekduck.com/events/super-mega-raid-day-november-2026/",
+    "https://leekduck.com/events/super-mega-raid-day-november-2026-extra/",
+    "https://leekduck.com/other/events/super-mega-raid-day-november-2026/"
+  ]) assert.deepEqual(auditWorld(make(url), theirs).fixes, [], url);
+  const exact = auditWorld(make("https://leekduck.com/events/super-mega-raid-day-november-2026/"), theirs);
+  assert.equal(exact.fixes.length, 1, "an exact source link may identify a genuinely rescheduled occurrence");
+  assert.deepEqual(exact.fixes[0].to, ["2026-11-28", "2026-11-28"]);
+});
+
+test("world title-only matching still detects overlapping local date discrepancies", () => {
+  const theirs = [{ slug: "super-mega-raid-day-november-2026", start: "2026-11-28T14:00:00", end: "2026-11-29T17:00:00", local: true }];
+  const world = [{ id: "w-raid", name: "Super Mega Raid Day", start: "2026-11-28", end: "2026-11-28", sources: [] }];
+  assert.deepEqual(auditWorld(world, theirs).fixes[0].to, ["2026-11-28", "2026-11-29"]);
+});
