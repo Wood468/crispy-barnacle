@@ -35,7 +35,7 @@ export function applyOwnerInput(data, input, snapshot, opts = {}) {
   for (const p of au) { const k = norm(p.label); known.set(k, known.has(k) && known.get(k) !== p.product ? null : p.product); }
   // Only exact names the Store is showing now, or products already in the Australian catalogue.
   const current = new Set((snapshot?.items || []).map(i => norm(i.name)));
-  const seen = new Set(), additions = [];
+  const seen = new Set(), additions = [], removals = new Map(), itemProducts = new Set();
   for (const [n, row] of input.items.entries()) {
     const where = 'item ' + (n + 1) + (row && row.label ? ' (' + row.label + ')' : '');
     if (!row || typeof row.label !== 'string' || !row.label.trim() || row.label.length > 120) { errors.push(where + ': label required'); continue; }
@@ -56,6 +56,21 @@ export function applyOwnerInput(data, input, snapshot, opts = {}) {
     if (!known.has(key) && !current.has(key) && !unlisted) { errors.push(where + ': not a name in the current Store snapshot or the Australian catalogue'); continue; }
     const product = known.get(key) || slug(row.label.trim());
     if (!known.has(key) && !/^store-[a-z0-9-]{3,110}$/.test(product)) { errors.push(where + ': cannot derive a product id'); continue; }
+    itemProducts.add(product);
+    // Opt-in: retire an earlier AU entry this item replaces (e.g. one recorded under a guessed label). Removes only that product's AU/AUD entries.
+    if (row.supersedes !== undefined) {
+      const target = typeof row.supersedes === 'string' ? norm(row.supersedes) : '';
+      if (!target) { errors.push(where + ': "supersedes" must be the label of an existing Australian entry'); continue; }
+      if (!known.has(target)) { errors.push(where + ': "supersedes" ' + row.supersedes + ' is not an existing Australian entry'); continue; }
+      if (known.get(target) === null) { errors.push(where + ': "supersedes" label matches more than one catalogue product'); continue; }
+      const old = known.get(target);
+      if (old === product) { errors.push(where + ': "supersedes" cannot name the item itself'); continue; }
+      const oldNewest = au.filter(p => p.product === old).sort((a, b) => String(b.observed).localeCompare(String(a.observed)))[0];
+      const why = typeof row.supersedesNote === 'string' ? row.supersedesNote.trim() : '';
+      if (oldNewest.amount !== amount && (!why || why.length > 200)) { errors.push(where + ': superseded entry is A$' + oldNewest.amount + ', not A$' + amount + '; add "supersedesNote" (1-200 characters) explaining why it is being replaced'); continue; }
+      if (removals.has(old)) { errors.push(where + ': "supersedes" ' + row.supersedes + ' is already superseded by another item'); continue; }
+      removals.set(old, where);
+    }
     const mine = au.filter(p => p.product === product).sort((a, b) => String(b.observed).localeCompare(String(a.observed)));
     const last = mine[0];
     if (last && realDate(observed)) {
@@ -71,8 +86,10 @@ export function applyOwnerInput(data, input, snapshot, opts = {}) {
       source: 'Pokémon GO Web Store (Australian storefront, read by the owner)', url: 'https://store.pokemongo.com/', observed,
       ...(unlisted ? {note: row.note.trim()} : {})});
   }
+  for (const [old, where] of removals) if (itemProducts.has(old)) errors.push(where + ': "supersedes" names a product that is itself an item in this input');
   if (errors.length) return reject(errors);
-  return {data: {...data, prices: [...prices, ...additions]}, changed: additions.length, errors: []};
+  const kept = removals.size ? prices.filter(p => !(removals.has(p.product) && p.region === 'AU' && p.currency === 'AUD')) : prices;
+  return {data: {...data, prices: [...kept, ...additions]}, changed: additions.length + (prices.length - kept.length), removed: prices.length - kept.length, errors: []};
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -82,5 +99,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const r = applyOwnerInput(data, input, snap);
   if (r.errors.length) { console.error('Rejected, nothing changed:\n- ' + r.errors.join('\n- ')); process.exit(1); }
   if (r.changed) await writeFile(pricesPath, JSON.stringify(r.data, null, 2) + '\n');
-  console.log('AU owner prices: ' + r.changed + ' added');
+  console.log('AU owner prices: ' + (r.changed - (r.removed || 0)) + ' added' + (r.removed ? ', ' + r.removed + ' superseded entry removed' : ''));
 }
