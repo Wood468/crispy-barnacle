@@ -166,7 +166,7 @@ test('non-array research and encounter values cannot fabricate source coverage',
  assert.equal(report.researchReviewCount,0);
  const valid=auditEvents({events:[{id:'valid',t:'Valid'}]},{events:{
   valid:{researchTasks:[{task:'Catch 5'}],encounters:[{species:'Pikachu'}]}}
- }});
+ });
  assert.equal(valid.events[0].checks.structuredResearch,true);
  assert.equal(valid.events[0].checks.sourceEncounters,true);
 });
