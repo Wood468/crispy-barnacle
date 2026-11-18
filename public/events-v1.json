@@ -11660,7 +11660,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 223,
+    "revision": 225,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -32507,7 +32507,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 238,
+    "revision": 240,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -33902,7 +33902,78 @@
     "lifecycleDeclared": true,
     "conflicts": [],
     "fields": {
-     "bonuses": [],
+     "bonuses": [
+      {
+       "text": "You will get 2x Candy for catching Pokémon",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The featured Pokémon and its evolutions can be shiny",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The following Pokémon will grant you extra bonuses when catching Grookey,if they are Mega/Primal evolved:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mega Victreebel",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Primal Groudon",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mega Abomasnow",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mega Chesnaught",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mega X Charizard",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mega Chandelure",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mega Blastoise",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "featured": [
       {
        "text": "The following Pokémon will appear more frequently in the wild.",
@@ -33912,10 +33983,117 @@
        "status": "single"
       }
      ],
-     "raids": [],
+     "raids": [
+      {
+       "text": "Razor Leaf and Grass Knot make Rillaboom a good addition to your team of counters against Ground , Rock , and Water-type Raid Bosses 💯",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Dynamax Rillaboom is a formidable Grass-type Pokémon with a very strong Max Overgrow to annihilate Bosses in Max Battles 🍃",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Cinderace is a decent addition to your Fire Raid team. It is outclassed by several other attackers, but it can still put in some work, especially for Trainers still lacking access to stronger options.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Fire Spin and Tackle: Cinderace’s Fast Attacks. No prizes for guessing, Fire Spin is the way to go.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Focus Blast, Flame Charge, Pyro Ball, Flamethrower, and Blast Burn: Cinderace’s Charged Attacks. Blast Burn, which is Cinderace’s Community Day exclusive move, is your best bet, though Pyro Ball is a very close second.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "eggs": [],
      "research": [],
-     "shiny": [],
+     "shiny": [
+      {
+       "text": "The featured Pokémon and its evolutions can be shiny",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Shiny Grookey is fairly subtle – look out for the body colour turning lighter!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Regular | Shiny",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Thwackey | Thwackey | Thwackey",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rillaboom | Rillaboom | Rillaboom",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Raboot | Raboot | Raboot",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Cinderace | Cinderace | Cinderace",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Shiny Sobble should be the easiest of the bunch to spot – look out for the yellow fin turning pink!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Drizzile | Drizzile | Drizzile",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Inteleon | Inteleon | Inteleon",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "moves": [],
      "costumes": [],
      "tickets": [],
@@ -33930,15 +34108,86 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "635e2dec3a2ab9dc6224d9cc0d468ca788586b7a507211a17bd40a72872cf29a",
-    "revision": 5,
+    "contentHash": "b470ba3c18816625123ab952d0547d46b28b298e2e5f1f7cb7b315d32e9fce62",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "source-details"
    },
    "schedule": null,
    "activities": [],
-   "bonuses": [],
+   "bonuses": [
+    {
+     "text": "You will get 2x Candy for catching Pokémon",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "The featured Pokémon and its evolutions can be shiny",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "The following Pokémon will grant you extra bonuses when catching Grookey,if they are Mega/Primal evolved:",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Mega Victreebel",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Primal Groudon",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Mega Abomasnow",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Mega Chesnaught",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Mega X Charizard",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Mega Chandelure",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Mega Blastoise",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
    "research": [],
    "passes": [],
    "tickets": [],
@@ -33948,6 +34197,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-19/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/gen-8-starters-spotlight-hour/"
     }
    ],
    "pokemon": [
@@ -61704,7 +61959,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 214,
+    "revision": 216,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -68628,7 +68883,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 223,
+    "revision": 225,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -76935,7 +77190,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 214,
+    "revision": 216,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -86576,7 +86831,7 @@
   },
   {
    "collection": "world-events",
-   "records": 60
+   "records": 61
   },
   {
    "collection": "regional-events",
