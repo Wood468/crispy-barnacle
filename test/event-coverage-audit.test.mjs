@@ -130,3 +130,26 @@ test('compact source-detail join review CLI is stable and contains no full event
  assert.ok(report.sourceJoinReview.every(x=>x.id&&x.name&&Array.isArray(x.missingDetailIds)
    &&x.missingDetailIds.length>0&&typeof x.hasCanonicalDetail==='boolean'));
 });
+
+test('malformed optional source links and prose rows cannot crash coverage audit or fabricate evidence',()=>{
+ const report=auditEvents({events:[{id:'bad',t:'Malformed source'}]},{events:{
+  bad:{sources:[null,{},42,{url:9},{url:'  '},{url:'https://example.org/valid'}],
+   fields:{bonuses:[null,9,{text:42},{title:'Confirmed bonus',status:'official'}],
+    research:[{text:99},{title:'Research text',status:'rejected'}],
+    dates:[null,{title:7}],featured:'not an array'}}
+ }});
+ const item=report.events[0];
+ assert.equal(item.checks.sourceLinked,true);
+ assert.equal(item.checks.sourceBonuses,true);
+ assert.equal(item.checks.sourceResearch,false);
+ assert.equal(item.checks.sourceEncounters,false);
+ assert.equal(item.checks.sourceTimeDetails,false);
+ assert.deepEqual(item.sources,['https://example.org/valid']);
+ assert.equal(report.researchReviewCount,0);
+ const malformed=auditEvents({events:[{id:'empty',t:'Empty'}]},{events:{
+  empty:{sources:{url:'https://example.org/fake'},fields:{bonuses:[{text:5}],research:[null]}}
+ }});
+ assert.equal(malformed.events[0].checks.sourceLinked,false);
+ assert.equal(malformed.events[0].checks.sourceBonuses,false);
+ assert.deepEqual(malformed.events[0].sources,[]);
+});
