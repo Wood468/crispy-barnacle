@@ -23,9 +23,9 @@ export function auditEvents(curated,details){
       sourceLinked:!!(event.sourceUrl||sourceLinks(source).length),
       verifiedArtwork:!!(source?.image&&source?.imageProvenance?.sourceUrl),
       sourceBonuses:hasField('bonuses'),
-      sourceResearch:hasField('research')||!!source?.researchTasks?.length,
-      structuredResearch:!!source?.researchTasks?.length,
-      sourceEncounters:!!(source?.encounters?.length||source?.pokemon?.length)||hasField('featured')||hasField('raids'),
+      sourceResearch:hasField('research')||rows(source?.researchTasks).length>0,
+      structuredResearch:rows(source?.researchTasks).length>0,
+      sourceEncounters:rows(source?.encounters).length>0||rows(source?.pokemon).length>0||hasField('featured')||hasField('raids'),
       sourceTimeDetails:hasField('dates'),
     };
     const missing=Object.entries(checks).filter(([,ok])=>!ok).map(([key])=>key);
