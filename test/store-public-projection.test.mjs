@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { projectPublicStoreSnapshot } from "../src/store-public-projection.js";
 import { withEvidence } from "./store-evidence-fixture.mjs";
 import { validateStoreObservation, deriveCompleteness } from "../src/store-validate.js";
+import { diffStore } from "../scripts/store-watch.mjs";
 
 const items = ["a", "b", "c", "d"].map((x, n) => ({
   name: "Item " + x, section: "box", href: "/purchase/" + x,
@@ -77,4 +78,28 @@ test("approved standalone offers remain eligible when explicitly present in the 
   assert.ok(projected);
   assert.equal(projected.items[3].name, "Standalone ticket");
   assert.equal(deriveCompleteness(projected).complete, true);
+});
+
+test("projected complete snapshot passes the real Store-watch diff consumer", () => {
+  const raw = make();
+  const projected = projectPublicStoreSnapshot(raw, allow);
+  assert.ok(projected);
+  const now = new Date().toISOString();
+  const initial = diffStore(null, projected, now);
+  assert.equal(initial.held, undefined);
+  assert.equal(Object.keys(initial.state.items).length, raw.items.length);
+  assert.equal(initial.state.lastObservation.status, "complete");
+  const repeat = diffStore(initial.state, projected, now);
+  assert.equal(repeat.held, undefined);
+  assert.equal(repeat.added.length, 0);
+  assert.equal(repeat.gone.length, 0);
+});
+
+test("unknown approved identity cannot be inferred from untrusted raw evidence", () => {
+  const raw = make();
+  raw.items[0].approved = true;
+  raw.items[0].public = true;
+  raw.items[0].href = "/purchase/unlisted";
+  raw.completeness = withEvidence(raw.items).completeness;
+  assert.equal(projectPublicStoreSnapshot(raw, allow), null);
 });
