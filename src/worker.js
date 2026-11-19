@@ -1167,7 +1167,7 @@ async function tgInbox(request, env) {
 // Inert (404) unless the write-only secret STORE_INGEST_KEY (>= 32 chars) and the DB are present. Auth is the x-ingest-key header only.
 const INGEST_MAX_BYTES = 256 * 1024, INGEST_MAX_ITEMS = 400, INGEST_MIN_GAP_MS = 5 * 60 * 1000;
 const INGEST_PAST_MS = 15 * 60 * 1000, INGEST_FUTURE_MS = 5 * 60 * 1000;
-// Schema is provisioned explicitly from migrations/store-ingest.sql; never create it on a request.
+// Schema is provisioned explicitly from schema/store-ingest.sql; never create it on a request.
 const INGEST_IMG_ORIGIN = "https://assets.pgo.webstore.nianticlabs.com"; // the only Store image host already in IMAGE_CSP_HOSTS
 const ingestImg = u => { if (!ingestStr(u, 600)) return false; try { const x = new URL(u); return x.origin === INGEST_IMG_ORIGIN && !x.username && !x.password; } catch { return false; } };
 const ingestStr = (v, max) => typeof v === "string" && v.length <= max;
