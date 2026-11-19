@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import worker from "../src/worker.js";
 import { withEvidence } from "./store-evidence-fixture.mjs";
+import { projectPublicStoreSnapshot } from "../src/store-public-projection.js";
 
 const KEY = "k".repeat(40);
 const ctx = { waitUntil() {} };
@@ -115,5 +116,43 @@ test("invalid, empty and self-referential approval cannot authorize raw publicat
     const res = await worker.fetch(request("GET", null), env, ctx);
     assert.equal(res.status, 503, String(value));
     assert.ok(!(await res.text()).includes("secret"));
+  }
+});
+
+test("actual official Store /purchase/item SKU form survives strict approved projection", () => {
+  // Real current public/store-current-snapshot.json uses /purchase/item/... for all 33 listings.
+  const observed = [
+    "/purchase/item/web-event-pass-plusrank-november-26-ultra",
+    "/purchase/item/web-event-pass-gowa-leadout-26",
+    "/purchase/item/web-remote-raidpass-bundle",
+    "/purchase/item/web-basic-incubator-3pack"
+  ];
+  const source = observed.map((href, i) => ({ name: "Observed " + i, section: "box",
+    href, price: "A$" + (i + 1) + ".99", imgs: [] }));
+  const snapshot = { ...withEvidence(source), fetched: new Date().toISOString(), items: source };
+  const projected = projectPublicStoreSnapshot(snapshot, new Set(observed));
+  assert.ok(projected, "verified official Store paths must be publishable when trusted");
+  assert.deepEqual(projected.items.map(i => i.href), observed);
+  assert.equal(projected.completeness.cards, 4);
+});
+
+test("encoded traversal, arbitrary nested paths and foreign hosts fail closed even when approved", () => {
+  const malformed = [
+    "/purchase/item/../private",
+    "/purchase/item/%2e%2e/private",
+    "/purchase/item/%2Fprivate",
+    "/purchase/item/a/other",
+    "/purchase//item/a",
+    "//evil.example/purchase/item/a",
+    "https://evil.example/purchase/item/a",
+    "/purchase/item/",
+    "/purchase/item/a#fragment",
+    "/purchase/item/a?redirect=https://evil.example/"
+  ];
+  for (const href of malformed) {
+    const changed = items.map(i => ({ ...i }));
+    changed[0].href = href;
+    const snapshot = { ...withEvidence(changed), fetched: new Date().toISOString(), items: changed };
+    assert.equal(projectPublicStoreSnapshot(snapshot, new Set(changed.map(i => i.href))), null, href);
   }
 });
