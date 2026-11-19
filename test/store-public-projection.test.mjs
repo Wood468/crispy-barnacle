@@ -103,3 +103,21 @@ test("unknown approved identity cannot be inferred from untrusted raw evidence",
   raw.completeness = withEvidence(raw.items).completeness;
   assert.equal(projectPublicStoreSnapshot(raw, allow), null);
 });
+
+test("approved purchase query paths and public countdown metadata survive projection", () => {
+  const raw = make();
+  raw.items[0].href = "/purchase/a?offer=7";
+  raw.items[0].tag = "Limited time";
+  raw.items[0].limit = "1 per account";
+  raw.items[0].left = "4 hours left";
+  raw.completeness = withEvidence(raw.items).completeness;
+  const projected = projectPublicStoreSnapshot(raw, new Set([...allow, raw.items[0].href]));
+  assert.ok(projected);
+  assert.equal(projected.items[0].href, "/purchase/a?offer=7");
+  assert.equal(projected.items[0].tag, "Limited time");
+  assert.equal(projected.items[0].limit, "1 per account");
+  assert.equal(projected.items[0].left, "4 hours left");
+  const watched = diffStore(null, projected, new Date().toISOString());
+  assert.equal(watched.held, undefined);
+  assert.ok(watched.state.items["/purchase/a?offer=7"].endsAt);
+});
