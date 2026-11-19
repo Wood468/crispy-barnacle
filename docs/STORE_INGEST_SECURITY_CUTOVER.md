@@ -6,7 +6,7 @@ This draft must not be merged/deployed without independent security acceptance a
 
 ## Explicit D1 provisioning
 The route never provisions its own schema. On an approved **disposable** D1 database,
-apply `migrations/store-ingest.sql` using the project's reviewed Wrangler D1
+apply `schema/store-ingest.sql` using the project's reviewed Wrangler D1
 migration procedure, then independently verify the table definition and perform
 an authenticated upload/readback against that disposable database. Repeating
 the SQL is idempotent. Do not apply it to production without separate approval.
