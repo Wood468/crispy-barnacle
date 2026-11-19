@@ -1,4 +1,4 @@
-"""Schedule / Research polish: live order on Schedule, generic reward shapes, unclipped form-art note, banner crop.
+"""Schedule / Research polish: live order on Schedule, reward pictures, unclipped form-art note, banner crop.
 
 Fixed 17 Nov 2026 Melbourne clock (Dynamax Trails, Cresselia/Darkrai, Mega Banette and Minior Showers are all live).
 Run against a static server of /public on 127.0.0.1:8791. 320/375/390 px.
@@ -68,12 +68,14 @@ with sync_playwright() as p:
         page.evaluate("GODETAIL.open('dyntrails')")
         page.wait_for_selector("#evd .ue-hero")
         page.locator('#evd .evd-nav-link[data-sec="research"]').click()
-        for nm, kind in (("Eternatus Candy", "candy"), ("Pinap Berry", "berry")):
+        # Since #855 both rewards show owner-supplied pictures, not category glyphs.
+        for nm, src in (("Eternatus Candy", "/ico/i/eternatus-candy.webp"), ("Pinap Berry", "/ico/i/pinap-berry.webp")):
             tile = page.locator("#evd-s-research .research-reward-item").filter(has=page.locator("b", has_text=re.compile(r"^(?:\d+× )?" + nm + "$"))).first
             tile.scroll_into_view_if_needed()
-            g = tile.locator(f'.ue-reward-category[data-item-glyph="{kind}"] svg')
+            g = tile.locator(".ue-reward-item-icon img")
             assert g.count() == 1 and g.is_visible(), (width, nm, tile.inner_html())
-            assert tile.locator(".ue-reward-dot, img").count() == 0, (width, nm, "dot or picture")
+            assert g.get_attribute("src") == src, (width, nm, g.get_attribute("src"))
+            assert tile.locator(".ue-reward-category, .ue-reward-dot").count() == 0, (width, nm, "glyph or dot instead of picture")
             box = g.bounding_box()
             assert box["width"] >= 20 and box["height"] >= 20, (width, nm, box)
         tile = page.locator("#evd-s-research .research-reward-encounter", has_text="Grookey").first
@@ -105,6 +107,6 @@ with sync_playwright() as p:
         }""")
         assert abs(res["ratio"] - 2) < 0.02, (width, res)
         assert res["clippedTopPct"] < 2, (width, "top edge cropped", res)
-        print(f"PASS schedule polish {width}px: order, candy/berry shapes, Grookey note unclipped, banner top kept ({res['clippedTopPct']:.1f}% top crop on 16:9)")
+        print(f"PASS schedule polish {width}px: order, candy/berry pictures, Grookey note unclipped, banner top kept ({res['clippedTopPct']:.1f}% top crop on 16:9)")
         ctx.close()
     browser.close()
