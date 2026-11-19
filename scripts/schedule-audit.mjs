@@ -51,9 +51,22 @@ function hasOfficialSource(event) {
 }
 // World events (public/world-events.json) carry dates only; a Leek Duck page in their sources identifies them.
 function matchWorld(w, theirs) {
-  const hit = (w.sources || []).map(s => theirs.find(t => String(s.url || "").includes("/" + t.slug + "/"))).find(Boolean);
+  // Only an exact Leek Duck event URL identifies a rescheduled occurrence across dates.
+  // Substring matches can mistake a different host or a longer recurring-event slug.
+  const sourceSlugs = new Set((w.sources || []).flatMap(function(source) {
+    try {
+      const url = new URL(String(source && source.url || ""));
+      if (url.protocol !== "https:" || url.hostname !== "leekduck.com") return [];
+      const match = url.pathname.match(new RegExp("^/events/([^/]+)/?$"));
+      return match ? [match[1]] : [];
+    } catch { return []; }
+  }));
+  const hit = theirs.find(t => sourceSlugs.has(t.slug));
   if (hit) return hit;
-  const ws = words(w.name); const exact = ws.length ? theirs.find(t => ws.every(x => t.slug.includes(x))) : null;
+  // Recurring world events may have identical titles months apart. Never treat a
+  // title alone as an occurrence identity without an overlapping date window.
+  const ws = words(w.name);
+  const exact = ws.length ? theirs.find(t => ws.every(x => t.slug.includes(x)) && overlaps(w.start, w.end, t.start, t.end)) : null;
   return exact || theirs.find(t => fuzzy(w.name, w.start, w.end, t)) || null;
 }
 export function auditWorld(world, theirs, used = new Set()) {
