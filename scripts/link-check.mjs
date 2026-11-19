@@ -8,23 +8,60 @@ export function urlsIn(value, out = new Set()) {
   else if (value && typeof value === "object") Object.values(value).forEach(v => urlsIn(v, out));
   return out;
 }
-async function alive(url) {
+// Only probe public HTTPS links. Match excluded domains on parsed hostnames,
+// never URL substrings (which can occur in attacker-controlled paths).
+export function publicSourceUrl(raw) {
+  try {
+    const u = new URL(raw);
+    if (u.protocol !== "https:" || u.username || u.password) return null;
+    const host = u.hostname.toLowerCase().replace(/\.$/, "");
+    if (!host || host === "localhost" || host.endsWith(".localhost") ||
+        host === "michaelpuff.com" || host.endsWith(".michaelpuff.com") ||
+        host === "cdn.discordapp.com" || host.endsWith(".cdn.discordapp.com") ||
+        host === "example.com" || host.endsWith(".example.com") ||
+        host === "example.org" || host.endsWith(".example.org") ||
+        host === "example.net" || host.endsWith(".example.net") ||
+        host.endsWith(".local") || host.endsWith(".internal") ||
+        /^\d+\.\d+\.\d+\.\d+$/.test(host) ||
+        host.includes(":")) return null;
+    // Do not forward URLs containing credentials or signed-token query strings.
+    if ([...u.searchParams.keys()].some(k => /(?:token|key|secret|password|signature|auth|credential|access)/i.test(k))) return null;
+    u.hash = "";
+    return u.href;
+  } catch { return null; }
+}
+// Diagnostics expose only the origin: paths may also embed tokens or private identifiers.
+export function safeLinkLabel(raw) {
+  try { const u = new URL(raw); return u.origin; }
+  catch { return "[invalid URL]"; }
+}
+export async function alive(url) {
   for (const method of ["HEAD", "GET"]) {
     try {
-      const r = await fetch(url, { method, redirect: "follow", headers: { "user-agent": "Mozilla/5.0 (go-field-notes link check)" }, signal: AbortSignal.timeout(20000) });
+      let target = url, r;
+      for (let hop = 0; hop <= 5; hop++) {
+        r = await fetch(target, { method, redirect: "manual", headers: { "user-agent": "Mozilla/5.0 (go-field-notes link check)" }, signal: AbortSignal.timeout(20000) });
+        if (![301, 302, 303, 307, 308].includes(r.status)) break;
+        const location = r.headers.get("location");
+        if (!location) return "redirect without location";
+        const next = publicSourceUrl(new URL(location, target).href);
+        if (!next) return "redirect to excluded or unsafe URL";
+        target = next;
+        if (hop === 5) return "too many redirects";
+      }
       if (r.ok) return null;
       if (method === "GET") return "HTTP " + r.status;
-    } catch (e) { if (method === "GET") return String(e && e.message || e).slice(0, 80); }
+    } catch { if (method === "GET") return "network error"; }
   }
   return null;
 }
 export async function main() {
   const all = new Set();
   for (const f of FILES) { try { urlsIn(JSON.parse(await readFile(f, "utf8")), all); } catch { /* file optional */ } }
-  const list = [...all].filter(u => !/michaelpuff\.com|cdn\.discordapp|example\./.test(u));
+  const list = [...new Set([...all].map(publicSourceUrl).filter(Boolean))];
   const bad = [];
   const queue = [...list];
-  await Promise.all(Array.from({ length: 8 }, async () => { for (let u; (u = queue.pop());) { const why = await alive(u); if (why) bad.push(u + " (" + why + ")"); } }));
+  await Promise.all(Array.from({ length: 8 }, async () => { for (let u; (u = queue.pop());) { const why = await alive(u); if (why) bad.push(safeLinkLabel(u) + " (" + why + ")"); } }));
   console.log("Checked " + list.length + " links, " + bad.length + " not opening.");
   for (const b of bad) console.log("::warning title=Link::" + b);
   const t = process.env.TELEGRAM_BOT_TOKEN, dest = route(process.env, "system");
