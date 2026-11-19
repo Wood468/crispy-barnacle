@@ -7,6 +7,261 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1572887979612049450",
+      "source": "discord",
+      "creator": "",
+      "title": "@here As there have been a few questions regarding the recent launch of ‘Discoverable Channels’ (Discord has introduced a feature that makes content searchable on the web): As you can see below, only channels with the ‘Discoverable’ icon are enabled and these are exclusively the infographic channels. We will never make a message channel as ‘Discoverable’.",
+      "publishedAt": "2026-11-19T08:15:17.185000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1021467233127514172/1572883811191095358/Screenshot_2026-11-18-19-38-32-998_com.discord-edit.jpg?ex=6afffdb3&is=6afeac33&hm=30b5c34379d274fea340967bd35fa0862b6ce798c8541060fa84f1866b50cf49&",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "< # @-pogo-chat > G G47IX @ 16:12 oe",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1572887979612049450.jpg"
+    },
+    {
+      "id": "discord:1572636269660348669",
+      "source": "discord",
+      "creator": "",
+      "title": "SH CANDY CATCH 2026",
+      "publishedAt": "2026-11-18T15:35:04.856000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1572630828947873933/SH_CANDY_CATCH_2026_.png?ex=6affbad7&is=6afe6957&hm=cf268361e33aa49e79df3d881aeda7c44d1d69aa63a8323c6f639dce4fc65c1e&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "19 Cy } ©@ NOV bs); 6:00 - 7:00 pm oy q eo f STARTERS — = Achance to receive Max. Particles when catching for catching event-themed Pokémon in the wild or after Max Battles. Pokémon Won't work with the Explorer Gadget or a GO Plus. Pokémon use that time to catch Pokémon If you don’t want to catch featured e from your stack, open Mystery Box or Coin Bag! ADVENTURE EFFECTS Remember you can use: Rend Spacial of Shock Freeze 4 © Mega Evolve for bonuses ey Shiny is available Roar Ice or other of Time Burn boosted during Spotlight Hour Please note - shiny rate is not @6®@ OO & Future sights Follow formore GA7ZIX QO aXe www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.822,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "2026",
+          "hour",
+          "nov",
+          "max",
+          "battles",
+          "shiny",
+          "coin",
+          "bag",
+          "mystery",
+          "box",
+          "poke"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.822
+          },
+          {
+            "eventId": "leekduck:pokemonspotlighthour2026-11-26",
+            "eventTitle": "Noibat Spotlight Hour",
+            "score": 0.526
+          },
+          {
+            "eventId": "leekduck:pokemonspotlighthour2026-10-29",
+            "eventTitle": "Gastly Spotlight Hour",
+            "score": 0.526
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Only one signal agrees.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1572636269660348669.png"
+    },
+    {
+      "id": "discord:1572060169817297026",
+      "source": "discord",
+      "creator": "",
+      "title": "Duolingo Collab",
+      "publishedAt": "2026-11-17T01:25:51.950000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1572054518118748283/Duolingo_.png?ex=6b00451c&is=6afef39c&hm=0880d22228e90cda6ee70cfe6a728ae78933a629f84cc5aa1f4627c868f15a44&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "AY A; “9 » ro O90 alasit New Special M83 Background Bn New feature: = Language Tag See eligible Pokémon Chatot names in other languages 106 / 106 HP Japanese: X Fy 7 © @ Celi Complete Timed Research Choose a language tasks in your selected language. ++ ++ nee * XP i Seri ghae shasit J . WW sek Se ghre shasit 28 DAYS HOW TO UNLOCK Complete a least Get the code and & Join Duo’s Pokémon Party 1 lesson on 7 redeem it on the Pokémon GO website Doale: son to earn today’s reward in & duolingo different days qa i Days do not have to be consecutive.",
+      "eventMatch": {
+        "eventId": "leekduck:duolingo-timed-research-2026",
+        "eventTitle": "Pokémon GO and Duolingo Timed Research",
+        "score": 0.812,
+        "confidence": "high",
+        "matchedTerms": [
+          "duolingo",
+          "timed",
+          "research",
+          "poke",
+          "mon",
+          "party",
+          "language",
+          "tag"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:duolingo-timed-research-2026",
+            "eventTitle": "Pokémon GO and Duolingo Timed Research",
+            "score": 0.812
+          },
+          {
+            "eventId": "leekduck:pokemon-x-adidas-2026",
+            "eventTitle": "adidas × Pokémon Timed Research",
+            "score": 0.64
+          },
+          {
+            "eventId": "official:save-the-date-s25",
+            "eventTitle": "Save the dates for next Season’s Community Days! — Pokémon GO",
+            "score": 0.346
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Only one signal agrees.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1572060169817297026.webp"
+    },
+    {
+      "id": "discord:1571939924482072576",
+      "source": "discord",
+      "creator": "",
+      "title": "crocs",
+      "publishedAt": "2026-11-16T17:28:03.228000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1571935067985678466/crocs.png?ex=6affd5dd&is=6afe845d&hm=7e236551147172212e2fd2cc4856f8a25fca355064651c3353cef76bfebcfd17&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Codes for the Pokémon ofS Gengar Classic Clog and Pokémon Jigglypuff Classic Platform Clog avatar items will be available with purchase of the Pokémon Gengar Crocs Classic Clog and Pokémon Jigglypuff Crocs Classic Platform Clog, respectively. SAq @- “| © a. @ 2 am FA POKEMONGOxCROCSxELECTRIFYING i a 41] othe store.pokemongo.com/offer-redemption ra a4 Tt io",
+      "eventMatch": {
+        "eventId": "official:city-safari-boston-rescheduled",
+        "eventTitle": "Pokémon GO City Safari: Boston Update",
+        "score": 0.349,
+        "confidence": "low",
+        "matchedTerms": [
+          "poke",
+          "mon",
+          "pokemongo",
+          "com"
+        ],
+        "alternatives": [
+          {
+            "eventId": "official:city-safari-boston-rescheduled",
+            "eventTitle": "Pokémon GO City Safari: Boston Update",
+            "score": 0.349
+          },
+          {
+            "eventId": "official:city-safari-boston-update",
+            "eventTitle": "Event Update: City Safari Boston — Pokémon GO",
+            "score": 0.349
+          },
+          {
+            "eventId": "leekduck:duolingo-timed-research-2026",
+            "eventTitle": "Pokémon GO and Duolingo Timed Research",
+            "score": 0.34
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1571939924482072576.webp"
+    },
+    {
+      "id": "discord:1571938883816390689",
+      "source": "discord",
+      "creator": "",
+      "title": "@here",
+      "publishedAt": "2026-11-16T17:23:55.114000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1021467233127514172/1571934929485561906/crocs.png?ex=6affd5bc&is=6afe843c&hm=163a279d02be1804458e55116a5687ffc6f79af60ef09a9fca4c92fb89ea7eac&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Codes for the Pokémon ofS Gengar Classic Clog and Pokémon Jigglypuff Classic Platform Clog avatar items will be available with purchase of the Pokémon Gengar Crocs Classic Clog and Pokémon Jigglypuff Crocs Classic Platform Clog, respectively. SAq @- “| © a. @ 2 am FA POKEMONGOxCROCSxELECTRIFYING i a 41] othe store.pokemongo.com/offer-redemption ra a4 Tt io",
+      "eventMatch": {
+        "eventId": "official:city-safari-boston-rescheduled",
+        "eventTitle": "Pokémon GO City Safari: Boston Update",
+        "score": 0.347,
+        "confidence": "low",
+        "matchedTerms": [
+          "poke",
+          "mon",
+          "pokemongo",
+          "com"
+        ],
+        "alternatives": [
+          {
+            "eventId": "official:city-safari-boston-rescheduled",
+            "eventTitle": "Pokémon GO City Safari: Boston Update",
+            "score": 0.347
+          },
+          {
+            "eventId": "official:city-safari-boston-update",
+            "eventTitle": "Event Update: City Safari Boston — Pokémon GO",
+            "score": 0.347
+          },
+          {
+            "eventId": "leekduck:duolingo-timed-research-2026",
+            "eventTitle": "Pokémon GO and Duolingo Timed Research",
+            "score": 0.338
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1571938883816390689.webp"
+    },
+    {
+      "id": "discord:1571900196105756758",
+      "source": "discord",
+      "creator": "",
+      "title": "Darkrai",
+      "publishedAt": "2026-11-16T14:50:11.245000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1571895954154725406/HXDJmWYXoAArSBA.jpg?ex=6affb16f&is=6afe5fef&hm=05609904fc1d8852026065059cc1f5a4635b9eb0abbacb533e8ad58f47b8264b&",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "#491 DYULCTL 53623 CP “It can lull people to sleep and make them dream. It is active during nights of the new moon Weakness cy cy + Difficulty: 2+ trainers needed _— % 2136 CP “we 2671 CP Boost Pw 44 Fog Lo Re ™ @ Co ww y @ Counter Re wa @ Force Palm (2 iy @ Low Kick i Jy @ Dyno unch+ « Aura: |Sph re hoy @ Aura Sphere =~ @ Secret Sword (W, @ Double Kick @ h—4 So , Vz eS © Meta FM a @ Sacred Sword u ) Dy! I \"e @ Play Rough . Py) | A! @ Th = an et @ Fury Cutter @ Fairy Wind @ @ Dynamic Punch @ @ X-Scissor ® Dazzling Gleam a a €z3 Remember to use proper counters, Party Play Follow for more e and Zacian’s Adventure Effect if needed. Ay G47IX 9© @®X@ | g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1571900196105756758.jpg"
+    },
+    {
+      "id": "discord:1571900192804835379",
+      "source": "discord",
+      "creator": "",
+      "title": "Cresselia",
+      "publishedAt": "2026-11-16T14:50:10.458000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1571895977982562386/HXDKnCmXEAA8dEp.jpg?ex=6affb175&is=6afe5ff5&hm=ef958d41b15f9299ffe2ff7388653d5af3850a01f314dc26698f35709744687c&",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "@ feasel ‘CRESSELIA 33794 cP _—- Shiny particles are felansed from its wings like a veil. It is s said to represent the crescent moon.” Weakness © @ @ Difficulty: 3+ trainers needed Duo possible % 1633 CP%we2041 CP Boost # Windy Ay a @ Shadow Claw ve @ Bug Bit. @ Ominous Wind:, sy © Dark Pulset, @ Moongeist Beam @ F&F, gert hw Be o a 4 \\anend =a 7% Ww) © Snarl ~~ Bi a Dy @ Shadow Cla gg ©' utal rane ing ) Bruta Swing | @ Shadow Ball 4 fiber onsen ed i A eres ve @ Astonish @ Hex @ Shadow Claw © Feint Attack @ Shadow Ball @ Shadow Ball @ Shadow Force [5 © Brutal Swing — > Remember to use proper counters, Party Play Follow for more ‘nat and Zacian’s Adventure Effect if needed. GA7IX 9 @ @ X @ | g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1571900192804835379.jpg"
+    },
+    {
       "id": "discord:1571789562240303105",
       "source": "discord",
       "creator": "",
