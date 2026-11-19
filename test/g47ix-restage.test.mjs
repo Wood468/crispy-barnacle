@@ -65,7 +65,7 @@ test("a wrong format that cannot be converted is not written", async () => {
   assert.equal(r.restored.length, 0); assert.equal(r.failed.length, 1); assert.equal(h.disk.size, 0);
 });
 
-test("localPictureReady needs a nonempty regular file", () => {
+test("localPictureReady needs a nonempty regular file (not a link)", () => {
   const d = mkdtempSync(join(tmpdir(), "g47ix-ready-"));
   try {
     writeFileSync(join(d, "a.webp"), "x"); writeFileSync(join(d, "empty.webp"), ""); mkdirSync(join(d, "dir.webp"));

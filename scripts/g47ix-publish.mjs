@@ -4,7 +4,7 @@
 // Unsure candidates are left in the queue with their OCR text and reason. The workflow opens a pull request;
 // nothing reaches main without the owner merging it.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { writeFileSync, readFileSync, statSync } from "node:fs";
+import { writeFileSync, readFileSync, lstatSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -313,7 +313,7 @@ export function buildWeekly(reg, now = Date.now()) {
 // stays valid. Nothing but the file is touched: no review status, decision, match or creator changes, so this can never approve or publish anything.
 // A fresh link comes from the latest Discord read (links expire); the file keeps the exact path the registry already names.
 const STAGED_NAME = /^\/infographics\/g47ix\/([a-z0-9][a-z0-9._-]*)\.(png|jpg|jpeg|webp)$/i;
-export const localPictureReady = file => { try { const st = statSync(file); return st.isFile() && st.size > 0; } catch { return false; } };
+export const localPictureReady = file => { try { const st = lstatSync(file); return st.isFile() && st.size > 0; } catch { return false; } };
 export function missingStaged(reg, ready) {
   return (reg.candidates || []).filter(c => c.decision !== "rejected" && STAGED_NAME.test(String(c.stagedPath || "")) && !ready(c.stagedPath));
 }
