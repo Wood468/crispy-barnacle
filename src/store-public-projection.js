@@ -4,8 +4,8 @@
 // Never derive approval from the incoming (untrusted) snapshot.
 import { validateAuIngest } from "./store-validate.js";
 
-// Match the Worker ingest path contract; exact trusted-set membership still gates publication.
-const SKU = /^\/purchase\/[A-Za-z0-9_-][A-Za-z0-9_.-]*(?:\?[A-Za-z0-9_.~%=&-]+)?$/;
+// Real official Store cards use /purchase/item/<sku>; legacy/standalone links may use /purchase/<sku>.\n// Exact trusted-set membership still gates publication; no arbitrary nested paths.
+const SKU = /^\/purchase\/(?:item\/)?[A-Za-z0-9_-][A-Za-z0-9_.-]*(?:\?[A-Za-z0-9_.~%=&-]+)?$/;
 const validSku = href => typeof href === "string" && SKU.test(href) &&
   !href.split("?")[0].split("/").includes("..") &&
   !href.split("?")[0].split("/").includes(".");
