@@ -4,7 +4,8 @@
 // Never derive approval from the incoming (untrusted) snapshot.
 import { validateAuIngest } from "./store-validate.js";
 
-const SKU = /^\/purchase\/[a-zA-Z0-9_.-]+$/;
+// Match the Worker ingest path contract; exact trusted-set membership still gates publication.
+const SKU = /^\/purchase\/[\w\-/?=&%.]*$/;
 const IMG_HOST = "assets.pgo.webstore.nianticlabs.com";
 const allowedImage = value => {
   try {
@@ -30,6 +31,9 @@ export function projectPublicStoreSnapshot(raw, approvedHrefs, nowMs = Date.now(
     section: item.section,
     href: item.href,
     price: item.price,
+    ...(typeof item.tag === "string" ? { tag: item.tag } : {}),
+    ...(typeof item.limit === "string" ? { limit: item.limit } : {}),
+    ...(typeof item.left === "string" ? { left: item.left } : {}),
     imgs: (item.imgs || []).filter(allowedImage).slice(0, 4)
   }));
   const result = {
