@@ -51,3 +51,36 @@ the public Store-watch workflow.
   endpoint, with legitimate standalone offers represented.
 - Separate approval for high-risk production auth/public-private changes,
   migrations and secrets. Confirm rollback and production/iPhone journeys.
+
+## Verified compatibility discovery (20 November 2026)
+
+The current main `public/store-current-snapshot.json` contains 33 catalogue
+items, and all 33 `href` values use `/purchase/item/<sku>`. This file is
+a **compatibility observation, not independent approval provenance**: it is
+generated application data and must not be promoted to the trusted approval
+list automatically. The projection now accepts this official-shaped path as
+well as previously supported `/purchase/<sku>`, but still rejects arbitrary
+nested paths, encoded traversal and unapproved identities. The fake-D1 tests
+include observed official-shaped examples and malformed URLs.
+
+Before publication, a reviewer must compare every observed href with
+independently captured official public AU Store listing evidence, including
+standalone offers. Record the capture time and independent reviewer outside
+the ingest payload. An unapproved new SKU keeps public GET at 503; it must
+not be silently omitted or auto-approved from `public/store-current-snapshot.json`.
+
+## Wrong-key abuse protection (release blocker)
+
+Wrong-key GET/POST now return 401 without D1 reads/writes. The previous
+database-backed wrong-key counter was deliberately removed from this route
+to enforce the zero-unauthenticated-write requirement. **Do not interpret
+that as equivalent rate limiting.** Before deployment, independently
+configure and verify an edge-enforced rate-limit rule for
+`/api/store-ingest`, scoped to invalid or excessive attempts without
+penalizing the authenticated Melbourne Reader or public Store-watch GET.
+Use a staging endpoint and fake credentials to demonstrate blocked repeated
+invalid attempts, legitimate Reader POST, public GET, and no D1 writes.
+Record the actual Cloudflare rule identifier, action, match criteria,
+limits, observed response and rollback in the private release evidence.
+The rule is not provisioned by this PR; production edge changes require
+separate security/infrastructure approval.
