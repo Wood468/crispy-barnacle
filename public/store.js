@@ -15,9 +15,9 @@
     [/^elite fast tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-fast-tm.webp'],
     [/^elite charged tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-charged-tm.webp'],
     [/^raid pass(?:es)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/raidpass.webp'],
-    /* Owner-supplied pictures (docs/asset-inventory/item-icons.json). Exact store names only: 'Item Bag' / 'Pokémon Storage', optionally with a '+N' upgrade suffix.
+    /* Owner-supplied pictures (docs/asset-inventory/item-icons.json). Exact store names only: 'Item Bag' / 'Item Bag Upgrade' / 'Pokémon Storage', optionally with a '+N' suffix.
        The third entry is the alt text: empty, the name is printed beside the picture. */
-    [/^item bag(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/item-bag.webp', ''],
+    [/^item bag(?:\s+upgrade)?(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/item-bag.webp', ''],
     [/^pok[eé]mon storage(?:\s*\+\s*[1-9]\d*)?$/i, '/ico/i/pokemon-storage.webp', ''],
     /* Owner-supplied pictures (docs/asset-inventory/item-icons.json). Exact names only, optional '×N'/'xN' quantity suffix; no bundles, packs or other balls. */
     [/^star pieces?(?:\s*[×x]\s*[1-9]\d*)?$/i, '/ico/i/star-piece.webp', ''],
@@ -188,7 +188,7 @@
           : offers.length > 1
             ? 'Matching product identity not established; no lowest-price comparison'
             : 'Only one verified buying channel observed; no lowest-price comparison';
-      return '<div class="sp-r sp-regional-row"' + (canCompare ? ' data-sp-compared="yes"' : '') + '><span class="sp-n">' + esc(label)
+      return '<div class="sp-r sp-regional-row"' + (canCompare ? ' data-sp-compared="yes"' : '') + '><span class="sp-n">' + icon(product) + esc(label)
         + '</span><span class="sp-regional-value"><b>' + esc(status) + '</b><small>'
         + esc(observedText + '. Not a live checkout quote.') + '</small></span></div>';
     }).join('');
