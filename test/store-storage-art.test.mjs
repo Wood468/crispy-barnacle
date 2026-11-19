@@ -16,8 +16,13 @@ test('Item Bag and Pokémon Storage (exact, optional +N) get their picture', () 
   for (const n of ['Pokémon Storage +1', 'Pokémon Storage', 'Pokemon Storage +1', 'pokémon storage +10']) assert.equal(srcOf(icon(n)), pst, n);
 });
 
+test('Item Bag Upgrade and Pokémon Storage +N number variants get their picture (exact names)', () => {
+  for (const n of ['Item Bag Upgrade', 'Item Bag upgrade', 'item bag upgrade', 'Item Bag Upgrade +1', 'Item Bag upgrade + 10']) assert.equal(srcOf(icon(n)), bag, n);
+  for (const n of ['Pokémon Storage +50', 'Pokemon Storage +50', 'pokémon storage + 50', 'Pokémon Storage +100']) assert.equal(srcOf(icon(n)), pst, n);
+});
+
 test('no false matches: lucky bags, other bags, other storage, combos', () => {
-  for (const n of ['Lucky Bag', 'Lucky Bag +1', 'Item Bag Bundle', 'Big Item Bag +1', 'Item Bag +1 Bundle', 'Item Bag +0', 'Item Bags', 'Bag', 'Bag Upgrade', 'Storage', 'Storage +1', 'Pokémon Storage Box', 'Pokémon Storage Bundle +1', 'Pokémon Storage +1 and Item Bag +1', 'Item Storage +1', 'Pokémon Bag +1', 'Starter Bag', 'Premium Battle Pass Bundle', '']) assert.equal(icon(n), '', JSON.stringify(n));
+  for (const n of ['Lucky Bag', 'Lucky Bag +1', 'Item Bag Bundle', 'Big Item Bag +1', 'Item Bag +1 Bundle', 'Item Bag +0', 'Item Bags', 'Bag', 'Bag Upgrade', 'Storage', 'Storage +1', 'Pokémon Storage Box', 'Pokémon Storage Bundle +1', 'Pokémon Storage +1 and Item Bag +1', 'Item Storage +1', 'Pokémon Bag +1', 'Starter Bag', 'Item Bag Upgrade Bundle', 'Item Bag Upgrade +0', 'Big Item Bag Upgrade', 'Upgrade', 'Item Upgrade', 'Pokémon Storage Upgrade Pack', 'Pokémon Storage +50 Bundle', 'Pokémon Storage +0', 'Indonesia · Item Bag upgrade', 'Premium Battle Pass Bundle', '']) assert.equal(icon(n), '', JSON.stringify(n));
 });
 
 test('picture is decorative (empty alt), lazy, sized, same-origin; other icons keep their alt', () => {
@@ -32,7 +37,7 @@ test('both live store labels are covered', () => {
 });
 
 test('store.js version token and shell cache are current', () => {
-  assert.match(html, /store\.js\?v=20261123b-audeq/);
-  assert.match(sw, /store\.js\?v=20261123b-audeq/);
-  assert.match(sw, /gofn-shell-v378/);
+  assert.match(html, /store\.js\?v=20261124a-bagart/);
+  assert.match(sw, /store\.js\?v=20261124a-bagart/);
+  assert.match(sw, /gofn-shell-v379/);
 });

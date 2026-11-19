@@ -258,6 +258,10 @@ test('advanced Store channel coverage never ranks same-name boxes, recorded pric
     'verified bundles and storage must be represented, not just event passes');
   assert.ok(review.includes('18,500 PokéCoins one-time bonus'),
     'one-time bonus packs remain distinct and observable');
+  assert.match(review,/<span class="sp-n"><img class="sp-i" src="\/ico\/i\/pokemon-storage\.webp"[^>]*>Indonesia · Pokémon Storage \+50<\/span>/,
+    'storage regional row shows the exact owner picture');
+  assert.match(review,/<span class="sp-n">Indonesia · Raid Day Box<\/span>/,
+    'products without an exact picture get no image slot');
   assert.equal((review.match(/Indonesia · Raid Day Box/g)||[]).length,2,
     'same human product name with distinct source records must never collapse into an assumed SKU');
   assert.doesNotMatch(review,/Unverified Historic Bundle/,
