@@ -73,3 +73,15 @@ test("standalone unapproved SKU fails closed without false completeness", async 
   env.STORE_PUBLIC_APPROVED_HREFS = JSON.stringify([...items.slice(0, 3).map(i => i.href), standalone.href]);
   assert.equal((await worker.fetch(request("GET", null), env, ctx)).status, 200);
 });
+
+test("explicit SQL schema provisions twice on disposable in-memory SQLite", async () => {
+  const { makeDB } = await import("./helpers.mjs");
+  const { readFileSync } = await import("node:fs");
+  const db = makeDB();
+  const sql = readFileSync(new URL("../migrations/store-ingest.sql", import.meta.url), "utf8");
+  await db.exec(sql);
+  await db.exec(sql);
+  const columns = db.raw.prepare("PRAGMA table_info(store_ingest)").all();
+  assert.deepEqual(columns.map(c => c.name), ["id", "received", "fetched", "body"]);
+  assert.equal(db.raw.prepare("SELECT COUNT(*) AS n FROM store_ingest").get().n, 0);
+});
