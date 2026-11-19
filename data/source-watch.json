@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-18T20:31:42.053Z",
+ "updated": "2026-11-19T11:40:11.407Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 4
+   "items": 5
   },
   {
    "id": "miners-assets",
@@ -27,8 +27,22 @@
    "items": 2
   }
  ],
- "gaps": 1,
+ "gaps": 2,
  "items": [
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Pokémon News This Week: Pokémon Happy Meals, Shiny Xerneas, Play! Prizes and More",
+   "link": "https://pokemongohub.net/post/news/pokemon-news-this-week-pokemon-happy-meals-shiny-xerneas-play-prizes-and-more/",
+   "date": "2026-11-19T08:23:07.000Z",
+   "summary": "Pokémon Happy Meals are back, Pokopia and Pokémon Legends: Z-A both have free gifts to claim, Play! Pokémon has Mega Rayquaza themed prizes and more! Pokémon Happy Meals are back at McDonalds, in eith",
+   "pokemon": [
+    "Xerneas"
+   ],
+   "notInOurData": [
+    "Xerneas"
+   ]
+  },
   {
    "source": "hub",
    "trust": "community",
