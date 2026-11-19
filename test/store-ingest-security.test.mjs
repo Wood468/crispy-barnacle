@@ -78,7 +78,7 @@ test("explicit SQL schema provisions twice on disposable in-memory SQLite", asyn
   const { makeDB } = await import("./helpers.mjs");
   const { readFileSync } = await import("node:fs");
   const db = makeDB();
-  const sql = readFileSync(new URL("../migrations/store-ingest.sql", import.meta.url), "utf8");
+  const sql = readFileSync(new URL("../schema/store-ingest.sql", import.meta.url), "utf8");
   await db.exec(sql);
   await db.exec(sql);
   const columns = db.raw.prepare("PRAGMA table_info(store_ingest)").all();
