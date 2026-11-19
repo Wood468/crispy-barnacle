@@ -1215,7 +1215,9 @@ async function storeIngest(request, env) {
     // Public responses are an independently approved projection, never the raw D1 row.
     // The same secret authenticates readback of original evidence; never log or echo it.
     const given = String(request.headers.get("x-ingest-key") || "");
-    const authenticated = !!given && await same(given, env.STORE_INGEST_KEY);
+    // A supplied but invalid credential is not silently downgraded to public access.
+    if (given && !(await same(given, env.STORE_INGEST_KEY))) return json({ error: "Wrong key." }, 401);
+    const authenticated = !!given;
     let row;
     try {
       row = await env.DB.prepare("SELECT received, body FROM store_ingest WHERE id = 1").first();
