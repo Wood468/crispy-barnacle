@@ -1,10 +1,12 @@
 {
  "alerted": [
+  "g47ix-infographics.yml",
   "ai-heartbeat-event-check",
   "ai-heartbeat-pipeline",
   "ai-heartbeat-shiny"
  ],
  "unmatched": [
+  "discord:1572887979612049450",
   "discord:1571900196105756758",
   "discord:1571900192804835379"
  ]
