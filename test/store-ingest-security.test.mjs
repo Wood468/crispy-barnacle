@@ -1,0 +1,75 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import worker from "../src/worker.js";
+import { withEvidence } from "./store-evidence-fixture.mjs";
+
+const KEY = "k".repeat(40);
+const ctx = { waitUntil() {} };
+const items = ["a", "b", "c", "d"].map((n, i) => ({
+  name: "Item " + n, section: "box", href: "/purchase/" + n,
+  price: "A$" + (i + 1) + ".99", imgs: []
+}));
+const raw = { ...withEvidence(items), fetched: new Date().toISOString(),
+  items: items.map(i => ({ ...i, privateRegionPrice: "IDR 100", internalId: "secret" })),
+  internalMetadata: "secret" };
+const request = (method, key, body) => new Request("https://test.invalid/api/store-ingest", {
+  method, headers: { ...(key ? { "x-ingest-key": key } : {}), "content-type": "application/json" },
+  ...(method === "POST" ? { body: JSON.stringify(body || raw) } : {})
+});
+const envFor = (row, approval) => {
+  const queries = [];
+  const DB = { prepare(sql) {
+    queries.push(sql);
+    if (!/^SELECT\s/i.test(sql)) throw Error("UNAUTHORIZED D1 WRITE: " + sql);
+    return { async first() {
+      if (!row) throw Error("no such table: store_ingest");
+      return row;
+    } };
+  } };
+  return { DB, queries, STORE_INGEST_KEY: KEY, STORE_PUBLIC_APPROVED_HREFS: approval,
+    ASSETS: { fetch: async () => new Response("{}") } };
+};
+
+test("unauthenticated and invalid-key requests never perform D1 DDL or writes", async () => {
+  const env = envFor(null, null);
+  for (const [method, key] of [["GET", null], ["POST", null], ["POST", "wrong"], ["DELETE", null]]) {
+    const res = await worker.fetch(request(method, key), env, ctx);
+    assert.ok([401, 405, 503].includes(res.status), method + ": " + res.status);
+  }
+  assert.ok(env.queries.every(q => /^SELECT\s/i.test(q)));
+});
+
+test("missing approval fails closed and never leaks raw evidence", async () => {
+  const env = envFor({ received: Date.now(), body: JSON.stringify(raw) }, null);
+  const res = await worker.fetch(request("GET", null), env, ctx);
+  assert.equal(res.status, 503);
+  assert.ok(!(await res.text()).includes("secret"));
+});
+
+test("authenticated raw readback is private and public projection excludes hidden fields", async () => {
+  const env = envFor({ received: Date.now(), body: JSON.stringify(raw) },
+    JSON.stringify(items.map(i => i.href)));
+  const publicRes = await worker.fetch(request("GET", null), env, ctx);
+  assert.equal(publicRes.status, 200);
+  assert.equal(publicRes.headers.get("cache-control"), "public, max-age=60");
+  const pub = await publicRes.json();
+  assert.equal(pub.items.length, 4);
+  assert.ok(!JSON.stringify(pub).includes("secret"));
+  assert.ok(!JSON.stringify(pub).includes("IDR"));
+  const privateRes = await worker.fetch(request("GET", KEY), env, ctx);
+  assert.equal(privateRes.status, 200);
+  assert.equal(privateRes.headers.get("cache-control"), "private, no-store");
+  assert.ok((await privateRes.text()).includes("secret"));
+  assert.ok(env.queries.every(q => /^SELECT\s/i.test(q)));
+});
+
+test("standalone unapproved SKU fails closed without false completeness", async () => {
+  const standalone = { ...items[3], href: "/purchase/private-ticket", name: "Standalone ticket" };
+  const snapshot = { ...raw, items: [...items.slice(0, 3), standalone] };
+  snapshot.completeness = withEvidence(snapshot.items).completeness;
+  const env = envFor({ received: Date.now(), body: JSON.stringify(snapshot) },
+    JSON.stringify(items.map(i => i.href)));
+  assert.equal((await worker.fetch(request("GET", null), env, ctx)).status, 503);
+  env.STORE_PUBLIC_APPROVED_HREFS = JSON.stringify([...items.slice(0, 3).map(i => i.href), standalone.href]);
+  assert.equal((await worker.fetch(request("GET", null), env, ctx)).status, 200);
+});
