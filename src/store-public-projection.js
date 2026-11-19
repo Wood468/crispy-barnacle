@@ -5,7 +5,10 @@
 import { validateAuIngest } from "./store-validate.js";
 
 // Match the Worker ingest path contract; exact trusted-set membership still gates publication.
-const SKU = /^\/purchase\/[\w\-/?=&%.]*$/;
+const SKU = /^\/purchase\/[A-Za-z0-9_-][A-Za-z0-9_.-]*(?:\?[A-Za-z0-9_.~%=&-]+)?$/;
+const validSku = href => typeof href === "string" && SKU.test(href) &&
+  !href.split("?")[0].split("/").includes("..") &&
+  !href.split("?")[0].split("/").includes(".");
 const IMG_HOST = "assets.pgo.webstore.nianticlabs.com";
 const allowedImage = value => {
   try {
@@ -25,7 +28,7 @@ const allowedImage = value => {
 export function projectPublicStoreSnapshot(raw, approvedHrefs, nowMs = Date.now()) {
   if (!(approvedHrefs instanceof Set) || !approvedHrefs.size) return null;
   if (validateAuIngest(raw, nowMs) !== null) return null;
-  if (!raw.items.every(item => SKU.test(item.href) && approvedHrefs.has(item.href))) return null;
+  if (!raw.items.every(item => validSku(item.href) && approvedHrefs.has(item.href))) return null;
   const items = raw.items.map(item => ({
     name: item.name,
     section: item.section,
