@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-19T02:51:46.687Z",
+ "runAt": "2026-11-19T10:48:39.713Z",
  "artworkCoverage": {
   "selected": 28,
   "missing": 77,
@@ -22,13 +22,6 @@
     "name": "Orionids Meteor Shower: Minior Debut",
     "sources": [
      "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
-    ]
-   },
-   {
-    "id": "leekduck:raidhour20261118",
-    "name": "Cresselia and Darkrai Raid Hour",
-    "sources": [
-     "https://leekduck.com/events/raidhour20261118/"
     ]
    },
    {
@@ -254,6 +247,13 @@
     "name": "[Canceled] Max Monday",
     "sources": [
      "https://leekduck.com/events/max-mondays-2026-11-16/"
+    ]
+   },
+   {
+    "id": "leekduck:raidhour20261118",
+    "name": "Cresselia and Darkrai Raid Hour",
+    "sources": [
+     "https://leekduck.com/events/raidhour20261118/"
     ]
    },
    {
@@ -756,6 +756,11 @@
    "source": "leekduck",
    "title": "[Canceled] Max Monday",
    "url": "https://leekduck.com/events/max-mondays-2026-11-16/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Cresselia and Darkrai Raid Hour",
+   "url": "https://leekduck.com/events/raidhour20261118/"
   }
  ],
  "intl": {
@@ -1271,8 +1276,8 @@
   "canonicalLinks": {
    "publication": "staging-only",
    "eligiblePages": 43,
-   "linkedPages": 42,
-   "unlinkedPages": 1,
+   "linkedPages": 41,
+   "unlinkedPages": 2,
    "ambiguousPages": 0,
    "duplicatePages": 0,
    "rejectedPages": 0,
@@ -1280,6 +1285,10 @@
     {
      "sourceUrl": "https://leekduck.com/events/max-mondays-2026-11-16",
      "expectedAlias": "leekduck:max-mondays-2026-11-16"
+    },
+    {
+     "sourceUrl": "https://leekduck.com/events/raidhour20261118",
+     "expectedAlias": "leekduck:raidhour20261118"
     }
    ],
    "ambiguousExamples": [],
@@ -1466,7 +1475,7 @@
     }
    ],
    "normalizedCounts": {
-    "events": 42,
+    "events": 41,
     "benefits": 50,
     "featuredMoves": 0,
     "researchPrograms": 18,

@@ -11660,7 +11660,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 229,
+    "revision": 231,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -32507,7 +32507,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 244,
+    "revision": 246,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -34859,27 +34859,23 @@
    "aliases": [],
    "family": "raid-hour",
    "title": "Cresselia and Darkrai Raid Hour",
-   "dateText": "",
+   "dateText": "A Raid Hour featuring Cresselia and Darkrai is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
    "completeness": "partial",
-   "lifecycle": "reference",
+   "lifecycle": "announced",
    "attendance": "",
    "location": null,
    "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": true,
-    "conflicts": [],
+    "lifecycleDeclared": false,
+    "native": true,
     "fields": {
      "bonuses": [],
      "featured": [],
      "raids": [
       {
-       "text": "A Raid Hour featuring Cresselia and Darkrai is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
+       "text": "A Raid Hour featuring Cresselia and Darkrai is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids."
       }
      ],
      "eggs": [],
@@ -34890,27 +34886,19 @@
      "tickets": [],
      "dates": [
       {
-       "text": "A Raid Hour featuring Cresselia and Darkrai is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
+       "text": "A Raid Hour featuring Cresselia and Darkrai is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids."
       }
      ]
     },
-    "info": [],
-    "detailRefs": [
-     "leekduck:raidhour20261118"
-    ],
     "legacyDates": {
      "start": "",
      "end": ""
     },
+    "conflicts": [],
     "imageReviewed": true,
-    "contentHash": "add48154140e7898b52e8c20cb7ba71fd24152579e49327c9705fd4d497c60d8",
-    "revision": 4,
+    "contentHash": "9ccdb354aae4b02f0a3880237327cb1fcc6490da353e9ba43c7b4e9d4a8ec58b",
+    "revision": 5,
     "amended": false,
-    "native": false,
     "collection": "source-details"
    },
    "schedule": null,
@@ -61959,7 +61947,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 220,
+    "revision": 222,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -68883,7 +68871,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 229,
+    "revision": 231,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -77190,7 +77178,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 220,
+    "revision": 222,
     "amended": true,
     "native": false,
     "collection": "world-events"
