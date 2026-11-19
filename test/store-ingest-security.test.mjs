@@ -85,3 +85,35 @@ test("explicit SQL schema provisions twice on disposable in-memory SQLite", asyn
   assert.deepEqual(columns.map(c => c.name), ["id", "received", "fetched", "body"]);
   assert.equal(db.raw.prepare("SELECT COUNT(*) AS n FROM store_ingest").get().n, 0);
 });
+
+test("wrong-key GET cannot retrieve raw evidence or change D1", async () => {
+  const env = envFor({ received: Date.now(), body: JSON.stringify(raw) },
+    JSON.stringify(items.map(i => i.href)));
+  const res = await worker.fetch(request("GET", "invalid-secret"), env, ctx);
+  assert.equal(res.status, 200);
+  assert.ok(!(await res.text()).includes("secret"));
+  assert.ok(env.queries.every(q => /^SELECT\s/i.test(q)));
+});
+
+test("public projection retains received heartbeat and producer evidence", async () => {
+  const received = Date.now();
+  const env = envFor({ received, body: JSON.stringify(raw) },
+    JSON.stringify(items.map(i => i.href)));
+  const res = await worker.fetch(request("GET", null), env, ctx);
+  assert.equal(res.status, 200);
+  assert.equal(res.headers.get("x-store-received"), new Date(received).toISOString());
+  const projected = await res.json();
+  assert.deepEqual(projected.completeness, raw.completeness);
+  assert.equal(projected.fetched, raw.fetched);
+  assert.equal(projected.items.length, raw.items.length);
+});
+
+test("invalid, empty and self-referential approval cannot authorize raw publication", async () => {
+  const approval = [null, "", "{}", "[]", "not-json", JSON.stringify(raw.items)];
+  for (const value of approval) {
+    const env = envFor({ received: Date.now(), body: JSON.stringify(raw) }, value);
+    const res = await worker.fetch(request("GET", null), env, ctx);
+    assert.equal(res.status, 503, String(value));
+    assert.ok(!(await res.text()).includes("secret"));
+  }
+});
