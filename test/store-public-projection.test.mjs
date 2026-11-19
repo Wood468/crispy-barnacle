@@ -121,3 +121,17 @@ test("approved purchase query paths and public countdown metadata survive projec
   assert.equal(watched.held, undefined);
   assert.ok(watched.state.items["/purchase/a?offer=7"].endsAt);
 });
+
+test("trusted identities cannot override strict purchase path validation", () => {
+  for (const href of [
+    "/purchase/", "/purchase/../private", "/purchase/./private",
+    "/purchase/a/b", "/purchase/a#private", "/purchase/a?offer=7#private",
+    "/purchase/a?next=/private", "//purchase/a", "/purchase/%2e%2e/private",
+    "/purchase/a?offer=7\\nX-Private: yes"
+  ]) {
+    const raw = make();
+    raw.items[0].href = href;
+    raw.completeness = withEvidence(raw.items).completeness;
+    assert.equal(projectPublicStoreSnapshot(raw, new Set([...allow, href])), null, href);
+  }
+});
