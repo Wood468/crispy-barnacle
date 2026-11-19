@@ -4,7 +4,7 @@
 // Unsure candidates are left in the queue with their OCR text and reason. The workflow opens a pull request;
 // nothing reaches main without the owner merging it.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { writeFileSync, readFileSync } from "node:fs";
+import { writeFileSync, readFileSync, statSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -309,6 +309,36 @@ export function buildWeekly(reg, now = Date.now()) {
   return { updated: new Date(now).toISOString(), items };
 }
 
+// A staged picture whose file is gone (it never reached R2, or was lost) is fetched again from its own post, so the data that points at it
+// stays valid. Nothing but the file is touched: no review status, decision, match or creator changes, so this can never approve or publish anything.
+// A fresh link comes from the latest Discord read (links expire); the file keeps the exact path the registry already names.
+const STAGED_NAME = /^\/infographics\/g47ix\/([a-z0-9][a-z0-9._-]*)\.(png|jpg|jpeg|webp)$/i;
+export const localPictureReady = file => { try { const st = statSync(file); return st.isFile() && st.size > 0; } catch { return false; } };
+export function missingStaged(reg, ready) {
+  return (reg.candidates || []).filter(c => c.decision !== "rejected" && STAGED_NAME.test(String(c.stagedPath || "")) && !ready(c.stagedPath));
+}
+export async function restoreMissingPictures(reg, historyItems, { ready, fetchPicture, convertTo, save, max = 10 }) {
+  const fresh = new Map(); for (const d of historyItems || []) if (d && d.message_id && d.image_url) fresh.set("discord:" + d.message_id, d.image_url);
+  const out = { restored: [], failed: [] };
+  for (const c of missingStaged(reg, ready).slice(0, max)) {
+    try {
+      const want = STAGED_NAME.exec(c.stagedPath)[2].toLowerCase().replace("jpeg", "jpg");
+      const url = fresh.get(c.id) || c.imageUrl; if (!url) throw new Error("no link");
+      let pic = await fetchPicture(url);
+      if (pic.ext !== want) pic = await convertTo(pic, want);
+      if (pic.ext !== want || !pic.buf || !pic.buf.length) throw new Error("wrong format");
+      await save(c.stagedPath, pic.buf); out.restored.push(c.id);
+    } catch (err) { out.failed.push(c.id + " (" + err.message + ")"); }
+  }
+  return out;
+}
+function toWebp(pic) { // only ever used to give a re-fetched picture the .webp name the registry already holds
+  const src = join(tmpdir(), "g47ix-restage." + pic.ext), dst = join(tmpdir(), "g47ix-restage-out.webp");
+  writeFileSync(src, pic.buf);
+  execFileSync("convert", [src, "-resize", "2400x4000>", "-quality", "85", dst], { timeout: 90000, stdio: "ignore" });
+  return { buf: readFileSync(dst), ext: "webp" };
+}
+
 // World and in-person events (public/world-events.json) as the same shape the matcher reads. They are only ever used for suggestions a person confirms.
 export function worldAsEvents(world) {
   return ((world && world.events) || []).filter(w => w && w.id && w.name).map(w => ({ id: w.id, t: w.name, s: (w.start || "") + "T00:00", e: (w.end || w.start || "") + "T23:59", p: [w.place || "", w.area || ""] }));
@@ -358,6 +388,14 @@ async function main() {
   } catch { /* no Discord file yet */ }
   try { const n = mergeHistory(reg, JSON.parse(await readFile(process.env.DISCORD_HISTORY_FILE || "infographics-history.json", "utf8")), process.env.DISCORD_CREATOR || ""); if (n) console.log("History: " + n + " older pictures added for review."); } catch { /* no history this run */ }
   await mkdir(IMG_DIR, { recursive: true });
+  let historyItems = []; try { historyItems = JSON.parse(await readFile(process.env.DISCORD_HISTORY_FILE || "infographics-history.json", "utf8")).items || []; } catch { /* no history this run */ }
+  const healed = await restoreMissingPictures(reg, historyItems, {
+    ready: p => localPictureReady(join(IMG_DIR, p.split("/").pop())),
+    fetchPicture: download, convertTo: async (pic, want) => want === "webp" ? toWebp(pic) : pic,
+    save: (p, buf) => writeFile(join(IMG_DIR, p.split("/").pop()), buf)
+  });
+  if (healed.restored.length) console.log("Fetched again " + healed.restored.length + " staged picture(s) missing from R2: " + healed.restored.join(", "));
+  for (const f of healed.failed) console.log("::warning title=G47IX::could not fetch a missing staged picture again: " + f);
   for (const c of reg.candidates || []) { // read earlier, left without any suggestion: try the Pokémon-based guess
     if (!c.ocrChecked || c.eventMatch || c.decision === "rejected" || c.reviewStatus !== "unmatched") continue;
     const wg = worldGuess(c, worldEvents);
