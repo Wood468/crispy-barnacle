@@ -156,3 +156,23 @@ test("encoded traversal, arbitrary nested paths and foreign hosts fail closed ev
     assert.equal(projectPublicStoreSnapshot(snapshot, new Set(changed.map(i => i.href))), null, href);
   }
 });
+
+test("current generated Store catalogue URLs remain projection-compatible without auto-approving publication", async () => {
+  // Compatibility fixture only: this generated file is NOT an approval authority.
+  const { readFileSync } = await import("node:fs");
+  const catalogue = JSON.parse(readFileSync(new URL("../public/store-current-snapshot.json", import.meta.url), "utf8"));
+  assert.ok(Array.isArray(catalogue.items) && catalogue.items.length >= 4);
+  const hrefs = catalogue.items.map(item => item.href);
+  assert.ok(hrefs.every(href => typeof href === "string" && href.startsWith("/purchase/item/")));
+  assert.equal(new Set(hrefs).size, hrefs.length, "current catalogue must not duplicate identities");
+  const itemsFromCatalogue = catalogue.items.map((item, n) => ({
+    name: item.name, section: item.section || "box", href: item.href,
+    price: "A$" + (n + 1) + ".99", imgs: []
+  }));
+  const source = { ...withEvidence(itemsFromCatalogue), fetched: new Date().toISOString(),
+    items: itemsFromCatalogue };
+  assert.equal(projectPublicStoreSnapshot(source, null), null, "generated data cannot self-approve");
+  const projected = projectPublicStoreSnapshot(source, new Set(hrefs));
+  assert.ok(projected, "all currently generated Store href shapes should pass the URL validator");
+  assert.deepEqual(projected.items.map(item => item.href), hrefs);
+});
