@@ -1,8 +1,14 @@
 {
- "updated": "2026-11-20T11:40:15.474Z",
+ "updated": "2026-11-20T20:21:11.555Z",
  "state": "ok",
  "scrapedDuckEvents": 41,
  "missingHere": [
+  {
+   "name": "Twitch Drops for 2027 Pokémon Latin America International Championships",
+   "type": "twitch-drops",
+   "start": "2026-11-20T12:00:00.000Z",
+   "link": "https://leekduck.com/events/pokemon-latin-america-international-championships-2027-timed-research-twitch-drops/"
+  },
   {
    "name": "Raid Day",
    "type": "raid-day",
