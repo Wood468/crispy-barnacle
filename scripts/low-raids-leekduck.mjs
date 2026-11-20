@@ -6,7 +6,7 @@
 // Any malformed or partial page changes nothing. An unreachable page changes nothing.
 // Run through scripts/low-raids.mjs (after the Hub step). LEEKDUCK_HTML=<file> reads a saved page instead of fetching; DRY_RUN=true writes nothing.
 import { readFile, writeFile } from "node:fs/promises";
-import { toLines, cleanName, isBossName, saneList, norm, applyLow, SOURCE as HUB_SOURCE, LEEKDUCK_SOURCE } from "./low-raids.mjs";
+import { toLines, cleanName, isBossName, saneList, norm, applyLow, isActiveRaidDay, SOURCE as HUB_SOURCE, LEEKDUCK_SOURCE } from "./low-raids.mjs";
 
 export const LEEKDUCK_URL = "https://leekduck.com/raid-bosses/";
 const TYPES = new Set("normal fire water electric grass ice fighting poison ground flying psychic bug rock ghost dragon dark steel fairy".split(" "));
@@ -58,10 +58,10 @@ export const sane = t => !!t && saneList(t.one, 1) && saneList(t.three, 1) && sa
 const fiveSet = s => new Set(String(s || "").split(/\s*(?:,|&|\band\b)\s*/i).map(norm).filter(Boolean));
 const sameSet = (a, b) => a.size > 0 && a.size === b.size && [...a].every(x => b.has(x));
 
-// The one current-or-upcoming rotation whose 5-star set equals the page's; null when none or more than one.
+// Current Leek Duck boss lists prove current low tiers only, not future ones.
 export function matchRotation(rotation, five, nowMs = Date.now()) {
-  const want = new Set(five.map(norm).filter(Boolean)), today = new Date(nowMs).toISOString().slice(0, 10);
-  const hits = (rotation || []).filter(r => String(r.e || "").slice(0, 10) >= today && sameSet(fiveSet(r.five), want));
+  const want = new Set(five.map(norm).filter(Boolean));
+  const hits = (rotation || []).filter(r => isActiveRaidDay(r, nowMs) && sameSet(fiveSet(r.five), want));
   return hits.length === 1 ? hits[0] : null;
 }
 
@@ -73,7 +73,7 @@ export function planLeekDuck(html, rotation, nowMs = Date.now()) {
   const t = parseLeekDuck(html);
   if (!sane(t)) return { action: "untrusted", reason: "the page did not parse into sensible lists" };
   const r = matchRotation(rotation, t.five, nowMs);
-  if (!r) return { action: "skip", reason: "the page's 5-star bosses (" + t.five.join(", ") + ") match no single current or upcoming rotation" };
+  if (!r) return { action: "skip", reason: "the page's 5-star bosses (" + t.five.join(", ") + ") match no single active rotation" };
   const low = { one: t.one, three: t.three, ...(t.shadowOne.length ? { shadowOne: t.shadowOne } : {}), ...(t.shadowThree.length ? { shadowThree: t.shadowThree } : {}) };
   if (r.low) {
     if (!importerWrote(r.low)) return { action: "skip", reason: "the " + r.five + " rotation has hand-entered data from " + r.low.source + "; left alone", rotation: r };
