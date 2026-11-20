@@ -92,12 +92,19 @@ const REGIONAL = /city-safari|wild-area|tour|go-fest|safari-zone/;
 export function prettyName(slug) {
   return String(slug).replace(/-(20\d\d)(-rescheduled)?$/, "").split("-").map(w => w ? w[0].toUpperCase() + w.slice(1) : w).join(" ").replace(/^Pokemon Go /, "Pokémon GO ").replace(/\bGo\b/g, "GO");
 }
+// Date.parse alone normalises impossible Gregorian dates on some runtimes.
+// Only source-backed, ordered, real local calendar dates may enter the public world list.
+const validDay = value => {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(value + "T00:00:00Z");
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
+};
 export function addMissing(world, missing, now = new Date(), days = 120) {
   const added = [], limit = now.getTime() + days * 864e5, today = now.toISOString().slice(0, 10);
   for (const m of missing) {
     if (!m.start || !m.end || /[+Z]/.test(String(m.start).slice(19))) continue; // UTC times are not plain dates; leave those to the importer
     const s = String(m.start).slice(0, 10), e = String(m.end).slice(0, 10);
-    if (Date.parse(s) > limit || e < today) continue;
+    if (!validDay(s) || !validDay(e) || s > e || Date.parse(s) > limit || e < today) continue;
     const id = "w-" + m.slug.replace(/-20\d\d.*$/, "").slice(0, 50);
     if (world.some(w => w.id === id || (w.sources || []).some(x => String(x.url || "").includes("/" + m.slug + "/")))) continue;
     const regional = REGIONAL.test(m.slug);
