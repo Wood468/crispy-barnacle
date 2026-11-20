@@ -7,6 +7,53 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1573405995139600404",
+      "source": "discord",
+      "creator": "",
+      "title": "December 2026",
+      "publishedAt": "2026-11-20T18:33:41.711000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1573399856251142254/December_2026.png?ex=6b01de4e&is=6b008cce&hm=237769b408b1b6d106df850c572c1a3cb5c2a02a931ef575581067a1f59a5d50&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "h > “4 12 13 f N 4 DEC DEC 4A to 5:00 p.m “fe vi +. let Chance for Catch Hatch Catch X XL Candy > & mee Ra Stardust Be Distance Candy ~~ from catching Lures Incense Limited-time Evolution requirement: Up to two Special Trades/day, and trades will cost 50% less. Evolve Bisharpin to Kingambit after defeating one Dark or Steel-type Raid Boss with Bisharp as your buddy (2) Saturday, 2:00-5:00 pm Cy Suns: 2:00-5:00 pm ye] ++ A7 aes @ “ x Fe ++ ++ red er) a ae ( tt R 2° rf Outside of these times, any of the featured Pokémon may appear from 9:00 a.m. to 9:00 p.m. local time on either Saturday or Sunday! Featured Moves i) > | 6 Hydro Cannon 9 Energy Ball ¥ Y Chance to encounter i Pokémon with q a Special Background nf a ty RY Es fza & (eas ll Encounters with Pokémon featured Research in previous Community Days and Community Day Classics Field Research will feature o* Pokémon from 2026 Community Days and CD Classic. SID CI=D CIID CI ules Follow for more G47|X £) Oax?voe www.g47ix.pro JOQ6",
+      "eventMatch": {
+        "eventId": "leekduck:raid-day-december-2026",
+        "eventTitle": "Raid Day",
+        "score": 0.791,
+        "confidence": "high",
+        "matchedTerms": [
+          "raid",
+          "day",
+          "december",
+          "2026"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:raid-day-december-2026",
+            "eventTitle": "Raid Day",
+            "score": 0.791
+          },
+          {
+            "eventId": "leekduck:hatch-day-december-2026",
+            "eventTitle": "Hatch Day",
+            "score": 0.791
+          },
+          {
+            "eventId": "leekduck:december-communityday2026",
+            "eventTitle": "December Community Day",
+            "score": 0.785
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1573405995139600404.webp"
+    },
+    {
       "id": "discord:1573056127648796683",
       "source": "discord",
       "creator": "",

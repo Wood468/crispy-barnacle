@@ -1,6 +1,37 @@
 {
- "updated": "2026-11-20T14:41:26.169Z",
+ "updated": "2026-11-20T22:27:58.668Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1573405995139600404",
+   "title": "December 2026",
+   "image": "/infographics/g47ix/discord-1573405995139600404.webp",
+   "post": "",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-20T18:33:41.711000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [],
+   "text": "h > “4 12 13 f N 4 DEC DEC 4A to 5:00 p.m “fe vi +. let Chance for Catch Hatch Catch X XL Candy > & mee Ra Stardust Be Distance Candy ~~ from catching Lures Incense Limited-time Evolution requirement: Up to two Special Trades/day, and trades will cost 50% less. Evolve Bisharpin to Kingambit after defeating one Dark or Steel-type Raid Boss with Bisharp as your buddy (2) Saturday, 2:00-5:00 pm Cy Suns: 2:00-5:00 pm ye] ++ A7 aes @ “ x Fe ++ ++ red er) a ae ( tt R 2° rf Outside of these times, any of the featured Pokémon may appear from 9:00 a.m. to 9:00 p.m. local time on either Saturday or Sunday! Featured Moves i) > | 6 Hydro Cannon 9 Energy Ball ¥ Y Chance to encounter i Pokémon with q a Sp",
+   "guesses": [
+    {
+     "eventId": "leekduck:raid-day-december-2026",
+     "eventTitle": "Raid Day",
+     "score": 0.791
+    },
+    {
+     "eventId": "leekduck:hatch-day-december-2026",
+     "eventTitle": "Hatch Day",
+     "score": 0.791
+    },
+    {
+     "eventId": "leekduck:december-communityday2026",
+     "eventTitle": "December Community Day",
+     "score": 0.785
+    }
+   ]
+  },
   {
    "linked": false,
    "id": "discord:1573056127648796683",
