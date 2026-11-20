@@ -1163,10 +1163,11 @@ async function tgInbox(request, env) {
 }
 // ---------------------------------------------------------------- AU store snapshot ingest
 // A Home Assistant add-on in Melbourne POSTs the Australian store snapshot (the GitHub runner's US address sees the US store).
-// Inert (404) unless the write-only secret STORE_INGEST_KEY (>= 32 chars) and the DB are present. Auth is the x-ingest-key header only.
+// Inert (404) unless the write-only secret STORE_INGEST_KEY (>= 32 chars) and the DB are present. GET and POST both need the x-ingest-key header (the only credential).
+// Auth is checked first; a failed request runs no DDL and writes nothing except the shared failure-throttle row.
 const INGEST_MAX_BYTES = 256 * 1024, INGEST_MAX_ITEMS = 400, INGEST_MIN_GAP_MS = 5 * 60 * 1000;
 const INGEST_PAST_MS = 15 * 60 * 1000, INGEST_FUTURE_MS = 5 * 60 * 1000;
-const INGEST_TABLE = "CREATE TABLE IF NOT EXISTS store_ingest (id INTEGER PRIMARY KEY CHECK(id = 1), received INTEGER, fetched TEXT, body TEXT)";
+// The table is created only by migrations/0004_store_ingest.sql (explicit, idempotent), never by a request.
 const INGEST_IMG_ORIGIN = "https://assets.pgo.webstore.nianticlabs.com"; // the only Store image host already in IMAGE_CSP_HOSTS
 const ingestImg = u => { if (!ingestStr(u, 600)) return false; try { const x = new URL(u); return x.origin === INGEST_IMG_ORIGIN && !x.username && !x.password; } catch { return false; } };
 const ingestStr = (v, max) => typeof v === "string" && v.length <= max;
@@ -1206,27 +1207,28 @@ const INGEST_REASONS = {
 };
 const ingestReason = (code, snap) => INGEST_REASONS[code === "incomplete" ? deriveCompleteness(snap).reason : code] || (code === "incomplete" ? "completeness" : "shape");
 const ingestBad = reason => json({ error: "Bad request.", reason }, 400);
+const noTable = e => /no such table/i.test(String(e && e.message));
+const ingestUnavailable = () => json({ error: "Unavailable.", reason: "schema" }, 503);
 async function storeIngest(request, env) {
   if (!env.DB || typeof env.STORE_INGEST_KEY !== "string" || env.STORE_INGEST_KEY.length < 32) return json({ error: "Not switched on." }, 404);
   const method = request.method;
   if (method !== "GET" && method !== "POST") return json({ error: "Method not allowed." }, 405);
-  if (method === "GET") { // public storefront data (raw snapshot, so it includes standalone SKUs the filtered public file omits)
-    const read = () => env.DB.prepare("SELECT received, body FROM store_ingest WHERE id = 1").first();
+  const given = String(request.headers.get("x-ingest-key") || "");
+  if (!given || !(await same(given, env.STORE_INGEST_KEY))) {
+    // Shared throttle only (no ensure(): never create tables here). If its table is missing, still refuse without recording.
+    try { return await authFailure(request, env, "key"); } catch (e) { if (!noTable(e)) throw e; return json({ error: "Wrong key." }, 401); }
+  }
+  if (method === "GET") { // the raw snapshot (includes standalone SKUs the filtered public file omits): private, for the watcher only
     let row;
-    try { row = await read(); } catch (e) {
-      if (!/no such table/i.test(String(e && e.message))) throw e;
-      await env.DB.prepare(INGEST_TABLE).run(); row = await read();
-    }
+    try { row = await env.DB.prepare("SELECT received, body FROM store_ingest WHERE id = 1").first(); } catch (e) { if (!noTable(e)) throw e; return ingestUnavailable(); }
     if (!row) return json({ error: "Not found." }, 404);
     // x-store-received lets the watcher tell "the reader stopped uploading" from "the store did not change".
-    return new Response(row.body, { headers: { "content-type": "application/json", "cache-control": "public, max-age=60", "x-store-received": new Date(row.received).toISOString() } });
+    return new Response(row.body, { headers: { "content-type": "application/json", "cache-control": "private, no-store", "x-store-received": new Date(row.received).toISOString() } });
   }
-  const given = String(request.headers.get("x-ingest-key") || "");
-  if (!given || !(await same(given, env.STORE_INGEST_KEY))) { await ensure(env); return authFailure(request, env, "key"); }
   if (!/^application\/json\b/i.test(request.headers.get("content-type") || "")) return json({ error: "Bad request." }, 415);
-  await env.DB.prepare(INGEST_TABLE).run();
   const now = Date.now();
-  const prev = await env.DB.prepare("SELECT received, fetched FROM store_ingest WHERE id = 1").first();
+  let prev;
+  try { prev = await env.DB.prepare("SELECT received, fetched FROM store_ingest WHERE id = 1").first(); } catch (e) { if (!noTable(e)) throw e; return ingestUnavailable(); }
   if (prev && prev.received > now - INGEST_MIN_GAP_MS) return json({ error: "Too soon." }, 429);
   const parsed = await readSyncJson(request, INGEST_MAX_BYTES);
   if (parsed.error === "too_large") return json({ error: "Payload too large." }, 413);

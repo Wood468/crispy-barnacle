@@ -5,9 +5,17 @@ import { makeDB } from "./helpers.mjs";
 import { withEvidence } from "./store-evidence-fixture.mjs";
 import { validateAuIngest } from "../src/store-validate.js";
 import * as watch from "../scripts/store-watch.mjs";
+import { readFileSync } from "node:fs";
 
 const KEY = "k".repeat(40);
-const mkEnv = (over = {}) => ({ DB: makeDB(), STORE_INGEST_KEY: KEY, ASSETS: { fetch: async () => new Response("{}") }, ...over });
+// The Worker never creates tables on a request: the test DB gets the explicit schema file (plus the existing throttle table) up front.
+const SCHEMA = readFileSync(new URL("../migrations/0004_store_ingest.sql", import.meta.url), "utf8");
+const THROTTLE = "CREATE TABLE IF NOT EXISTS pin_fails_ip (ip_hash TEXT NOT NULL, at INTEGER NOT NULL)";
+const mkDB = ({ schema = true } = {}) => { const db = makeDB(); db.raw.exec(THROTTLE); if (schema) db.raw.exec(SCHEMA); return db; };
+const mkEnv = (over = {}) => ({ DB: mkDB(), STORE_INGEST_KEY: KEY, ASSETS: { fetch: async () => new Response("{}") }, ...over });
+// Fake D1 recorder: remembers every statement, and throws on any DDL (CREATE/ALTER/DROP).
+const recorded = (db) => { const log = [], prepare = db.prepare; return { log, raw: db.raw, batch: async () => { throw new Error("batch (ensure) must not be called"); }, prepare(sql) { if (/^\s*(CREATE|ALTER|DROP)\b/i.test(sql)) throw new Error("DDL at request time: " + sql.slice(0, 40)); log.push(sql.trim()); return prepare(sql); } }; };
+const writes = log => log.filter(q => !/^SELECT\b/i.test(q));
 const ctx = { waitUntil() {} };
 let ipN = 0;
 const call = (env, { method = "POST", key = KEY, body, headers = {}, path = "/api/store-ingest", ip } = {}) => worker.fetch(new Request("https://x.test" + path, {
@@ -36,15 +44,15 @@ test("wrong or missing key is 401, and the 11th failure from one address is 429"
   assert.equal(row(env), undefined);
 });
 
-test("valid A$ snapshot: 200, row stored, GET returns it with no-store", async () => {
+test("valid A$ snapshot: 200, row stored, keyed GET returns it with private no-store", async () => {
   const env = mkEnv(), now = Date.now();
-  assert.equal((await call(env, { method: "GET", key: null })).status, 404);
+  assert.equal((await call(env, { method: "GET" })).status, 404); // authenticated, nothing stored yet
   const r = await call(env, { body: snap(now) });
   assert.equal(r.status, 200);
   const stored = row(env);
   assert.equal(stored.id, 1); assert.ok(stored.received >= now); assert.equal(stored.fetched, new Date(now).toISOString());
-  const g = await call(env, { method: "GET", key: null });
-  assert.equal(g.status, 200); assert.equal(g.headers.get("cache-control"), "public, max-age=60");
+  const g = await call(env, { method: "GET" });
+  assert.equal(g.status, 200); assert.equal(g.headers.get("cache-control"), "private, no-store");
   assert.equal(g.headers.get("x-store-received"), new Date(stored.received).toISOString());
   const body = await g.json();
   assert.equal(body.items.length, 4); assert.equal(body.items[0].price, "A$1.99");
@@ -139,7 +147,7 @@ test("security: the key is never read from the query string or any other header,
   assert.equal(row(env), undefined);
   const ok = await call(env, { body: snap(now), path: "/api/store-ingest?junk=1" });
   assert.equal(ok.status, 200); assert.ok(!(await ok.text()).includes(KEY));
-  const g = await call(env, { method: "GET", key: KEY }); assert.ok(!(await g.text()).includes(KEY));
+  const g = await call(env, { method: "GET" }); assert.equal(g.status, 200); assert.ok(!(await g.text()).includes(KEY));
 });
 
 test("a wrong ingest key fills the shared bucket but the correct x-pin still works; wording is 'key' for ingest and unchanged for PINs", async () => {
@@ -164,9 +172,50 @@ test("two concurrent identical POSTs yield exactly one 200", async () => {
   assert.ok(rs.every(r => [200, 409, 429].includes(r.status)));
 });
 
-test("GET does not need the table to exist yet (404, then created lazily)", async () => {
+test("table missing: authenticated GET and POST are 503 with a fixed reason and nothing is created", async () => {
+  const env = mkEnv({ DB: mkDB({ schema: false }) });
+  for (const r of [await call(env, { method: "GET" }), await call(env, { body: snap(Date.now()) })]) { assert.equal(r.status, 503); assert.deepEqual(await r.json(), { error: "Unavailable.", reason: "schema" }); }
+  assert.equal(env.DB.raw.prepare("SELECT name FROM sqlite_master WHERE name = 'store_ingest'").get(), undefined);
+});
+
+test("no DDL and no store_ingest write on any rejected request (recorder throws on CREATE/ALTER/DROP or ensure)", async () => {
+  const now = Date.now(), cases = [];
+  const rec = over => { const db = recorded(mkDB()); return { db, env: mkEnv({ DB: db, ...over }) }; };
+  for (const [name, args] of Object.entries({
+    getNoKey: { method: "GET", key: null }, getWrongKey: { method: "GET", key: "wrong" }, getKeyInQuery: { method: "GET", key: null, path: "/api/store-ingest?key=" + KEY },
+    postNoKey: { key: null, body: snap(now) }, postWrongKey: { key: "wrong", body: snap(now) },
+    put: { method: "PUT", body: "{}" }, del: { method: "DELETE" }, head: { method: "HEAD" }
+  })) { const { db, env } = rec(); const r = await call(env, args); cases.push(name);
+    assert.ok([401, 405].includes(r.status), name);
+    assert.deepEqual(writes(db.log).filter(q => !/^(INSERT INTO|DELETE FROM) pin_fails_ip\b/.test(q)), [], name); // only the shared failure throttle may write
+    if (r.status === 405) assert.deepEqual(db.log, [], name);
+    assert.equal(db.raw.prepare("SELECT COUNT(*) AS n FROM store_ingest").get().n, 0, name); }
+  for (const over of [{ STORE_INGEST_KEY: undefined }, { STORE_INGEST_KEY: "short" }]) { const { db, env } = rec(over); assert.equal((await call(env, { method: "GET" })).status, 404); assert.equal((await call(env, { body: snap(now) })).status, 404); assert.deepEqual(db.log, []); }
+  { const db = recorded(mkDB()); const r = await call(mkEnv({ DB: undefined }), { method: "GET" }); assert.equal(r.status, 404); assert.deepEqual(db.log, []); }
+  // throttle table absent as well: still 401, still no DDL
+  { const db = recorded(mkDB()); db.raw.exec("DROP TABLE pin_fails_ip"); const r = await call(mkEnv({ DB: db }), { method: "GET", key: "wrong" }); assert.equal(r.status, 401); assert.deepEqual(db.log.filter(q => !/^INSERT INTO pin_fails_ip\b/.test(q)), []); }
+  assert.equal(cases.length, 8);
+});
+
+test("a wrong-key GET is throttled like a wrong-key POST (11th from one address is 429)", async () => {
   const env = mkEnv();
-  assert.equal((await call(env, { method: "GET", key: null })).status, 404);
+  for (let n = 0; n < 10; n++) assert.equal((await call(env, { method: "GET", key: "wrong", ip: "6.6.6.6" })).status, 401);
+  assert.equal((await call(env, { method: "GET", key: "wrong", ip: "6.6.6.6" })).status, 429);
+  assert.equal((await call(env, { method: "GET", key: KEY, ip: "6.6.6.6" })).status, 404); // the right key is never throttled (nothing stored yet)
+});
+
+test("a stored snapshot with standalone/private-only SKUs is never returned without the right key", async () => {
+  const env = mkEnv(), now = Date.now(), MARK = "PRIVATE-ONLY-SKU-9F3A";
+  const its = [...items(), { name: MARK, section: "box", href: "/purchase/" + MARK.toLowerCase(), price: "A$9.99", imgs: ["https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/priv/w256.webp"] }];
+  assert.equal((await call(env, { body: snap(now, {}, its) })).status, 200);
+  assert.ok(JSON.parse(row(env).body).items.some(i => i.name === MARK));
+  for (const args of [{ method: "GET", key: null }, { method: "GET", key: "wrong" }, { method: "GET", key: null, path: "/api/store-ingest?key=" + KEY },
+    { method: "GET", key: null, headers: { authorization: "Bearer " + KEY, "x-pin": KEY, "x-ingest-key": "" } }, { method: "HEAD", key: null }, { method: "OPTIONS", key: null }]) {
+    const r = await call(env, args), t = await r.text();
+    assert.ok([401, 405].includes(r.status), args.method); assert.ok(!t.includes(MARK) && !t.includes("purchase") && !t.includes(KEY));
+    assert.ok(!r.headers.get("x-store-received") && !/public|max-age/.test(r.headers.get("cache-control") || ""));
+  }
+  assert.ok((await (await call(env, { method: "GET" })).text()).includes(MARK)); // the keyed read still has it
 });
 
 test("every 400 carries a fixed-vocabulary reason code and never echoes the input", async () => {
