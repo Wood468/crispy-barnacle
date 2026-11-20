@@ -2,7 +2,6 @@
  "alerted": [
   "event-importer.yml",
   "g47ix-infographics.yml",
-  "discord_sync.yml",
   "ai-heartbeat-event-check",
   "ai-heartbeat-pipeline",
   "ai-heartbeat-shiny"
