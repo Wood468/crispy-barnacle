@@ -37,7 +37,9 @@ export function review({ items, dex, costumes, dataText, now, weak = false }) {
   const names = dex.map(r => r[1]);
   const known = Object.keys({ ...(costumes.pictures || {}), ...(costumes.shiny || {}) }).map(k => k.split("|")[0]).concat((costumes.missing || []).map(k => String(k).split("|")[0]));
   const hay = String(dataText).toLowerCase();
-  return items.filter(i => i.date && i.date >= now - LOOK_DAYS * DAY && (KEYWORDS.test(i.title + " " + i.summary.slice(0, 400)) || (weak && WEAK.test(i.title))) && !OTHER_GAMES.test(i.title)).map(i => {
+  // Publisher clocks can drift slightly, but future-dated articles must not create
+  // unverified shiny/costume alerts or drown out real recent discoveries.
+  return items.filter(i => Number.isFinite(i.date) && i.date > 0 && i.date >= now - LOOK_DAYS * DAY && i.date <= now + DAY && (KEYWORDS.test(i.title + " " + i.summary.slice(0, 400)) || (weak && WEAK.test(i.title))) && !OTHER_GAMES.test(i.title)).map(i => {
     // names in the title are what the post is about; fall back to the start of the text only when the title names none
     const inTitle = mentioned(i.title, names), pokemon = (inTitle.length ? inTitle : mentioned(i.summary.slice(0, 300), names)).slice(0, 4);
     const unseen = pokemon.filter(p => !hay.includes(p.toLowerCase()) && !known.includes(p.toLowerCase()));
