@@ -31,6 +31,8 @@ test('FX provider outage retains only a fresh owner-sourced IDR quote', async ()
 });
 
 test('owner Store shows one AUD placeholder before each local price without waiting for FX', async () => {
+  // The UI uses the real clock for FX freshness; keep this fixture fresh at test execution time.
+  const recentFxDate = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   let resolveFx;
   function fxNode(currency, amount) {
     const attrs={'data-sp-aud-currency':currency,'data-sp-aud-min':String(amount)};
@@ -44,7 +46,7 @@ test('owner Store shows one AUD placeholder before each local price without wait
   const host = {parentNode:{insertBefore:()=>{}}};
   // An Australian-only verified item guarantees an honest unobserved ID/IN cell.
   const prices = {owner:true,prices:[{product:'store-test-au-only',label:'AU-only fixture',
-    region:'AU',currency:'AUD',verified:true,amount:5,group:'Items',observed:'2026-11-12'}],regional:OBSERVATIONS};
+    region:'AU',currency:'AUD',verified:true,amount:5,group:'Items',observed:recentFxDate}],regional:OBSERVATIONS};
   const win = {GOStoreFX:FX,GORegionalPrices:R,
     fetch:url=>url==='/store-current-snapshot.json' ? Promise.resolve({ok:false}) : new Promise(resolve=>{resolveFx=resolve;}),
     GOLIB:{esc:s=>String(s),loadPrices:async()=>prices},
@@ -80,7 +82,7 @@ test('owner Store shows one AUD placeholder before each local price without wait
   assert.ok(inPriced.indexOf('class="sp-aud-equivalent"')<inPriced.indexOf('class="sp-local-price"'),
     'India also reads its AUD reference before local INR amount');
   resolveFx({ok:true,json:async()=>({result:'success',base_code:'AUD',
-    time_last_update_unix:Date.parse('2026-11-12')/1000,rates:{IDR:11000,INR:60}})});
+    time_last_update_unix:Date.parse(recentFxDate)/1000,rates:{IDR:11000,INR:60}})});
   await new Promise(resolve=>setTimeout(resolve,20));
   assert.match(idAud.textContent,/≈ A\$6\.91/,'fresh IDR FX fills the AUD reference');
   assert.match(inAud.textContent,/≈ A\$7\.32/,'fresh INR FX fills the AUD reference');
