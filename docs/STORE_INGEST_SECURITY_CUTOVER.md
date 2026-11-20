@@ -14,7 +14,7 @@ A missing schema returns HTTP 503, with zero request-time DDL.
 
 ## Trusted SKU publication
 `STORE_PUBLIC_APPROVED_HREFS` is a JSON array of exact relative
-`/purchase/<sku>` identities, optionally including verified query strings.
+`/purchase/item/<sku>` identities (or independently verified legacy\n`/purchase/<sku>` identities), optionally including verified query strings.
 It must be curated **outside the ingest snapshot**, from a reviewed official
 Pokémon GO Web Store public catalogue with evidence of SKU identity and
 public visibility. Record source URL, capture time, reviewer and approved
