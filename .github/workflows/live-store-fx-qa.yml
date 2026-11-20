@@ -1,0 +1,43 @@
+name: Live Store AUD FX browser QA
+
+# Opt-in production acceptance only: no recurring monitor and no user secrets.
+# A temporary third-party FX outage must not block unrelated deployments.
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "test/live_store_fx_qa.py"
+      - ".github/workflows/live-store-fx-qa.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-store-fx-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  production-aud-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+      - name: Install public-browser test dependencies
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Verify deployed exact CSP and live IDR/INR to AUD reference conversion
+        env:
+          GOFN_FX_QA_URL: https://pogo.michaelpuff.com
+          GOFN_FX_QA_OUT: artifacts/live-store-fx
+        run: python test/live_store_fx_qa.py
+      - name: Upload sanitized FX QA evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: live-store-aud-fx-evidence
+          path: artifacts/live-store-fx/report.json
+          if-no-files-found: ignore
