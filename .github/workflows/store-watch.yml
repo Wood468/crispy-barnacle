@@ -68,6 +68,8 @@ jobs:
       # One Telegram message (system topic) if the published snapshot is over 3 days old or the reader has not uploaded for 6 hours;
       # at most once per 24 hours (state.staleAlertAt, committed by the save step below).
       - name: Warn if the snapshot has gone stale
+        # Run after an earlier failed step too; never send alerts for cancelled jobs.
+        if: ${{ !cancelled() }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
