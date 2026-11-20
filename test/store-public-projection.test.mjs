@@ -1,0 +1,137 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { projectPublicStoreSnapshot } from "../src/store-public-projection.js";
+import { withEvidence } from "./store-evidence-fixture.mjs";
+import { validateStoreObservation, deriveCompleteness } from "../src/store-validate.js";
+import { diffStore } from "../scripts/store-watch.mjs";
+
+const items = ["a", "b", "c", "d"].map((x, n) => ({
+  name: "Item " + x, section: "box", href: "/purchase/" + x,
+  price: "A$" + (n + 1) + ".99",
+  imgs: ["https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/" + x + "/w256.webp"]
+}));
+const make = () => ({
+  ...withEvidence(items), fetched: new Date().toISOString(),
+  items: items.map(x => ({ ...x, imgs: [...x.imgs], privateRegionPrice: "IDR 1", internalId: "secret" })),
+  secret: "private-snapshot-metadata"
+});
+const allow = new Set(items.map(x => x.href));
+
+test("explicit approved SKU set yields watcher-compatible AU snapshot without private fields", () => {
+  const projected = projectPublicStoreSnapshot(make(), allow);
+  assert.ok(projected);
+  assert.equal(validateStoreObservation(projected), null);
+  assert.equal(deriveCompleteness(projected).complete, true);
+  assert.equal(projected.items.length, 4);
+  assert.ok(!JSON.stringify(projected).includes("secret"));
+  assert.ok(!JSON.stringify(projected).includes("IDR"));
+  assert.deepEqual(Object.keys(projected.items[0]), ["name", "section", "href", "price", "imgs"]);
+});
+
+test("missing or untrusted allowlist fails closed, never silently drops private SKU", () => {
+  const snapshot = make();
+  assert.equal(projectPublicStoreSnapshot(snapshot, null), null);
+  assert.equal(projectPublicStoreSnapshot(snapshot, new Set()), null);
+  assert.equal(projectPublicStoreSnapshot(snapshot, new Set(items.slice(0, 3).map(x => x.href))), null);
+  snapshot.items[0].href = "/purchase/hidden-private-only";
+  assert.equal(projectPublicStoreSnapshot(snapshot, allow), null);
+});
+
+test("rejects malformed or incomplete source evidence and invalid public href", () => {
+  const s = make();
+  s.completeness.loadComplete = false;
+  assert.equal(projectPublicStoreSnapshot(s, allow), null);
+  const t = make();
+  t.items[0].href = "javascript:alert(1)";
+  assert.equal(projectPublicStoreSnapshot(t, new Set([...allow, t.items[0].href])), null);
+});
+
+test("drops unapproved image metadata without leaking URLs or diagnostics", () => {
+  const s = make();
+  s.items[0].imgs.push("https://evil.test/private.png");
+  const out = projectPublicStoreSnapshot(s, allow);
+  assert.ok(out);
+  assert.equal(out.items[0].imgs.length, 1);
+  assert.ok(!JSON.stringify(out).includes("evil.test"));
+});
+
+test("public projection does not mutate authenticated raw evidence or approved identities", () => {
+  const raw = make();
+  const before = structuredClone(raw);
+  const approvedBefore = [...allow];
+  const projected = projectPublicStoreSnapshot(raw, allow);
+  assert.ok(projected);
+  assert.deepEqual(raw, before);
+  assert.deepEqual([...allow], approvedBefore);
+  assert.equal(projected.items[0].href, raw.items[0].href);
+  assert.equal(projected.completeness.cards, raw.completeness.cards);
+  assert.equal(projected.completeness.passes, raw.completeness.passes);
+  assert.equal(projected.completeness.maxPasses, raw.completeness.maxPasses);
+});
+
+test("approved standalone offers remain eligible when explicitly present in the trusted set", () => {
+  const raw = make();
+  raw.items[3].name = "Standalone ticket";
+  raw.items[3].section = "ticket";
+  raw.completeness = withEvidence(raw.items).completeness;
+  const projected = projectPublicStoreSnapshot(raw, allow);
+  assert.ok(projected);
+  assert.equal(projected.items[3].name, "Standalone ticket");
+  assert.equal(deriveCompleteness(projected).complete, true);
+});
+
+test("projected complete snapshot passes the real Store-watch diff consumer", () => {
+  const raw = make();
+  const projected = projectPublicStoreSnapshot(raw, allow);
+  assert.ok(projected);
+  const now = new Date().toISOString();
+  const initial = diffStore(null, projected, now);
+  assert.equal(initial.held, undefined);
+  assert.equal(Object.keys(initial.state.items).length, raw.items.length);
+  assert.equal(initial.state.lastObservation.status, "complete");
+  const repeat = diffStore(initial.state, projected, now);
+  assert.equal(repeat.held, undefined);
+  assert.equal(repeat.added.length, 0);
+  assert.equal(repeat.gone.length, 0);
+});
+
+test("unknown approved identity cannot be inferred from untrusted raw evidence", () => {
+  const raw = make();
+  raw.items[0].approved = true;
+  raw.items[0].public = true;
+  raw.items[0].href = "/purchase/unlisted";
+  raw.completeness = withEvidence(raw.items).completeness;
+  assert.equal(projectPublicStoreSnapshot(raw, allow), null);
+});
+
+test("approved purchase query paths and public countdown metadata survive projection", () => {
+  const raw = make();
+  raw.items[0].href = "/purchase/a?offer=7";
+  raw.items[0].tag = "Limited time";
+  raw.items[0].limit = "1 per account";
+  raw.items[0].left = "4 hours left";
+  raw.completeness = withEvidence(raw.items).completeness;
+  const projected = projectPublicStoreSnapshot(raw, new Set([...allow, raw.items[0].href]));
+  assert.ok(projected);
+  assert.equal(projected.items[0].href, "/purchase/a?offer=7");
+  assert.equal(projected.items[0].tag, "Limited time");
+  assert.equal(projected.items[0].limit, "1 per account");
+  assert.equal(projected.items[0].left, "4 hours left");
+  const watched = diffStore(null, projected, new Date().toISOString());
+  assert.equal(watched.held, undefined);
+  assert.ok(watched.state.items["/purchase/a?offer=7"].endsAt);
+});
+
+test("trusted identities cannot override strict purchase path validation", () => {
+  for (const href of [
+    "/purchase/", "/purchase/../private", "/purchase/./private",
+    "/purchase/a/b", "/purchase/a#private", "/purchase/a?offer=7#private",
+    "/purchase/a?next=/private", "//purchase/a", "/purchase/%2e%2e/private",
+    "/purchase/a?offer=7\\nX-Private: yes"
+  ]) {
+    const raw = make();
+    raw.items[0].href = href;
+    raw.completeness = withEvidence(raw.items).completeness;
+    assert.equal(projectPublicStoreSnapshot(raw, new Set([...allow, href])), null, href);
+  }
+});
