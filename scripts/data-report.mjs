@@ -13,11 +13,17 @@ function dateRanges(value, year) {
   return [...String(value || "").matchAll(re)].map(m => {
     const sm = MONTHS[m[1].slice(0, 3).toLowerCase()], em = MONTHS[(m[3] || m[1]).slice(0, 3).toLowerCase()];
     const ey = em < sm ? year + 1 : year;
-    return {
-      start: new Date(Date.UTC(year, sm - 1, Number(m[2]))).toISOString().slice(0, 10),
-      end: new Date(Date.UTC(ey, em - 1, Number(m[4]))).toISOString().slice(0, 10)
+    // Date.UTC silently rolls April 31 into May 1; such source text must
+    // never be treated as a verified rotation window.
+    const calendarDay = (y, month, number) => {
+      const d = new Date(Date.UTC(y, month - 1, number));
+      return d.getUTCFullYear() === y && d.getUTCMonth() === month - 1 &&
+        d.getUTCDate() === number ? d.toISOString().slice(0, 10) : null;
     };
-  });
+    const start = calendarDay(year, sm, Number(m[2]));
+    const end = calendarDay(ey, em, Number(m[4]));
+    return start && end && start <= end ? { start, end } : null;
+  }).filter(Boolean);
 }
 function previousDay(value) {
   const ms = Date.parse(String(value || "") + "T00:00:00Z");
