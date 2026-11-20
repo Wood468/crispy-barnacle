@@ -7,7 +7,11 @@ import { validateAuIngest } from "../src/store-validate.js";
 import * as watch from "../scripts/store-watch.mjs";
 
 const KEY = "k".repeat(40);
-const mkEnv = (over = {}) => ({ DB: makeDB(), STORE_INGEST_KEY: KEY, ASSETS: { fetch: async () => new Response("{}") }, ...over });
+const mkEnv = (over = {}) => {
+  const DB = makeDB();
+  DB.raw.exec("CREATE TABLE IF NOT EXISTS store_ingest (id INTEGER PRIMARY KEY CHECK(id = 1), received INTEGER NOT NULL, fetched TEXT NOT NULL, body TEXT NOT NULL)");
+  return { DB, STORE_INGEST_KEY: KEY, STORE_PUBLIC_APPROVED_HREFS: JSON.stringify(["a","b","c","d"].map(s => "/purchase/" + s)), ASSETS: { fetch: async () => new Response("{}") }, ...over };
+};
 const ctx = { waitUntil() {} };
 let ipN = 0;
 const call = (env, { method = "POST", key = KEY, body, headers = {}, path = "/api/store-ingest", ip } = {}) => worker.fetch(new Request("https://x.test" + path, {
@@ -28,11 +32,11 @@ test("unset or short key: route is inert (404), even with a matching header", as
   assert.equal((await call(mkEnv({ DB: undefined }), { body: snap(Date.now()) })).status, 404);
 });
 
-test("wrong or missing key is 401, and the 11th failure from one address is 429", async () => {
+test("wrong or missing key is 401, without D1 mutation", async () => {
   const env = mkEnv();
   assert.equal((await call(env, { key: null, body: snap(Date.now()), ip: "9.9.9.9" })).status, 401);
   for (let n = 1; n < 10; n++) assert.equal((await call(env, { key: "wrong", body: snap(Date.now()), ip: "9.9.9.9" })).status, 401);
-  assert.equal((await call(env, { key: "wrong", body: snap(Date.now()), ip: "9.9.9.9" })).status, 429);
+  assert.equal((await call(env, { key: "wrong", body: snap(Date.now()), ip: "9.9.9.9" })).status, 401);
   assert.equal(row(env), undefined);
 });
 
@@ -142,12 +146,12 @@ test("security: the key is never read from the query string or any other header,
   const g = await call(env, { method: "GET", key: KEY }); assert.ok(!(await g.text()).includes(KEY));
 });
 
-test("a wrong ingest key fills the shared bucket but the correct x-pin still works; wording is 'key' for ingest and unchanged for PINs", async () => {
+test("wrong ingest key does not mutate PIN failure bucket; PIN semantics unchanged", async () => {
   const env = mkEnv({ SYNC_PIN: "1234" });
   let last;
   for (let n = 0; n < 10; n++) { last = await call(env, { key: "wrong", body: snap(Date.now()), ip: "7.7.7.7" }); assert.equal(last.status, 401); assert.deepEqual(await last.json(), { error: "Wrong key." }); }
   const t = await call(env, { key: "wrong", body: snap(Date.now()), ip: "7.7.7.7" });
-  assert.equal(t.status, 429); assert.equal((await t.json()).error, "Too many wrong keys from this address. Try again in 10 minutes.");
+  assert.equal(t.status, 401); assert.equal((await t.json()).error, "Wrong key.");
   const pin = (p) => worker.fetch(new Request("https://x.test/api/dex", { headers: { "x-pin": p, "cf-connecting-ip": "7.7.7.7" } }), env, ctx);
   assert.equal((await pin("1234")).status, 200);
   const env2 = mkEnv({ SYNC_PIN: "1234" });
@@ -164,9 +168,9 @@ test("two concurrent identical POSTs yield exactly one 200", async () => {
   assert.ok(rs.every(r => [200, 409, 429].includes(r.status)));
 });
 
-test("GET does not need the table to exist yet (404, then created lazily)", async () => {
-  const env = mkEnv();
-  assert.equal((await call(env, { method: "GET", key: null })).status, 404);
+test("GET does not create missing schema", async () => {
+  const env = mkEnv({ DB: makeDB() });
+  assert.equal((await call(env, { method: "GET", key: null })).status, 503);
 });
 
 test("every 400 carries a fixed-vocabulary reason code and never echoes the input", async () => {
