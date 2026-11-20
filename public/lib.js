@@ -467,5 +467,36 @@
   }
   function failingSources() { return Object.keys(failing); }
 
-  return { readJsonKeep: readJsonKeep, reportSave: reportSave, failingSources: failingSources, SAVE_MESSAGE: SAVE_MESSAGE, raidBossNames: raidBossNames, raidWindowState: raidWindowState, maxRosterFor: maxRosterFor, researchCheckedText: researchCheckedText, freshnessOf: freshnessOf, missingLabel: missingLabel, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, isGlobalEvent: isGlobalEvent, attendanceOf: attendanceOf, liveActivityCounts: liveActivityCounts };
+  /* Species whose debut event has already started, from data.json events (a Debut tag or a DEBUT highlight). Same rule as the Worker's debutedSpecies
+     (src/worker.js); a test keeps the two in step. Lets the Unreleased list and the Pokédex drop a Pokémon that is already in the game without the live
+     /api/unreleased answer (offline, first paint, or a failed nightly run). */
+  function debutedSpecies(events, nowMs) {
+    var out = {};
+    (events || []).forEach(function (e) {
+      var start = Date.parse(e && e.s);
+      if (!isFinite(start) || start > nowMs) return;
+      function add(n) { var k = String(n).replace(/^(Gigantamax|Mega|Dynamax)\s+/i, '').replace(/\s*\(.*\)\s*/, '').trim().toLowerCase(); if (k.length > 2 && !(k in out)) out[k] = e.t || 'an event'; }
+      (e.highlights || []).forEach(function (h) { var m = h && h.type === 'debut' && /^\s*DEBUT\s*[·:-]\s*(.+)$/i.exec(String(h.label || '')); if (m) add(m[1].split('(')[0].trim()); });
+      if ((e.tags || []).indexOf('Debut') > -1) (e.art || []).forEach(add);
+    });
+    return out;
+  }
+  /* "unreleased|Name" -> a Released record, for every plain species in the curated Unreleased section whose debut event has started.
+     Megas and Gigantamax/Dynamax forms are never promoted by a debut; an item with art [] is a placeholder and is left alone. */
+  function releasedByDebut(dd, events, nowMs) {
+    var debuts = debutedSpecies(events, nowMs), out = {};
+    (dd || []).forEach(function (sec) {
+      if (sec.id !== 'unreleased') return;
+      (function walk(g) {
+        (g.items || []).forEach(function (i) {
+          var k = String(i.n).replace(/\s*\(.*\)\s*/, '').trim().toLowerCase();
+          if (/^(Gigantamax|Mega|Dynamax)\s/i.test(i.n) || (i.art && i.art.length === 0) || k.length < 3 || !(k in debuts)) return;
+          out[sec.id + '|' + i.n] = { s: sec.id, n: i.n, status: 'Released', srcLabel: 'Debuted in ' + debuts[k] };
+        });
+        (g.groups || []).forEach(walk);
+      })({ groups: sec.groups });
+    });
+    return out;
+  }
+  return { debutedSpecies: debutedSpecies, releasedByDebut: releasedByDebut, readJsonKeep: readJsonKeep, reportSave: reportSave, failingSources: failingSources, SAVE_MESSAGE: SAVE_MESSAGE, raidBossNames: raidBossNames, raidWindowState: raidWindowState, maxRosterFor: maxRosterFor, researchCheckedText: researchCheckedText, freshnessOf: freshnessOf, missingLabel: missingLabel, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, isGlobalEvent: isGlobalEvent, attendanceOf: attendanceOf, liveActivityCounts: liveActivityCounts };
 }));
