@@ -22,11 +22,13 @@ export function score({ events, costumes, dex, now }) {
     const text = (e.p || []).join(" ").toLowerCase();
     for (const a of e.art || []) {
       if (typeof a === "string") continue;
-      const kind = a.costume ? "costume" : a.shiny ? "shiny" : null;
-      if (!kind) continue;
-      claims.push({ event: e.id, pokemon: a.n, kind, label: a.label || null, weight: w, start: e.s });
+      // A shiny-capable costume represents two distinct claims; do not silently
+      // discard the shiny claim merely because the costume flag is also present.
+      const kinds = [a.costume && "costume", a.shiny && "shiny"].filter(Boolean);
+      if (!kinds.length) continue;
+      for (const kind of kinds) claims.push({ event: e.id, pokemon: a.n, kind, label: a.label || null, weight: w, start: e.s });
       if (!names.has(base(a.n))) issues.push({ event: e.id, issue: `${a.n} is not in dex.json`, level: "warn" });
-      if (kind === "costume") {
+      if (a.costume) {
         const k = key(a.n, a.label);
         if (!pics[k] && !missing.has(k)) issues.push({ event: e.id, issue: `costume ${k} has no picture and is not tracked as missing`, level: "warn" });
         if (!pics[k] && missing.has(k)) issues.push({ event: e.id, issue: `costume ${k} still has no picture; event starts ${e.s.slice(0, 10)}`, level: s - now < 7 * DAY ? "warn" : "info" });
