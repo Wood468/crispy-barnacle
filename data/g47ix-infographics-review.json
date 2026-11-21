@@ -7,6 +7,52 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1573601515619487835",
+      "source": "discord",
+      "creator": "",
+      "title": "CD NOV 26",
+      "publishedAt": "2026-11-21T07:30:37.426000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1562512076704981042/CD_NOV_26.png?ex=6b027805&is=6b012685&hm=f88328ad4394470337bfd24a5d445db56ba8124479c7c7e0ecadb985c3e1b125&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "\\f Sf re) \\s jeoe 2:00 pm 5:00 pm ‘ir a6 | eco alasic aT epee BG He + Shiny Chance #624 Pawniard mr: Chance +* ~1/35 a ESsee Incense (ex. Daily Adv Distance Hatch Candy Chance Photobomb Lure Incense) for eerthinc for Candy XL Surprise Modules Kowtow fe 2 Cleave 4+ sek % = te Evolve Ts | +1 Special Additional Research ield ce ©° © a between Trade lure spawns Mega Evolve Spacial Freeze Ice for Extra Bonuses Use Adventure & Ri Rend %) Shock Burn Siac Wr i EJee or other Effects BD Roar of Time 2 Future Sight+ ow for more g G47IX \\EENE Check in Paid Try Rewards Community for Additional y Research Special Fuse Oaxe Wi",
+      "eventMatch": {
+        "eventId": "leekduck:november-communityday2026",
+        "eventTitle": "Pawniard Community Day",
+        "score": 0.394,
+        "confidence": "low",
+        "matchedTerms": [
+          "pawniard"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:november-communityday2026",
+            "eventTitle": "Pawniard Community Day",
+            "score": 0.394
+          },
+          {
+            "eventId": "leekduck:hatch-day-december-2026",
+            "eventTitle": "Hatch Day",
+            "score": 0.394
+          },
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.278
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1573601515619487835.png"
+    },
+    {
       "id": "discord:1573405995139600404",
       "source": "discord",
       "creator": "",
