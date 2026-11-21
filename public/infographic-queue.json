@@ -1,20 +1,36 @@
 {
- "updated": "2026-11-19T22:51:14.118Z",
+ "updated": "2026-11-21T04:58:43.401Z",
  "items": [
   {
-   "linked": false,
-   "id": "discord:1573056127648796683",
-   "title": "And as a note, you can disable that for yourself completely, just go under ```User Settings > Data & Privacy > Show my messages ... ``` thank @mikosoby",
-   "image": "/infographics/g47ix/discord-1573056127648796683.jpg",
+   "linked": true,
+   "id": "discord:1573405995139600404",
+   "title": "December 2026",
+   "image": "/infographics/g47ix/discord-1573405995139600404.webp",
    "post": "",
    "creator": "",
    "source": "discord",
-   "publishedAt": "2026-11-19T19:23:26.801000+00:00",
-   "note": "No event name found in the caption or image text.",
+   "publishedAt": "2026-11-20T18:33:41.711000+00:00",
+   "note": "Two events look alike. Please choose.",
    "history": false,
    "signals": [],
-   "text": "< Data & Privacy AUWOWS US TO USE INTOF MATION, SUCN aS WNO YOU Talk TO and WNal games you play, to personalise Discord for you. Learn more Use my Discord activity to personalise e Sponsored Content Allows us to personalise Sponsored Content, like Quests, using your Discord activity, such as the games you play. If you opt out, you may still see Quests, but they won't be personalised. Learn more Use third-party data to personalise e Sponsored Content Allows us to personalise Sponsored Content, like Quests, using data we receive from advertisers and third-party data providers. If you opt out, you may still see Quests, but they won't be personalised using data from third parties. Learn more Sho",
-   "guesses": []
+   "text": "h > “4 12 13 f N 4 DEC DEC 4A to 5:00 p.m “fe vi +. let Chance for Catch Hatch Catch X XL Candy > & mee Ra Stardust Be Distance Candy ~~ from catching Lures Incense Limited-time Evolution requirement: Up to two Special Trades/day, and trades will cost 50% less. Evolve Bisharpin to Kingambit after defeating one Dark or Steel-type Raid Boss with Bisharp as your buddy (2) Saturday, 2:00-5:00 pm Cy Suns: 2:00-5:00 pm ye] ++ A7 aes @ “ x Fe ++ ++ red er) a ae ( tt R 2° rf Outside of these times, any of the featured Pokémon may appear from 9:00 a.m. to 9:00 p.m. local time on either Saturday or Sunday! Featured Moves i) > | 6 Hydro Cannon 9 Energy Ball ¥ Y Chance to encounter i Pokémon with q a Sp",
+   "guesses": [
+    {
+     "eventId": "leekduck:raid-day-december-2026",
+     "eventTitle": "Raid Day",
+     "score": 0.791
+    },
+    {
+     "eventId": "leekduck:hatch-day-december-2026",
+     "eventTitle": "Hatch Day",
+     "score": 0.791
+    },
+    {
+     "eventId": "leekduck:december-communityday2026",
+     "eventTitle": "December Community Day",
+     "score": 0.785
+    }
+   ]
   },
   {
    "linked": false,
@@ -51,21 +67,6 @@
   },
   {
    "linked": false,
-   "id": "discord:1572887979612049450",
-   "title": "@here As there have been a few questions regarding the recent launch of ‘Discoverable Channels’ (Discord has introduced a feature that makes content searchable ",
-   "image": "/infographics/g47ix/discord-1572887979612049450.jpg",
-   "post": "",
-   "creator": "",
-   "source": "discord",
-   "publishedAt": "2026-11-19T08:15:17.185000+00:00",
-   "note": "No event name found in the caption or image text.",
-   "history": false,
-   "signals": [],
-   "text": "< # @-pogo-chat > G G47IX @ 16:12 oe",
-   "guesses": []
-  },
-  {
-   "linked": false,
    "id": "discord:1572636269660348669",
    "title": "SH CANDY CATCH 2026",
    "image": "/infographics/g47ix/discord-1572636269660348669.png",
@@ -98,7 +99,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1572060169817297026",
    "title": "Duolingo Collab",
    "image": "/infographics/g47ix/discord-1572060169817297026.webp",

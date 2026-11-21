@@ -448,7 +448,7 @@ button.igcheck{min-height:44px}
 .vh-live{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .evc.cmp .evc-foot .more.igthumb{flex:none;width:44px;padding:0}
 .evc.cmp .evc-foot .more.igcheck{white-space:normal;line-height:1.15;font-size:var(--type-meta)}
-.goinfo{position:fixed;inset:0;z-index:1200;background:rgba(4,7,15,.94);display:grid;place-items:center;padding:var(--space-3);overflow:auto}
+.goinfo{position:fixed;inset:0;z-index:1200;background:rgba(4,7,15,.94);display:grid;place-items:center;padding:var(--space-3);padding-top:max(var(--space-3),var(--safe-top,0px));overflow:auto}
 .goinfo[hidden]{display:none}
 .goinfo-panel{position:relative;width:min(100%,760px);max-height:100%;overflow:auto;border:1px solid var(--border-subtle);border-radius:24px;background:var(--color-canvas);color:var(--color-text);box-shadow:0 20px 80px #0009}
 .goinfo-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding:var(--space-3) var(--space-4);background:var(--surface-glass);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-subtle)}

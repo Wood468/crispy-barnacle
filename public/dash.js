@@ -2241,6 +2241,14 @@ function renderHomeBrief(t) {
     return { live: live.slice(0, 12), upcoming: upcoming.slice(0, 8) };
   }
   function t1Overseas(place) { return !!place && !/australia|melbourne|victoria|sydney|brisbane|perth|adelaide/i.test(place); }
+  /* Overseas in-person listings stay visible but sit below Australian and global (worldwide / in-game) ones.
+     A stable partition: nothing is added, dropped or recounted, and the existing order is kept inside each group.
+     "Overseas" is the row's own t1Overseas() flag (the one behind the Overseas chip); a global listing is never demoted. */
+  function t1OverseasLast(items) {
+    var near = [], far = [];
+    items.forEach(function (it) { (it.overseas && !it.global ? far : near).push(it); });
+    return near.concat(far);
+  }
   function t1PlaceKey(place) { return String(place || '').toLowerCase().split(/[,(]/)[0].trim(); }
   /* Two listings are the same *visible* Today occurrence only with matching
      event titles, place and overlapping dates. Name-only, fuzzy city-only or
@@ -2321,6 +2329,7 @@ function renderHomeBrief(t) {
       if (t1IsHidden(hide, r.id, r.start)) { hiddenByYou.push({ key: TL.doneKey(r.id, r.start), name: r.name, when: 'In person' }); return; }
       if (r.start <= t && r.end > t) regLive.push(item); else if (r.start > t && +r.start <= soonEnd) regSoon.push(item); else if (+r.start > soonEnd && +r.start <= weekEnd) regWeek.push(item);
     });
+    regLive = t1OverseasLast(regLive); regSoon = t1OverseasLast(regSoon); regWeek = t1OverseasLast(regWeek);
     var seasons = [];
     try {
       (window.GOSEASON ? GOSEASON.events() : []).forEach(function (s) {

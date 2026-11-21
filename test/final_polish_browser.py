@@ -224,6 +224,12 @@ with sync_playwright() as p:
         page.wait_for_timeout(200)
         evd2 = page.evaluate("document.querySelector('#evd .evd-bar').getBoundingClientRect().top")
         check(f'{width}: scrolled event detail bar stays below the mask', evd2 >= 47 and evd2 < 60, evd2)
+        # The event infographic viewer sits above the mask (z-index 1200), so its own title bar and Close button must clear the inset too.
+        page.evaluate("document.getElementById('evd').scrollTop = 0; window.GOINFOGRAPHIC.open('cur:wag')")
+        page.wait_for_selector('#goinfo:not([hidden]) .goinfo-top', state='visible', timeout=30000)
+        ig = page.evaluate("(()=>{const q=s=>document.querySelector(s).getBoundingClientRect();return {panel:q('#goinfo .goinfo-panel').top,bar:q('#goinfo .goinfo-top').top,close:q('#goinfo [data-infoclose]').top}})()")
+        check(f'{width}: infographic viewer title bar and Close start below the 47px inset', ig['panel'] >= 47 and ig['bar'] >= 47 and ig['close'] >= 47, ig)
+        page.evaluate("window.GOINFOGRAPHIC.close(true)")
         page.context.close()
 
     # Dynamic Island iPhone (390x844, ~59px inset): scrolled Today, Schedule and Battle content must never show

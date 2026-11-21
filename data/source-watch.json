@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-19T11:40:11.407Z",
+ "updated": "2026-11-21T11:01:58.241Z",
  "status": [
   {
    "id": "hub",
@@ -61,6 +61,18 @@
   {
    "source": "hub",
    "trust": "community",
+   "title": "Pawniard Community Day (November 2026)",
+   "link": "https://pokemongohub.net/post/event/pawniard-community-day-november-2026/",
+   "date": "2026-11-21T07:00:07.000Z",
+   "summary": "The November 2026 Community Day features Pawniard, the Sharp Blade Pokémon! Join the event on Saturday, November 21, 2026, from 2:00 p.m. to 5:00 p.m. local time to enjoy 1/4 Egg Hatch Distance, incre",
+   "pokemon": [
+    "Pawniard"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "hub",
+   "trust": "community",
    "title": "How to Beat Dynamax Latios: Best Counters &#038; Guide",
    "link": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-latios-best-counters-guide/",
    "date": "2026-11-13T05:00:51.000Z",
@@ -79,18 +91,6 @@
    "summary": "Dynamax Latias is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Latias successfully. Dynamax Latias can",
    "pokemon": [
     "Latias"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "How to Beat Dynamax Registeel: Best Counters &#038; Guide",
-   "link": "https://pokemongohub.net/post/news/how-to-beat-dynamax-registeel-best-counters-guide/",
-   "date": "2026-11-11T05:00:59.000Z",
-   "summary": "Dynamax Registeel is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Registeel successfully. Dynamax Regi",
-   "pokemon": [
-    "Registeel"
    ],
    "notInOurData": []
   },
