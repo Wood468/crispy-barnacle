@@ -709,5 +709,6 @@
  "lastObservation": {
   "at": "2026-11-21T11:03:16.016Z",
   "status": "complete"
- }
+ },
+ "staleAlertAt": "2026-11-21T17:58:10.344Z"
 }
