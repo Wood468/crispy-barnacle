@@ -21,7 +21,7 @@ Do not use `curl -f` here: it throws away the reply body, which is where the rej
 
 ## What the Worker accepts
 
-`POST /api/store-ingest` is inert (404) until the owner creates the `STORE_INGEST_KEY` secret (at least 32 characters). It only stores a snapshot that is complete (producer evidence checks out), has at least 3 items, at least half of them with an explicit `A$` price, no other currency symbol, https-only images, and a `fetched` time within the last 15 minutes (not more than 5 minutes ahead) and newer than the stored one. At most one accepted upload per 5 minutes; wrong keys are throttled per address (10 per 10 minutes) and globally (25 per 10 minutes). Limits: 256 KB, 400 items. A rejected upload leaves the stored snapshot unchanged and the reply never echoes the input.
+`/api/store-ingest` is inert (404) until the owner creates the `STORE_INGEST_KEY` secret (at least 32 characters). Both `POST` and `GET` need that key in the `x-ingest-key` header (never the URL); the key is checked first, with a constant-time comparison, and a wrong or missing key gets 401 (or 429 from the throttle) and no data. Other methods get 405. `POST` only stores a snapshot that is complete (producer evidence checks out), has at least 3 items, at least half of them with an explicit `A$` price, no other currency symbol, https-only images, and a `fetched` time within the last 15 minutes (not more than 5 minutes ahead) and newer than the stored one. At most one accepted upload per 5 minutes; wrong keys are throttled per address (10 per 10 minutes) and globally (25 per 10 minutes). Limits: 256 KB, 400 items. A rejected upload leaves the stored snapshot unchanged and the reply never echoes the input.
 
 ### Why a 400
 
@@ -50,7 +50,17 @@ A 400 reply is `{"error":"Bad request.","reason":"<code>"}`. The code comes from
 
 409 (older or equal `fetched`) and 429 are separate and unchanged.
 
-`GET /api/store-ingest` returns the latest stored raw snapshot (`cache-control: public, max-age=60`, plus an `x-store-received` header with the time of the last accepted upload), or 404 if there is none. It needs no key: it is public storefront data, but being the raw snapshot it includes standalone SKUs that the filtered `store-current-snapshot.json` leaves out.
+`GET /api/store-ingest` (with the correct `x-ingest-key`) returns the latest stored raw snapshot with `cache-control: private, no-store`, plus an `x-store-received` header with the time of the last accepted upload, or 404 if there is none. It is **not public**: being the raw snapshot it includes standalone SKUs that the filtered `store-current-snapshot.json` leaves out, so an unauthenticated or wrong-key GET gets only the 401 reply. Its only consumer is the "Read the store" step of `.github/workflows/store-watch.yml`.
+
+### Schema (the Worker never creates tables)
+
+No request creates or alters any table. The table comes from `migrations/0004_store_ingest.sql` (`CREATE TABLE IF NOT EXISTS store_ingest ...`, idempotent; the live table already exists, so nothing needs applying there). On a fresh database apply it once by hand: `npx wrangler d1 execute go-field-notes --remote --file migrations/0004_store_ingest.sql`. If the table is missing, an authenticated GET or POST answers `503 {"error":"Unavailable.","reason":"schema"}` and creates nothing. A failed-key request runs no DDL and writes nothing except one row in the shared failure throttle (`pin_fails_ip`, which already exists); if even that table is missing it is simply a 401.
+
+### GitHub secret and key rotation
+
+The watcher reads the snapshot with the key held in the GitHub Actions secret `STORE_INGEST_KEY` (same value as the Cloudflare secret). The workflow passes it to curl on stdin, so it is never on a command line or in a log. If the secret is empty or refused, the step takes the usual soft path (`fresh=false` and a warning; the job does not fail), and the stale alert will then say the reader has not uploaded.
+
+To rotate the key, in this order: (1) the Cloudflare secret `STORE_INGEST_KEY` (then redeploy), (2) the Home Assistant add-on `ingest_key` option, (3) the GitHub secret `STORE_INGEST_KEY`, (4) restart the add-on. Until step 3 the watcher skips store processing (soft), and until step 4 uploads from the add-on get 401; neither damages stored data. Never write the key into the repo, an issue or a log.
 
 ## Add-on rules
 
@@ -59,7 +69,7 @@ A 400 reply is `{"error":"Bad request.","reason":"<code>"}`. The code comes from
 
 ## Switching the watcher over (order matters)
 
-1. The ingest endpoint is deployed, `STORE_INGEST_KEY` is set, the add-on is uploading, and `GET /api/store-ingest` returns a recent snapshot.
+1. The ingest endpoint is deployed, `STORE_INGEST_KEY` is set (Cloudflare and GitHub), the add-on is uploading, and a keyed `GET /api/store-ingest` returns a recent snapshot.
 2. Merge the `store-watch.yml` change.
 3. Only when the owner says so, run "Web store watch" once manually with `rebaseline=true` **and `dry_run=false`**. Manual runs default to `dry_run=true`, which saves nothing, so a rebaseline with the default would change nothing. The run saves the A$ snapshot as the new baseline and sends no Telegram messages.
 4. After that, scheduled runs are normal. If the reader goes quiet (no accepted upload for 6 hours, or no complete observation for 3 days) one system-topic message is sent, at most once per 24 hours.

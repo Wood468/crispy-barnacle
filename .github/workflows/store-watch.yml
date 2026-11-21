@@ -37,14 +37,21 @@ jobs:
           node scripts/store-catalogue-audit.mjs
       # The Melbourne Home Assistant add-on uploads the A$ snapshot to the Worker (this runner's US address sees the US store).
       # No usable upload (missing, or older than 6 hours) skips this run's store processing; the stale alert below reports it.
+      # GET /api/store-ingest needs the ingest key. It is fed to curl on stdin (a config line), so it is never on a command line or in a log.
+      # The response headers are saved (they hold no secret) so the stale alert below can read x-store-received without the key.
+      # No key, or a refused/missing/old snapshot, takes the same soft path: fresh=false plus a warning, never a failed job.
       - name: Read the store
         id: read
+        env:
+          STORE_INGEST_KEY: ${{ secrets.STORE_INGEST_KEY }}
         run: |
-          if curl --fail-with-body -sS --max-time 30 --retry 2 https://pogo.michaelpuff.com/api/store-ingest -o /tmp/store-snapshot.json && node scripts/store-watch.mjs --check-fresh /tmp/store-snapshot.json; then
+          set +x
+          rm -f /tmp/store-snapshot.json /tmp/store-ingest-headers.txt
+          if [ -n "${STORE_INGEST_KEY:-}" ] && printf 'header = "x-ingest-key: %s"\n' "$STORE_INGEST_KEY" | curl --config - --fail-with-body -sS --max-time 30 --retry 2 -D /tmp/store-ingest-headers.txt https://pogo.michaelpuff.com/api/store-ingest -o /tmp/store-snapshot.json && node scripts/store-watch.mjs --check-fresh /tmp/store-snapshot.json; then
             echo "fresh=true" >> "$GITHUB_OUTPUT"
           else
             echo "fresh=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::No fresh Melbourne store snapshot; skipping store processing this run"
+            echo "::warning::No fresh Melbourne store snapshot (or STORE_INGEST_KEY missing/refused); skipping store processing this run"
           fi
       - name: Refresh verified Australian catalogue when snapshot explicitly uses A$
         if: ${{ steps.read.outputs.fresh == 'true' }}
