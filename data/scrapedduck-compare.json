@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-20T20:21:11.555Z",
+ "updated": "2026-11-21T02:15:31.714Z",
  "state": "ok",
  "scrapedDuckEvents": 41,
  "missingHere": [
@@ -114,5 +114,49 @@
    "start": "2026-12-19"
   }
  ],
- "shinyDisagree": []
+ "shinyDisagree": [
+  {
+   "event": "w-december-communityday2026",
+   "name": "December Communityday2026",
+   "scrapedDuckShinies": [
+    "Vulpix",
+    "Ninetales",
+    "Alolan Vulpix",
+    "Alolan Ninetales",
+    "Grookey",
+    "Thwackey",
+    "Rillaboom",
+    "Scorbunny",
+    "Raboot",
+    "Cinderace",
+    "Lechonk",
+    "Oinkologne",
+    "Tinkatink",
+    "Tinkatuff",
+    "Tinkaton",
+    "Piplup",
+    "Prinplup",
+    "Empoleon",
+    "Zorua",
+    "Zoroark",
+    "Pawniard",
+    "Bisharp",
+    "Kingambit",
+    "Sobble",
+    "Drizzile",
+    "Inteleon",
+    "Nickit",
+    "Thievul",
+    "Frigibax",
+    "Arctibax",
+    "Baxcalibur",
+    "Gible",
+    "Gabite",
+    "Garchomp",
+    "Deino",
+    "Zweilous",
+    "Hydreigon"
+   ]
+  }
+ ]
 }
