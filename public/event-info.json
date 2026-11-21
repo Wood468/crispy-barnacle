@@ -1762,6 +1762,32 @@
           "alt": "tr NOV 13 8PM Counter Kyurem Black"
         }
       ]
+    },
+    {
+      "pokemonId": "491",
+      "formId": null,
+      "battleMode": "normal",
+      "infographics": [
+        {
+          "url": "/infographics/g47ix/discord-1571900196105756758.jpg",
+          "label": "Raid boss guide · G47IX",
+          "source": "G47IX",
+          "alt": "Darkrai"
+        }
+      ]
+    },
+    {
+      "pokemonId": "488",
+      "formId": null,
+      "battleMode": "normal",
+      "infographics": [
+        {
+          "url": "/infographics/g47ix/discord-1571900192804835379.jpg",
+          "label": "Raid boss guide · G47IX",
+          "source": "G47IX",
+          "alt": "Cresselia"
+        }
+      ]
     }
   ]
 }
