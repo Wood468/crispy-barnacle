@@ -1546,6 +1546,46 @@
       "start": "2026-11-14",
       "end": "2026-11-15",
       "dateSource": "world-events.json"
+    },
+    "leekduck:december-communityday2026": {
+      "names": [
+        "December Community Day"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "observed": "2026-11-21"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1573405995139600404.webp",
+          "source": "G47IX",
+          "alt": "December Community Day infographic"
+        }
+      ]
+    },
+    "leekduck:duolingo-timed-research-2026": {
+      "names": [
+        "Pokémon GO and Duolingo Timed Research"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "observed": "2026-11-21"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1572060169817297026.webp",
+          "source": "G47IX",
+          "alt": "Pokémon GO and Duolingo Timed Research infographic"
+        }
+      ]
     }
   },
   "passes": {

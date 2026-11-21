@@ -13,8 +13,8 @@
       "title": "December 2026",
       "publishedAt": "2026-11-20T18:33:41.711000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1573399856251142254/December_2026.png?ex=6b01de4e&is=6b008cce&hm=237769b408b1b6d106df850c572c1a3cb5c2a02a931ef575581067a1f59a5d50&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "h > “4 12 13 f N 4 DEC DEC 4A to 5:00 p.m “fe vi +. let Chance for Catch Hatch Catch X XL Candy > & mee Ra Stardust Be Distance Candy ~~ from catching Lures Incense Limited-time Evolution requirement: Up to two Special Trades/day, and trades will cost 50% less. Evolve Bisharpin to Kingambit after defeating one Dark or Steel-type Raid Boss with Bisharp as your buddy (2) Saturday, 2:00-5:00 pm Cy Suns: 2:00-5:00 pm ye] ++ A7 aes @ “ x Fe ++ ++ red er) a ae ( tt R 2° rf Outside of these times, any of the featured Pokémon may appear from 9:00 a.m. to 9:00 p.m. local time on either Saturday or Sunday! Featured Moves i) > | 6 Hydro Cannon 9 Energy Ball ¥ Y Chance to encounter i Pokémon with q a Special Background nf a ty RY Es fza & (eas ll Encounters with Pokémon featured Research in previous Community Days and Community Day Classics Field Research will feature o* Pokémon from 2026 Community Days and CD Classic. SID CI=D CIID CI ules Follow for more G47|X £) Oax?voe www.g47ix.pro JOQ6",
       "eventMatch": {
@@ -51,7 +51,12 @@
       "reviewNote": "Two events look alike. Please choose.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1573405995139600404.webp"
+      "stagedPath": "/infographics/g47ix/discord-1573405995139600404.webp",
+      "publishedEvent": "leekduck:december-communityday2026",
+      "publishedEvents": [
+        "leekduck:december-communityday2026"
+      ],
+      "publishedTargets": []
     },
     {
       "id": "discord:1573056127648796683",
@@ -60,15 +65,17 @@
       "title": "And as a note, you can disable that for yourself completely, just go under ```User Settings > Data & Privacy > Show my messages ... ``` thank @mikosoby",
       "publishedAt": "2026-11-19T19:23:26.801000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1021467233127514172/1573052061145243986/Screenshot_2026-11-19-20-05-27-620_com.discord-edit.jpg?ex=6b009a65&is=6aff48e5&hm=e346311565b6814c06c37046767a7390a7daa20efb115882938c1ace04f991ad&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "< Data & Privacy AUWOWS US TO USE INTOF MATION, SUCN aS WNO YOU Talk TO and WNal games you play, to personalise Discord for you. Learn more Use my Discord activity to personalise e Sponsored Content Allows us to personalise Sponsored Content, like Quests, using your Discord activity, such as the games you play. If you opt out, you may still see Quests, but they won't be personalised. Learn more Use third-party data to personalise e Sponsored Content Allows us to personalise Sponsored Content, like Quests, using data we receive from advertisers and third-party data providers. If you opt out, you may still see Quests, but they won't be personalised using data from third parties. Learn more Show my message content from Discoverable channels on web pages @ Allow message content that you send in Discoverable channels to appear on web pages. Admins of Discoverable servers control which channels are Discoverable. These messages will appear as you wrote them, but won’t show your username. Learn more",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1573056127648796683.jpg"
+      "stagedPath": "/infographics/g47ix/discord-1573056127648796683.jpg",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1573053164574216223",
@@ -124,15 +131,17 @@
       "title": "@here As there have been a few questions regarding the recent launch of ‘Discoverable Channels’ (Discord has introduced a feature that makes content searchable on the web): As you can see below, only channels with the ‘Discoverable’ icon are enabled and these are exclusively the infographic channels. We will never make a message channel as ‘Discoverable’.",
       "publishedAt": "2026-11-19T08:15:17.185000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1021467233127514172/1572883811191095358/Screenshot_2026-11-18-19-38-32-998_com.discord-edit.jpg?ex=6afffdb3&is=6afeac33&hm=30b5c34379d274fea340967bd35fa0862b6ce798c8541060fa84f1866b50cf49&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "< # @-pogo-chat > G G47IX @ 16:12 oe",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1572887979612049450.jpg"
+      "stagedPath": "/infographics/g47ix/discord-1572887979612049450.jpg",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1572636269660348669",
@@ -198,8 +207,8 @@
       "title": "Duolingo Collab",
       "publishedAt": "2026-11-17T01:25:51.950000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1572054518118748283/Duolingo_.png?ex=6b00451c&is=6afef39c&hm=0880d22228e90cda6ee70cfe6a728ae78933a629f84cc5aa1f4627c868f15a44&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "AY A; “9 » ro O90 alasit New Special M83 Background Bn New feature: = Language Tag See eligible Pokémon Chatot names in other languages 106 / 106 HP Japanese: X Fy 7 © @ Celi Complete Timed Research Choose a language tasks in your selected language. ++ ++ nee * XP i Seri ghae shasit J . WW sek Se ghre shasit 28 DAYS HOW TO UNLOCK Complete a least Get the code and & Join Duo’s Pokémon Party 1 lesson on 7 redeem it on the Pokémon GO website Doale: son to earn today’s reward in & duolingo different days qa i Days do not have to be consecutive.",
       "eventMatch": {
@@ -242,7 +251,12 @@
         "picture text names the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1572060169817297026.webp"
+      "stagedPath": "/infographics/g47ix/discord-1572060169817297026.webp",
+      "publishedEvent": "leekduck:duolingo-timed-research-2026",
+      "publishedEvents": [
+        "leekduck:duolingo-timed-research-2026"
+      ],
+      "publishedTargets": []
     },
     {
       "id": "discord:1571939924482072576",

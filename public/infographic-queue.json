@@ -2,7 +2,7 @@
  "updated": "2026-11-20T22:27:58.668Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1573405995139600404",
    "title": "December 2026",
    "image": "/infographics/g47ix/discord-1573405995139600404.webp",
@@ -31,21 +31,6 @@
      "score": 0.785
     }
    ]
-  },
-  {
-   "linked": false,
-   "id": "discord:1573056127648796683",
-   "title": "And as a note, you can disable that for yourself completely, just go under ```User Settings > Data & Privacy > Show my messages ... ``` thank @mikosoby",
-   "image": "/infographics/g47ix/discord-1573056127648796683.jpg",
-   "post": "",
-   "creator": "",
-   "source": "discord",
-   "publishedAt": "2026-11-19T19:23:26.801000+00:00",
-   "note": "No event name found in the caption or image text.",
-   "history": false,
-   "signals": [],
-   "text": "< Data & Privacy AUWOWS US TO USE INTOF MATION, SUCN aS WNO YOU Talk TO and WNal games you play, to personalise Discord for you. Learn more Use my Discord activity to personalise e Sponsored Content Allows us to personalise Sponsored Content, like Quests, using your Discord activity, such as the games you play. If you opt out, you may still see Quests, but they won't be personalised. Learn more Use third-party data to personalise e Sponsored Content Allows us to personalise Sponsored Content, like Quests, using data we receive from advertisers and third-party data providers. If you opt out, you may still see Quests, but they won't be personalised using data from third parties. Learn more Sho",
-   "guesses": []
   },
   {
    "linked": false,
@@ -82,21 +67,6 @@
   },
   {
    "linked": false,
-   "id": "discord:1572887979612049450",
-   "title": "@here As there have been a few questions regarding the recent launch of ‘Discoverable Channels’ (Discord has introduced a feature that makes content searchable ",
-   "image": "/infographics/g47ix/discord-1572887979612049450.jpg",
-   "post": "",
-   "creator": "",
-   "source": "discord",
-   "publishedAt": "2026-11-19T08:15:17.185000+00:00",
-   "note": "No event name found in the caption or image text.",
-   "history": false,
-   "signals": [],
-   "text": "< # @-pogo-chat > G G47IX @ 16:12 oe",
-   "guesses": []
-  },
-  {
-   "linked": false,
    "id": "discord:1572636269660348669",
    "title": "SH CANDY CATCH 2026",
    "image": "/infographics/g47ix/discord-1572636269660348669.png",
@@ -129,7 +99,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1572060169817297026",
    "title": "Duolingo Collab",
    "image": "/infographics/g47ix/discord-1572060169817297026.webp",
