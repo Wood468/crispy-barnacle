@@ -69,7 +69,7 @@ test('quantity wording does not permit using exact art for bundles or other item
 test('Store icon code and offline shell share the new source version',()=>{
   const index=readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
   const sw=readFileSync(new URL('../public/sw.js',import.meta.url),'utf8');
-  for(const [file,version] of [['store','20261124b-endsat'],['regional-prices','20261115d-nianticimg']]){
+  for(const [file,version] of [['store','20261124d-comparepop'],['regional-prices','20261115d-nianticimg']]){
     assert.match(index,new RegExp(file+'\\.js\\?v='+version));
     assert.match(sw,new RegExp(file+'\\.js\\?v='+version));
   }

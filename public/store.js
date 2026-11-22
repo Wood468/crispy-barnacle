@@ -339,6 +339,56 @@
       + '<details class="sp-compare-more sp-review"><summary>Data review</summary>' + review + '</details>'
       + '<p class="sp-foot" data-sp-foot>Prices are dated observations, not live checkout quotes. <span aria-hidden="true">~</span> older · est. estimate · ? unconfirmed <span data-sp-fx-note></span></p></details>';
   }
+  /* Popover: opens near the tap, always fully on-screen, scrolls inside, closes on outside tap, Esc or the close button;
+     focus moves to the close button on open and returns to the opener on close. */
+  function placePopover(pop, point) {
+    var de = document.documentElement, vw = de.clientWidth, vh = window.innerHeight, m = 8;
+    var w = Math.min(vw - 2 * m, 440), x = point.x, y = point.y;
+    pop.style.width = w + 'px';
+    pop.style.left = Math.max(m, Math.min(x - w / 2, vw - w - m)) + 'px';
+    var below = vh - (y + 12) - m, above = y - 12 - m, top = null, maxH;
+    if (below >= Math.min(320, above)) { top = y + 12; maxH = below; } else maxH = above;
+    if (maxH < 180) { top = m; maxH = vh - 2 * m; }
+    pop.style.maxHeight = maxH + 'px';
+    if (top == null) top = Math.max(m, y - 12 - pop.offsetHeight);
+    pop.style.top = top + 'px';
+  }
+  function setupPopover(root) {
+    var btn = root.querySelector('[data-sp-open]'), pop = root.querySelector('[data-sp-pop]');
+    if (!btn || !pop) return;
+    var close = pop.querySelector('[data-sp-close]'), last = { x: 0, y: 0 };
+    function shut(restore) {
+      if (pop.hidden) return;
+      pop.hidden = true; btn.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('pointerdown', outside, true);
+      document.removeEventListener('keydown', keys, true);
+      window.removeEventListener('resize', reposition);
+      if (restore) btn.focus();
+    }
+    function outside(e) { if (!pop.contains(e.target) && !btn.contains(e.target)) shut(false); }
+    function keys(e) {
+      if (e.key === 'Escape') { e.preventDefault(); shut(true); return; }
+      if (e.key !== 'Tab') return;
+      var f = Array.prototype.filter.call(pop.querySelectorAll('button,input,summary,a[href]'), function (n) { return n.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], end = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); end.focus(); }
+      else if (!e.shiftKey && document.activeElement === end) { e.preventDefault(); first.focus(); }
+    }
+    function reposition() { placePopover(pop, last); }
+    btn.addEventListener('click', function (e) {
+      if (!pop.hidden) { shut(true); return; }
+      var r = btn.getBoundingClientRect();
+      last = e.clientX || e.clientY ? { x: e.clientX, y: e.clientY } : { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+      pop.hidden = false; btn.setAttribute('aria-expanded', 'true');
+      placePopover(pop, last);
+      document.addEventListener('pointerdown', outside, true);
+      document.addEventListener('keydown', keys, true);
+      window.addEventListener('resize', reposition);
+      if (close) close.focus();
+    });
+    if (close) close.addEventListener('click', function () { shut(true); });
+  }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
     GOLIB.loadPrices().then(async function (d) {
@@ -362,7 +412,12 @@
       var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
-      el.innerHTML = h;
+      /* The comparison lives in a popover opened from one compact button, anchored near the tap. */
+      el.innerHTML = '<button type="button" class="sp-open" data-sp-open aria-haspopup="dialog" aria-expanded="false">Compare store prices</button>'
+        + '<div class="sp-pop" data-sp-pop role="dialog" aria-labelledby="sp-pop-t" hidden><div class="sp-pop-head"><h3 id="sp-pop-t">Store price comparison</h3>'
+        + '<button type="button" class="sp-pop-x" data-sp-close aria-label="Close price comparison">&times;</button></div>'
+        + '<div class="sp-pop-body">' + h.replace('<details class="storep"', '<details class="storep" open') + '</div></div>';
+      setupPopover(el);
       /* FX is reference-only. Hydrate each existing AUD placeholder in place,
          preserving search, disclosure and coin controls while offline. */
       if (window.GOStoreFX && Array.isArray(d.regional) && d.regional.length) {

@@ -2340,4 +2340,13 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .evc.cmp > .evc-art:has(.evc-banner) ~ .evc-main{grid-column:1/-1}
 .evc-banner{display:block;width:100%;aspect-ratio:2/1;overflow:hidden;border-radius:var(--radius-md);background:var(--color-surface)}
 .evc-banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 10%}
+/* Store comparison popover: one compact button; the panel is fixed near the tap and stays inside the viewport. */
+.sp-open{display:inline-flex;align-items:center;min-height:44px;margin:14px 0 6px;padding:0 var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-pill);background:var(--color-surface);color:var(--color-text);font:inherit;font-weight:700;cursor:pointer}
+.sp-pop{position:fixed;z-index:60;box-sizing:border-box;display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.sp-pop[hidden]{display:none}
+.sp-pop-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);padding:var(--space-1) var(--space-1) var(--space-1) var(--space-3);border-bottom:1px solid var(--color-border)}
+.sp-pop-head h3{margin:0;font-size:var(--type-body-sm)}
+.sp-pop-x{min-width:44px;min-height:44px;border:0;background:none;color:var(--color-text);font-size:26px;line-height:1;cursor:pointer}
+.sp-pop-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:0 var(--space-2) var(--space-2)}
+.sp-pop-body>.storep{margin:var(--space-2) 0 0}
 .storep-regional .sp-ends{margin:2px 0 0;font-size:var(--type-caption-compact);color:var(--color-text-muted)}
