@@ -13,8 +13,8 @@
       "title": "g47ix Twillight",
       "publishedAt": "2026-11-22T07:30:22.838000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1566875384606105821/g47ix_Twillight.png?ex=6b03d72a&is=6b0285aa&hm=6164f868766fae2296c30b818a20608f2b0374168d218a79115c7d24b6e603ea&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "TWILIGHT a 24 30 wad <a Nov | Nov | =a WSIS 10:00 =~ BOOSTED SHINY OODS A > wat -s b oF «© @ vey! During this event, stars will light up the skies. ‘eh ++ WR oFW ef © My < {BEY sae io and more! Boosted Lucky 2x Catch Stardust Y Pokémon and YW New Posed GO Pass Deluxe 3d Lucky Friends | $4.99 Follow for more G47|X £) () ax | ao www.g47ix.pro",
       "eventMatch": {
@@ -60,7 +60,12 @@
         "posted around the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1573963842298581045.webp"
+      "stagedPath": "/infographics/g47ix/discord-1573963842298581045.webp",
+      "publishedEvent": "leekduck:twilight-wishes-2026",
+      "publishedEvents": [
+        "leekduck:twilight-wishes-2026"
+      ],
+      "publishedTargets": []
     },
     {
       "id": "discord:1573601515619487835",
