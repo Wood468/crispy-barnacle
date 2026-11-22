@@ -77,6 +77,9 @@ export function parseVenueTimes(text) {
   const pick = re => {
     const m = new RegExp(re + "\\s*:\\s*" + T + "(?:\\s*(?:to|until|–|-)\\s*" + T + ")?", "i").exec(t);
     if (!m) return null;
+    // A malformed range endpoint must not be silently discarded by the optional regex group.
+    // Otherwise "7:30 p.m. to 9:999 p.m." becomes a misleading start-only event.
+    if (!m[4] && /^\s*(?:to\b|until\b|[–-])/.test(t.slice(m.index + m[0].length))) return null;
     const a = at(m[1], m[2], m[3]), b = m[4] ? at(m[4], m[5], m[6]) : null;
     return a == null || (m[4] && b == null) ? null : { a, b };
   };
