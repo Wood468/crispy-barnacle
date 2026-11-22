@@ -1,6 +1,40 @@
 {
- "updated": "2026-11-22T01:51:11.300Z",
+ "updated": "2026-11-22T09:09:18.376Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1573963842298581045",
+   "title": "g47ix Twillight",
+   "image": "/infographics/g47ix/discord-1573963842298581045.webp",
+   "post": "",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-22T07:30:22.838000+00:00",
+   "note": "Match is not strong enough (low).",
+   "history": false,
+   "signals": [
+    "picture text names the event",
+    "posted around the event"
+   ],
+   "text": "TWILIGHT a 24 30 wad <a Nov | Nov | =a WSIS 10:00 =~ BOOSTED SHINY OODS A > wat -s b oF «© @ vey! During this event, stars will light up the skies. ‘eh ++ WR oFW ef © My < {BEY sae io and more! Boosted Lucky 2x Catch Stardust Y Pokémon and YW New Posed GO Pass Deluxe 3d Lucky Friends | $4.99 Follow for more G47|X £) () ax | ao www.g47ix.pro",
+   "guesses": [
+    {
+     "eventId": "twilightwishes",
+     "eventTitle": "Twilight Wishes",
+     "score": 0.455
+    },
+    {
+     "eventId": "gopassnov",
+     "eventTitle": "GO Pass: November",
+     "score": 0.442
+    },
+    {
+     "eventId": "leekduck:go-pass-november-2026",
+     "eventTitle": "GO Pass: November",
+     "score": 0.409
+    }
+   ]
+  },
   {
    "linked": true,
    "id": "discord:1573405995139600404",

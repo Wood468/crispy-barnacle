@@ -7,6 +7,62 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1573963842298581045",
+      "source": "discord",
+      "creator": "",
+      "title": "g47ix Twillight",
+      "publishedAt": "2026-11-22T07:30:22.838000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1566875384606105821/g47ix_Twillight.png?ex=6b03d72a&is=6b0285aa&hm=6164f868766fae2296c30b818a20608f2b0374168d218a79115c7d24b6e603ea&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "TWILIGHT a 24 30 wad <a Nov | Nov | =a WSIS 10:00 =~ BOOSTED SHINY OODS A > wat -s b oF «© @ vey! During this event, stars will light up the skies. ‘eh ++ WR oFW ef © My < {BEY sae io and more! Boosted Lucky 2x Catch Stardust Y Pokémon and YW New Posed GO Pass Deluxe 3d Lucky Friends | $4.99 Follow for more G47|X £) () ax | ao www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "twilightwishes",
+        "eventTitle": "Twilight Wishes",
+        "score": 0.455,
+        "confidence": "low",
+        "matchedTerms": [
+          "twilight",
+          "shiny",
+          "lucky",
+          "pass",
+          "poke",
+          "mon",
+          "friends",
+          "catch",
+          "stardust",
+          "deluxe"
+        ],
+        "alternatives": [
+          {
+            "eventId": "twilightwishes",
+            "eventTitle": "Twilight Wishes",
+            "score": 0.455
+          },
+          {
+            "eventId": "gopassnov",
+            "eventTitle": "GO Pass: November",
+            "score": 0.442
+          },
+          {
+            "eventId": "leekduck:go-pass-november-2026",
+            "eventTitle": "GO Pass: November",
+            "score": 0.409
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1573963842298581045.webp"
+    },
+    {
       "id": "discord:1573601515619487835",
       "source": "discord",
       "creator": "",
