@@ -28,3 +28,10 @@ test("venue parser preserves source timezone offset checks for overseas events",
   assert.equal(winter?.start, Date.parse("2026-11-11T03:30:00Z"));
   assert.equal(parseVenueTimes("Date: November 10, 2026 Event time: 7:30 p.m. PDT"), null);
 });
+
+// A malformed three-digit minute field must not be parsed as a valid start-only time.
+test("venue parser fails closed when a malformed range cannot match the optional endpoint", () => {
+  for (const clock of ["7:30 p.m. to 9:999 p.m.", "7:30 p.m. until 8:123 a.m.", "7:30 p.m. – 9:999 p.m."]) {
+    assert.equal(parse(clock), null, `malformed range silently truncated: ${clock}`);
+  }
+});
