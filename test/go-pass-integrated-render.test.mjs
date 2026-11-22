@@ -161,15 +161,15 @@ test('load order, offline references and post-render mount form a complete PWA i
  const assets=[
   '/go-pass-navigation.css?v=20261118h',
   '/go-pass-navigation.js?v=20261118i',
-  '/go-pass-reward-art.js?v=20261122b',
+  '/go-pass-reward-art.js?v=20261122c',
   '/event-components.js?v=20261123c-shiny',
   dashPreload[1]
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
  assert.ok(index.indexOf('/go-pass-reward-art.js?v=')<index.indexOf('/event-components.js?v='),'semantic registry must load before renderer');
  assert.ok(index.indexOf('/go-pass-navigation.js?v=')<index.indexOf('/app.js?v='),'navigator must load before app navigation');
- assert.match(dash,/\/detail\.js\?v=20261122d/);
- assert.match(sw,/\/detail\.js\?v=20261122d/);
+ assert.match(dash,/\/detail\.js\?v=20261122e/);
+ assert.match(sw,/\/detail\.js\?v=20261122e/);
  const renderAt=detail.indexOf("o.innerHTML = '<div class=\"evd-in\">'");
  const mountAt=detail.indexOf('GOGoPassNavigation.mount(o)',renderAt);
  assert.ok(renderAt>=0&&mountAt>renderAt&&mountAt<renderAt+300,'mount after actual event render');
