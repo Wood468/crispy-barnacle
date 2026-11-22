@@ -414,10 +414,15 @@ function raidDayRosters(raidDays,ctx){
    artwork are never evidence of increased encounter odds. */
 function shinyBoostOverview(model,ctx){
  ctx=ctx||{};
- var sourced=(model.sources||[]).some(function(source){
-  try{var url=new URL(source&&source.url);return url.protocol==='https:'&&!url.username&&!url.password;}catch(error){return false;}
+ var sourceIds=new Set();
+ (model.sources||[]).forEach(function(source){
+  if(!source||typeof source.id!=='string'||!source.id.trim())return;
+  try{
+   var url=new URL(source.url);
+   if(url.protocol==='https:'&&!url.username&&!url.password)sourceIds.add(source.id);
+  }catch(error){}
  });
- if(!sourced)return '';
+ if(!sourceIds.size)return '';
  var conflicts=model.internalValidation&&model.internalValidation.conflicts||[];
  if(conflicts.some(function(c){return c.field==='shiny'&&!c.identityKey;}))return '';
  function disputed(text){
@@ -430,23 +435,27 @@ function shinyBoostOverview(model,ctx){
     /\bshiny\b.{0,60}\b(?:chance|chances|odds|rates?|likelihood)\b.{0,45}\b(?:increased|boosted|higher|enhanced)\b/i.test(text)||
     /\b(?:increased|boosted)\s+shiny\s+(?:chance|chances|odds|rates?)\b/i.test(text);
  }
- var boosted=(model.pokemon||[]).filter(function(p){
-  return p.boostedShiny===true&&p.shiny!=='no'&&!conflicts.some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
- });
- var claims=[],seen=new Set();
- function addClaim(row){
+ var claims=[],seen=new Set(),evidenceByIdentity=new Map();
+ var fields=model.internalValidation&&model.internalValidation.fields||{};
+ var rows=[].concat(model.bonuses||[],Array.isArray(fields.shiny)?fields.shiny:[]);
+ rows.forEach(function(row){
+  if(!row||!['official','verified','corroborated'].includes(row.status)
+    ||!Array.isArray(row.sources)||!row.sources.length
+    ||!row.sources.every(function(id){return sourceIds.has(id);}))return;
   var statement=value(row);
   if(!statement||!explicitIncrease(statement)||disputed(statement))return;
+  if(row.identityKey){
+   var evidence=evidenceByIdentity.get(row.identityKey)||[];
+   evidence.push(row);
+   evidenceByIdentity.set(row.identityKey,evidence);
+   return;
+  }
   var key=statement.toLowerCase().replace(/\s+/g,' ').trim();
   if(!seen.has(key)){seen.add(key);claims.push(statement);}
- }
- (model.bonuses||[]).forEach(function(row){
-  if(!row||typeof row==='object'&&row.status&&!['official','verified','corroborated'].includes(row.status))return;
-  addClaim(row);
  });
- var fields=model.internalValidation&&model.internalValidation.fields||{};
- (fields.shiny||[]).forEach(function(row){
-  if(row&&['official','verified','corroborated'].includes(row.status))addClaim(row);
+ var boosted=(model.pokemon||[]).filter(function(p){
+  return p.boostedShiny===true&&p.shiny!=='no'&&evidenceByIdentity.has(p.key)
+   &&!conflicts.some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
  });
  if(!boosted.length&&!claims.length)return '';
  var pokemon=boosted.map(function(p){
@@ -454,9 +463,16 @@ function shinyBoostOverview(model,ctx){
   if(p.label&&name.toLowerCase().indexOf(String(p.label).toLowerCase())<0)name+=' ('+p.label+')';
   var metadata=[],unique=new Set();
   (model.encounters||[]).filter(function(edge){return edge.identityKey===p.key;}).forEach(function(edge){
-   var activity=(model.activities||[]).find(function(a){return a.id===edge.activityId;});
+   var evidence=evidenceByIdentity.get(p.key).filter(function(row){
+    return row.method===edge.method&&(!row.activityId||row.activityId===edge.activityId)
+     &&(!row.access||row.access===edge.access);
+   });
+   if(!evidence.length)return;
+   var activity=evidence.some(function(row){return row.activityId===edge.activityId;})
+    &&(model.activities||[]).find(function(a){return a.id===edge.activityId;});
    var method=edge.method!=='other'?METHODS[edge.method]||'':'';
-   var access=edge.access&&edge.access!=='unknown'&&edge.access!=='all'?'Access: '+edge.access:'';
+   var access=edge.access!=='unknown'&&edge.access!=='all'
+    &&evidence.some(function(row){return row.access===edge.access;})?'Access: '+edge.access:'';
    var when=activity&&activity.schedule&&ctx.clock&&typeof ctx.clock.range==='function'?'Time: '+activityTime(activity,ctx):'';
    var statement=[method,access,when].filter(Boolean).join(' · ');
    if(statement&&!unique.has(statement)){unique.add(statement);metadata.push(statement);}

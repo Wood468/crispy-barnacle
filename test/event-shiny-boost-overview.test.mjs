@@ -5,15 +5,16 @@ const require=createRequire(import.meta.url);
 const C=require('../public/event-contract.js');
 const UI=require('../public/event-components.js');
 const Clock=require('../public/event-clock.js');
-const sources=[{name:'Pokémon GO',url:'https://pokemongo.com/en/news/future-event'}];
+const sources=[{id:'official',name:'Pokémon GO',url:'https://pokemongo.com/en/news/future-event'}];
 const event=(props={})=>C.normalize({schemaVersion:1,eventId:'future-shiny-test',title:'Future event',sources,...props});
+const claim=(extra={})=>({text:'Increased chance of encountering Shiny Pokémon.',status:'official',sources:['official'],...extra});
 const preview=model=>UI.shinyBoostOverview(model,{clock:Clock,viewerZone:'Australia/Melbourne'});
 
 test('explicit Pokémon boost is prominent on Overview, without inventing odds or a main-event boost window',()=>{
  const boosted={speciesId:'25',name:'Pikachu',shiny:'yes',boostedShiny:true};
  const normal={speciesId:'133',name:'Eevee',shiny:'yes'};
  const key=C.identity(boosted);
- const model=event({pokemon:[normal,boosted],activities:[{
+ const model=event({pokemon:[normal,boosted],internalValidation:{fields:{shiny:[claim({identityKey:key,method:'wild',activityId:'ticket-hour',access:'Ticket holders'})]}},activities:[{
   id:'ticket-hour',kind:'wild',title:'Ticket hour',encounterMethod:'wild',access:'Ticket holders',
   pokemonRefs:[key],schedule:{timeBasis:'instant',start:'2027-01-03T05:00:00Z',end:'2027-01-03T06:00:00Z'}
  }]});
@@ -53,7 +54,7 @@ test('official source statements show exact ticket conditions without pretending
 
 test('published bonus prose with explicit increased shiny odds is shown; mere shiny eligibility is not',()=>{
  const boost='Increased chance of encountering Shiny Pokémon when using Incense.';
- const model=event({bonuses:[boost,'Shiny Meltan may be encountered from the Mystery Box.']});
+ const model=event({bonuses:[claim({text:boost}),'Shiny Meltan may be encountered from the Mystery Box.']});
  const html=preview(model);
  assert.match(html,/Increased chance of encountering Shiny Pokémon when using Incense/);
  assert.doesNotMatch(html,/Shiny Meltan may be encountered/);
@@ -61,7 +62,10 @@ test('published bonus prose with explicit increased shiny odds is shown; mere sh
 
 test('weak, negated, conflicting or unsourced boost signals fail closed',()=>{
  const pokemon={speciesId:'25',name:'Pikachu',boostedShiny:true},key=C.identity(pokemon);
- const official={text:'Increased chance of encountering Shiny Pokémon.',status:'official'};
+ const official=claim();
+ assert.equal(preview(event({pokemon:[pokemon]})),'');
+ assert.equal(preview(event({internalValidation:{fields:{shiny:[claim({sources:['unrelated']})]}}})),'');
+ assert.equal(preview(event({bonuses:[official.text]})),'');
  const unconfirmed={text:'Increased chance of encountering Shiny Pokémon.',status:'community'};
  assert.equal(preview(event({pokemon:[{...pokemon,shiny:'no'}]})),'');
  assert.equal(preview(event({pokemon:[pokemon],sources:[]})),'');
@@ -75,7 +79,7 @@ test('weak, negated, conflicting or unsourced boost signals fail closed',()=>{
 test('access and activity time display only when attached to that Pokémon encounter',()=>{
  const boosted={speciesId:'25',name:'Pikachu',boostedShiny:true},key=C.identity(boosted);
  const model=event({
-  pokemon:[boosted],schedule:{timeBasis:'instant',start:'2027-01-01T09:00:00Z',end:'2027-01-08T09:00:00Z'},
+  pokemon:[boosted],internalValidation:{fields:{shiny:[claim({identityKey:key,method:'raid'})]}},schedule:{timeBasis:'instant',start:'2027-01-01T09:00:00Z',end:'2027-01-08T09:00:00Z'},
   encounters:[{identityKey:key,method:'raid'}],
   activities:[{id:'unrelated-ticket',kind:'wild',title:'Ticket hour',access:'Ticket holders',
    schedule:{timeBasis:'instant',start:'2027-01-03T05:00:00Z',end:'2027-01-03T06:00:00Z'}}]
@@ -87,11 +91,22 @@ test('access and activity time display only when attached to that Pokémon encou
 
 test('an explicit boost display escapes untrusted names, access and source prose',()=>{
  const pokemon={speciesId:'25',name:'Pikachu <script>',boostedShiny:true},key=C.identity(pokemon);
- const html=preview(event({pokemon:[pokemon],encounters:[{identityKey:key,method:'wild',access:'Ticket <img>'}],bonuses:['Increased chance of encountering Shiny Pokémon <img src=x>.']}));
+ const html=preview(event({pokemon:[pokemon],encounters:[{identityKey:key,method:'wild',access:'Ticket <img>'}],internalValidation:{fields:{shiny:[claim({identityKey:key,method:'wild',access:'Ticket <img>'})]}},bonuses:[claim({text:'Increased chance of encountering Shiny Pokémon <img src=x>.'})]}));
  assert.match(html,/Pikachu &lt;script&gt;/);
  assert.match(html,/Ticket &lt;img&gt;/);
  assert.match(html,/&lt;img src=x&gt;/);
  assert.equal(html.includes('<script>'),false,'raw script element must never be emitted');
  assert.equal(html.includes('<img src=x>'),false,'raw image element must never be emitted');
  assert.equal(html.includes('<SCRIPT>'),false,'uppercase raw script element must never be emitted');
+});
+
+test('boost evidence is exact to identity and its stated encounter scope',()=>{
+ const base={speciesId:'25',name:'Pikachu',boostedShiny:true};
+ const costume={...base,name:'Costume Pikachu',costumeId:'bow'};
+ const key=C.identity(base);
+ const model=event({pokemon:[base,costume],encounters:[{identityKey:key,method:'raid',access:'Unrelated ticket'}],
+  internalValidation:{fields:{shiny:[claim({identityKey:key})]}}});
+ const html=preview(model);
+ assert.match(html,/<strong>Pikachu<\/strong>/);
+ assert.doesNotMatch(html,/Costume Pikachu|Unrelated ticket|Raid encounters/);
 });
