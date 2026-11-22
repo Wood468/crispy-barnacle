@@ -250,7 +250,12 @@
     if (ctx.done.length) {
       h += '<section class="t1-sec t1-done" aria-labelledby="t1-done-h"><div class="t1-sec-head"><h2 id="t1-done-h">Marked done</h2><span class="t1-count-pill">' + ctx.done.length + '</span></div>'
         + '<p class="t1-sec-note t1-done-note">Completed for you. These events remain in Schedule.</p><ul class="t1-done-list">'
-        + ctx.done.map(function (d) { return '<li><span>' + esc(d.name) + ' <small>' + esc(d.when) + '</small></span><button type="button" class="t1-restore" data-t1-undo="' + esc(d.key) + '" aria-label="' + esc('Restore ' + d.name + ' to Today') + '">Restore</button></li>'; }).join('') + '</ul></section>';
+        + ctx.done.map(function (d) {
+          var when = String(d.when == null ? '' : d.when).trim();
+          var label = 'Restore ' + d.name + ' to Today' + (when ? ', ' + when : '');
+          return '<li><span>' + esc(d.name) + ' <small>' + esc(d.when) + '</small></span>'
+            + '<button type="button" class="t1-restore" data-t1-undo="' + esc(d.key) + '" aria-label="' + esc(label) + '">Restore</button></li>';
+        }).join('') + '</ul></section>';
     }
     return h;
   }

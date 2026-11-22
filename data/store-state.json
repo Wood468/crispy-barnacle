@@ -12,7 +12,7 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-event-pass-gowa-leadout-26": {
@@ -27,7 +27,7 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": "2026-11-24T21:47:40.917Z"
   },
   "/purchase/item/web-event-pass-plusrank-november-26": {
@@ -42,7 +42,7 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-pawniard-cd-ultra": {
@@ -57,8 +57,23 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
-   "endsAt": "2026-11-22T21:47:40.917Z"
+   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "endsAt": "2026-11-22T07:03:16.016Z"
+  },
+  "/purchase/item/web-event-pass-base-twilight-finale-26": {
+   "name": "GO Pass Deluxe: Twilight Wishes",
+   "images": [
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.small.2(1)-279ef530430f/w256.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_event_0246-31c1e2c017e8/w64.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_ultra_ball-cbbb04b4daf8/w64.webp"
+   ],
+   "price": "A$7.99",
+   "section": "LIMITED_TIME",
+   "tag": "LIMITED-TIME ONLY",
+   "limit": "Can only be purchased 1 time.",
+   "firstSeen": "2026-11-20T21:05:36.513Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "endsAt": null
   },
   "/purchase/item/web-event-pass-base-november-26": {
    "name": "GO Pass Deluxe: November",
@@ -72,7 +87,37 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "endsAt": null
+  },
+  "/purchase/item/web-event-pass-plusrank-twilight-finale-26-ultra": {
+   "name": "GO Pass Deluxe: Twilight Wishes Ultra Box",
+   "images": [
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.large.2-301d7aa12b46/w256.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_event_0246-31c1e2c017e8/w64.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_event_pass_point_live_ops_06-22f3718b0b8f/w64.webp"
+   ],
+   "price": "A$13.99",
+   "section": "LIMITED_TIME",
+   "tag": "LIMITED-TIME ONLY",
+   "limit": "Can only be purchased 1 time.",
+   "firstSeen": "2026-11-20T21:05:36.513Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "endsAt": null
+  },
+  "/purchase/item/web-event-pass-plusrank-twilight-finale-26": {
+   "name": "GO Pass Deluxe: Twilight Wishes + 6 Ranks",
+   "images": [
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.medium.2-96c0427111f5/w256.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/badge_event_0246-31c1e2c017e8/w64.webp",
+    "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_event_pass_point_live_ops_06-22f3718b0b8f/w64.webp"
+   ],
+   "price": "A$10.99",
+   "section": "LIMITED_TIME",
+   "tag": "LIMITED-TIME ONLY",
+   "limit": "Can only be purchased 1 time.",
+   "firstSeen": "2026-11-20T21:05:36.513Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-seasonal-delights-2024-box": {
@@ -87,7 +132,7 @@
    "tag": "",
    "limit": "Can only be purchased 3 times.",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-luckyegg-bundle-8": {
@@ -101,7 +146,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-starpiece-bundle": {
@@ -115,7 +160,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-remote-raidpass-bundle": {
@@ -129,7 +174,7 @@
    "tag": "POPULAR",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-pokemon-storage-bundle": {
@@ -143,7 +188,7 @@
    "tag": "POPULAR",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-item-storage-bundle": {
@@ -157,7 +202,7 @@
    "tag": "POPULAR",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-basic-incubator-3pack": {
@@ -171,7 +216,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-nc-600-rrp-3": {
@@ -186,7 +231,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-super-incubator-2pack": {
@@ -200,7 +245,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-max-revive-6": {
@@ -214,7 +259,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-nc-600": {
@@ -228,7 +273,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-premium-battle-pass-3": {
@@ -242,7 +287,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-mp-pack.6": {
@@ -256,7 +301,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-max-mushroom-3": {
@@ -270,7 +315,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-3mp-3rrp-bundle": {
@@ -285,7 +330,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-1mp-1rrp-bundle": {
@@ -300,7 +345,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-10-silver-pinap": {
@@ -314,7 +359,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-15-gold-razz": {
@@ -328,7 +373,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-10-max-potions": {
@@ -342,7 +387,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/web-coin-bundle-medium-thanksgiving-26": {
@@ -356,8 +401,8 @@
    "tag": "",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
-   "endsAt": null
+   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "endsAt": "2026-11-28T11:03:16.016Z"
   },
   "/purchase/item/web-coin-bundle-large-thanksgiving-26": {
    "name": "6,000 PokéCoins",
@@ -370,8 +415,8 @@
    "tag": "",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
-   "endsAt": null
+   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "endsAt": "2026-11-28T11:03:16.016Z"
   },
   "/purchase/item/web-coin-bundle-xlarge-thanksgiving-26": {
    "name": "16,500 PokéCoins",
@@ -384,8 +429,8 @@
    "tag": "BEST VALUE",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
-   "endsAt": null
+   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "endsAt": "2026-11-28T11:03:16.016Z"
   },
   "/purchase/item/coin-bundle-xxsmall": {
    "name": "110 PokéCoins",
@@ -397,7 +442,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-xsmall": {
@@ -410,7 +455,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-small_v2": {
@@ -423,7 +468,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-medium_v2": {
@@ -436,7 +481,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-large-v2": {
@@ -449,7 +494,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   },
   "/purchase/item/coin-bundle-xlarge": {
@@ -462,7 +507,7 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-19T21:35:56.505Z",
+   "lastSeen": "2026-11-21T11:03:16.016Z",
    "endsAt": null
   }
  },
@@ -657,12 +702,13 @@
   }
  },
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-11-19T21:35:56.505Z",
+ "updated": "2026-11-21T11:03:16.016Z",
  "currency": "A$",
- "lastPublishedAt": "2026-11-19T21:35:56.505Z",
- "lastCompleteAt": "2026-11-19T21:35:56.505Z",
+ "lastPublishedAt": "2026-11-21T11:03:16.016Z",
+ "lastCompleteAt": "2026-11-21T11:03:16.016Z",
  "lastObservation": {
-  "at": "2026-11-19T21:35:56.505Z",
+  "at": "2026-11-21T11:03:16.016Z",
   "status": "complete"
- }
+ },
+ "staleAlertAt": "2026-11-21T17:58:10.344Z"
 }

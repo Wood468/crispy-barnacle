@@ -77,12 +77,24 @@ test("stale reasons and the once-per-24h dedupe", () => {
 test("--stale-alert in dry run prints but saves nothing; a recent staleAlertAt suppresses it", () => {
   const dir = mkdtempSync(join(tmpdir(), "sw-")), old = new Date(Date.now() - 5 * 864e5).toISOString();
   writeFileSync(join(dir, "cur.json"), JSON.stringify({ updated: old })); writeFileSync(join(dir, "state.json"), JSON.stringify({ items: {} }));
-  const env = { STORE_CURRENT_SNAPSHOT: join(dir, "cur.json"), STORE_INGEST_URL: "http://127.0.0.1:9/x", DRY_RUN: "true", TELEGRAM_BOT_TOKEN: "x", TELEGRAM_CHAT_ID: "1" };
+  const env = { STORE_CURRENT_SNAPSHOT: join(dir, "cur.json"), STORE_INGEST_HEADERS: join(dir, "none.txt"), DRY_RUN: "true", TELEGRAM_BOT_TOKEN: "x", TELEGRAM_CHAT_ID: "1" };
   const go = e => spawnSync(process.execPath, ["scripts/store-watch.mjs", "--stale-alert"], { encoding: "utf8", env: { PATH: process.env.PATH, STORE_STATE: join(dir, "state.json"), ...env, ...e } });
   let r = go({}); assert.equal(r.status, 0, r.stderr); assert.match(r.stdout, /Stale: .*3 days/); assert.match(r.stdout, /Not sending/);
   assert.equal(JSON.parse(readFileSync(join(dir, "state.json"), "utf8")).staleAlertAt, undefined);
   writeFileSync(join(dir, "state.json"), JSON.stringify({ items: {}, staleAlertAt: new Date().toISOString() }));
   r = go({}); assert.match(r.stdout, /already alerted/);
+});
+
+test("--stale-alert reads x-store-received from the headers the Read step saved (no key, no network)", () => {
+  const dir = mkdtempSync(join(tmpdir(), "sw-")), fresh = new Date().toISOString();
+  writeFileSync(join(dir, "cur.json"), JSON.stringify({ updated: fresh })); writeFileSync(join(dir, "state.json"), JSON.stringify({ items: {}, lastObservation: { status: "complete", at: fresh } }));
+  const go = () => spawnSync(process.execPath, ["scripts/store-watch.mjs", "--stale-alert"], { encoding: "utf8", env: { PATH: process.env.PATH, STORE_STATE: join(dir, "state.json"), STORE_CURRENT_SNAPSHOT: join(dir, "cur.json"), STORE_INGEST_HEADERS: join(dir, "h.txt"), DRY_RUN: "true", TELEGRAM_BOT_TOKEN: "x", TELEGRAM_CHAT_ID: "1" } });
+  writeFileSync(join(dir, "h.txt"), "HTTP/2 200\r\ncache-control: private, no-store\r\nX-Store-Received: " + fresh + "\r\n\r\n");
+  assert.match(go().stdout, /fresh/);
+  writeFileSync(join(dir, "h.txt"), "HTTP/2 200\r\nx-store-received: " + new Date(Date.now() - 8 * 36e5).toISOString() + "\r\n");
+  assert.match(go().stdout, /has not uploaded/);
+  writeFileSync(join(dir, "h.txt"), "HTTP/2 401\r\ncontent-type: application/json\r\n"); // refused: no header, counts as silent
+  assert.match(go().stdout, /has not uploaded/);
 });
 
 test("health and uptime judge snapshot age (stale after 3 days)", () => {
@@ -97,13 +109,19 @@ test("health and uptime judge snapshot age (stale after 3 days)", () => {
 
 test("workflow reads the Worker (no browser), has a rebaseline input, a stale alert, and keeps its permissions", () => {
   const wf = read(new URL("../.github/workflows/store-watch.yml", import.meta.url), "utf8");
-  assert.match(wf, /curl --fail-with-body -sS --max-time 30 --retry 2 https:\/\/pogo\.michaelpuff\.com\/api\/store-ingest -o \/tmp\/store-snapshot\.json/);
+  assert.match(wf, /curl --config - --fail-with-body -sS --max-time 30 --retry 2 -D \/tmp\/store-ingest-headers\.txt https:\/\/pogo\.michaelpuff\.com\/api\/store-ingest -o \/tmp\/store-snapshot\.json/);
   assert.ok(!/playwright|store_snapshot\.py|setup-python/.test(wf));
   assert.match(wf, /rebaseline:\s*\n\s*description: .*\n\s*default: "false"/);
   assert.match(wf, /STORE_REBASELINE: \$\{\{ github\.event\.inputs\.rebaseline == 'true' && '1' \|\| '' \}\}/);
   assert.match(wf, /node scripts\/store-watch\.mjs --stale-alert/);
   assert.match(wf, /permissions:\n  contents: write\n/);
-  assert.ok(!/STORE_INGEST_KEY/.test(wf), "the write key is never used by GitHub");
+  // The ingest key now reads GET /api/store-ingest: only the "Read the store" step gets it (env, from the secret), fed to curl on stdin.
+  assert.equal(wf.match(/secrets\.STORE_INGEST_KEY/g).length, 1);
+  const step = wf.slice(wf.indexOf("- name: Read the store"), wf.indexOf("- name: Refresh verified"));
+  assert.match(step, /STORE_INGEST_KEY: \$\{\{ secrets\.STORE_INGEST_KEY \}\}/);
+  assert.match(step, /printf 'header = "x-ingest-key: %s"\\n' "\$STORE_INGEST_KEY" \| curl --config -/);
+  assert.ok(!/x-ingest-key: \$|-H\b|--header|set -x|echo [^\n]*\$\{?STORE_INGEST_KEY/.test(step), "the key is never on a command line or echoed");
+  assert.match(step, /\[ -n "\$\{STORE_INGEST_KEY:-\}" \]/); assert.match(step, /fresh=false/);
 });
 
 test("held-forever: uploads arrive hourly but every one is held, so the last COMPLETE time ages and the alert fires", () => {
@@ -123,7 +141,7 @@ test("held-forever: uploads arrive hourly but every one is held, so the last COM
 test("--stale-alert never writes the marker when the send fails, nor creates a state holding only the marker", () => {
   const dir = mkdtempSync(join(tmpdir(), "sw-")), old = new Date(Date.now() - 5 * 864e5).toISOString();
   writeFileSync(join(dir, "cur.json"), JSON.stringify({ updated: old }));
-  const go = () => spawnSync(process.execPath, ["scripts/store-watch.mjs", "--stale-alert"], { encoding: "utf8", env: { PATH: process.env.PATH, STORE_STATE: join(dir, "state.json"), STORE_CURRENT_SNAPSHOT: join(dir, "cur.json"), STORE_INGEST_URL: "http://127.0.0.1:9/x", TELEGRAM_BOT_TOKEN: "x", TELEGRAM_CHAT_ID: "1", DRY_RUN: "false", HTTPS_PROXY: "http://127.0.0.1:9" } });
+  const go = () => spawnSync(process.execPath, ["scripts/store-watch.mjs", "--stale-alert"], { encoding: "utf8", env: { PATH: process.env.PATH, STORE_STATE: join(dir, "state.json"), STORE_CURRENT_SNAPSHOT: join(dir, "cur.json"), STORE_INGEST_HEADERS: join(dir, "none.txt"), TELEGRAM_BOT_TOKEN: "x", TELEGRAM_CHAT_ID: "1", DRY_RUN: "false", HTTPS_PROXY: "http://127.0.0.1:9" } });
   let r = go(); assert.equal(r.status, 0, r.stderr); assert.equal(existsSync(join(dir, "state.json")), false);
   writeFileSync(join(dir, "state.json"), JSON.stringify({ items: { a: {} } }));
   r = go(); assert.equal(r.status, 0, r.stderr); assert.equal(JSON.parse(readFileSync(join(dir, "state.json"), "utf8")).staleAlertAt, undefined);

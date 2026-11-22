@@ -1,8 +1,14 @@
 {
- "updated": "2026-11-19T11:40:11.603Z",
+ "updated": "2026-11-21T19:16:14.074Z",
  "state": "ok",
- "scrapedDuckEvents": 44,
+ "scrapedDuckEvents": 41,
  "missingHere": [
+  {
+   "name": "Twitch Drops for 2027 Pokémon Latin America International Championships",
+   "type": "twitch-drops",
+   "start": "2026-11-20T12:00:00.000Z",
+   "link": "https://leekduck.com/events/pokemon-latin-america-international-championships-2027-timed-research-twitch-drops/"
+  },
   {
    "name": "Raid Day",
    "type": "raid-day",
@@ -108,5 +114,49 @@
    "start": "2026-12-19"
   }
  ],
- "shinyDisagree": []
+ "shinyDisagree": [
+  {
+   "event": "w-december-communityday2026",
+   "name": "December Communityday2026",
+   "scrapedDuckShinies": [
+    "Vulpix",
+    "Ninetales",
+    "Alolan Vulpix",
+    "Alolan Ninetales",
+    "Grookey",
+    "Thwackey",
+    "Rillaboom",
+    "Scorbunny",
+    "Raboot",
+    "Cinderace",
+    "Lechonk",
+    "Oinkologne",
+    "Tinkatink",
+    "Tinkatuff",
+    "Tinkaton",
+    "Piplup",
+    "Prinplup",
+    "Empoleon",
+    "Zorua",
+    "Zoroark",
+    "Pawniard",
+    "Bisharp",
+    "Kingambit",
+    "Sobble",
+    "Drizzile",
+    "Inteleon",
+    "Nickit",
+    "Thievul",
+    "Frigibax",
+    "Arctibax",
+    "Baxcalibur",
+    "Gible",
+    "Gabite",
+    "Garchomp",
+    "Deino",
+    "Zweilous",
+    "Hydreigon"
+   ]
+  }
+ ]
 }

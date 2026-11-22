@@ -99,6 +99,6 @@ test('store icons are decorative, lazy and sized; no new hosts; version tokens a
   const h = icon('Great Ball x20');
   assert.match(h, /alt=""/); assert.match(h, /loading="lazy"/); assert.match(h, /width="40" height="40"/); assert.doesNotMatch(h, /https?:/);
   for (const f of FILES) assert.ok(store.includes(f) && detail.includes(f), f);
-  assert.match(sw, /gofn-shell-v382/);
+  assert.match(sw, /gofn-shell-v385/);
   assert.match(html, /go-pass-reward-art\.js\?v=20261118e/); assert.match(sw, /go-pass-reward-art\.js\?v=20261118e/);
 });

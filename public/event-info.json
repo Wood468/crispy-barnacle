@@ -1546,6 +1546,46 @@
       "start": "2026-11-14",
       "end": "2026-11-15",
       "dateSource": "world-events.json"
+    },
+    "leekduck:december-communityday2026": {
+      "names": [
+        "December Community Day"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "observed": "2026-11-21"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1573405995139600404.webp",
+          "source": "G47IX",
+          "alt": "December Community Day infographic"
+        }
+      ]
+    },
+    "leekduck:duolingo-timed-research-2026": {
+      "names": [
+        "Pokémon GO and Duolingo Timed Research"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "observed": "2026-11-21"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1572060169817297026.webp",
+          "source": "G47IX",
+          "alt": "Pokémon GO and Duolingo Timed Research infographic"
+        }
+      ]
     }
   },
   "passes": {
@@ -1720,6 +1760,32 @@
           "label": "Raid boss guide · G47IX",
           "source": "G47IX",
           "alt": "tr NOV 13 8PM Counter Kyurem Black"
+        }
+      ]
+    },
+    {
+      "pokemonId": "491",
+      "formId": null,
+      "battleMode": "normal",
+      "infographics": [
+        {
+          "url": "/infographics/g47ix/discord-1571900196105756758.jpg",
+          "label": "Raid boss guide · G47IX",
+          "source": "G47IX",
+          "alt": "Darkrai"
+        }
+      ]
+    },
+    {
+      "pokemonId": "488",
+      "formId": null,
+      "battleMode": "normal",
+      "infographics": [
+        {
+          "url": "/infographics/g47ix/discord-1571900192804835379.jpg",
+          "label": "Raid boss guide · G47IX",
+          "source": "G47IX",
+          "alt": "Cresselia"
         }
       ]
     }

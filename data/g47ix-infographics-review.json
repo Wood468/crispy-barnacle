@@ -7,21 +7,121 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1573601515619487835",
+      "source": "discord",
+      "creator": "",
+      "title": "CD NOV 26",
+      "publishedAt": "2026-11-21T07:30:37.426000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1562512076704981042/CD_NOV_26.png?ex=6b027805&is=6b012685&hm=f88328ad4394470337bfd24a5d445db56ba8124479c7c7e0ecadb985c3e1b125&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "\\f Sf re) \\s jeoe 2:00 pm 5:00 pm ‘ir a6 | eco alasic aT epee BG He + Shiny Chance #624 Pawniard mr: Chance +* ~1/35 a ESsee Incense (ex. Daily Adv Distance Hatch Candy Chance Photobomb Lure Incense) for eerthinc for Candy XL Surprise Modules Kowtow fe 2 Cleave 4+ sek % = te Evolve Ts | +1 Special Additional Research ield ce ©° © a between Trade lure spawns Mega Evolve Spacial Freeze Ice for Extra Bonuses Use Adventure & Ri Rend %) Shock Burn Siac Wr i EJee or other Effects BD Roar of Time 2 Future Sight+ ow for more g G47IX \\EENE Check in Paid Try Rewards Community for Additional y Research Special Fuse Oaxe Wi",
+      "eventMatch": {
+        "eventId": "leekduck:november-communityday2026",
+        "eventTitle": "Pawniard Community Day",
+        "score": 0.394,
+        "confidence": "low",
+        "matchedTerms": [
+          "pawniard"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:november-communityday2026",
+            "eventTitle": "Pawniard Community Day",
+            "score": 0.394
+          },
+          {
+            "eventId": "leekduck:hatch-day-december-2026",
+            "eventTitle": "Hatch Day",
+            "score": 0.394
+          },
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.278
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1573601515619487835.png"
+    },
+    {
+      "id": "discord:1573405995139600404",
+      "source": "discord",
+      "creator": "",
+      "title": "December 2026",
+      "publishedAt": "2026-11-20T18:33:41.711000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1573399856251142254/December_2026.png?ex=6b01de4e&is=6b008cce&hm=237769b408b1b6d106df850c572c1a3cb5c2a02a931ef575581067a1f59a5d50&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "h > “4 12 13 f N 4 DEC DEC 4A to 5:00 p.m “fe vi +. let Chance for Catch Hatch Catch X XL Candy > & mee Ra Stardust Be Distance Candy ~~ from catching Lures Incense Limited-time Evolution requirement: Up to two Special Trades/day, and trades will cost 50% less. Evolve Bisharpin to Kingambit after defeating one Dark or Steel-type Raid Boss with Bisharp as your buddy (2) Saturday, 2:00-5:00 pm Cy Suns: 2:00-5:00 pm ye] ++ A7 aes @ “ x Fe ++ ++ red er) a ae ( tt R 2° rf Outside of these times, any of the featured Pokémon may appear from 9:00 a.m. to 9:00 p.m. local time on either Saturday or Sunday! Featured Moves i) > | 6 Hydro Cannon 9 Energy Ball ¥ Y Chance to encounter i Pokémon with q a Special Background nf a ty RY Es fza & (eas ll Encounters with Pokémon featured Research in previous Community Days and Community Day Classics Field Research will feature o* Pokémon from 2026 Community Days and CD Classic. SID CI=D CIID CI ules Follow for more G47|X £) Oax?voe www.g47ix.pro JOQ6",
+      "eventMatch": {
+        "eventId": "leekduck:raid-day-december-2026",
+        "eventTitle": "Raid Day",
+        "score": 0.791,
+        "confidence": "high",
+        "matchedTerms": [
+          "raid",
+          "day",
+          "december",
+          "2026"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:raid-day-december-2026",
+            "eventTitle": "Raid Day",
+            "score": 0.791
+          },
+          {
+            "eventId": "leekduck:hatch-day-december-2026",
+            "eventTitle": "Hatch Day",
+            "score": 0.791
+          },
+          {
+            "eventId": "leekduck:december-communityday2026",
+            "eventTitle": "December Community Day",
+            "score": 0.785
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1573405995139600404.webp",
+      "publishedEvent": "leekduck:december-communityday2026",
+      "publishedEvents": [
+        "leekduck:december-communityday2026"
+      ],
+      "publishedTargets": []
+    },
+    {
       "id": "discord:1573056127648796683",
       "source": "discord",
       "creator": "",
       "title": "And as a note, you can disable that for yourself completely, just go under ```User Settings > Data & Privacy > Show my messages ... ``` thank @mikosoby",
       "publishedAt": "2026-11-19T19:23:26.801000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1021467233127514172/1573052061145243986/Screenshot_2026-11-19-20-05-27-620_com.discord-edit.jpg?ex=6b009a65&is=6aff48e5&hm=e346311565b6814c06c37046767a7390a7daa20efb115882938c1ace04f991ad&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "< Data & Privacy AUWOWS US TO USE INTOF MATION, SUCN aS WNO YOU Talk TO and WNal games you play, to personalise Discord for you. Learn more Use my Discord activity to personalise e Sponsored Content Allows us to personalise Sponsored Content, like Quests, using your Discord activity, such as the games you play. If you opt out, you may still see Quests, but they won't be personalised. Learn more Use third-party data to personalise e Sponsored Content Allows us to personalise Sponsored Content, like Quests, using data we receive from advertisers and third-party data providers. If you opt out, you may still see Quests, but they won't be personalised using data from third parties. Learn more Show my message content from Discoverable channels on web pages @ Allow message content that you send in Discoverable channels to appear on web pages. Admins of Discoverable servers control which channels are Discoverable. These messages will appear as you wrote them, but won’t show your username. Learn more",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1573056127648796683.jpg"
+      "stagedPath": "/infographics/g47ix/discord-1573056127648796683.jpg",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1573053164574216223",
@@ -30,8 +130,8 @@
       "title": "Eternatus",
       "publishedAt": "2026-11-19T19:11:40.349000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1573048619202777118/Eternatus_counters_v2.png?ex=6b009730&is=6aff45b0&hm=16e50f99b1c9a50aaf80e900cc2f81a63a7899bee09be7b5ec2aaa0c87456ada&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "nate I OA ¢ 21Nov J ee me >» . LY =) R\\y uf Eternatus ~4S =~ l q WV AK mL ® Nu Please note that you won’t be able to catch it - you will only get Candy and Candy XL. x N\\ 5 & Wl Li O® RO i = (é \\fs Vf igh Wg N Ope g We Ser © METAL CLAW © Pounp © METAL CLAW @ Lock-on @ Lock-on @ THUNDER SHOCK oat 4) zo) Se —_) i \\4 e “a a ‘le ~~ ‘le 0) ts, oe We ee _! Pre = “ey Zs » A> 4 ‘i ® DRAGONTAIL © METAL CLAW © DR. BREATH ®@ DR. BREATH @ PsycHo cuT @ EXTRASENSORY Use this Switch to Unlock Upgrade its For extra help, Tank la\" this Pokémon Max Spirit Max Attack and use Zacian’s to build to take and heal your use it as your H or Eternatus’s energy resisted hits y teammates | Damage Dealer — Adventure Effect Set the right Fast Move because, the type of your Dynamax Swipe to get Keep tapping to Max Move depends on your Fast Move ® energy bubbles help your teammates (this doesn’t apply for GMax) « 07° You can leave and rejoin a Max Battle Follow for more G47|X £) @®X@®@ www.g47ix.pro RJ to reroll for a different boss moveset.",
       "eventMatch": {
@@ -68,7 +168,9 @@
         "picture text names the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1573053164574216223.webp"
+      "stagedPath": "/infographics/g47ix/discord-1573053164574216223.webp",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1572887979612049450",
@@ -77,15 +179,17 @@
       "title": "@here As there have been a few questions regarding the recent launch of ‘Discoverable Channels’ (Discord has introduced a feature that makes content searchable on the web): As you can see below, only channels with the ‘Discoverable’ icon are enabled and these are exclusively the infographic channels. We will never make a message channel as ‘Discoverable’.",
       "publishedAt": "2026-11-19T08:15:17.185000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1021467233127514172/1572883811191095358/Screenshot_2026-11-18-19-38-32-998_com.discord-edit.jpg?ex=6afffdb3&is=6afeac33&hm=30b5c34379d274fea340967bd35fa0862b6ce798c8541060fa84f1866b50cf49&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "< # @-pogo-chat > G G47IX @ 16:12 oe",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1572887979612049450.jpg"
+      "stagedPath": "/infographics/g47ix/discord-1572887979612049450.jpg",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1572636269660348669",
@@ -94,8 +198,8 @@
       "title": "SH CANDY CATCH 2026",
       "publishedAt": "2026-11-18T15:35:04.856000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1572630828947873933/SH_CANDY_CATCH_2026_.png?ex=6affbad7&is=6afe6957&hm=cf268361e33aa49e79df3d881aeda7c44d1d69aa63a8323c6f639dce4fc65c1e&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "19 Cy } ©@ NOV bs); 6:00 - 7:00 pm oy q eo f STARTERS — = Achance to receive Max. Particles when catching for catching event-themed Pokémon in the wild or after Max Battles. Pokémon Won't work with the Explorer Gadget or a GO Plus. Pokémon use that time to catch Pokémon If you don’t want to catch featured e from your stack, open Mystery Box or Coin Bag! ADVENTURE EFFECTS Remember you can use: Rend Spacial of Shock Freeze 4 © Mega Evolve for bonuses ey Shiny is available Roar Ice or other of Time Burn boosted during Spotlight Hour Please note - shiny rate is not @6®@ OO & Future sights Follow formore GA7ZIX QO aXe www.g47ix.pro",
       "eventMatch": {
@@ -142,7 +246,9 @@
         "picture text names the event"
       ],
       "matchScore": 2,
-      "stagedPath": "/infographics/g47ix/discord-1572636269660348669.png"
+      "stagedPath": "/infographics/g47ix/discord-1572636269660348669.png",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1572060169817297026",
@@ -151,8 +257,8 @@
       "title": "Duolingo Collab",
       "publishedAt": "2026-11-17T01:25:51.950000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1572054518118748283/Duolingo_.png?ex=6b00451c&is=6afef39c&hm=0880d22228e90cda6ee70cfe6a728ae78933a629f84cc5aa1f4627c868f15a44&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "AY A; “9 » ro O90 alasit New Special M83 Background Bn New feature: = Language Tag See eligible Pokémon Chatot names in other languages 106 / 106 HP Japanese: X Fy 7 © @ Celi Complete Timed Research Choose a language tasks in your selected language. ++ ++ nee * XP i Seri ghae shasit J . WW sek Se ghre shasit 28 DAYS HOW TO UNLOCK Complete a least Get the code and & Join Duo’s Pokémon Party 1 lesson on 7 redeem it on the Pokémon GO website Doale: son to earn today’s reward in & duolingo different days qa i Days do not have to be consecutive.",
       "eventMatch": {
@@ -195,7 +301,12 @@
         "picture text names the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1572060169817297026.webp"
+      "stagedPath": "/infographics/g47ix/discord-1572060169817297026.webp",
+      "publishedEvent": "leekduck:duolingo-timed-research-2026",
+      "publishedEvents": [
+        "leekduck:duolingo-timed-research-2026"
+      ],
+      "publishedTargets": []
     },
     {
       "id": "discord:1571939924482072576",
@@ -204,8 +315,8 @@
       "title": "crocs",
       "publishedAt": "2026-11-16T17:28:03.228000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1571935067985678466/crocs.png?ex=6affd5dd&is=6afe845d&hm=7e236551147172212e2fd2cc4856f8a25fca355064651c3353cef76bfebcfd17&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "Codes for the Pokémon ofS Gengar Classic Clog and Pokémon Jigglypuff Classic Platform Clog avatar items will be available with purchase of the Pokémon Gengar Crocs Classic Clog and Pokémon Jigglypuff Crocs Classic Platform Clog, respectively. SAq @- “| © a. @ 2 am FA POKEMONGOxCROCSxELECTRIFYING i a 41] othe store.pokemongo.com/offer-redemption ra a4 Tt io",
       "eventMatch": {
@@ -242,7 +353,9 @@
       "reviewNote": "Match is not strong enough (low).",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1571939924482072576.webp"
+      "stagedPath": "/infographics/g47ix/discord-1571939924482072576.webp",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1571938883816390689",
@@ -251,8 +364,8 @@
       "title": "@here",
       "publishedAt": "2026-11-16T17:23:55.114000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1021467233127514172/1571934929485561906/crocs.png?ex=6affd5bc&is=6afe843c&hm=163a279d02be1804458e55116a5687ffc6f79af60ef09a9fca4c92fb89ea7eac&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "Codes for the Pokémon ofS Gengar Classic Clog and Pokémon Jigglypuff Classic Platform Clog avatar items will be available with purchase of the Pokémon Gengar Crocs Classic Clog and Pokémon Jigglypuff Crocs Classic Platform Clog, respectively. SAq @- “| © a. @ 2 am FA POKEMONGOxCROCSxELECTRIFYING i a 41] othe store.pokemongo.com/offer-redemption ra a4 Tt io",
       "eventMatch": {
@@ -289,7 +402,9 @@
       "reviewNote": "Match is not strong enough (low).",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1571938883816390689.webp"
+      "stagedPath": "/infographics/g47ix/discord-1571938883816390689.webp",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1571900196105756758",
@@ -298,15 +413,25 @@
       "title": "Darkrai",
       "publishedAt": "2026-11-16T14:50:11.245000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1571895954154725406/HXDJmWYXoAArSBA.jpg?ex=6affb16f&is=6afe5fef&hm=05609904fc1d8852026065059cc1f5a4635b9eb0abbacb533e8ad58f47b8264b&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "#491 DYULCTL 53623 CP “It can lull people to sleep and make them dream. It is active during nights of the new moon Weakness cy cy + Difficulty: 2+ trainers needed _— % 2136 CP “we 2671 CP Boost Pw 44 Fog Lo Re ™ @ Co ww y @ Counter Re wa @ Force Palm (2 iy @ Low Kick i Jy @ Dyno unch+ « Aura: |Sph re hoy @ Aura Sphere =~ @ Secret Sword (W, @ Double Kick @ h—4 So , Vz eS © Meta FM a @ Sacred Sword u ) Dy! I \"e @ Play Rough . Py) | A! @ Th = an et @ Fury Cutter @ Fairy Wind @ @ Dynamic Punch @ @ X-Scissor ® Dazzling Gleam a a €z3 Remember to use proper counters, Party Play Follow for more e and Zacian’s Adventure Effect if needed. Ay G47IX 9© @®X@ | g47ix.pro",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1571900196105756758.jpg"
+      "stagedPath": "/infographics/g47ix/discord-1571900196105756758.jpg",
+      "publishedEvent": "",
+      "publishedEvents": [],
+      "publishedTargets": [
+        {
+          "type": "raid-boss",
+          "pokemonId": "491",
+          "formId": null,
+          "battleMode": "normal"
+        }
+      ]
     },
     {
       "id": "discord:1571900192804835379",
@@ -315,15 +440,25 @@
       "title": "Cresselia",
       "publishedAt": "2026-11-16T14:50:10.458000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1571895977982562386/HXDKnCmXEAA8dEp.jpg?ex=6affb175&is=6afe5ff5&hm=ef958d41b15f9299ffe2ff7388653d5af3850a01f314dc26698f35709744687c&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "@ feasel ‘CRESSELIA 33794 cP _—- Shiny particles are felansed from its wings like a veil. It is s said to represent the crescent moon.” Weakness © @ @ Difficulty: 3+ trainers needed Duo possible % 1633 CP%we2041 CP Boost # Windy Ay a @ Shadow Claw ve @ Bug Bit. @ Ominous Wind:, sy © Dark Pulset, @ Moongeist Beam @ F&F, gert hw Be o a 4 \\anend =a 7% Ww) © Snarl ~~ Bi a Dy @ Shadow Cla gg ©' utal rane ing ) Bruta Swing | @ Shadow Ball 4 fiber onsen ed i A eres ve @ Astonish @ Hex @ Shadow Claw © Feint Attack @ Shadow Ball @ Shadow Ball @ Shadow Force [5 © Brutal Swing — > Remember to use proper counters, Party Play Follow for more ‘nat and Zacian’s Adventure Effect if needed. GA7IX 9 @ @ X @ | g47ix.pro",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1571900192804835379.jpg"
+      "stagedPath": "/infographics/g47ix/discord-1571900192804835379.jpg",
+      "publishedEvent": "",
+      "publishedEvents": [],
+      "publishedTargets": [
+        {
+          "type": "raid-boss",
+          "pokemonId": "488",
+          "formId": null,
+          "battleMode": "normal"
+        }
+      ]
     },
     {
       "id": "discord:1571789562240303105",
