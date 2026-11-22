@@ -31,13 +31,13 @@ test('Store: exact names (optional xN suffix) get their picture', () => {
 test('Store: Rare Candy, Rare Candy XL, Lucky Egg and incubators (exact, optional xN) and no cross matches', () => {
   for (const [names, want] of [[['Rare Candy', 'Rare Candy x3'], RC], [['Rare Candy XL', 'Rare Candy XL x2', 'rare candy xl ×2'], RX], [['Lucky Egg', 'Lucky Egg x8'], LE], [['Egg Incubator', 'Egg Incubator x3', 'Egg Incubators ×3'], EI], [['Super Incubator', 'Super Incubator x2'], SI]])
     for (const n of names) assert.equal(srcOf(icon(n)), want, n);
-  for (const n of ['Machop Candy', 'Candy', 'Candy XL', 'XL Candy', 'Rare Candy Pack', 'Rare Candy XL Bundle', 'Lucky Egg Bundle', 'Lucky Eggs Pack', 'Golden Lucky Egg', 'Incubator', 'Egg', 'Egg Incubator Bundle', 'Super Incubator Pack', 'Super Egg Incubator', 'Basic Incubator', 'Rare Candy x0', '']) assert.equal(icon(n), '', JSON.stringify(n));
+  for (const n of ['Zzz Candy', 'Candy', 'Candy XL', 'XL Candy', 'Rare Candy Pack', 'Rare Candy XL Bundle', 'Lucky Egg Bundle', 'Lucky Eggs Pack', 'Golden Lucky Egg', 'Incubator', 'Egg', 'Egg Incubator Bundle', 'Super Incubator Pack', 'Super Egg Incubator', 'Basic Incubator', 'Rare Candy x0', '']) assert.equal(icon(n), '', JSON.stringify(n));
 });
 
 test('Research chips and GO Pass: the five new items are exact, Rare Candy and XL never cross', () => {
   for (const [n, want] of [['Rare Candy', RC], ['10× Rare Candy', RC], ['Rare Candy XL', RX], ['3× Rare Candy XL', RX], ['Lucky Egg', LE], ['Egg Incubator', EI], ['2× Super Incubator', SI]]) { assert.equal(itemIcon(n), want, n); }
   for (const [n, want] of [['Rare Candy', RC], ['Rare Candy XL', RX], ['Lucky Egg', LE], ['Egg Incubator', EI], ['Super Incubator', SI]]) assert.equal(GP.resolve({ name: n, type: 'item' }).src, want, n);
-  for (const n of ['Machop Candy', 'Candy', 'Candy XL', 'Rare Candy Pack', 'Lucky Egg Pack', 'Incubator', 'Egg Incubator Bundle', 'Super Incubator Pack', 'Machop Candy XL']) { assert.equal(itemIcon(n), '', n); assert.equal(GP.resolve({ name: n, type: 'item' }).src, null, n); }
+  for (const n of ['Zzz Candy', 'Candy', 'Candy XL', 'Rare Candy Pack', 'Lucky Egg Pack', 'Incubator', 'Egg Incubator Bundle', 'Super Incubator Pack', 'Zzz Candy XL']) { assert.equal(itemIcon(n), '', n); assert.equal(GP.resolve({ name: n, type: 'item' }).src, null, n); }
 });
 
 test('Nanab, Max Mushroom, Revive, Potions and Remote Raid Pass: exact in Store, chips and GO Pass; Max Revive/Max Potion/Raid Pass keep theirs', () => {
@@ -99,6 +99,6 @@ test('store icons are decorative, lazy and sized; no new hosts; version tokens a
   const h = icon('Great Ball x20');
   assert.match(h, /alt=""/); assert.match(h, /loading="lazy"/); assert.match(h, /width="40" height="40"/); assert.doesNotMatch(h, /https?:/);
   for (const f of FILES) assert.ok(store.includes(f) && detail.includes(f), f);
-  assert.match(sw, /gofn-shell-v386/);
-  assert.match(html, /go-pass-reward-art\.js\?v=20261122a/); assert.match(sw, /go-pass-reward-art\.js\?v=20261122a/);
+  assert.match(sw, /gofn-shell-v387/);
+  assert.match(html, /go-pass-reward-art\.js\?v=20261122b/); assert.match(sw, /go-pass-reward-art\.js\?v=20261122b/);
 });
