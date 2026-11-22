@@ -69,13 +69,17 @@ export const norm = s => String(s || "").toLowerCase().replace(/\(.*?\)/g, "").r
 // A current boss page cannot establish future 1-3-star / Shadow rosters.
 // Use the existing UTC calendar-day granularity for unsuffixed rotation times.
 export function isActiveRaidDay(rotation, nowMs = Date.now()) {
-  if (!Number.isFinite(nowMs)) return false;
-  const date = /^\d{4}-\d{2}-\d{2}(?:T|$)/;
-  const s = String(rotation?.s || ""), e = String(rotation?.e || "");
-  if (!date.test(s) || !date.test(e)) return false;
-  const first = s.slice(0, 10), last = e.slice(0, 10);
-  const today = new Date(nowMs).toISOString().slice(0, 10);
-  return first <= today && today <= last && first <= last;
+  function calendarDay(value) {
+    const day = typeof value === "string" && /^\d{4}-\d{2}-\d{2}(?:T|$)/.test(value)
+      ? value.slice(0, 10) : "";
+    const stamp = Date.parse(day);
+    return Number.isFinite(stamp) && new Date(stamp).toISOString().slice(0, 10) === day ? day : "";
+  }
+  const current = new Date(nowMs);
+  if (!Number.isFinite(nowMs) || !Number.isFinite(current.getTime())) return false;
+  const first = calendarDay(rotation?.s), last = calendarDay(rotation?.e);
+  const today = current.toISOString().slice(0, 10);
+  return Boolean(first && last && first <= today && today <= last);
 }
 
 // Only an active rotation whose 5-star boss is present on the current page.

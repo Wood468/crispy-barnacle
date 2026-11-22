@@ -201,3 +201,18 @@ test("current low-raid page cannot match future repeated species or invalid date
   assert.equal(coveredCuratedSpecialEvent([future], { one: [], three: ["Druddigon"], five: ["Palkia"] }, at), null,
     "future official/curated exception cannot be triggered from a current source");
 });
+
+test("active raid days reject impossible Gregorian dates and accept real leap days", () => {
+  const at = Date.parse("2028-02-29T12:00:00Z");
+  assert.equal(isActiveRaidDay({ s: "2028-02-29", e: "2028-02-29" }, at), true);
+  for (const [s, e] of [
+    ["2028-00-01", "2028-03-01"],
+    ["2028-02-01", "2028-99-01"],
+    ["2028-02-01", "2028-02-30"],
+    ["2027-02-29", "2028-03-01"],
+    ["2028-02-01", "2028-04-31"],
+  ]) {
+    assert.equal(isActiveRaidDay({ s, e }, at), false, s + " to " + e);
+  }
+  assert.equal(isActiveRaidDay({ s: "2028-02-29", e: "2028-02-29" }, 9e15), false);
+});
