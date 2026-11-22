@@ -132,7 +132,7 @@ export function venueItems(details) {
     if (v) out.push({
       id: "v:" + id, name: ev.name || id, ms: v.start, endMs: v.end, doorsMs: v.doors,
       venueTime: v.venue + " " + v.zone, zone: v.zone, timeZone: v.timeZone,
-      unconfirmed: !v.official && /unconfirmed|not (yet )?(been )?confirmed/i.test(hit), link, venue: true
+      unconfirmed: !v.official, link, venue: true
     });
   }
   return out;
