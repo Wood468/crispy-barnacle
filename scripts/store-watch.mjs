@@ -255,11 +255,13 @@ export const rebaselinePrev = prev => ({ watchStart: prev && prev.watchStart, go
 async function staleAlert() {
   const now = Date.now(), st = await readJson(STATE, null) || {};
   const pub = await readJson(process.env.STORE_CURRENT_SNAPSHOT || "public/store-current-snapshot.json", {});
+  // GET /api/store-ingest needs the key, which this step does not hold: the "Read the store" step saved the response headers
+  // (no secret in them). No file (no key, refused, unreachable) leaves receivedMs null, which counts as silent as before.
   let receivedMs = null;
   try {
-    const r = await fetch(process.env.STORE_INGEST_URL || "https://pogo.michaelpuff.com/api/store-ingest", { signal: AbortSignal.timeout(15000) });
-    if (r.ok) receivedMs = Date.parse(r.headers.get("x-store-received"));
-  } catch { /* unreachable counts as silent */ }
+    const m = /^x-store-received:\s*(\S+)/im.exec(await readFile(process.env.STORE_INGEST_HEADERS || "/tmp/store-ingest-headers.txt", "utf8"));
+    if (m) receivedMs = Date.parse(m[1]);
+  } catch { /* no headers saved counts as silent */ }
   const why = staleReason({ publicUpdated: pub.updated, lastComplete: lastCompleteAt(st), receivedMs }, now);
   if (!why) { console.log("Store snapshot is fresh."); return; }
   if (!shouldSendStaleAlert(st, now)) { console.log("Stale (" + why + "); already alerted within 24 hours."); return; }

@@ -34,7 +34,11 @@ const ZONES = {
   NZST: { timeZone: "Etc/GMT-12", offsetMinutes: 720 }
 };
 const T = "(\\d{1,2})(?::(\\d\\d))?\\s*([ap])\\.?m\\.?";
-const mins = (h, m, ap) => ((+h % 12) + (/p/i.test(ap) ? 12 : 0)) * 60 + (+m || 0);
+const mins = (h, m, ap) => {
+  const hour = Number(h), minute = m === undefined ? 0 : Number(m);
+  if (!Number.isInteger(hour) || hour < 1 || hour > 12 || !Number.isInteger(minute) || minute < 0 || minute > 59) return null;
+  return ((hour % 12) + (/p/i.test(ap) ? 12 : 0)) * 60 + minute;
+};
 function safeTimeZone(value) {
   try { new Intl.DateTimeFormat("en-AU", { timeZone: value }).format(0); return value; }
   catch { return TZ_DEFAULT; }
@@ -66,10 +70,16 @@ export function parseVenueTimes(text) {
   const z = /\b(PDT|PST|MDT|MST|CDT|CST|EDT|EST|GMT|UTC|BST|CEST|CET|EEST|EET|JST|KST|SGT|HKT|PHT|ICT|WIB|AEDT|AEST|NZDT|NZST)\b/.exec(t);
   const mo = d && MONTHS.indexOf(d[1].toLowerCase()), zone = z && ZONES[z[1]];
   if (!d || mo < 0 || !zone) return null;
-  const at = (h, m, ap) => localClockToMs(+d[3], mo, +d[2], mins(h, m, ap), zone.timeZone, zone.offsetMinutes);
+  const at = (h, m, ap) => {
+    const minuteOfDay = mins(h, m, ap);
+    return minuteOfDay === null ? null : localClockToMs(+d[3], mo, +d[2], minuteOfDay, zone.timeZone, zone.offsetMinutes);
+  };
   const pick = re => {
     const m = new RegExp(re + "\\s*:\\s*" + T + "(?:\\s*(?:to|until|–|-)\\s*" + T + ")?", "i").exec(t);
     if (!m) return null;
+    // A malformed range endpoint must not be silently discarded by the optional regex group.
+    // Otherwise "7:30 p.m. to 9:999 p.m." becomes a misleading start-only event.
+    if (!m[4] && /^\s*(?:to\b|until\b|[–-])/i.test(t.slice(m.index + m[0].length))) return null;
     const a = at(m[1], m[2], m[3]), b = m[4] ? at(m[4], m[5], m[6]) : null;
     return a == null || (m[4] && b == null) ? null : { a, b };
   };
@@ -122,7 +132,7 @@ export function venueItems(details) {
     if (v) out.push({
       id: "v:" + id, name: ev.name || id, ms: v.start, endMs: v.end, doorsMs: v.doors,
       venueTime: v.venue + " " + v.zone, zone: v.zone, timeZone: v.timeZone,
-      unconfirmed: !v.official && /unconfirmed|not (yet )?(been )?confirmed/i.test(hit), link, venue: true
+      unconfirmed: !v.official, link, venue: true
     });
   }
   return out;
