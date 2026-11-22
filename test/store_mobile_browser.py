@@ -1,4 +1,4 @@
-"""Store PR-head visual contract with synthetic, non-owner prices only.
+"""Store mobile contract for anonymous visitors and synthetic owner prices.
 
 Run against the real static application served on localhost:8791. No owner API
 response, credentials or actual regional price data enter CI artifacts.
@@ -6,6 +6,7 @@ response, credentials or actual regional price data enter CI artifacts.
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 from playwright.sync_api import sync_playwright
 
 BASE = "http://127.0.0.1:8791"
@@ -66,6 +67,12 @@ with sync_playwright() as p:
         context = browser.new_context(viewport={"width": width, "height": 844},
                                       service_workers="block", locale="en-AU")
         page = context.new_page()
+        private_price_requests = []
+        def record_private_price_request(request):
+            if urlsplit(request.url).path == "/api/prices-private":
+                private_price_requests.append(True)
+
+        page.on("request", record_private_price_request)
         page.route("**/api/**", lambda route: route.fulfill(status=404, body="{}"))
         page.route("**/store-current-snapshot.json",
                    lambda route: route.fulfill(status=200, content_type="application/json",
@@ -77,6 +84,16 @@ with sync_playwright() as p:
         page.wait_for_selector("#tab-events:not([hidden])")
         page.wait_for_selector("#sub-timeline:not([hidden])")
         page.wait_for_function("Boolean(window.GOLIB && window.GORegionalPrices && window.GOStoreOfferIdentities && window.GOStoreFX)")
+        # Exercise the actual anonymous loader before introducing owner fixtures.
+        prices = page.evaluate("() => GOLIB.loadPrices()")
+        assert isinstance(prices, dict) and isinstance(prices.get("prices"), list), (
+            f"{width}px public price data did not load"
+        )
+        private_fields = {"owner", "regional", "tiers_idr", "rp_per_usd", "fx"}
+        assert not private_fields.intersection(prices), f"{width}px private fields in anonymous prices"
+        assert not private_price_requests, f"{width}px anonymous browser requested the owner price endpoint"
+        assert page.locator("#storep-host").count() == 0, f"{width}px owner Store mounted for anonymous visitor"
+
         # Replace the private loader before rerunning the real Store renderer.
         # Only synthetic data is rendered or saved to the artifact.
         page.evaluate("""fixture => {
