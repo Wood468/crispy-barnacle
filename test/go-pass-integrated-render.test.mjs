@@ -161,7 +161,7 @@ test('load order, offline references and post-render mount form a complete PWA i
  const assets=[
   '/go-pass-navigation.css?v=20261118h',
   '/go-pass-navigation.js?v=20261118i',
-  '/go-pass-reward-art.js?v=20261122b',
+  '/go-pass-reward-art.js?v=20261122c',
   '/event-components.js?v=20261123c-shiny',
   dashPreload[1]
  ];
