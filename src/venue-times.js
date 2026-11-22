@@ -34,7 +34,11 @@ const ZONES = {
   NZST: { timeZone: "Etc/GMT-12", offsetMinutes: 720 }
 };
 const T = "(\\d{1,2})(?::(\\d\\d))?\\s*([ap])\\.?m\\.?";
-const mins = (h, m, ap) => ((+h % 12) + (/p/i.test(ap) ? 12 : 0)) * 60 + (+m || 0);
+const mins = (h, m, ap) => {
+  const hour = Number(h), minute = m === undefined ? 0 : Number(m);
+  if (!Number.isInteger(hour) || hour < 1 || hour > 12 || !Number.isInteger(minute) || minute < 0 || minute > 59) return null;
+  return ((hour % 12) + (/p/i.test(ap) ? 12 : 0)) * 60 + minute;
+};
 function safeTimeZone(value) {
   try { new Intl.DateTimeFormat("en-AU", { timeZone: value }).format(0); return value; }
   catch { return TZ_DEFAULT; }
@@ -66,7 +70,10 @@ export function parseVenueTimes(text) {
   const z = /\b(PDT|PST|MDT|MST|CDT|CST|EDT|EST|GMT|UTC|BST|CEST|CET|EEST|EET|JST|KST|SGT|HKT|PHT|ICT|WIB|AEDT|AEST|NZDT|NZST)\b/.exec(t);
   const mo = d && MONTHS.indexOf(d[1].toLowerCase()), zone = z && ZONES[z[1]];
   if (!d || mo < 0 || !zone) return null;
-  const at = (h, m, ap) => localClockToMs(+d[3], mo, +d[2], mins(h, m, ap), zone.timeZone, zone.offsetMinutes);
+  const at = (h, m, ap) => {
+    const minuteOfDay = mins(h, m, ap);
+    return minuteOfDay === null ? null : localClockToMs(+d[3], mo, +d[2], minuteOfDay, zone.timeZone, zone.offsetMinutes);
+  };
   const pick = re => {
     const m = new RegExp(re + "\\s*:\\s*" + T + "(?:\\s*(?:to|until|–|-)\\s*" + T + ")?", "i").exec(t);
     if (!m) return null;
