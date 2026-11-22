@@ -245,3 +245,25 @@ test('a single priced region distinguishes same-name cards without numbering', a
   const twins = cards.filter(c => c.includes('>Twin Box</b>'));
   assert.deepEqual(twins.map(c => c.match(/sp-tag">([^<]+)</)[1]).sort(), ['AU only', 'ID only']);
 });
+
+test('distinct Indonesia-only and India-only SKUs stay separate from a same-name AU offer', async () => {
+  const product = 'Same Name Regional Box';
+  const regional = [
+    { id: 'id-distinct-box', product, kind: 'bundle', region: 'ID', channel: 'web',
+      sourceSku: 'id-distinct-box', currency: 'IDR', amount: 50000,
+      observed: '2026-11-09', source: 'fixture', status: 'verified' },
+    { id: 'in-distinct-box', product, kind: 'bundle', region: 'IN', channel: 'in-app',
+      sourceSku: 'in-distinct-box', currency: 'INR', amount: 439,
+      observed: '2026-11-09', source: 'fixture', status: 'verified' },
+  ];
+  const { cards } = await render({ prices: [au('store-au-distinct-box', product, 9.99, 'Boxes')], regional });
+  const matches = cards.filter(card => card.includes('>' + product + '</b>'));
+  assert.equal(matches.length, 3);
+  const byRegion = new Map(matches.map(card => [card.match(/sp-tag">([^<]+)</)?.[1], text(card)]));
+  assert.deepEqual([...byRegion.keys()].sort(), ['AU only', 'ID only', 'IN only']);
+  assert.match(byRegion.get('AU only'), /A\$9\.99/);
+  assert.match(byRegion.get('ID only'), /Rp\s?50,000/);
+  assert.match(byRegion.get('IN only'), /₹\s?439/);
+  assert.doesNotMatch(byRegion.get('ID only'), /₹|cheapest/i);
+  assert.doesNotMatch(byRegion.get('IN only'), /Rp|cheapest/i);
+});
