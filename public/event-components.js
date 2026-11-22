@@ -409,6 +409,68 @@ function raidDayRosters(raidDays,ctx){
  }).join('');
  return '<div class="ue-raid-days"><h3 class="ue-mini-h">Raids &amp; Max Battles by day</h3><div class="ue-raid-day-grid">'+cards+'</div></div>';
 }
+
+/* Only explicit, sourced increases belong here. Shiny eligibility and shiny
+   artwork are never evidence of increased encounter odds. */
+function shinyBoostOverview(model,ctx){
+ ctx=ctx||{};
+ var sourced=(model.sources||[]).some(function(source){
+  try{var url=new URL(source&&source.url);return url.protocol==='https:'&&!url.username&&!url.password;}catch(error){return false;}
+ });
+ if(!sourced)return '';
+ var conflicts=model.internalValidation&&model.internalValidation.conflicts||[];
+ if(conflicts.some(function(c){return c.field==='shiny'&&!c.identityKey;}))return '';
+ function disputed(text){
+  return conflicts.some(function(c){return c.a&&c.a.text===text||c.b&&c.b.text===text;});
+ }
+ function explicitIncrease(text){
+  if(!/\bshiny\b/i.test(text))return false;
+  if(/\b(?:no|not|without)\b.{0,35}\b(?:boost|increase|higher|enhanced)\b/i.test(text))return false;
+  return /\b(?:increased|boosted|higher|enhanced)\b.{0,65}\b(?:chance|chances|odds|rates?|likelihood)\b.{0,100}\bshiny\b/i.test(text)||
+    /\bshiny\b.{0,60}\b(?:chance|chances|odds|rates?|likelihood)\b.{0,45}\b(?:increased|boosted|higher|enhanced)\b/i.test(text)||
+    /\b(?:increased|boosted)\s+shiny\s+(?:chance|chances|odds|rates?)\b/i.test(text);
+ }
+ var boosted=(model.pokemon||[]).filter(function(p){
+  return p.boostedShiny===true&&!conflicts.some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
+ });
+ var claims=[],seen=new Set();
+ function addClaim(row){
+  var statement=value(row);
+  if(!statement||!explicitIncrease(statement)||disputed(statement))return;
+  var key=statement.toLowerCase().replace(/\s+/g,' ').trim();
+  if(!seen.has(key)){seen.add(key);claims.push(statement);}
+ }
+ (model.bonuses||[]).forEach(function(row){
+  if(!row||typeof row==='object'&&row.status&&!['official','verified','corroborated'].includes(row.status))return;
+  addClaim(row);
+ });
+ var fields=model.internalValidation&&model.internalValidation.fields||{};
+ (fields.shiny||[]).forEach(function(row){
+  if(row&&['official','verified','corroborated'].includes(row.status))addClaim(row);
+ });
+ if(!boosted.length&&!claims.length)return '';
+ var pokemon=boosted.map(function(p){
+  var name=String(p.name||p.speciesId||'Pokémon');
+  if(p.label&&name.toLowerCase().indexOf(String(p.label).toLowerCase())<0)name+=' ('+p.label+')';
+  var metadata=[],unique=new Set();
+  (model.encounters||[]).filter(function(edge){return edge.identityKey===p.key;}).forEach(function(edge){
+   var activity=(model.activities||[]).find(function(a){return a.id===edge.activityId;});
+   var method=edge.method!=='other'?METHODS[edge.method]||'':'';
+   var access=edge.access&&edge.access!=='unknown'&&edge.access!=='all'?'Access: '+edge.access:'';
+   var when=activity&&activity.schedule&&ctx.clock&&typeof ctx.clock.range==='function'?'Time: '+activityTime(activity,ctx):'';
+   var statement=[method,access,when].filter(Boolean).join(' · ');
+   if(statement&&!unique.has(statement)){unique.add(statement);metadata.push(statement);}
+  });
+  return '<li class="ue-shiny-species"><div class="ue-shiny-species-title"><strong>'+esc(name)+'</strong><span>↑✦ Boosted shiny</span></div>'+
+   (metadata.length?'<ul class="ue-shiny-methods">'+metadata.map(function(line){return '<li>'+esc(line)+'</li>';}).join('')+'</ul>':'')+'</li>';
+ }).join('');
+ var announcements=claims.map(function(statement){return '<li>'+esc(statement)+'</li>';}).join('');
+ return '<section class="ue-shiny-overview" aria-label="Shiny boosts"><div class="ue-shiny-overview-head"><span class="ue-shiny-overview-mark" aria-hidden="true">↑✦</span><div><h3>Shiny boosts</h3><p>Confirmed increased chances only. Shiny availability alone is not a boost.</p></div></div>'+
+  (pokemon?'<ul class="ue-shiny-species-list">'+pokemon+'</ul>':'')+
+  (announcements?'<div class="ue-shiny-announcements"><strong>Published boost conditions</strong><ul>'+announcements+'</ul></div>':'')+
+  '</section>';
+}
+
 function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.internalValidation&&model.internalValidation.fields||{},body={};
  var galleryOnly=!ctx.rotationHtml&&model.encounters.every(function(e){return e.method==='other';});
  body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',(ctx.rotationHtml||'')+gallery(model,ctx));
@@ -454,7 +516,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
 
  var panels=[],label={encounters:'Pokémon',bonuses:'Bonuses',research:'Research',passes:'GO Pass',tickets:'Tickets'};
  var incomplete=!selected.length&&!info.length;
- var overview=(ctx.overview||'')+schedulePreview(model,ctx)+raidDayRosters(ctx.raidDays,ctx)+sourceHighlights(model)+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
+ var overview=(ctx.overview||'')+shinyBoostOverview(model,ctx)+schedulePreview(model,ctx)+raidDayRosters(ctx.raidDays,ctx)+sourceHighlights(model)+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
  panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
  ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-(bonus|note)/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
  var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
@@ -469,5 +531,5 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var secs=sections.map(function(t){return '<section class="evd-sec" id="evd-s-'+t.id+'" aria-labelledby="evd-h-'+t.id+'" data-sec="'+t.id+'"><h2 class="evd-sec-h" id="evd-h-'+t.id+'" tabindex="-1">'+esc(t.label)+(t.id==='research'?' <small class="m evd-count">'+(view.researchTasks?view.researchTasks+(view.researchTasks===1?' task':' tasks'):'no tasks listed yet')+'</small>':'')+'</h2>'+dedupe(t.html)+'</section>';}).join('');
  return (ctx.toolbar||'')+hero+nav+'<div class="evd-sections">'+secs+'</div>';
 }
-return {render:render,gallery:gallery,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');},raidDayRosters:raidDayRosters,eggKm:eggKm};
+return {render:render,gallery:gallery,shinyBoostOverview:shinyBoostOverview,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');},raidDayRosters:raidDayRosters,eggKm:eggKm};
 }));

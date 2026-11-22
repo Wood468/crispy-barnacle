@@ -510,6 +510,24 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 .ue-source-highlights strong{font-size:12px;letter-spacing:.03em;color:var(--muted,#b9b5cf)}
 .ue-source-highlights span{font-size:14px;line-height:1.45}
 
+
+/* Source-backed shiny-boost overview. Never style normal shiny eligibility as boosted. */
+.ue-shiny-overview{display:grid;gap:11px;padding:13px 14px;border:1px solid color-mix(in srgb,var(--color-kind-shiny) 55%,var(--color-border));border-radius:var(--radius-lg);background:color-mix(in srgb,var(--color-kind-shiny) 9%,var(--color-surface));min-width:0}
+.ue-shiny-overview-head{display:flex;align-items:flex-start;gap:10px}
+.ue-shiny-overview-mark{display:grid;place-items:center;flex:0 0 34px;min-height:34px;border-radius:10px;background:var(--color-kind-shiny);color:var(--color-on-kind-shiny);font-size:1rem;font-weight:900}
+.ue-shiny-overview-head h3{margin:0 0 3px;font-size:1rem}
+.ue-shiny-overview-head p{margin:0;color:var(--color-text-muted);font-size:.76rem;line-height:1.4}
+.ue-shiny-species-list,.ue-shiny-announcements ul,.ue-shiny-methods{list-style:none;margin:0;padding:0;display:grid;gap:7px;min-width:0}
+.ue-shiny-species{min-width:0;padding:9px 11px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface)}
+.ue-shiny-species-title{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap}
+.ue-shiny-species-title strong{font-size:.87rem;overflow-wrap:anywhere}
+.ue-shiny-species-title span{font-size:.68rem;font-weight:800;color:var(--color-kind-shiny);white-space:nowrap}
+.ue-shiny-methods{margin-top:6px;gap:4px;font-size:.74rem;line-height:1.45;color:var(--color-text-muted)}
+.ue-shiny-methods li,.ue-shiny-announcements li{overflow-wrap:anywhere}
+.ue-shiny-announcements{display:grid;gap:7px;font-size:.8rem;line-height:1.45}
+.ue-shiny-announcements>strong{font-size:.75rem}
+.ue-shiny-announcements li{padding:8px 10px;border-radius:var(--radius-sm);background:var(--color-surface);border:1px solid var(--color-border)}
+
 /* Universal schedule preview: same responsive treatment for every event family. */
 .ue-schedule-preview{margin:16px 0}
 .ue-schedule-preview ol{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}
