@@ -200,7 +200,7 @@ test('recorded (not re-checked) prices carry the older marker; verified prices s
 });
 
 test('unconfirmed items are marked in the main list; passes and boxes still move to Earlier offers', async () => {
-  const now = new Date().toISOString();
+  const now = new Date(Date.now()).toISOString();
   const prices = [au('store-listed', 'Listed Item', 2.99), au('store-bag', 'Item Bag Upgrade', 3.99, 'Storage'),
     au('store-coin', '600 PokéCoins', 4.99, 'PokéCoins'), au('store-pass', 'Unconfirmed Pass', 9.99, 'Tickets')];
   const snapshot = { version: 1, updated: now, items: [{ name: 'Listed Item', lastSeen: now }], gone: [] };

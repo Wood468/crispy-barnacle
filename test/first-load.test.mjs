@@ -125,8 +125,8 @@ test("service worker hands the network response back before the cache write fini
 test("service worker answers pictures from the cache first and refreshes ones older than a day", async () => {
   let net = 0;
   const t = makeSw(async () => { net++; return basic("new-pic"); });
-  t.entries.set("https://app.test/dex/25.webp", Object.assign(basic("cached-pic", { date: new Date().toUTCString() })));
-  t.entries.set("https://app.test/infographic-thumbs/g47ix/a.jpg.webp", Object.assign(basic("cached-thumb", { date: new Date().toUTCString() })));
+  t.entries.set("https://app.test/dex/25.webp", Object.assign(basic("cached-pic", { date: new Date(Date.now()).toUTCString() })));
+  t.entries.set("https://app.test/infographic-thumbs/g47ix/a.jpg.webp", Object.assign(basic("cached-thumb", { date: new Date(Date.now()).toUTCString() })));
   const thumb = await t.dispatch("/infographic-thumbs/g47ix/a.jpg.webp");
   assert.equal(await thumb.text(), "cached-thumb"); assert.equal(net, 0, "a visited infographic WebP is served cache-first");
   const fresh = await t.dispatch("/dex/25.webp");
