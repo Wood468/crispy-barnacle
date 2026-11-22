@@ -110,7 +110,12 @@ with sync_playwright() as p:
                 document.body.appendChild(host);
             }
         }""", FIXTURE)
-        page.add_script_tag(url="/store.js?v=20261124a-bagart")
+        page.add_script_tag(url="/store.js?v=20261124d-comparepop")
+        # The comparison is behind one compact button; open it with a real tap, as on a phone.
+        page.wait_for_selector("[data-sp-open]", state="visible")
+        assert page.locator(".sp-pop").is_hidden(), f"{width}px comparison must start closed"
+        page.locator("[data-sp-open]").click()
+        page.wait_for_selector(".sp-pop", state="visible")
         # Wait for attachment first: the product may live in a collapsed category.
         target = ".storep-regional [data-sp-name*='synthetic test ticket']"
         page.wait_for_selector(target, state="attached")
@@ -266,6 +271,22 @@ with sync_playwright() as p:
         assert india["olderMarks"] == 1, f"{width}px recorded IN price needs the older marker: {india}"
         assert metrics["footVisible"] and metrics["foot"].startswith("Prices are dated observations, not live checkout quotes."), f"{width}px footer: {metrics['foot']}"
         assert metrics["legendCount"] == 1, f"{width}px legend must exist once: {metrics['legendCount']}"
+        box = page.locator(".sp-pop").bounding_box()
+        vh = page.evaluate("window.innerHeight")
+        assert box["x"] >= 0 and box["x"] + box["width"] <= width + 0.5, f"{width}px popover off-screen horizontally: {box}"
+        assert box["y"] >= 0 and box["y"] + box["height"] <= vh + 0.5, f"{width}px popover off-screen vertically: {box}"
+        assert page.locator("[data-sp-open]").get_attribute("aria-expanded") == "true"
+        body = page.evaluate("() => { const b = document.querySelector('.sp-pop-body'); return getComputedStyle(b).overflowY; }")
+        assert body == "auto", f"{width}px popover must scroll inside: {body}"
+        page.keyboard.press("Escape")
+        assert page.locator(".sp-pop").is_hidden(), f"{width}px Esc must close"
+        assert page.evaluate("document.activeElement?.hasAttribute('data-sp-open')"), f"{width}px focus returns to the button"
+        page.locator("[data-sp-open]").click()
+        page.locator(".sp-pop-x").click()
+        assert page.locator(".sp-pop").is_hidden(), f"{width}px close button must close"
+        page.locator("[data-sp-open]").click()
+        page.mouse.click(2, 2)
+        assert page.locator(".sp-pop").is_hidden(), f"{width}px outside tap must close"
         print(f"PASS Store synthetic owner layout {width}px: {json.dumps(metrics)}", flush=True)
         context.close()
     browser.close()
