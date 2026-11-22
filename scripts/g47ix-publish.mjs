@@ -106,7 +106,28 @@ export function detailsAsEvents(details) {
   return out;
 }
 
-export function decide(candidate, ocrText, events) {
+// A raid boss guide / counter chart: say so in the picture, or name a boss from the current rotation. Only a hint for suggestions:
+// it never counts as a signal toward an automatic link, and raid slots repeat across dates, so a date in the picture ranks them.
+const RAID_GUIDE = /raid guide|counters?\b|\b5[- ]?star\b|5★|mega raid|shadow raid|raid boss/i;
+export function raidSuggest(text, events, now = Date.now()) {
+  const raids = (events || []).filter(e => e && e.kind === "raid");
+  if (!raids.length) return [];
+  const guide = RAID_GUIDE.test(String(text || ""));
+  const found = datesIn(text);
+  return monGuesses(text, raids, now).map(g => {
+    const ev = raids.find(e => e.id === g.eventId), dated = ev && dateHit(ev, found);
+    return { eventId: g.eventId, eventTitle: g.eventTitle, score: Math.min(0.95, g.score + (guide ? 0.1 : 0) + (dated ? 0.2 : 0)), via: g.via, why: ["names " + g.via, guide && "looks like a raid guide", dated && "date in the picture is in this raid window"].filter(Boolean).join("; ") };
+  }).sort((a, b) => b.score - a.score).slice(0, 2);
+}
+
+export function decide(candidate, ocrText, events, now = Date.now()) {
+  const r = decideBase(candidate, ocrText, events);
+  if (r.confident || (r.match && r.match.confidence === "high" && r.event && r.event.kind !== "raid")) return r;
+  const sug = raidSuggest([candidate.title, ocrText].filter(Boolean).join(" "), events, now);
+  if (!sug.length) return r;
+  return { confident: false, match: null, guess: { ...sug[0], alternatives: sug }, score: 0, signals: [], reason: "Looks like a raid guide (" + sug[0].why + "). Tap to link it to " + sug[0].eventTitle + ", or choose another." };
+}
+function decideBase(candidate, ocrText, events) {
   const text = [candidate.title, ocrText].filter(Boolean).join(" ");
   const match = matchEvent({ title: text }, events);
   if (!match) {
