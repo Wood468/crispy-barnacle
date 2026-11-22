@@ -96,13 +96,15 @@ function reward(item,ctx){
  var icon='<span class="ue-reward-art">'+(artwork||fallback)+'</span>';
  return '<div class="research-reward">'+icon+'<span><b>'+quantity+esc(item.name)+'</b>'+cp+'</span></div>';
 }
-function researchTask(r,ctx){return '<article class="research-task"><h4>'+esc(value(r))+'</h4>'+(r.access&&r.access!=='unknown'?'<p>'+esc(r.access)+'</p>':'')+(Array.isArray(r.rewards)?'<div class="research-rewards">'+r.rewards.map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+'</article>';}
+function researchTask(r,ctx){return '<article class="research-task"><h4>'+esc(value(r))+'</h4>'+(r.access&&r.access!=='unknown'?'<p>'+esc(r.access)+'</p>':'')+(Array.isArray(r.rewards)?'<div class="research-rewards">'+r.rewards.map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+(Array.isArray(r.rewardConflicts)&&r.rewardConflicts.length?'<small class="research-task-source">Sources disagree on these rewards. Quantities are unconfirmed.</small>':'')+'</article>';}
 /* Parsed tasks are the countable unit. Source prose lines are shown as notes underneath and never counted as tasks. */
 function research(items,ctx){var list=items.filter(function(r){return value(r);}),tasks=list.filter(function(r){return V.researchTaskCount([r]);}),notes=list.filter(function(r){return !V.researchTaskCount([r]);});
  return tasks.map(function(r){return researchTask(r,ctx);}).join('')+(notes.length?'<ul class="ue-facts ue-research-notes">'+notes.map(function(r){return '<li>'+esc(value(r))+'</li>';}).join('')+'</ul>':'')+(!tasks.length&&notes.length?'<p class="ue-more-note" role="note">No individual research tasks have been published yet.</p>':'');}
 /* Only use icons whose published app assets identify the actual reward.
    XP and Candy XL deliberately use category symbols instead of misleading art. */
-var PASS_ICONS=[[/^stardust$/i,'/ico/dust.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz/i,'/ico/i/golden-razz.webp'],[/^silver pinap/i,'/ico/i/silver-pinap.webp'],[/^incense$/i,'/ico/incense.webp'],[/(raid|battle) pass/i,'/ico/g/raidpass.webp']];
+/* Exact-only fallback for when the semantic artwork helper is unavailable.
+   Never reuse standard Raid Pass art for Remote/Premium Battle Passes. */
+var PASS_ICONS=[[/^stardust$/i,'/ico/dust.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz berry$/i,'/ico/i/golden-razz.webp'],[/^silver pinap berry$/i,'/ico/i/silver-pinap.webp'],[/^incense$/i,'/ico/incense.webp'],[/^raid pass$/i,'/ico/g/raidpass.webp']];
 function passCategory(item){
  if(item.type==='encounter')return 'Pokémon';
  var n=item.name;
@@ -117,7 +119,7 @@ function passGlyph(item,cat){
  if(/^xp$/i.test(item.name))return 'XP';
  if(/candy xl/i.test(item.name))return 'XL';
  if(/candy/i.test(item.name))return 'C';
- if(cat==='Pokémon')return '?';
+ if(cat==='Pokémon')return 'PKM'; /* Honest encounter category, not missing artwork. */
  if(cat==='Avatar item')return '👕';
  if(cat==='Box')return '▣';
  if(/stardust|star piece/i.test(item.name))return '✦';
@@ -130,28 +132,80 @@ function passGlyph(item,cat){
 function passReward(raw,ctx){
  var item=typeof raw==='string'?{name:raw.trim(),type:'other',quantity:1}:raw;
  if(!item||typeof item.name!=='string'||!item.name||/^[-–—]+$/.test(item.name.trim()))return null;
- if(typeof raw==='string'){var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name);if(q){item={name:q[1].trim(),type:'item',quantity:+q[2]};}}
+ /* Both source string and structured reward names can contain a quantity.
+    Show it once and resolve art against the real item name, but never silently
+    override a disagreeing explicit source quantity. */
+ var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name.trim());
+ if(q){
+  var stated=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:null;
+  var inlineQty=Number(q[2]);
+  if(stated===null||stated===inlineQty){
+   item=Object.assign({},item,{name:q[1].trim(),type:typeof raw==='string'?'item':item.type,quantity:stated||inlineQty});
+  }
+ }
  var cat=passCategory(item),art='',hasArt=false;
+ var semantic=typeof globalThis!=='undefined'&&globalThis.GOGoPassRewardArt&&typeof globalThis.GOGoPassRewardArt.resolve==='function'?globalThis.GOGoPassRewardArt.resolve(item):null;
  if(item.type==='encounter'&&ctx.rewardArt){
   art=ctx.rewardArt(item)||'';
   hasArt=/<(img|svg|canvas)\b/i.test(art);
   if(!hasArt)art='';
  }else{
-  var icon=PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];
+  /* Exact-only semantic art module supersedes ambiguous legacy name matching. */
+  var icon=semantic?(semantic.kind==='image'?[/^.*$/,semantic.src]:null):PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];
   if(icon){art='<img src="'+esc(icon[1])+'" alt="" width="40" height="40" loading="lazy" decoding="async">';hasArt=true;}
  }
  var qty=Number.isInteger(item.quantity)&&item.quantity>1?'×'+esc(item.quantity):'';
  var lvl=item.type==='encounter'&&Number.isInteger(item.level)?' · Level '+esc(item.level):'';
- var symbol=passGlyph(item,cat);
- return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(hasArt?'':' data-art="category"')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+esc(symbol)+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b><small>'+(qty?qty+' · ':'')+esc(cat)+lvl+'</small></span></div>';
+ /* The species artwork remains the primary image for encounter rewards.
+    Dynamax is a battle treatment, not a substitute generic MAX icon. Keep
+    source-labelled modes visibly separate from the real Pokémon picture. */
+ var mode='';
+ if(item.type==='encounter'){
+  var named=/^(Dynamax|Gigantamax|Shadow|Mega|Primal)\s+/i.exec(item.name);
+  var declared=String(item.battleMode||item.formId||'').toLowerCase();
+  mode=named?named[1].toLowerCase():/^(dynamax|gigantamax|shadow|mega|primal)$/.test(declared)?declared:'';
+ }
+ var modeChip=mode?'<span class="ue-pass-mode ue-pass-mode-'+esc(mode)+'">'+esc(mode==='gigantamax'?'Gigantamax':mode[0].toUpperCase()+mode.slice(1))+'</span>':'';
+ var symbol=semantic&&semantic.kind==='symbol'?semantic.symbol:passGlyph(item,cat);
+ return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(mode?' data-battle-mode="'+esc(mode)+'"':'')+(hasArt?'':' data-art="category"')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+esc(symbol)+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b>'+(modeChip?'<span class="ue-pass-mode-line">'+modeChip+'</span>':'')+'<small>'+(qty?qty+' · ':'')+esc(cat)+lvl+'</small></span></div>';
 }
 function passLane(label,cls,list,ctx){
  var chips=[].concat(list||[]).map(function(x){return passReward(x,ctx);}).filter(Boolean);
  return chips.length?'<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+chips.join('')+'</div>':'';
 }
+/* Stages can combine identified Free/Deluxe tracks with additional published
+   rewards whose track has not been attributed. Never silently hide the latter
+   or label them Free; avoid double-showing a reward already in a named track. */
+function passRewardIdentity(raw){
+ var name=typeof raw==='string'?raw:raw&&raw.name;
+ if(typeof name!=='string')return '';
+ var quantity=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:1;
+ /* Source feeds encode quantities either as a structured field or in the
+    item label. Normalize both for identity, without changing display text.
+    If two explicit quantities disagree, preserve that conflict instead of
+    silently assuming two rewards are identical. */
+ var match=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(name.trim());
+ if(match){
+  var stated=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:null;
+  var inlineQty=Number(match[2]);
+  if(stated===null||stated===inlineQty){
+   name=match[1];quantity=inlineQty;
+  }
+ }
+ return name.trim().normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+  .replace(/\s+/g,' ').toLowerCase()+'|'+quantity;
+}
+function passUnspecified(s){
+ var free=[].concat(s.free||[]),deluxe=[].concat(s.deluxe||[]);
+ var identified=new Set(free.concat(deluxe).map(passRewardIdentity).filter(Boolean));
+ return [].concat(s.rewards||[]).filter(function(item){
+  var identity=passRewardIdentity(item);
+  return identity&&!identified.has(identity);
+ });
+}
 function passStageLanes(s,ctx){
- if(s.free||s.deluxe)return passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx);
- return passLane('Reward · track not specified','free',s.rewards,ctx);
+ return passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx)
+  +passLane('Track not specified','unspecified',passUnspecified(s),ctx);
 }
 function passStageRewards(s){
  return [].concat(s.free||[],s.deluxe||[],s.rewards||[]).filter(function(x){return x&&typeof x==='object'&&typeof x.name==='string'||typeof x==='string'&&x.trim();});
@@ -170,9 +224,18 @@ function passes(items,ctx){
   var lanes=passStageLanes(s,ctx);
   return '<li class="ue-pass-rank" data-rank="'+esc(s.rank)+'"><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+'<div class="ue-pass-lanes">'+(lanes||'<p class="ue-pass-unlisted">Track rewards not specified for this rank.</p>')+'</div></li>';
  }
- function listWithGaps(list,startPrev){
-  var out='',prev=startPrev===undefined?null:startPrev;
-  list.forEach(function(s){if(prev!==null&&s.rank>prev+1)out+='<li class="ue-pass-gap" role="note">'+(s.rank-prev===2?'Rank '+(prev+1):'Ranks '+(prev+1)+'–'+(s.rank-1))+': no reward entries published by the source</li>';out+=stage(s);prev=s.rank;});
+ /* A disclosure must describe only its own 25-rank span. Missing whole
+    groups are reported between disclosures, never inside a different group. */
+ function gapLabel(first,last){
+  return (first===last?'Rank '+esc(first):'Ranks '+esc(first)+'–'+esc(last))+': no reward entries published by the source';
+ }
+ function listWithGaps(list,rangeStart,rangeEnd){
+  var out='',prev=rangeStart-1;
+  list.forEach(function(s){
+   if(s.rank>prev+1)out+='<li class="ue-pass-gap" role="note">'+gapLabel(prev+1,s.rank-1)+'</li>';
+   out+=stage(s);prev=s.rank;
+  });
+  if(prev<rangeEnd)out+='<li class="ue-pass-gap" role="note">'+gapLabel(prev+1,rangeEnd)+'</li>';
   return out;
  }
  function highlight(s){
@@ -180,13 +243,23 @@ function passes(items,ctx){
  }
  var meta=ctx.passMeta||{};
  return items.filter(function(p){return value(p);}).map(function(p){
-  var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0;}).slice().sort(function(a,b){return a.rank-b.rank;});
+  var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0&&passStageRewards(s).some(function(r){return passReward(r,ctx)!==null;});}).slice().sort(function(a,b){return a.rank-b.rank;});
   var content='';
   if(!stages.length)content='<p class="note ue-pass-missing">Rank rewards have not been published by the source yet.</p>';
   else{
    var groups={};stages.forEach(function(s){var key=Math.floor(Math.max(0,s.rank-1)/25);(groups[key]||(groups[key]=[])).push(s);});
    var keys=Object.keys(groups),first=stages[0].rank,last=stages[stages.length-1].rank;
-   var head='<p class="ue-pass-count">'+stages.length+' '+(stages.length===1?'rank with a published entry':'ranks with published entries')+' · through Rank '+last+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' have no track-reward entries published; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend"><span class="ue-key ue-key-free">Free track</span><span class="ue-key ue-key-deluxe">Deluxe track</span> Deluxe also receives every Free reward.</p>';
+   /* A legend must reflect *published* track assignments; source records
+      without attribution must not masquerade as Free or Deluxe rewards. */
+   var hasFree=stages.some(function(s){return [].concat(s.free||[]).some(function(x){return passReward(x,ctx)!==null;});});
+   var hasDeluxe=stages.some(function(s){return [].concat(s.deluxe||[]).some(function(x){return passReward(x,ctx)!==null;});});
+   var hasUnspecified=stages.some(function(s){return passUnspecified(s).some(function(x){return passReward(x,ctx)!==null;});});
+   var legend=[];
+   if(hasFree)legend.push('<span class="ue-key ue-key-free">Free track</span>');
+   if(hasDeluxe)legend.push('<span class="ue-key ue-key-deluxe">Deluxe track</span>');
+   if(hasUnspecified)legend.push('<span class="ue-key ue-key-unspecified">Track not specified</span>');
+   if(hasFree&&hasDeluxe)legend.push('Deluxe also receives every Free reward.');
+   var head='<p class="ue-pass-count">'+stages.length+' '+(stages.length===1?'rank with a published entry':'ranks with published entries')+' · through Rank '+last+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' have no track-reward entries published; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend">'+legend.join(' ')+'</p>';
    var ranked=stages.map(function(s){return {stage:s,score:passHighlightScore(s)};}).filter(function(x){return x.score>0;});
    ranked.sort(function(a,b){return b.score-a.score||a.stage.rank-b.stage.rank;});
    /* Source-listed reward milestones at the familiar 45/100 thresholds stay visible
@@ -195,8 +268,13 @@ function passes(items,ctx){
    var featured=pinned.concat(ranked.filter(function(x){return pinned.indexOf(x.stage)<0;}).slice(0,Math.max(0,4-pinned.length)).map(function(x){return x.stage;}));
    if(!featured.length&&stages.length)featured=[stages[0],stages[Math.floor((stages.length-1)/2)],stages[stages.length-1]].filter(function(s,i,arr){return arr.indexOf(s)===i&&passStageRewards(s).length;});
    featured.sort(function(a,b){return a.rank-b.rank;});
-   var overview=featured.length?'<div class="ue-pass-overview"><h5>Published milestones</h5><ul class="ue-pass-highlights">'+featured.map(highlight).join('')+'</ul></div>':'';
-   content=head+overview+'<h5 class="ue-pass-all-title">All published rank entries</h5>'+keys.map(function(key,i){var list=groups[key],before=i?groups[keys[i-1]][groups[keys[i-1]].length-1].rank:null;return '<details class="ue-pass-range"><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+' · '+list.length+' listed</summary><ol class="ue-pass-stages">'+listWithGaps(list,before)+'</ol></details>';}).join('');
+   var overview=featured.length?'<div class="ue-pass-overview"><h5>Published milestones'+(featured.length>1?' <small>Swipe for more</small>':'')+'</h5><ul class="ue-pass-highlights" aria-label="Published milestone rewards">'+featured.map(highlight).join('')+'</ul></div>':'';
+   content=head+overview+'<h5 class="ue-pass-all-title">All published rank entries</h5>'+keys.map(function(key,i){
+    var list=groups[key],start=Number(key)*25+1,end=start+24;
+    var previousEnd=i?(Number(keys[i-1])+1)*25:0;
+    var missingGroups=i&&previousEnd+1<start?'<p class="ue-pass-gap ue-pass-gap-between" role="note">'+gapLabel(previousEnd+1,start-1)+'</p>':'';
+    return missingGroups+'<details class="ue-pass-range"><summary>'+'Ranks '+esc(start)+'–'+esc(end)+' · '+list.length+' published</summary><ol class="ue-pass-stages">'+listWithGaps(list,start,end)+'</ol></details>';
+   }).join('');
   }
   var srcs=(model_sources(ctx)||[]).map(function(s){return s;}).join(' · ');
   var foot='<p class="ue-pass-src">'+(srcs?'Source: '+srcs:'Source not listed')+(meta.updated?' · Data checked '+esc(String(meta.updated).slice(0,10)):' · Freshness unknown')+'. Rewards are as published by the source and can change; anything not listed is not confirmed.'+(meta.warning?' '+esc(meta.warning):'')+'</p>';
@@ -331,6 +409,84 @@ function raidDayRosters(raidDays,ctx){
  }).join('');
  return '<div class="ue-raid-days"><h3 class="ue-mini-h">Raids &amp; Max Battles by day</h3><div class="ue-raid-day-grid">'+cards+'</div></div>';
 }
+
+/* Only explicit, sourced increases belong here. Shiny eligibility and shiny
+   artwork are never evidence of increased encounter odds. */
+function shinyBoostOverview(model,ctx){
+ ctx=ctx||{};
+ var sourceIds=new Set();
+ (model.sources||[]).forEach(function(source){
+  if(!source||typeof source.id!=='string'||!source.id.trim())return;
+  try{
+   var url=new URL(source.url);
+   if(url.protocol==='https:'&&!url.username&&!url.password)sourceIds.add(source.id);
+  }catch(error){}
+ });
+ if(!sourceIds.size)return '';
+ var conflicts=model.internalValidation&&model.internalValidation.conflicts||[];
+ if(conflicts.some(function(c){return c.field==='shiny'&&!c.identityKey;}))return '';
+ function disputed(text){
+  return conflicts.some(function(c){return c.a&&c.a.text===text||c.b&&c.b.text===text;});
+ }
+ function explicitIncrease(text){
+  if(!/\bshiny\b/i.test(text))return false;
+  if(/\b(?:no|not|without)\b.{0,35}\b(?:boost\w*|increas\w*|higher|enhanc\w*)\b/i.test(text))return false;
+  return /\b(?:increased|boosted|higher|enhanced)\b.{0,65}\b(?:chance|chances|odds|rates?|likelihood)\b.{0,100}\bshiny\b/i.test(text)||
+    /\bshiny\b.{0,60}\b(?:chance|chances|odds|rates?|likelihood)\b.{0,45}\b(?:increased|boosted|higher|enhanced)\b/i.test(text)||
+    /\b(?:increased|boosted)\s+shiny\s+(?:chance|chances|odds|rates?)\b/i.test(text);
+ }
+ var claims=[],seen=new Set(),evidenceByIdentity=new Map();
+ var fields=model.internalValidation&&model.internalValidation.fields||{};
+ var rows=[].concat(model.bonuses||[],Array.isArray(fields.shiny)?fields.shiny:[]);
+ rows.forEach(function(row){
+  if(!row||!['official','verified','corroborated'].includes(row.status)
+    ||!Array.isArray(row.sources)||!row.sources.length
+    ||!row.sources.every(function(id){return sourceIds.has(id);}))return;
+  var statement=value(row);
+  if(!statement||!explicitIncrease(statement)||disputed(statement))return;
+  if(row.identityKey){
+   var evidence=evidenceByIdentity.get(row.identityKey)||[];
+   evidence.push(row);
+   evidenceByIdentity.set(row.identityKey,evidence);
+   return;
+  }
+  var key=statement.toLowerCase().replace(/\s+/g,' ').trim();
+  if(!seen.has(key)){seen.add(key);claims.push(statement);}
+ });
+ var boosted=(model.pokemon||[]).filter(function(p){
+  return p.boostedShiny===true&&p.shiny!=='no'&&evidenceByIdentity.has(p.key)
+   &&!conflicts.some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
+ });
+ if(!boosted.length&&!claims.length)return '';
+ var pokemon=boosted.map(function(p){
+  var name=String(p.name||p.speciesId||'Pokémon');
+  if(p.label&&name.toLowerCase().indexOf(String(p.label).toLowerCase())<0)name+=' ('+p.label+')';
+  var metadata=[],unique=new Set();
+  (model.encounters||[]).filter(function(edge){return edge.identityKey===p.key;}).forEach(function(edge){
+   var evidence=evidenceByIdentity.get(p.key).filter(function(row){
+    return row.method===edge.method&&(!row.activityId||row.activityId===edge.activityId)
+     &&(!row.access||row.access===edge.access);
+   });
+   if(!evidence.length)return;
+   var activity=evidence.some(function(row){return row.activityId===edge.activityId;})
+    &&(model.activities||[]).find(function(a){return a.id===edge.activityId;});
+   var method=edge.method!=='other'?METHODS[edge.method]||'':'';
+   var access=edge.access!=='unknown'&&edge.access!=='all'
+    &&evidence.some(function(row){return row.access===edge.access;})?'Access: '+edge.access:'';
+   var when=activity&&activity.schedule&&ctx.clock&&typeof ctx.clock.range==='function'?'Time: '+activityTime(activity,ctx):'';
+   var statement=[method,access,when].filter(Boolean).join(' · ');
+   if(statement&&!unique.has(statement)){unique.add(statement);metadata.push(statement);}
+  });
+  return '<li class="ue-shiny-species"><div class="ue-shiny-species-title"><strong>'+esc(name)+'</strong><span>↑✦ Boosted shiny</span></div>'+
+   (metadata.length?'<ul class="ue-shiny-methods">'+metadata.map(function(line){return '<li>'+esc(line)+'</li>';}).join('')+'</ul>':'')+'</li>';
+ }).join('');
+ var announcements=claims.map(function(statement){return '<li>'+esc(statement)+'</li>';}).join('');
+ return '<section class="ue-shiny-overview" aria-label="Shiny boosts"><div class="ue-shiny-overview-head"><span class="ue-shiny-overview-mark" aria-hidden="true">↑✦</span><div><h3>Shiny boosts</h3><p>Confirmed increased chances only. Shiny availability alone is not a boost.</p></div></div>'+
+  (pokemon?'<ul class="ue-shiny-species-list">'+pokemon+'</ul>':'')+
+  (announcements?'<div class="ue-shiny-announcements"><strong>Published boost conditions</strong><ul>'+announcements+'</ul></div>':'')+
+  '</section>';
+}
+
 function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.internalValidation&&model.internalValidation.fields||{},body={};
  var galleryOnly=!ctx.rotationHtml&&model.encounters.every(function(e){return e.method==='other';});
  body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',(ctx.rotationHtml||'')+gallery(model,ctx));
@@ -376,7 +532,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
 
  var panels=[],label={encounters:'Pokémon',bonuses:'Bonuses',research:'Research',passes:'GO Pass',tickets:'Tickets'};
  var incomplete=!selected.length&&!info.length;
- var overview=(ctx.overview||'')+schedulePreview(model,ctx)+raidDayRosters(ctx.raidDays,ctx)+sourceHighlights(model)+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
+ var overview=(ctx.overview||'')+shinyBoostOverview(model,ctx)+schedulePreview(model,ctx)+raidDayRosters(ctx.raidDays,ctx)+sourceHighlights(model)+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
  panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
  ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-(bonus|note)/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
  var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
@@ -391,5 +547,5 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var secs=sections.map(function(t){return '<section class="evd-sec" id="evd-s-'+t.id+'" aria-labelledby="evd-h-'+t.id+'" data-sec="'+t.id+'"><h2 class="evd-sec-h" id="evd-h-'+t.id+'" tabindex="-1">'+esc(t.label)+(t.id==='research'?' <small class="m evd-count">'+(view.researchTasks?view.researchTasks+(view.researchTasks===1?' task':' tasks'):'no tasks listed yet')+'</small>':'')+'</h2>'+dedupe(t.html)+'</section>';}).join('');
  return (ctx.toolbar||'')+hero+nav+'<div class="evd-sections">'+secs+'</div>';
 }
-return {render:render,gallery:gallery,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');},raidDayRosters:raidDayRosters,eggKm:eggKm};
+return {render:render,gallery:gallery,shinyBoostOverview:shinyBoostOverview,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');},raidDayRosters:raidDayRosters,eggKm:eggKm};
 }));

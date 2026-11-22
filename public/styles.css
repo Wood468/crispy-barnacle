@@ -1,5 +1,6 @@
 /* Layout: dark-first scoreboard. Big condensed numerals, flat colour blocks for heroes, hairline rows for lists, solid colour pills for event kinds. */
 :root{
+  --safe-top:env(safe-area-inset-top,0px);
   --bg:#0C0F14; --panel:#141922; --soft:#1B212C; --line:#232B38; --fg:#F3F5F9; --muted:#9AA4B5; --body:#D5DBE6;
   --inv-bg:#F3F5F9; --inv-fg:#0C0F14; --gold:#FFD43B; --gold-fg:#1D1700;
   --display:"Big Shoulders Display","Arial Narrow",Arial,sans-serif;
@@ -55,7 +56,10 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
-body{background:var(--color-canvas);color:var(--color-text);font-family:var(--font-body);font-size:var(--type-body-base);line-height:1.55;padding-inline:max(16px,4vw);padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))}
+body{background:var(--color-canvas);color:var(--color-text);font-family:var(--font-body);font-size:var(--type-body-base);line-height:1.55;padding-inline:max(16px,4vw);padding-block:var(--safe-top) calc(72px + env(safe-area-inset-bottom,0px))}
+/* iOS standalone (black-translucent + viewport-fit=cover): the page is drawn under the status bar, so an opaque canvas-coloured mask covers it. Above scrolling content and the tab bar, below modals and toasts; 0px (no effect) where there is no inset. */
+body::before{content:"";position:fixed;top:0;left:0;right:0;height:var(--safe-top);background:var(--color-canvas);pointer-events:none;z-index:50}
+html{scroll-padding-top:var(--safe-top)}
 .wrap{max-width:84rem;margin-inline:auto}
 h1,h2,h3{margin:0;font-family:var(--font-display);font-weight:800;text-transform:uppercase;line-height:.95;text-wrap:balance}
 p{margin:0}

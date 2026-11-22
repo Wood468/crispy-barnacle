@@ -97,6 +97,9 @@ jobs:
           done
           cat /tmp/go-field-notes-http.log
           exit 1
+      - name: Verify Today compact artwork geometry in Chromium
+        if: matrix.shard == 'a'
+        run: python test/test_today_compact_art_geometry.py
       - name: Run browser regression tests
         if: contains(fromJSON('["a","b","c"]'), matrix.shard)
         shell: bash
@@ -126,6 +129,17 @@ jobs:
         if: matrix.shard == 'c'
         run: python test/final_polish_browser.py
 
+      - name: Verify synthetic owner Store layout at 320/390/430px
+        if: matrix.shard == 'e'
+        run: python test/store_mobile_browser.py
+      - name: Retain synthetic Store mobile screenshots and measurements
+        if: always() && matrix.shard == 'e'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: store-mobile-visual-acceptance
+          path: /tmp/gofn-store-visual
+          if-no-files-found: error
+
       - name: Verify Collection opportunity planner
         if: matrix.shard == 'b'
         run: python test/opportunity_planner_browser.py
@@ -148,6 +162,8 @@ jobs:
 
       - name: Verify premium Today, Schedule and event detail surfaces
         if: matrix.shard == 'd'
+        env:
+          GO_FIELD_NOTES_SCREENSHOTS: /tmp/gofn-s4-research-screenshots
         run: |
           python test/premium_surfaces_browser.py
           python test/today_detail_redesign_browser.py
@@ -156,12 +172,21 @@ jobs:
           python test/battle_rotation_browser.py
           python test/wild_area_battle_browser.py
           python test/raids_max_polish_browser.py
+          python test/raids_max_art_decode_browser.py
           python test/event_consistency_browser.py
           python test/event_specials_browser.py
           python test/event_rotations_browser.py
           python test/schedule_gopass_browser.py
           python test/visual_refinements_browser.py
           python test/accuracy_fixes_browser.py
+
+      - name: Retain Sprint 4 research mobile screenshots
+        if: always() && matrix.shard == 'd'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: sprint4-research-mobile-screenshots
+          path: /tmp/gofn-s4-research-screenshots/accuracy-research-*.png
+          if-no-files-found: warn
 
       - name: Verify combined source rendering and offline upgrade
         if: matrix.shard == 'e'
@@ -222,22 +247,44 @@ jobs:
             sleep 1
           done
           exit 1
+      - name: Verify Today compact artwork geometry in WebKit
+        env:
+          TODAY_ART_WEBKIT_ONLY: '1'
+        run: python test/test_today_compact_art_geometry.py
       - name: Verify Collection planner and Research in WebKit
+        shell: bash
         run: |
-          python test/opportunity_planner_browser.py
-          python test/research_recovery_browser.py
-          python test/research_sources_browser.py
-          python test/premium_surfaces_browser.py
-          python test/today_detail_redesign_browser.py
-          python test/today_done_browser.py
-          python test/today_v1_coverage_browser.py
-          python test/battle_rotation_browser.py
-          python test/raids_max_polish_browser.py
-          python test/event_specials_browser.py
-          python test/event_rotations_browser.py
-          python test/schedule_gopass_browser.py
-          python test/universal_event_browser.py
-          python test/worldwide_timezone_browser.py
+          set -euo pipefail
+          scripts=(
+            test/opportunity_planner_browser.py
+            test/research_recovery_browser.py
+            test/research_sources_browser.py
+            test/premium_surfaces_browser.py
+            test/today_detail_redesign_browser.py
+            test/today_done_browser.py
+            test/today_v1_coverage_browser.py
+            test/battle_rotation_browser.py
+            test/raids_max_polish_browser.py
+            test/raids_max_art_decode_browser.py
+            test/event_specials_browser.py
+            test/event_rotations_browser.py
+            test/schedule_gopass_browser.py
+            test/universal_event_browser.py
+            test/worldwide_timezone_browser.py
+          )
+          for script in "${scripts[@]}"; do
+            start=$(date +%s)
+            echo "::group::WebKit START ${script} at $(date -u +%FT%TZ)"
+            if python "$script"; then
+              echo "WebKit PASS ${script} duration=$(( $(date +%s) - start ))s"
+              echo "::endgroup::"
+            else
+              status=$?
+              echo "::error::WebKit FAIL ${script} exit=${status} duration=$(( $(date +%s) - start ))s"
+              echo "::endgroup::"
+              exit "$status"
+            fi
+          done
       - name: Verify canonical Dex and private inventory in WebKit
         run: python test/p1_dex_browser.py
       - name: Verify combined source rendering, PWA update and preserved player data
@@ -287,3 +334,38 @@ jobs:
         env:
           GO_FIELD_NOTES_AUDIT_URL: https://pogo.michaelpuff.com/
         run: python test/production_image_audit.py
+
+
+  production-gopass-visibility:
+    # Dedicated, read-only production check. Run separately from long image audit
+    # so a slow image waterfall cannot mask or postpone feature visibility proof.
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+      - name: Install Playwright Chromium
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Wait for matching production Cloudflare build after merge
+        if: github.event_name == 'push'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/wait-for-workers-build.mjs
+      - name: Probe actual live GO Pass controls (no local fixtures)
+        env:
+          GO_FIELD_NOTES_LIVE_GO_PASS_URL: https://pogo.michaelpuff.com
+          GOFN_EXPECT_NAV_FIRST: ${{ github.event_name == 'push' && '1' || '0' }}
+        run: python test/production_gopass_visibility.py
+      - name: Retain live GO Pass screenshots
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: production-gopass-visibility
+          path: /tmp/gopass-live-check
+          if-no-files-found: ignore

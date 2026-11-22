@@ -1,0 +1,81 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
+import { createRequire } from 'node:module';
+const R = createRequire(import.meta.url)('../public/go-pass-reward-art.js');
+
+test('the approved exact reward icon table points only to tracked on-disk assets', () => {
+  assert.equal(R.knownAssets.length,29);
+  assert.equal(new Set(R.knownAssets).size,R.knownAssets.length);
+  for (const path of R.knownAssets) {
+    assert.match(path,/^\/ico\/(?:i\/|g\/)?[a-z0-9-]+\.webp$/);
+    assert.equal(existsSync(new URL('../public'+path,import.meta.url)),true,path);
+  }
+});
+
+test('verified assets are used only for their actual item names', () => {
+  const cases=[
+    ['Max Potion','/ico/i/max-potion.webp'],
+    ['Max Revive','/ico/i/max-revive.webp'],
+    ['Golden Razz Berry','/ico/i/golden-razz.webp'],
+    ['Silver Pinap Berry','/ico/i/silver-pinap.webp'],
+    ['Elite Fast TM','/ico/g/elite-fast-tm.webp'],
+    ['Elite Charged TM','/ico/g/elite-charged-tm.webp'],
+    ['Incense','/ico/incense.webp'],
+    ['Stardust','/ico/dust.webp'],
+    ['Raid Pass','/ico/g/raidpass.webp'],
+    ['Star Piece','/ico/i/star-piece.webp'],
+    ['Poké Ball','/ico/i/poke-ball.webp'],
+    ['Great Ball','/ico/i/great-ball.webp'],
+    ['Ultra Ball','/ico/i/ultra-ball.webp'],
+    ['Rare Candy','/ico/i/rare-candy.webp'],
+    ['Rare Candy XL','/ico/i/rare-candy-xl.webp'],
+    ['Lucky Egg','/ico/i/lucky-egg.webp'],
+    ['Egg Incubator','/ico/i/egg-incubator.webp'],
+    ['Super Incubator','/ico/i/super-incubator.webp'],
+    ['Nanab Berry','/ico/i/nanab-berry.webp'],
+    ['Max Mushroom','/ico/i/max-mushroom.webp'],
+    ['Revive','/ico/i/revive.webp'],
+    ['Potion','/ico/i/potion.webp'],
+    ['Hyper Potion','/ico/i/hyper-potion.webp'],
+    ['Super Potion','/ico/i/super-potion.webp'],
+    ['Remote Raid Pass','/ico/i/remote-raid-pass.webp']
+  ];
+  for(const [name,src] of cases) assert.deepEqual(R.resolve({name,type:'item'}).src,src);
+});
+
+test('similar items do not borrow incorrect images', () => {
+  for(const name of ['Regular Potion','Super Potion Pack','Hyper Potion Box','Revive Pack','Remote Raid Pass Bundle','Premium Battle Pass Bundle','Razz Berry','Pinap Berry','Max Potion XL','Silver Bottle Cap','Lucky Egg Pack','Star Piece Pack','Great Ball Bundle','Premier Ball','Master Ball','Poffin','Rare Candy Pack','Machop Candy','Incubator']) {
+    const result=R.resolve({name,type:'item'});
+    assert.equal(result.kind,'symbol',name);
+    assert.equal(result.src,null,name);
+    assert.ok(result.symbol.length,name);
+  }
+});
+
+test('XP, Candy XL and Rare Candy distinguish source items with honest category glyphs', () => {
+  assert.deepEqual(R.resolve({name:'XP'}),{kind:'symbol',category:'Resource',symbol:'XP',src:null});
+  assert.equal(R.resolve({name:'Candy XL'}).symbol,'XL');
+  assert.equal(R.resolve({name:'Rare Candy XL'}).src,'/ico/i/rare-candy-xl.webp');
+  assert.equal(R.resolve({name:'Rare Candy'}).src,'/ico/i/rare-candy.webp');
+  assert.equal(R.resolve({name:'Rare Candy Pack'}).symbol,'RC');
+  assert.equal(R.resolve({name:'Machop Candy'}).symbol,'C');
+  assert.equal(R.resolve({name:'Silver Bottle Cap'}).symbol,'CAP');
+  assert.equal(R.resolve({name:'Premier Ball'}).symbol,'PR');
+});
+
+test('Pokémon encounter rewards are delegated to the exact-form artwork resolver', () => {
+  assert.deepEqual(R.resolve({name:'Dynamax Meltan',type:'encounter'}),{kind:'encounter',category:'Pokémon',symbol:'',src:null});
+  assert.deepEqual(R.resolve({name:'Crowned Sword Zacian',type:'encounter'}),{kind:'encounter',category:'Pokémon',symbol:'',src:null});
+});
+
+test('missing and placeholder rewards never produce invented icons or HTML', () => {
+  assert.equal(R.resolve(null),null);
+  assert.equal(R.resolve({name:''}),null);
+  assert.equal(R.resolve({name:'—'}),null);
+  const malicious=R.resolve({name:'<img src=x onerror=alert(1)>'});
+  assert.equal(malicious.kind,'symbol');
+  assert.equal(malicious.src,null);
+  assert.equal(malicious.symbol,'◇');
+  assert.equal('name' in malicious,false);
+});

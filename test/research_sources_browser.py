@@ -109,7 +109,7 @@ with sync_playwright() as p:
         page.evaluate("GODETAIL.open('into')")
         page.wait_for_selector('#evd .ue-hero')
         page.locator('#evd .evd-nav-link[data-sec="research"]').click()
-        assert page.locator('#evd .evd-sec:not([hidden])').count() == 1
+        assert page.locator('#evd .evd-sec:not([hidden])').count() == page.locator('#evd .evd-sec').count(), 'published sections remain readable when researching an event'
         page.locator('#evd .evd-research').scroll_into_view_if_needed()
         assert page.locator('#evd .evd-research .research-task').count() >= 3
         assert 'One of 3 possible rewards' in page.locator('#evd .evd-research').inner_text() or page.locator('#evd .evd-research [aria-label^="One of"]').count() >= 1

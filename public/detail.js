@@ -352,14 +352,24 @@
 
   /* Research reward cell, shared by Event Details and the Research tab. Exact variant art for encounters (forms and costumes), quantities, CP range,
      "Mighty" and a Shiny tag only when the source itself says the reward can be Shiny (never inferred from boosts or event type). */
-  /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol). */
-  function itemIcon(n) { n = String(n || ''); return /stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''; }
+  /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol), Eternatus Candy and Candy XL, Pinap Berry. */
+  /* Exact names only: 'Eternatus Candy' (optionally with a quantity prefix such as '25\u00d7 ') and 'Eternatus Candy XL' / 'Eternatus XL Candy'. Pictures supplied by the owner (see docs/asset-inventory/item-icons.json). Anything looser, any other species candy, Rare Candy and combined reward text fall through unchanged. */
+  function eternatusIcon(n) { n = String(n || '').normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/^[\d,]+ ?[\u00d7x] ?/i, ''); return /^eternatus candy$/i.test(n) ? '/ico/i/eternatus-candy.webp' : /^(?:eternatus candy xl|eternatus xl candy)$/i.test(n) ? '/ico/i/eternatus-candy-xl.webp' : ''; }
+  /* Exact 'Pinap Berry' only (optional quantity prefix such as '3\u00d7 '). Silver Pinap Berry, Golden Razz Berry and every other berry keep their own picture or the generic berry shape. Picture supplied by the owner. */
+  function pinapIcon(n) { n = String(n || '').normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/^[\d,]+ ?[\u00d7x] ?/i, ''); return /^pinap berry$/i.test(n) ? '/ico/i/pinap-berry.webp' : ''; }
+  /* Exact 'Star Piece', 'Poké Ball', 'Great Ball', 'Ultra Ball', 'Rare Candy', 'Rare Candy XL', 'Lucky Egg', 'Egg Incubator', 'Super Incubator', 'Nanab Berry', 'Max Mushroom', 'Revive', 'Potion', 'Hyper Potion', 'Super Potion', 'Remote Raid Pass', 'Max Particle Pack'/'Max Particles', 'Lure Module', 'Link Charge(s)' and 'Premium Battle Pass' only (optional quantity prefix such as '10\u00d7 '). Premier Ball, Master Ball, Star Piece bundles and any other wording fall through unchanged. Pictures supplied by the owner (docs/asset-inventory/item-icons.json). */
+  function ownerIcon(n) { n = String(n || '').normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/^[\d,]+ ?[\u00d7x] ?/i, ''); return /^star piece$/i.test(n) ? '/ico/i/star-piece.webp' : /^pok[e\u00e9] ball$/i.test(n) ? '/ico/i/poke-ball.webp' : /^great ball$/i.test(n) ? '/ico/i/great-ball.webp' : /^ultra ball$/i.test(n) ? '/ico/i/ultra-ball.webp' : /^rare candy$/i.test(n) ? '/ico/i/rare-candy.webp' : /^rare candy xl$/i.test(n) ? '/ico/i/rare-candy-xl.webp' : /^lucky egg$/i.test(n) ? '/ico/i/lucky-egg.webp' : /^egg incubator$/i.test(n) ? '/ico/i/egg-incubator.webp' : /^super incubator$/i.test(n) ? '/ico/i/super-incubator.webp' : /^nanab berry$/i.test(n) ? '/ico/i/nanab-berry.webp' : /^max mushroom$/i.test(n) ? '/ico/i/max-mushroom.webp' : /^revive$/i.test(n) ? '/ico/i/revive.webp' : /^potion$/i.test(n) ? '/ico/i/potion.webp' : /^hyper potion$/i.test(n) ? '/ico/i/hyper-potion.webp' : /^super potion$/i.test(n) ? '/ico/i/super-potion.webp' : /^remote raid pass$/i.test(n) ? '/ico/i/remote-raid-pass.webp' : /^max particle pack$/i.test(n) || /^max particles$/i.test(n) ? '/ico/i/max-particle-pack.webp' : /^lure module$/i.test(n) ? '/ico/i/lure-module.webp' : /^link charges?$/i.test(n) ? '/ico/i/link-charge.webp' : /^premium battle pass$/i.test(n) ? '/ico/i/premium-battle-pass.webp' : ''; }
+  function itemIcon(n) { n = String(n || ''); return eternatusIcon(n) || pinapIcon(n) || ownerIcon(n) || (/stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''); }
   /* A clearly typographic category fallback, never counterfeit item art.
-     Exact Rare Candy and Rare Candy XL images are not in the approved ico set. */
+     Exact Rare Candy and Rare Candy XL images are not in the approved ico set (only Eternatus Candy and Candy XL have pictures, matched by exact name in eternatusIcon). */
   function researchItemGlyph(name) {
     name = String(name || '');
     if (/\brare candy xl\b/i.test(name)) return { kind: 'rare-candy-xl', text: 'XL' };
     if (/\brare candy\b/i.test(name)) return { kind: 'rare-candy', text: 'RC' };
+    /* No approved picture exists for these (the only berries in /ico/i are Silver Pinap and Golden Razz, the only candy is the generic bonus icon),
+       so draw a plainly generic shape instead of guessing a wrong item picture. Species candy (Eternatus Candy) shows the candy shape, not the species. */
+    if (/\bcandy( xl)?\b/i.test(name)) return { kind: 'candy', svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" focusable="false"><ellipse cx="12" cy="12" rx="5" ry="4.2" fill="currentColor" fill-opacity=".25"/><path d="M7 12 2.8 8.6v6.8L7 12zM17 12l4.2-3.4v6.8L17 12z"/></svg>' };
+    if (/\b(berry|pinap|razz|nanab|bluk|wepar|cornn|pomeg)\b/i.test(name)) return { kind: 'berry', svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" focusable="false"><circle cx="12" cy="14" r="6.2" fill="currentColor" fill-opacity=".25"/><path d="M12 7.8c0-2 1-3.4 3-4M12 7.8c-.4-1.6-1.8-2.4-3.6-2.4"/></svg>' };
     return null;
   }
   function researchReward(item, ev) {
@@ -372,7 +382,7 @@
     }
     var icon = itemIcon(item.name);
     var glyph = icon ? null : researchItemGlyph(item.name);
-    var fallback = glyph ? '<span class="ue-reward-category" data-item-glyph="' + glyph.kind + '" aria-hidden="true">' + glyph.text + '</span>' : '<i class="ue-reward-dot"></i>';
+    var fallback = glyph ? '<span class="ue-reward-category" data-item-glyph="' + glyph.kind + '" aria-hidden="true">' + (glyph.svg || glyph.text) + '</span>' : '<i class="ue-reward-dot"></i>';
     return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : fallback) + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '\u00d7 ' : '') + esc(item.name) + '</b>' + shiny + '</span></div>';
   }
   /* Seasons and monthly GO Passes: their own layout, in sections with icons. Curated notes come from season.json; rank rows and prices from the compared write-ups. */
@@ -842,6 +852,8 @@
       var ev2 = completeEvent(ev),sourcePoster=findDetails(ev2);
       if(!ev2.img&&sourcePoster&&safe(sourcePoster.image))ev2=Object.assign({},ev2,{img:sourcePoster.image});
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
+      // Mount after each actual Event Details render; no polling or DOM observers.
+      if(window.GOGoPassNavigation)window.GOGoPassNavigation.mount(o);
       addBonusTime(o, ev2);
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
       addInfographicShortcut(o, ev2);
@@ -902,107 +914,111 @@
     if (e.shiftKey && (active === first || !o.contains(active))) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && (active === last || !o.contains(active))) { e.preventDefault(); first.focus(); }
   });
-  /* Continuous page navigation: tapping a link scrolls to its heading, scrolling updates the active link. The overlay (#evd) is the one scroller. */
-  var spy = null, savedScroll = {}, prevRestoration = null;
+  /* Continuous Event Details: the overlay is one vertical scroller. Source-backed
+     sections stay visible in document order; sticky chips are optional shortcuts,
+     not mandatory one-panel tabs. Scroll position and focus stay in the modal. */
+  var spy = null, savedScroll = Object.create(null);
   function spyOffsets(o) {
     var bar = o.querySelector('.evd-bar'), nav = o.querySelector('.evd-nav'), barH = bar ? bar.offsetHeight : 0, navH = nav ? nav.offsetHeight : 0;
     o.style.setProperty('--evd-bar-h', barH + 'px'); o.style.setProperty('--evd-stack', (barH + navH) + 'px');
     return barH + navH;
   }
-  function setActive(o, id) {
-    var links = o.querySelectorAll('.evd-nav-link'), active = null;
-    links.forEach(function (l) { var on = l.getAttribute('data-sec') === id; if (on) { l.setAttribute('aria-current', 'true'); active = l; } else l.removeAttribute('aria-current'); });
-    var strip = o.querySelector('.evd-nav-scroll');
-    if (active && strip) strip.scrollTo({ left: active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2, behavior: 'auto' });
-    navEdges(o);
-  }
   function navEdges(o) {
     var strip = o.querySelector('.evd-nav-scroll'), w = strip && strip.parentNode; if (!w) return;
     w.classList.toggle('has-left', strip.scrollLeft > 4); w.classList.toggle('has-right', strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 4);
   }
-  /* Which section is active: the last one whose heading has passed under the sticky stack; the last section once the page is at its bottom. */
+  function setActive(o, id) {
+    if (!id) return;
+    var previous = spy && spy.o === o ? spy.cur : '';
+    if (spy && spy.o === o) spy.cur = id;
+    var links = o.querySelectorAll('.evd-nav-link'), active = null;
+    links.forEach(function (l) {
+      var on = l.getAttribute('data-sec') === id;
+      if (on) { l.setAttribute('aria-current', 'true'); active = l; }
+      else l.removeAttribute('aria-current');
+    });
+    var strip = o.querySelector('.evd-nav-scroll');
+    // Avoid moving the horizontal strip on every vertical scroll frame.
+    if (previous !== id && active && strip) strip.scrollTo({ left: active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2, behavior: 'auto' });
+    navEdges(o);
+  }
+  /* Active = section most recently passed beneath the sticky toolbar/chips;
+     at page end the last section is always reachable. */
   function computeActive(o) {
-    var secs = [].slice.call(o.querySelectorAll('.evd-sec')); if (!secs.length) return '';
+    var secs = [].slice.call(o.querySelectorAll('.evd-sec')).filter(function (s) { return !s.hidden; });
+    if (!secs.length) return '';
     var stack = spyOffsets(o), line = o.getBoundingClientRect().top + stack + 24, cur = secs[0].getAttribute('data-sec');
     secs.forEach(function (sec) { if (sec.getBoundingClientRect().top <= line) cur = sec.getAttribute('data-sec'); });
-    if (o.scrollTop + o.clientHeight >= o.scrollHeight - 4) cur = secs[secs.length - 1].getAttribute('data-sec');
+    if (o.scrollTop + o.clientHeight >= o.scrollHeight - 4 && o.scrollHeight > o.clientHeight) cur = secs[secs.length - 1].getAttribute('data-sec');
     return cur;
   }
-  /* Section tabs: keep the existing source-backed panels mounted, but expose only one
-     at a time. This prevents Research from leaking into GO Pass or Tickets. */
-  function showPanel(o, id, focus) {
-    // Preserve each event's panel scroll depth while switching sections.
-    var previous = spy && spy.cur;
-    if (previous && previous !== id && spy && spy.id) savedScroll[spy.id + '|' + previous] = o.scrollTop;
+  function spyDestroy() {
+    if (!spy) return;
+    var old = spy;
+    savedScroll[old.id] = old.o.scrollTop;
+    old.o.removeEventListener('scroll', old.onScroll);
+    if (old.frame) cancelAnimationFrame(old.frame);
+    spy = null;
+  }
+  function spyInit(o, id) {
+    spyDestroy();
     var sections = [].slice.call(o.querySelectorAll('.evd-sec'));
-    var selected = sections.find(function (section) { return section.getAttribute('data-sec') === id; });
-    if (!selected) return;
-    sections.forEach(function (section) {
-      var active = section === selected;
-      section.hidden = !active;
-      section.style.display = active ? '' : 'none';
-      section.setAttribute('aria-hidden', active ? 'false' : 'true');
-    });
+    var strip = o.querySelector('.evd-nav-scroll');
+    // Links are genuine in-dialog anchors, not ARIA tabs: every section
+    // remains visible and accessible by normal touch/keyboard scrolling.
+    if (strip) strip.removeAttribute('role');
     o.querySelectorAll('.evd-nav-link').forEach(function (link) {
-      var active = link.getAttribute('data-sec') === id;
-      link.setAttribute('aria-selected', active ? 'true' : 'false');
-      link.setAttribute('tabindex', active ? '0' : '-1');
+      var sec = link.getAttribute('data-sec');
+      link.removeAttribute('role');
+      link.removeAttribute('aria-selected');
+      link.removeAttribute('tabindex');
+      link.setAttribute('aria-controls', 'evd-s-' + sec);
     });
-    if (spy) spy.cur = id;
-    setActive(o, id);
-    var heading = selected.querySelector('.evd-sec-h') || selected;
-    // Keep the selected panel in view below the sticky toolbar and tab strip.
-    // Returning to Overview instead starts at the hero.
-    var restored = previous && spy ? savedScroll[spy.id + '|' + id] : undefined;
-    if (Number.isFinite(restored)) o.scrollTop = Math.min(Math.max(0, restored), Math.max(0, o.scrollHeight - o.clientHeight));
-    else if (id === 'overview') o.scrollTop = 0;
+    sections.forEach(function (section) {
+      section.hidden = false;
+      section.style.removeProperty('display');
+      section.removeAttribute('aria-hidden');
+      section.removeAttribute('role');
+      section.removeAttribute('tabindex');
+    });
+    var current = { o: o, id: id, cur: '', frame: 0, onScroll: null };
+    current.onScroll = function () {
+      if (current.frame || spy !== current) return;
+      current.frame = requestAnimationFrame(function () {
+        current.frame = 0;
+        if (spy === current && !o.hidden) {
+          savedScroll[id] = o.scrollTop;
+          setActive(o, computeActive(o));
+        }
+      });
+    };
+    spy = current;
+    spyOffsets(o);
+    o.addEventListener('scroll', current.onScroll, { passive: true });
+    var previous = savedScroll[id];
+    o.scrollTop = Number.isFinite(previous) ? Math.min(previous, Math.max(0, o.scrollHeight - o.clientHeight)) : 0;
+    setActive(o, computeActive(o) || 'overview');
+  }
+  function goSection(o, id, focus) {
+    if (!spy || spy.o !== o) return;
+    var section = [].slice.call(o.querySelectorAll('.evd-sec')).find(function (s) { return s.getAttribute('data-sec') === id; });
+    if (!section) return;
+    var heading = section.querySelector('.evd-sec-h') || section;
+    if (id === 'overview') o.scrollTop = 0;
     else {
       var stack = spyOffsets(o);
       var targetTop = heading.getBoundingClientRect().top - o.getBoundingClientRect().top + o.scrollTop - stack - 8;
-      o.scrollTop = Math.max(0, targetTop);
+      o.scrollTop = Math.min(Math.max(0, targetTop), Math.max(0, o.scrollHeight - o.clientHeight));
     }
+    setActive(o, id);
     if (focus) {
       heading.setAttribute('tabindex', '-1');
       heading.focus({ preventScroll: true });
     }
   }
-  function spyInit(o, id) {
-    spyDestroy();
-    spy = { o: o, id: id, cur: '' };
-    spyOffsets(o);
-    // Author the accessible tab relationship without editing the shared
-    // event-components renderer (which is also used by GO Pass work).
-    var strip = o.querySelector('.evd-nav-scroll');
-    if (strip) {
-      strip.setAttribute('role', 'tablist');
-      strip.setAttribute('aria-label', 'Event sections');
-    }
-    o.querySelectorAll('.evd-nav-link').forEach(function (link) {
-      var sec = link.getAttribute('data-sec');
-      link.setAttribute('role', 'tab');
-      link.setAttribute('id', 'evd-tab-' + sec);
-      link.setAttribute('aria-controls', 'evd-s-' + sec);
-    });
-    var sections = o.querySelectorAll('.evd-sec');
-    sections.forEach(function (section) {
-      var sec = section.getAttribute('data-sec');
-      section.setAttribute('role', 'tabpanel');
-      section.setAttribute('aria-labelledby', 'evd-tab-' + sec);
-      section.setAttribute('tabindex', '0');
-    });
-    if (sections.length) showPanel(o, sections[0].getAttribute('data-sec'), false);
-    else setActive(o, 'overview');
-  }
-  function spyDestroy() {
-    if (!spy) return;
-    spy = null;
-  }
-  function goSection(o, id, focus) {
-    if (!spy || spy.o !== o) return;
-    showPanel(o, id, focus);
-  }
   document.addEventListener('click', function (e) {
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
+    // An anchor's default fragment navigation would close the overlay on popstate.
     e.preventDefault(); var o = $('evd'); if (o) goSection(o, l.getAttribute('data-sec'), true);
   });
   document.addEventListener('keydown', function (e) {
@@ -1010,13 +1026,13 @@
     var links = [].slice.call(l.parentNode.querySelectorAll('.evd-nav-link')), i = links.indexOf(l), n = -1;
     if (e.key === 'ArrowRight') n = (i + 1) % links.length; else if (e.key === 'ArrowLeft') n = (i - 1 + links.length) % links.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = links.length - 1;
     if (n < 0) {
-      if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); goSection($('evd'), l.getAttribute('data-sec'), false); }
+      if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); goSection($('evd'), l.getAttribute('data-sec'), true); }
       return;
     }
     e.preventDefault();
     var next = links[n], dialog = $('evd');
+    next.focus({ preventScroll: true });
     if (dialog) goSection(dialog, next.getAttribute('data-sec'), false);
-    next.focus();
   });
   /* Event overflow menu: infographic, open source, mark done (Today). */
   function closeEvMenu(restore){var m=document.querySelector('.evd-menu');if(!m)return;var b=m.parentNode.querySelector('[data-evmenu]');m.remove();if(b){b.setAttribute('aria-expanded','false');if(restore)b.focus();}}

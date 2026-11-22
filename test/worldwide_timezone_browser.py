@@ -81,12 +81,14 @@ with sync_playwright() as p:
   from urllib.parse import unquote
   assert 'DTSTART:20261107T190000Z' in unquote(ics), 'calendar export used device zone instead of selected zone'
   close_event();open_event(WINDOWS['eventId'])
+  # Continuous Event Details: section chips jump through one scrollable page;
+  # selecting a section must not hide other source-backed sections.
   page.locator('#evd .evd-nav-link[data-sec="research"]').click()
   assert page.locator('#evd-research-title').is_visible()
-  assert not page.locator('#evd-tickets').is_visible()
+  assert page.locator('#evd-tickets').is_visible(), 'Tickets must stay visible during Research'
   page.locator('#evd .evd-nav-link[data-sec="tickets"]').click()
   assert page.locator('#evd-tickets').is_visible()
-  assert not page.locator('#evd-research-title').is_visible()
+  assert page.locator('#evd-research-title').is_visible(), 'Research must remain visible during Tickets'
   assert page.locator('#evd-rotations').count()==0
   close_event()
   bad=copy.deepcopy(VALID);bad['events'].append({'schemaVersion':1,'eventId':'synthetic-invalid-new','title':'Synthetic invalid','pokemon':[{'speciesId':'25'}],'encounters':[{'identityKey':'25:base:none','method':'wiild'}]});payload[0]=bad

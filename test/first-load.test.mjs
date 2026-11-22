@@ -81,7 +81,7 @@ test("service worker precache lists each file once, and every versioned URL the 
 });
 
 test("index.html preloads the dash.js URL that app.js injects, so it is found at the top of the page", () => {
-  const injected = /ds\.src='(\/dash\.js\?v=\w+)'/.exec(read("app.js"));
+  const injected = /ds\.src='(\/dash\.js\?v=[\w-]+)'/.exec(read("app.js"));
   assert.ok(injected, "app.js still injects dash.js");
   assert.ok(html.includes('<link rel="preload" href="' + injected[1] + '" as="script">'), "preload names the same versioned URL");
   assert.ok(html.indexOf("rel=\"preload\"") < html.indexOf("<script"), "the preload is in the head");

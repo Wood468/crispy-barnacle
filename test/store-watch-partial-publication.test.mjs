@@ -1,0 +1,97 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { diffStore, storeCurrentSnapshot } from "../scripts/store-watch.mjs";
+import { withEvidence } from "./store-evidence-fixture.mjs";
+
+const at = "2026-11-14T06:00:00.000Z";
+const item = n => ({
+  href: "/purchase/item/sku-" + n,
+  name: "Product " + n,
+  price: "A$1.00",
+  section: n < 10 ? "POKECOINS" : n < 20 ? "ITEMS" : "LIMITED_TIME",
+  imgs: []
+});
+const previous = {
+  currency: "A$",
+  watchStart: "2026-11-10T00:00:00.000Z",
+  updated: "2026-11-14T05:00:00.000Z",
+  lastPublishedAt: "2026-11-10T00:00:00.000Z",
+  items: Object.fromEntries(Array.from({length:35},(_,n)=>{
+    const i=item(n);
+    return [i.href, {name:i.name,price:i.price,section:i.section,firstSeen:"2026-11-10T00:00:00.000Z",lastSeen:previousTime(),images:[]}];
+  })),
+  gone: {}
+};
+function previousTime(){return "2026-11-14T05:00:00.000Z";}
+
+test("partial same-currency 35-to-3 snapshot must not retire 32 confirmed items", () => {
+  const d = diffStore(previous, {items:[item(0),item(1),item(2)]}, at);
+  assert.equal(d.gone.length,0,"untrusted partial snapshot must not generate removals");
+  assert.equal(Object.keys(d.state.items).length,35,"previous current listings must be retained");
+  assert.equal(storeCurrentSnapshot(d.state).gone.length,0,"public snapshot must not falsely archive SKUs");
+});
+
+test("currency-held observation must not count as a published refresh", () => {
+  const d = diffStore(previous,{items:Array.from({length:35},(_,n)=>({...item(n),price:"US$1.00"}))},at);
+  assert.ok(d.held);
+  assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
+});
+
+for (const [count, total] of [[18,35],[20,35],[3,9]]) {
+  test(`partial same-currency ${total}-to-${count} observation must not falsely retire listings`, () => {
+    const old = { ...previous, items: Object.fromEntries(Object.entries(previous.items).slice(0,total)) };
+    const d = diffStore(old, {items:Array.from({length:count},(_,n)=>item(n))}, at);
+    assert.equal(d.gone.length,0,"ambiguous missing SKUs are not confirmed retirements");
+    assert.equal(Object.keys(d.state.items).length,total);
+    assert.equal(d.state.lastPublishedAt,old.lastPublishedAt);
+  });
+  test(`complete-evidence ${total}-to-${count} drop is still held (large-drop) with no retirement`, () => {
+    const old = { ...previous, items: Object.fromEntries(Object.entries(previous.items).slice(0,total)) };
+    const snap = withEvidence(Array.from({length:count},(_,n)=>item(n)));
+    const d1 = diffStore(old, snap, at);
+    assert.equal(d1.held?.reason,"large-drop");
+    const d2 = diffStore(d1.state, snap, "2026-11-14T07:00:00.000Z");
+    assert.equal(d2.held?.reason,"large-drop","a second identical scrape does not unlock a large drop");
+    assert.equal(d2.gone.length,0);
+    assert.equal(Object.keys(d2.state.items).length,total);
+  });
+}
+
+test("successful unchanged observation preserves durable private publication stamp", () => {
+  const d = diffStore(previous,{items:Array.from({length:35},(_,n)=>item(n))},at);
+  assert.equal(d.gone.length,0);
+  assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
+});
+
+test("complete evidence alone does not retire a SKU: first absence is held pending corroboration", () => {
+  const d = diffStore(previous,withEvidence(Array.from({length:34},(_,n)=>item(n))),at);
+  assert.equal(d.held?.reason,"awaiting-corroboration");
+  assert.equal(d.gone.length,0);
+  assert.equal(Object.keys(d.state.items).length,35);
+  assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
+});
+
+test("unverified 35-to-34 absence cannot retire a SKU", () => {
+  const d = diffStore(previous,{items:Array.from({length:34},(_,n)=>item(n))},at);
+  assert.ok(d.held);
+  assert.equal(d.gone.length,0);
+  assert.equal(Object.keys(d.state.items).length,35);
+  assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
+});
+
+for (const [label, items] of [
+  ["empty", []],
+  ["two-item", [item(0),item(1)]],
+  ["duplicate SKU", [item(0),item(0),item(2)]],
+  ["invalid item", [item(0),{...item(1),price:""},item(2)]],
+  ["missing section", [item(0),{...item(1),section:""},item(2)]],
+  ["mixed currencies", [item(0),{...item(1),price:"US$1.00"},item(2)]]
+]) {
+  test(`untrusted ${label} scrape cannot retire or publish listings`, () => {
+    const d = diffStore(previous, {items}, at);
+    assert.ok(d.held, "invalid observation must be held");
+    assert.equal(d.gone.length,0);
+    assert.equal(Object.keys(d.state.items).length,35);
+    assert.equal(d.state.lastPublishedAt,previous.lastPublishedAt);
+  });
+}

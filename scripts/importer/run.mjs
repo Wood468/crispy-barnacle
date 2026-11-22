@@ -5,6 +5,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { SOURCES, sourceFor } from "./sources.mjs";
 import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent, researchOptions } from "./extract.mjs";
+import { collectCanonicalSourceFacetAudit, worldSourceFacetCandidates } from "./source-facets-canonical-audit.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
 import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries, sharedArticleKey } from "./world.mjs";
@@ -256,19 +257,132 @@ export function preserveGoPassRows(out, old, byEvent) {
 }
 
 
-// Keep source-backed research during a temporary feed outage, but never keep
-// outdated rows when the publishing page was actually fetched this run.
-// Only tasks with an explicit source URL are eligible; prose is never promoted.
-export function preserveUnfetchedResearchTasks(out, old, byEvent) {
+// Keep source-backed research when this run cannot prove it was removed.
+//
+// Removal contract (only reached when this run's merged research is EMPTY):
+//   * A source that was not fetched, or whose extractFields().researchParse is
+//     missing, "incomplete" or truncated, is UNKNOWN: retain. (Time alone never
+//     expires these.)
+//   * A fully read source reporting "none" is ALSO UNKNOWN on first sight. Absence
+//     of *recognised* research is not evidence of removal: a markup change,
+//     JS-rendered content or a renamed heading looks identical. We retain, warn,
+//     and stamp researchRetainedAt with the time retention BEGAN (kept across
+//     runs, never reset to the last publish time).
+//   * Removal needs positive confirmation that the absence persists: the old record
+//     already carries researchRetainedAt, that first-retained time is at least
+//     RETENTION_CONFIRM_DAYS before `now`, and the source is still fully read and
+//     showing no research ("none"). A source with status "ok" parsed fine and
+//     simply no longer lists the task, so it is an ordinary removal.
+//   * An EXPLICIT denial is positive evidence and needs no wait: a fully read, non-truncated
+//     page that is this event's own page (its detail id or link) whose research section says
+//     "No Timed Research ..." (researchParse.explicitNone) confirms removal immediately, provided
+//     every source of the task is ok, itself a denial, or "none" with researchKeywords === false
+//     (no Timed/Special/Field Research or Task wording on the fully read page; a parser miss has it). Other sources supplying tasks never reach
+//     here (merged research would not be empty).
+//   * Report reasons: unfetched, incomplete, none-unconfirmed (retained); source-denies
+//     (explicit denial), removal-confirmed (persisted 7-day "none"), source-ok-removed (source
+//     parsed "ok" without the task), window-mismatch, name-mismatch (dropped).
+//   * Once the event has ended (stamped task window end or current event end is
+//     before today) published research is KEPT when the sources are merely unreadable or absent
+//     (reason event-ended-kept: retained, no warning, no retention stamp), so a past event's detail
+//     page stays complete after its source falls off discovery. Never invents tasks; positive
+//     removal evidence (ok-removed, source-denies, confirmed none) still drops, ended or not.
+// Only tasks with an explicit source URL are eligible; a stamped id, name or window
+// date must match the current event, and unstamped legacy tasks are accepted (the
+// same-id old record already identifies the event); prose is never promoted.
+// `report` (optional array) receives one diagnostic entry per event that had old
+// source-backed tasks while the merged result was empty.
+export const RETENTION_CONFIRM_DAYS = 7;
+const samePlace = (a, b) => !a || !b || a === b;
+// Calendar date of an ISO date or datetime ("2026-11-14", "2026-11-14T17:00:00Z"); "" when absent.
+const day = value => (typeof value === "string" ? value.slice(0, 10) : "");
+function taskBelongsTo(task, id, now, event) {
+  if (!samePlace(task.eventId, id) || !samePlace(task.eventName, now.name)) return "name-mismatch";
+  const w = task.eventWindow;
+  return !w || !event || (samePlace(day(w.start), day(event.start)) && samePlace(day(w.end), day(event.end))) ? "" : "window-mismatch";
+}
+// Is `source` this event's own write-up (its stable detail id, or its link)? A shared page never denies an event it merely covers.
+function ownsPage(event, source) {
+  if (!event || !source?.url) return false;
+  const url = normUrl(source.url);
+  if ([event.link, event.sourceUrl].some(link => link && normUrl(link) === url)) return true;
+  const detailId = pageDetailId({ source: source.id, url: source.url });
+  return !!detailId && Array.isArray(event.detailIds) && event.detailIds.includes(detailId);
+}
+export function preserveUnfetchedResearchTasks(out, old, byEvent, { now: runAt = new Date().toISOString(), report = [] } = {}) {
+  const today = day(runAt);
   for (const [id, group] of byEvent) {
     const now = out[id], before = old[id];
-    if (!now || !before || now.name !== before.name || (now.researchTasks || []).length) continue;
-    const fetched = new Set(group.results.map(r => normUrl(r.source?.url || "")).filter(Boolean));
-    const carried = (before.researchTasks || []).filter(task =>
-      Array.isArray(task.sourceRefs) && task.sourceRefs.some(ref =>
-        /^https:\/\//.test(ref.url || "") && !fetched.has(normUrl(ref.url)))
-    );
-    if (carried.length) now.researchTasks = carried;
+    if (!now || !before || (now.researchTasks || []).length) continue;
+    const backed = (before.researchTasks || []).filter(task => task && typeof task === "object" && Array.isArray(task.sourceRefs) && task.sourceRefs.some(ref => /^https:\/\//.test(ref.url || "")));
+    if (!backed.length) continue;
+    const health = new Map(), sources = [], srcByUrl = new Map(); let denied = false;
+    const anyExplicit = group.results.some(r => r.fields?.researchParse?.explicitNone === true);
+    for (const r of group.results) {
+      const url = normUrl(r.source?.url || "");
+      if (!url) continue;
+      const p = r.fields?.researchParse, status = p?.status ?? null, truncated = !!p?.truncated;
+      const ownDenial = p?.explicitNone === true && status === "explicit-none" && !truncated && ownsPage(group.event, r.source);
+      if (ownDenial) denied = true;
+      // Keys appear only when they explain a denial: researchKeywords as a boolean when false or when any source denied; ownsPage on denying sources.
+      const src = { url: r.source.url, status, truncated, candidateRows: p?.candidateRows ?? null, headings: p?.headings ?? null, table: p?.table ?? null, ...(p?.explicitNone === true ? { explicitNone: true, ownsPage: ownsPage(group.event, r.source) } : {}), ...(typeof p?.researchKeywords === "boolean" && (p.researchKeywords === false || anyExplicit) ? { researchKeywords: p.researchKeywords } : {}), ...(typeof p?.sample === "string" ? { sample: p.sample.slice(0, 600) } : {}) };
+      sources.push(src); srcByUrl.set(url, { src, keywords: p?.researchKeywords });
+      // ok: parsed. none: fully read, nothing recognised (also a denial on a page that is not this event's own). denied: own page says there is none. anything else (incl. truncated): incomplete.
+      const kind = truncated ? "incomplete" : status === "ok" ? "ok" : status === "none" && p?.researchKeywords === false ? "none-clean" : status === "none" || (status === "explicit-none" && !ownDenial) ? "none" : ownDenial ? "denied" : "incomplete";
+      const prior = health.get(url), rank = ["ok", "denied", "none-clean", "none", "incomplete"];
+      health.set(url, prior && rank.indexOf(prior) > rank.indexOf(kind) ? prior : kind);
+    }
+    const firstRetained = Date.parse(before.researchRetainedAt || "");
+    const confirmed = Number.isFinite(firstRetained) && Date.parse(runAt) - firstRetained >= RETENTION_CONFIRM_DAYS * 864e5;
+    const entry = { id, name: before.name ?? now.name, oldTasks: backed.length, retained: false, reason: "source-ok-removed", sources };
+    let deniedDrop = false;
+    const filtered = new Set(); // why tasks were dropped before health was consulted
+    const seen = new Set();
+    let incomplete = false, unconfirmed = false, confirmedNone = false, endedKept = false;
+    const carried = backed.filter(task => {
+      const mismatch = now.name !== before.name ? "name-mismatch" : taskBelongsTo(task, id, now, group.event);
+      if (mismatch) { filtered.add(mismatch); return false; }
+      const end = [day(task.eventWindow?.end), day(group.event?.end)].filter(Boolean);
+      // An ended event keeps its published research (its detail page stays complete); healthy removal evidence below still drops it.
+      const ended = end.some(value => value < today);
+      const rawKinds = task.sourceRefs.filter(ref => /^https:\/\//.test(ref.url || "")).map(ref => health.get(normUrl(ref.url)));
+      const kinds = rawKinds.map(k => k === "none-clean" ? "none" : k);
+      // undefined = not fetched this run (outage): unknown, no parse warning.
+      // Explicit denial by the event's own page, with every source of the task fetched and readable: removal is confirmed now.
+      // Every other source must be positively healthy: parsed ok, itself a denial, or "none" with no research wording anywhere on the page (a parser miss would still show "Timed Research"/"Task").
+      if (denied && rawKinds.every(k => k === "ok" || k === "denied" || k === "none-clean")) { deniedDrop = true; return false; }
+      // Say exactly which guard kept the task when a source denied the research (first retained task only).
+      if (anyExplicit && !entry.blockedBy) {
+        const why = [];
+        if (!denied) why.push(group.results.some(r => r.fields?.researchParse?.truncated && r.fields?.researchParse?.explicitNone) ? "denial-truncated" : "not-own-page");
+        else task.sourceRefs.filter(ref => /^https:\/\//.test(ref.url || "")).forEach(ref => {
+          const u = normUrl(ref.url), k = health.get(u), meta = srcByUrl.get(u);
+          const w = k === undefined ? "source-unfetched" : k === "incomplete" ? "source-incomplete" : k === "none" ? (meta?.keywords === true ? "source-keywords" : "keywords-unknown") : "";
+          if (w) { why.push(w); if (meta) meta.src.blockedBy = w; }
+        });
+        entry.blockedBy = [...new Set(why)];
+      }
+      const doubtful = kinds.some(k => k === "incomplete"), pending = kinds.some(k => k === "none") && !confirmed;
+      if (!kinds.some(k => k === undefined) && !doubtful && !pending) { if (kinds.includes("none")) confirmedNone = true; return false; }
+      const key = JSON.stringify([task.category, task.task, task.rewards, task.occurrence || 1]);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      if (ended) endedKept = true; else if (doubtful) incomplete = true; else if (pending) unconfirmed = true;
+      return true;
+    });
+    if (carried.length) {
+      now.researchTasks = carried;
+      entry.retained = true;
+      entry.reason = incomplete ? "incomplete" : unconfirmed ? "none-unconfirmed" : endedKept ? "event-ended-kept" : "unfetched";
+      if (incomplete || unconfirmed) {
+        now.researchParseWarning = "Research could not be confirmed this run; previously published research tasks were retained.";
+        now.researchRetainedAt = before.researchRetainedAt || runAt; // when retention BEGAN
+      } else if (before.researchRetainedAt && !endedKept) now.researchRetainedAt = before.researchRetainedAt;
+    } else {
+      entry.reason = ["window-mismatch", "name-mismatch"].find(r => filtered.has(r)) || (deniedDrop ? "source-denies" : confirmedNone ? "removal-confirmed" : "source-ok-removed");
+    }
+    report.push(entry);
+    console.log(`research-retention ${id}: ${entry.retained ? "retained" : "dropped"} ${carried.length}/${entry.oldTasks} (${entry.reason}) sources=${sources.map(s => s.status + (s.truncated ? "+trunc" : "")).join(",") || "none"}`);
   }
   return out;
 }
@@ -277,6 +391,37 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent) {
 // Never let that copy drop an exactly matched, published source-backed activity
 // schedule: its typed Raid / Max Hour bosses are authoritative for form IDs.
 // This is an exact canonical-ID join, not a name or species guess.
+// Once an event has ended, a third-party write-up (Leek Duck removes its page afterwards) can fall off discovery.
+// The re-import then rebuilt the event from the remaining sources only and silently deleted everything that page
+// supplied (encounters, Pokémon, field rows), emptying a finished event's detail page. Carry forward what a
+// vanished source id contributed: its source entry, its attributed field rows, and the structured encounters and
+// Pokémon (which carry no per-source attribution, so only when this run produced none). Live events never reach it.
+export function preserveEndedSourceData(out, old, byEvent, { now: runAt = new Date().toISOString() } = {}) {
+  const today = day(runAt);
+  for (const [id, { event }] of byEvent) {
+    const now = out[id], before = old[id];
+    if (!now || !before || !event || !event.end || day(event.end) >= today) continue;
+    const present = new Set((now.sources || []).map(source => source.id));
+    const lost = (before.sources || []).filter(source => source && !present.has(source.id) && !(now.sources || []).some(kept => kept.url === source.url));
+    if (!lost.length) continue;
+    const ids = new Set(lost.map(source => source.id));
+    now.sources = [...(now.sources || []), ...lost];
+    now.fields ||= {};
+    for (const [key, rows] of Object.entries(before.fields || {})) {
+      if (!Array.isArray(rows)) continue;
+      const have = new Set((now.fields[key] || []).map(row => row && row.text));
+      const keep = rows.filter(row => row && Array.isArray(row.sources) && row.sources.some(sid => ids.has(sid)) && !have.has(row.text));
+      if (keep.length) now.fields[key] = [...(now.fields[key] || []), ...keep];
+    }
+    if (!(now.encounters || []).length && (before.encounters || []).length) {
+      now.encounters = before.encounters;
+      now.pokemon = before.pokemon || now.pokemon;
+      if (before.encounterConflicts) now.encounterConflicts = before.encounterConflicts;
+    }
+  }
+  return out;
+}
+
 export function sourceBackedActivitiesFor(id, event, curatedById) {
   const record=curatedById.get(id);
   const curated=record&&Array.isArray(record.activities)?record.activities:[];
@@ -323,6 +468,9 @@ async function main() {
   let formData={f:[]};try{formData=JSON.parse(await readFile('public/forms.json','utf8'));}catch{/* undeclared forms remain source prose */}
   const rewardOptions=researchOptions({dex,names:artNames,costumes:costumeNames,forms:formData});
   for(const page of pages)page.fields=extractFields(page.html,rewardOptions);
+  // Staging only: count additional verified-source claims for importer QA.
+  // Do not merge these preliminary facets into published event-details data.
+  // Exact source-facet auditing happens after generated world-event identities are resolved.
   const byEvent = new Map(), unmatched = [];
   for (const p of pages) {
     const hit = pickEvent(p, events);
@@ -369,9 +517,15 @@ async function main() {
   let nameFixes = {}; try { nameFixes = JSON.parse(await readFile("data/name-overrides.json", "utf8")).names || {}; } catch { /* none */ }
   world = world.map(w => ({ ...w, name: nameFixes[w.id] || ((w.sources || []).some(x => x.id === "official") && !(w.sources || []).some(x => x.auto) ? tidyName(w.name) : w.name) }));
   world = world.map(w => ({ ...w, seen: w.seen && !entries.some(e => e.name === w.name) ? w.seen : today })).sort((a, b) => String(a.start || "9").localeCompare(String(b.start || "9")));
+  // A source can belong to an independently discovered in-person world event
+  // not present in the curated/API feed. Join only its explicit LeekDuck URL
+  // and keep all ticket/move/research claims staging-only until publication QA.
+  const sourceFacetStaging = collectCanonicalSourceFacetAudit(
+    pages,events.concat(worldSourceFacetCandidates(world,events))
+  ).report;
   await writeFile(WORLD_OUT, JSON.stringify({ updated: new Date().toISOString(), events: world }, null, 1) + "\n");
   let old = {}; try { old = JSON.parse(await readFile(OUT, "utf8")).events || {}; } catch { /* first run */ }
-  const now = new Date().toISOString(), out = {};
+  const now = new Date().toISOString(), out = {}, researchRetention = [];
   // Page-level promotional artwork index: every official / Leek Duck page's own og:image, with its page URL and retrieval date.
   // The catalogue joins it to any event that lists the page as its own source (never to hub round-ups).
   if (ARTWORK_OUT) {
@@ -448,7 +602,8 @@ async function main() {
     }
   } catch (error) { console.warn("Curated activity reconciliation skipped:", error.message); }
   preserveGoPassRows(out, old, byEvent);
-  preserveUnfetchedResearchTasks(out, old, byEvent);
+  preserveUnfetchedResearchTasks(out, old, byEvent, { now, report: researchRetention });
+  preserveEndedSourceData(out, old, byEvent, { now });
   // A feed-derived twin record (leekduck:<slug>) whose every source page is now read into the curated record is a duplicate: keeping it would show every task and Pokémon twice.
   const claimedUrls = new Set([...byEvent.values()].flatMap(group => group.results.map(result => normUrl(result.source.url))));
   let sameRulings = []; try { sameRulings = JSON.parse(await readFile("data/event-aliases.json", "utf8")).same || []; } catch { /* no rulings */ }
@@ -464,7 +619,7 @@ async function main() {
   const artworkCoverage = { selected: Object.values(out).filter(v => !!v.image && !!v.imageProvenance).length, missing: Object.values(out).filter(v => !v.image).length, legacyUnattributed: Object.values(out).filter(v => !!v.image && !v.imageProvenance).length, bySource: {} };
   for (const v of Object.values(out)) if (v.image && v.imageProvenance) { const source = v.imageProvenance.source || "Unknown"; artworkCoverage.bySource[source] = (artworkCoverage.bySource[source] || 0) + 1; }
   artworkCoverage.missingEvents = Object.entries(out).filter(([, v]) => !v.image).map(([id, v]) => ({ id, name: v.name, sources: (v.sources || []).map(s => s.url).filter(Boolean).slice(0, 2) })).slice(0, 100);
-  await writeFile(REPORT, JSON.stringify({ runAt: now, artworkCoverage, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20) }, null, 1) + "\n");
+  await writeFile(REPORT, JSON.stringify({ runAt: now, artworkCoverage, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), researchRetention, unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20), sourceFacetStaging }, null, 1) + "\n");
   console.log(`Read ${pages.length} pages for ${byEvent.size} events; ${unmatched.length} pages matched no event; ${errors.length} errors.`);
 }
 if (import.meta.url === "file://" + process.argv[1]) main().catch(failRun);

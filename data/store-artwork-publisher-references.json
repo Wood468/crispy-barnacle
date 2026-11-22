@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "observedDate": "2026-11-13",
+  "sourcePage": "https://store.pokemongo.com/?hl=en_us",
+  "sourceRegionContext": "en_us; a source-image observation, never evidence of price or regional checkout availability",
+  "purpose": "Read-only, human-inspectable official publisher item-image references for exact Store identity review",
+  "rightsNotice": "All images belong to their respective Pokémon GO rights holders. Public display or redistribution permission is NOT established by a published URL; review permission, CSP/same-origin delivery and item identity separately before any runtime use.",
+  "runtimeUseAuthorized": false,
+  "approvedImages": 0,
+  "exclusions": [
+    "Coin pack images are pack-size-specific and are not approved as a generic PokéCoin item icon.",
+    "Bundles/tickets need offer-specific art; a component icon cannot be promoted as the product picture."
+  ],
+  "entries": [
+    {
+      "id": "lucky-egg",
+      "item": "Lucky Egg",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_lucky_egg-feaf5f82a636/w128.webp",
+      "publisherImageAlt": "Lucky Egg",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "star-piece",
+      "item": "Star Piece",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_star_piece-18779140310e/w128.webp",
+      "publisherImageAlt": "Star Piece",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "egg-incubator",
+      "item": "Egg Incubator",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_incubator_basic-12b107ebf517/w128.webp",
+      "publisherImageAlt": "Egg Incubator",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "super-incubator",
+      "item": "Super Incubator",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_incubator_super-5ba221453551/w128.webp",
+      "publisherImageAlt": "Super Incubator",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "pokemon-storage",
+      "item": "Pokémon Storage",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_pokemon_storage_upgrade-289699e03393/w128.webp",
+      "publisherImageAlt": "Pokémon Storage",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "item-bag",
+      "item": "Item Bag",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_item_storage_upgrade-20cd05ec3eaa/w128.webp",
+      "publisherImageAlt": "Item Bag",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "max-particle-pack",
+      "item": "Max Particle Pack",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_mp_replenish-0c1ab1b9c061/w128.webp",
+      "publisherImageAlt": "Max Particle Pack",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "remote-raid-pass",
+      "item": "Remote Raid Pass",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_remote_raid_ticket-af11fc2ef1e4/w128.webp",
+      "publisherImageAlt": "Remote Raid Pass",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "premium-battle-pass",
+      "item": "Premium Battle Pass",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_paid_raid_ticket-583080af6a8c/w128.webp",
+      "publisherImageAlt": "Premium Battle Pass",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "max-mushroom",
+      "item": "Max Mushroom",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_max_boost-62af949f3236/w128.webp",
+      "publisherImageAlt": "Max Mushroom",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "link-charge",
+      "item": "Link Charge",
+      "publisherImageUrl": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/item_enhanced_currency-5aead479b400/w128.webp",
+      "publisherImageAlt": "Link Charge",
+      "listingEvidence": "https://store.pokemongo.com/?hl=en_us",
+      "visualStatus": "publisher-listing-observed",
+      "rightsStatus": "not-cleared",
+      "deliveryStatus": "not-reviewed",
+      "approvedForRuntime": false
+    }
+  ]
+}

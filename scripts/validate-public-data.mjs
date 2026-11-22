@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Lightweight integrity checks for generated/public data. Runs even when a change only updates JSON.
-import { readdir, readFile, access } from "node:fs/promises";
+import { readdir, readFile, lstat } from "node:fs/promises";
 import { join, relative, resolve, sep } from "node:path";
 
 import { IMAGE_CSP_HOSTS } from '../src/image-policy.js';
@@ -177,13 +177,33 @@ if (regionalEvents != null) {
   }
 }
 
-let picturesRestored = false; try { await access(join(PUBLIC, "infographics")); picturesRestored = true; } catch { /* pictures are in R2 */ }
+// R2 media is not committed to git. In a checkout without restored images we
+// continue validating metadata; after restore starts, never accept a broken or
+// linked file just because fs.access() succeeds (directories and empty files do).
+// lstat on every component prevents symlinks into private/outside locations.
+let picturesRestored = false;
+try { await lstat(join(PUBLIC, "infographics")); picturesRestored = true; } catch { /* R2 not restored in this checkout */ }
+async function restoredWeeklyImageReady(path) {
+  let current = PUBLIC;
+  const segments = path.slice(1).split("/");
+  for (const [index, segment] of segments.entries()) {
+    if (!segment) return false;
+    current = join(current, segment);
+    let entry;
+    try { entry = await lstat(current); } catch { return false; }
+    if (index < segments.length - 1) {
+      if (!entry.isDirectory()) return false;
+    } else return entry.isFile() && entry.size > 0;
+  }
+  return false;
+}
 const weekly = parsed.get("public/weekly.json");
 if (weekly != null) {
   if (!weekly || !Array.isArray(weekly.items)) fail("public/weekly.json", "expected an items array");
   else for (const [i, item] of weekly.items.entries()) {
     const where = `public/weekly.json items[${i}]`;
-    if (typeof item.image !== "string" || !/^\/infographics\/[\w./-]+$/.test(item.image) || item.image.includes("..")) {
+    if (!item || typeof item !== "object" || typeof item.image !== "string" ||
+        !/^\/infographics\/[\w./-]+$/.test(item.image) || item.image.includes("..")) {
       fail(where, "image must be a safe local /infographics/ path");
       continue;
     }
@@ -192,8 +212,11 @@ if (weekly != null) {
       fail(where, "image path escapes the public directory");
       continue;
     }
-    // Pictures live in the R2 bucket, not in git: the file is only checked when a run has restored them (public/infographics exists).
-    if (picturesRestored) { try { await access(target); } catch { fail(where, `image file does not exist: ${item.image}`); } }
+    // A regular, nonempty local file is necessary but does not prove image
+    // decoding or permission to publish. The publisher retains that decision.
+    if (picturesRestored && !(await restoredWeeklyImageReady(item.image))) {
+      fail(where, "image file does not exist or is not a nonempty regular local file");
+    }
     if (item.post) {
       try { if (new URL(item.post).protocol !== "https:") fail(where, "post URL must use HTTPS"); }
       catch { fail(where, "post is not a valid URL"); }

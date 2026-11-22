@@ -5,6 +5,7 @@
 // The owner's tap in the app is the approval, so the workflow commits this straight to main.
 import { readFile, writeFile, rm } from "node:fs/promises";
 import {addToEventInfo, datedEvents, publicSourceUrl, sanitizePublicInfographicSources, sanitizeRegistrySources } from "./g47ix-publish.mjs";
+import { targetsFromInfographicDecision } from "./infographic-target-contract.mjs";
 
 const APP = process.env.APP_URL || "https://pogo.michaelpuff.com";
 const REG = process.env.REGISTRY_FILE || "data/g47ix-infographics-review.json";
@@ -23,6 +24,28 @@ export function removeFromEventInfo(info, url, eventIds) {
 }
 const idsOf = d => String(d.eventId || "").split(",").filter(Boolean);
 const titlesOf = d => String(d.eventTitle || "").split(" | ");
+// Guides live independently of rotations: exact Pokémon, form and battle mode.
+export function removeFromPokemonGuides(info, url) {
+  if (!Array.isArray(info.pokemonGuides)) return;
+  info.pokemonGuides = info.pokemonGuides.map(g => ({
+    ...g, infographics: (g.infographics || []).filter(i => i.url !== url)
+  })).filter(g => g.infographics.length);
+}
+export function addToPokemonGuides(info, target, graphic) {
+  if (!target || target.type !== "raid-boss" || !graphic || !graphic.url) return false;
+  info.pokemonGuides ||= [];
+  let guide = info.pokemonGuides.find(g => g.pokemonId === target.pokemonId &&
+    g.formId === target.formId && g.battleMode === target.battleMode);
+  if (!guide) {
+    guide = {pokemonId: target.pokemonId, formId: target.formId, battleMode: target.battleMode, infographics: []};
+    info.pokemonGuides.push(guide);
+  }
+  if (guide.infographics.some(i => i.url === graphic.url)) return false;
+  const sourceUrl = publicSourceUrl(graphic.sourceUrl), creator = graphic.creator || "G47IX";
+  guide.infographics.push({url: graphic.url, label: "Raid boss guide · " + creator,
+    source: creator, ...(sourceUrl ? {sourceUrl} : {}), alt: graphic.alt || "Pokémon raid boss infographic"});
+  return true;
+}
 
 // A decision is the wanted state: which events carry the picture. Later changes (add another event, unlink one, discard)
 // are applied to pictures that were already published too.
@@ -34,32 +57,42 @@ export function applyDecisions(reg, info, decisions, today = new Date().toISOStr
     if (!c) { out.skipped.push(d.id); continue; }
     const was = c.publishedEvents || (c.publishedEvent ? [c.publishedEvent] : []);
     const wasLive = c.reviewStatus === "published";
+    const previousBoss = Array.isArray(c.publishedTargets) ? c.publishedTargets : [];
     if (d.status === "rejected") {
       if (c.overview) { out.skipped.push(d.id); continue; } // a restored week/month picture is not re-discarded by an old Discard
-      if (wasLive && c.stagedPath) removeFromEventInfo(info, c.stagedPath, was);
+      if (wasLive && c.stagedPath) { removeFromEventInfo(info, c.stagedPath, was); removeFromPokemonGuides(info, c.stagedPath); }
       if (c.decision === "rejected" && !wasLive) { out.skipped.push(d.id); continue; }
-      c.decision = "rejected"; c.reviewStatus = "rejected"; c.publishedEvents = []; out.rejected.push(c); continue;
+      c.decision = "rejected"; c.reviewStatus = "rejected"; c.publishedEvents = []; c.publishedTargets = []; out.rejected.push(c); continue;
     }
     if (d.status === "week" || d.status === "month") {
       if (c.overview === d.status && c.reviewStatus === "weekly") { out.skipped.push(d.id); continue; }
-      if (wasLive && c.stagedPath) removeFromEventInfo(info, c.stagedPath, was);
-      c.overview = d.status; c.reviewStatus = "weekly"; c.decision = ""; c.publishedEvents = []; delete c.publishedEvent; out.changed.push(c); continue;
+      if (wasLive && c.stagedPath) { removeFromEventInfo(info, c.stagedPath, was); removeFromPokemonGuides(info, c.stagedPath); }
+      c.overview = d.status; c.reviewStatus = "weekly"; c.decision = ""; c.publishedEvents = []; c.publishedTargets = []; delete c.publishedEvent; out.changed.push(c); continue;
     }
     if (d.status === "unlinked") {
       if (!wasLive) { out.skipped.push(d.id); continue; }
-      if (c.stagedPath) removeFromEventInfo(info, c.stagedPath, was);
-      c.reviewStatus = "needs_review"; c.decision = ""; c.publishedEvents = []; delete c.publishedEvent; out.changed.push(c); continue;
+      if (c.stagedPath) { removeFromEventInfo(info, c.stagedPath, was); removeFromPokemonGuides(info, c.stagedPath); }
+      c.reviewStatus = "needs_review"; c.decision = ""; c.publishedEvents = []; c.publishedTargets = []; delete c.publishedEvent; out.changed.push(c); continue;
     }
-    if (d.status !== "approved" || !d.eventId || !c.stagedPath) { out.skipped.push(d.id); continue; }
+    if (d.status !== "approved" || !c.stagedPath) { out.skipped.push(d.id); continue; }
+    let targets;
+    try { targets = targetsFromInfographicDecision(d); }
+    catch { out.skipped.push(d.id); continue; }
+    if (!targets.length || targets.length > 8) { out.skipped.push(d.id); continue; }
+    const bossTargets = targets.filter(t => t.type === "raid-boss");
     if (c.decision === "rejected" && c.reviewStatus === "rejected") { out.skipped.push(d.id); continue; }
-    const want = idsOf(d), titles = titlesOf(d);
-    if (wasLive && want.length === was.length && want.every(x => was.includes(x))) { out.skipped.push(d.id); continue; }
-    if (wasLive) removeFromEventInfo(info, c.stagedPath, was.filter(x => !want.includes(x)));
+    const want = targets.filter(t => t.type === "event").map(t => t.eventId), titles = titlesOf(d);
+    if (wasLive && want.length === was.length && want.every(x => was.includes(x)) &&
+        JSON.stringify(bossTargets) === JSON.stringify(previousBoss)) { out.skipped.push(d.id); continue; }
+    if (wasLive) { removeFromEventInfo(info, c.stagedPath, was.filter(x => !want.includes(x))); removeFromPokemonGuides(info, c.stagedPath); }
     want.forEach((id, i) => {
       const t = titles[i] || id;
       addToEventInfo(info, { id, t, ...(eventOf(id) || {}) }, { url: c.stagedPath, sourceUrl: c.url, observed: today, alt: t + " infographic", creator: c.creator });
     });
-    c.reviewStatus = "published"; c.decision = "approved"; c.publishedEvent = want[0]; c.publishedEvents = want;
+    bossTargets.forEach(t => addToPokemonGuides(info, t, {url: c.stagedPath, sourceUrl: c.url,
+      observed: today, alt: c.title || "Pokémon raid boss guide", creator: c.creator}));
+    c.reviewStatus = "published"; c.decision = "approved"; c.publishedEvent = want[0] || "";
+    c.publishedEvents = want; c.publishedTargets = bossTargets;
     (wasLive ? out.changed : out.published).push(c);
   }
   return out;

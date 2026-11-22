@@ -490,6 +490,12 @@ html[data-kbd] #evd .hbtn:focus-visible,html[data-kbd] #evd .evd-nav-link:focus-
 .ue-pass-gap{margin:6px 0;padding:7px 9px}
 @media(max-width:375px){.ue-pass-stages>li.ue-pass-rank{grid-template-columns:minmax(58px,65px) minmax(0,1fr);gap:6px}.ue-pass-highlight{padding:9px}}
 
+/* Source-backed GO Pass Pokémon keep their species illustration visible.
+   The mode is separate text, not a fake Dynamax/Shadow sprite or MAX icon. */
+.ue-pass-mode-line{display:flex;align-items:center;min-width:0}
+.ue-pass-mode{display:inline-flex;align-items:center;max-width:100%;width:max-content;min-height:15px;padding:1px 5px;border:1px solid color-mix(in srgb,var(--color-accent) 45%,var(--color-border));border-radius:5px;background:color-mix(in srgb,var(--color-accent) 11%,transparent);color:var(--color-text);font:750 .59rem/1.2 var(--font-body);letter-spacing:.015em;white-space:nowrap}
+.ue-pass-reward[data-battle-mode="dynamax"] .ue-pass-mode,.ue-pass-reward[data-battle-mode="gigantamax"] .ue-pass-mode{border-color:color-mix(in srgb,#d17bff 45%,var(--color-border));background:color-mix(in srgb,#d17bff 13%,transparent)}
+
 /* Schedule: today marker on day headings, honest empty week */
 h2.dh-today{color:var(--color-accent,#f5c518)}
 h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);border:1px solid var(--color-border);border-radius:999px;padding:3px 8px;vertical-align:middle;margin-left:6px}
@@ -503,6 +509,24 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 .ue-source-highlights li{display:grid;gap:4px;padding:12px 14px;border:1px solid var(--border,#303849);border-radius:13px;background:var(--surface,#1a1e27)}
 .ue-source-highlights strong{font-size:12px;letter-spacing:.03em;color:var(--muted,#b9b5cf)}
 .ue-source-highlights span{font-size:14px;line-height:1.45}
+
+
+/* Source-backed shiny-boost overview. Never style normal shiny eligibility as boosted. */
+.ue-shiny-overview{display:grid;gap:11px;padding:13px 14px;border:1px solid color-mix(in srgb,var(--color-kind-shiny) 55%,var(--color-border));border-radius:var(--radius-lg);background:color-mix(in srgb,var(--color-kind-shiny) 9%,var(--color-surface));min-width:0}
+.ue-shiny-overview-head{display:flex;align-items:flex-start;gap:10px}
+.ue-shiny-overview-mark{display:grid;place-items:center;flex:0 0 34px;min-height:34px;border-radius:10px;background:var(--color-kind-shiny);color:var(--color-on-kind-shiny);font-size:1rem;font-weight:900}
+.ue-shiny-overview-head h3{margin:0 0 3px;font-size:1rem}
+.ue-shiny-overview-head p{margin:0;color:var(--color-text-muted);font-size:.76rem;line-height:1.4}
+.ue-shiny-species-list,.ue-shiny-announcements ul,.ue-shiny-methods{list-style:none;margin:0;padding:0;display:grid;gap:7px;min-width:0}
+.ue-shiny-species{min-width:0;padding:9px 11px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface)}
+.ue-shiny-species-title{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap}
+.ue-shiny-species-title strong{font-size:.87rem;overflow-wrap:anywhere}
+.ue-shiny-species-title span{font-size:.68rem;font-weight:800;color:var(--color-kind-shiny);white-space:nowrap}
+.ue-shiny-methods{margin-top:6px;gap:4px;font-size:.74rem;line-height:1.45;color:var(--color-text-muted)}
+.ue-shiny-methods li,.ue-shiny-announcements li{overflow-wrap:anywhere}
+.ue-shiny-announcements{display:grid;gap:7px;font-size:.8rem;line-height:1.45}
+.ue-shiny-announcements>strong{font-size:.75rem}
+.ue-shiny-announcements li{padding:8px 10px;border-radius:var(--radius-sm);background:var(--color-surface);border:1px solid var(--color-border)}
 
 /* Universal schedule preview: same responsive treatment for every event family. */
 .ue-schedule-preview{margin:16px 0}
@@ -545,3 +569,10 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 #evd .ue-raid-day-info{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
 #evd .ue-raid-day-info .ue-raid-cp{justify-content:flex-start;font-size:.57rem}
 @media(max-width:390px){#evd .ue-raid-day-grid{grid-template-columns:1fr}}
+/* Research tab: generic candy/berry shape where no approved item picture exists (kept in the grey-dot's place, but readable as an item). */
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-category[data-item-glyph="candy"],.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-category[data-item-glyph="berry"]{border-style:dashed}
+.rs-rewards .ue-reward-category svg{display:block;width:22px;height:22px}
+/* Research tab: the "Form art unavailable" badge is added at run time inside the 34px picture box, where it was cut off mid-word ("Form ar").
+   Hide it visually there (its text stays in the picture's label) and show the same words, whole, under the reward name where they can wrap. */
+.rs-rewards .ue-reward-art .form-chip{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;padding:0;border:0}
+.rs-rewards .research-reward:has(.ue-reward-art .form-chip)>span:last-child::after{content:"Form art unavailable";display:block;max-width:100%;text-align:center;white-space:normal;overflow-wrap:normal;word-break:normal;font-size:.62rem;line-height:1.15;color:var(--color-text-muted)}

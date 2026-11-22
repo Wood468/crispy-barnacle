@@ -29,7 +29,15 @@
   }
   function round(v, cur) { var r = ROUND[cur] || 1; return Math.round(v / r) * r; }
   function ageDays(observed, now) { var t = Date.parse(observed); return Number.isFinite(t) ? Math.floor(((now == null ? Date.now() : now) - t) / DAY) : null; }
-  function norm(s) { return String(s || '').toLowerCase().replace(/pok[eé]/g, 'poke').replace(/[^a-z0-9+]+/g, ' ').trim(); }
+  function norm(s) {
+    var name = String(s || '').toLowerCase().replace(/pok[eé]/g, 'poke').trim();
+    /* Only the literal standard Web Store suffix is a safe alias: a 600-coin
+       standard pack is the same quantity in AU and ID. Bonus and one-time
+       packs MUST remain distinct SKUs even where the headline amount matches. */
+    if (/^[\d,]+\s+pokecoins?\s*\(standard web store pack\)$/.test(name))
+      name = name.replace(/\s*\(standard web store pack\)$/, '');
+    return name.replace(/[^a-z0-9+]+/g, ' ').trim();
+  }
   function usable(o) { return o && o.amount > 0 && o.currency && o.region && o.channel && Number.isFinite(Date.parse(o.observed)); }
   function newest(list) { return list.slice().sort(function (a, b) { return String(b.observed).localeCompare(String(a.observed)); })[0] || null; }
   /* Which purchase channels may be suggested in a region: only those with at least one real observation there. */
@@ -107,9 +115,13 @@
       }
       out.push(Object.assign(base, { cash: ref.amount + upfront, effective: ref.amount + upfront, via: 'direct' }));
     });
-    out = out.filter(function (o, _, all) { return all.every(function (x) { return x.currency === o.currency; }); });
-    out.sort(function (a, b) { return a.effective - b.effective; });
-    return { options: out, best: out[0] || null };
+    /* Keep all observed options visible, but only rank verified prices in one
+       currency. Estimates are not checkout quotes; recorded prices may have
+       changed; and nominal amounts in different currencies are incomparable. */
+    var verified = out.filter(function (o) { return o.basis === 'verified'; });
+    var comparable = verified.length > 0 && verified.every(function (o) { return o.currency === verified[0].currency; });
+    var best = comparable ? verified.slice().sort(function (a, b) { return a.effective - b.effective; })[0] : null;
+    return { options: out, best: best };
   }
   /* Monthly review without screenshots: flags stale observations, products that exist only as estimates, and regions with no live channel. */
   function review(obs, now, opts) {
@@ -130,29 +142,211 @@
     });
     return { flags: flags, ok: !flags.some(function (f) { return f.level === 'error' || f.level === 'stale'; }), checked: Object.keys(latest).length };
   }
-  /* Rows for the Store page: every AU catalogue item with the best Indonesian / Indian price known, verified or estimated. */
-  function catalogue(prices, obs, now) {
-    var latest = {}, all = {};
+  /* The Australian source records include some verified official Web Store
+     offers with historical IDs that predate the store-* importer. Their URLs
+     identify an official Web Store observation; a GO Hub event ticket is
+     NOT a Web Store product, even if its region and currency match. */
+  function sourcedAuWebOffer(p) {
+    if (!p || typeof p.product !== 'string' || !p.product.trim() ||
+        p.currency !== 'AUD' || p.region !== 'AU' || p.verified !== true ||
+        !(Number.isFinite(Number(p.amount)) && Number(p.amount) > 0)) return false;
+    if (/^store-/.test(p.product)) return true; // Existing verified Store catalogue.
+    try {
+      var url = new URL(p.url);
+      return url.protocol === 'https:' && url.hostname === 'store.pokemongo.com' &&
+        !url.username && !url.password && !url.port && url.pathname === '/' &&
+        !url.search && !url.hash;
+    } catch (_) { return false; }
+  }
+  /* Every verified AU Web Store SKU plus all regional-only observations;
+     do not misattribute off-site event tickets or guess missing product names. */
+  /* A shared product title does not prove two boxes contain the same items.
+     For bundle offers require an independently recorded common source SKU;
+     never join a one-time promotion to a standard listing. */
+  function sameStoreIdentity(au, regional) {
+    if (!!au.oneTime !== !!regional.oneTime) return false;
+    var auSku = typeof au.sourceSku === 'string' ? au.sourceSku.trim().toLowerCase() : '';
+    var regionalSku = typeof regional.sourceSku === 'string' ? regional.sourceSku.trim().toLowerCase() : '';
+    /* An explicitly identified source SKU must not pair with an unattributed
+       offer just because their human-readable labels happen to match. */
+    if (auSku || regionalSku) return !!(auSku && regionalSku && auSku === regionalSku);
+    if (kindOf(au.label) === 'bundle' || kindOf(regional.product) === 'bundle'
+      || regional.kind === 'bundle' || /\b(?:box|boxes|bundle|bundles)\b/i.test(String(au.group || ''))
+      || /\b(?:box|bundle|kit)\b/i.test(String(au.label || '') + ' ' + String(regional.product || '')))
+      return false;
+    return true;
+  }
+  function catalogue(prices, obs, now, officialOffers) {
+    var latest = {}, all = {}, auByLabel = {};
+    obs = Array.isArray(obs) ? obs : [];
     (prices || []).forEach(function (p) {
-      if (!p || p.currency !== 'AUD' || p.region !== 'AU' || p.verified !== true || !(p.amount > 0) || !/^store-/.test(p.product)) return;
+      if (!sourcedAuWebOffer(p)) return;
       if (!latest[p.product] || String(p.observed) > String(latest[p.product].observed)) latest[p.product] = p;
     });
+    // The SKU, not the display label, is an Australian Store offer's identity.
+    // Two exact packs may legitimately share the same human-readable name.
     Object.keys(latest).forEach(function (key) {
-      var p = latest[key], label = p.label || key;
-      all[norm(label)] = { product: key, label: label, group: p.group || 'Other', aud: p.amount, observed: p.observed };
+      var p = latest[key], label = p.label || key, labelKey = norm(label);
+      var group = p.group || (/^go-pass-|^wild-area-2026-global-ultra-box$/.test(key)
+        ? 'Passes & tickets' : 'Other');
+      var id = 'au:' + key;
+      all[id] = { product: key, label: label, group: group,
+        sourceIdOnly: !p.label, aud: p.amount, observed: p.observed,
+        oneTime: !!p.oneTime, sourceSku: p.sourceSku,
+        contents: Array.isArray(p.contents) ? p.contents : [],
+        contentsSource: p.contentsSource || null,
+        disableRegionalEstimates: p.disableRegionalEstimates === true };
+      (auByLabel[labelKey] || (auByLabel[labelKey] = [])).push(id);
     });
-    (obs || []).forEach(function (o) {
+    obs.forEach(function (o, index) {
       if (!usable(o) || !o.product) return;
-      var key = norm(o.product);
-      if (!all[key]) all[key] = { product: o.id || o.product, label: o.product, group: o.kind || kindOf(o.product), aud: null, observed: o.observed };
+      var key = norm(o.product), owners = auByLabel[key] || [];
+      if (owners.length === 1 && sameStoreIdentity(all[owners[0]], o)) return;
+      /* Ambiguous boxes, promotions and source-SKU observations are retained
+         as distinct regional offers, not merged solely by matching text. */
+      var distinct = kindOf(o.product) === 'bundle' || o.kind === 'bundle' || !!o.oneTime || !!o.sourceSku;
+      var regionalId = distinct
+        ? 'regional-observation:' + o.region + '|' + o.channel + '|' + String(o.id || index)
+        : 'regional:' + key;
+      if (!all[regionalId] || String(o.observed) > String(all[regionalId].observed)) all[regionalId] = {
+        product: o.id || o.product, label: o.product,
+        group: o.kind || kindOf(o.product), aud: null, observed: o.observed,
+        regionalUnmatched: owners.length > 0, strictRegionalIndex: distinct ? index : null
+      };
+    });
+    /* Publisher-announced products without a verified AU/ID/IN quote stay
+       separate from the price-observation union. A matching title is not a
+       source-backed SKU join, even when an ID/IN price is later recorded. */
+    (Array.isArray(officialOffers) ? officialOffers : []).forEach(function (offer) {
+      if (!offer || offer.noPriceObservation !== true
+        || typeof offer.id !== 'string' || !/^official:[a-z0-9:-]+$/.test(offer.id)
+        || typeof offer.label !== 'string' || !offer.label.trim()
+        || typeof offer.sourceUrl !== 'string'
+        || !/^https:\/\/pokemongo\.com\/news\/[a-z0-9-]+$/.test(offer.sourceUrl)
+        || !Array.isArray(offer.contents)) return;
+      var key = 'source-only:' + offer.id;
+      if (all[key]) return;
+      /* A verified AU Web price whose label is this offer's exact title IS the priced card for it:
+         adopt the publisher contents and do not add a second, unpriced duplicate. */
+      var priced = auByLabel[norm(offer.label)] || [];
+      if (priced.length === 1) {
+        var card = all[priced[0]];
+        if (!card.contents.length) { card.contents = offer.contents; card.contentsSource = offer.sourceUrl; }
+        return;
+      }
+      all[key] = {product:offer.id,label:offer.label,group:offer.group || 'Passes & tickets',
+        aud:null,observed:null,unpricedOfficial:true,contents:offer.contents,
+        contentsSource:offer.sourceUrl};
     });
     return Object.keys(all).map(function (key) {
       var p = all[key], kind = kindOf(p.label);
-      return { product: p.product, label: p.label, group: p.group, kind: kind, aud: p.aud, observed: p.observed,
-        india: reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now),
-        indonesia: reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now) };
+      var ambiguous = p.aud != null && (auByLabel[norm(p.label)] || []).length > 1;
+      var rowObs = p.strictRegionalIndex != null ? [obs[p.strictRegionalIndex]]
+        : p.aud != null ? obs.filter(function (o) {
+          /* Retain other product observations for honest pass estimates while
+             prohibiting unsafe same-name exact matches. */
+          return !!o && (norm(o.product) !== norm(p.label) || sameStoreIdentity(p, o));
+        }) : obs;
+      function regionPrice(spec) {
+        // Historical, source-named passes may show exact checkout observations,
+        // but must not borrow an unrelated monthly/event-pass price estimate.
+        return p.disableRegionalEstimates ? exact(rowObs, spec.region, spec.channel, spec.product)
+          : reference(spec, rowObs, now);
+      }
+      return { product: p.product, label: p.label, group: p.group, kind: kind,
+        sourceIdOnly: !!p.sourceIdOnly, ambiguousSku: ambiguous,
+        regionalUnmatched: !!p.regionalUnmatched, unpricedOfficial: !!p.unpricedOfficial,
+        aud: p.aud, observed: p.observed,
+        contents: p.contents || [], contentsSource: p.contentsSource || null,
+        india: ambiguous ? null : p.unpricedOfficial
+          ? estimate({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now)
+          : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
+        indonesia: ambiguous ? null : p.unpricedOfficial
+          ? estimate({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now)
+          : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
     });
   }
+  /* Source-only listing state. Store price observations are historical receipts:
+     they are NEVER evidence that a product remains on sale. Match the exact
+     official display name, not a similar event, tier, quantity or bonus. */
+  function sourceOffer(label, snapshot, now, options) {
+    var empty = {status:'unconfirmed', image:null, lastSeen:null, goneAt:null, endAt:null, note:'Not confirmed in recent Store snapshot'};
+    if (options && options.ambiguousSku)
+      return Object.assign({}, empty, {note:'Source SKU/contents are ambiguous; exact storefront identity not proven'});
+    if (!snapshot || !Array.isArray(snapshot.items) || !Array.isArray(snapshot.gone)) return empty;
+    var key = norm(label), checkTime = now == null ? Date.now() : now;
+    var sourceFresh = typeof snapshot.updated === 'string' &&
+      Number.isFinite(Date.parse(snapshot.updated)) &&
+      checkTime >= Date.parse(snapshot.updated) && checkTime - Date.parse(snapshot.updated) <= 7 * DAY;
+    function matching(row) { return row && norm(row.name) === key; }
+    var current = snapshot.items.filter(matching);
+    var past = snapshot.gone.filter(matching);
+    var row = current.length === 1 ? current[0] : past.length === 1 ? past[0] : null;
+    /* Owner-approved (15 Nov 2026): the Store card may show the snapshot image of the ONE current
+       offer whose official display name matches exactly, and only if the URL passes sourceArt().
+       Archived/removed or ambiguous matches never carry an image. */
+    var artwork = current.length === 1 && sourceArt(current[0].image) ? current[0].image : null;
+    if (current.length !== 1) {
+      /* An old removal record is not proof of today's availability. Only a
+         fresh source snapshot may classify a missing offer as removed. */
+      artwork = null;
+      if (past.length === 1 && sourceFresh) {
+        var goneTime = Date.parse(row.goneAt || '');
+        if (Number.isFinite(goneTime) && goneTime <= checkTime)
+          return {status:'archived',image:artwork,lastSeen:row.lastSeen||null,goneAt:row.goneAt,endAt:row.endsAt||null,note:'Removed from the observed Store listing'};
+      }
+      return {status:'unconfirmed',image:artwork,lastSeen:row&&row.lastSeen||null,goneAt:row&&row.goneAt||null,endAt:row&&row.endsAt||null,note:'Current Store availability not confirmed'};
+    }
+    var end = Date.parse(row.endsAt || '');
+    if (Number.isFinite(end) && end <= checkTime)
+      return {status:'archived',image:artwork,lastSeen:row.lastSeen||null,goneAt:null,endAt:row.endsAt,note:'Published purchase window ended'};
+    if (!sourceFresh) return {status:'unconfirmed',image:artwork,lastSeen:row.lastSeen||null,goneAt:null,endAt:row.endsAt||null,note:'Store snapshot needs refreshing'};
+    var last = Date.parse(row.lastSeen || '');
+    if (!Number.isFinite(last) || last > checkTime || checkTime-last > 7*DAY)
+      return {status:'unconfirmed',image:artwork,lastSeen:row.lastSeen||null,goneAt:null,endAt:row.endsAt||null,note:'Store observation is stale'};
+    return {status:'listed',image:artwork,lastSeen:row.lastSeen,goneAt:null,endAt:row.endsAt||null,note:'Seen in the latest Store snapshot; checkout availability may differ'};
+  }
+  /* Strict allow-list for Niantic Store item images: https, exact host, no port/userinfo/query/fragment,
+     the sku_assets path, a plain slug (no dot-only or traversal segment) and a length cap. */
+  function sourceArt(url) {
+    return typeof url === 'string' && url.length <= 300 &&
+      /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/(?!\.+\/)[a-z0-9_.%()\-]+\/w(?:64|128|256|512)\.webp$/i.test(url) &&
+      !/%2e|%2f|%5c/i.test(url);
+  }
+  /* Owner-only audit of source coverage, not a live checkout or a price
+     prediction. Keep absent, modelled and recorded prices distinguishable. */
+  function coverage(rows, now, reviewDays) {
+    var products = Array.isArray(rows) ? rows : [];
+    var threshold = Number.isSafeInteger(reviewDays) && reviewDays > 0 ? reviewDays : 30;
+    var result = { total: products.length, auVerified: 0, idVerified: 0, inVerified: 0,
+      unlabelled: [], unpaired: [], sourceOnly: [], missingAu: [], missingId: [], missingIn: [],
+      unverifiedId: [], unverifiedIn: [], reviewDue: [], reviewDays: threshold };
+    function due(observed) {
+      var age = ageDays(observed, now);
+      return age !== null && age >= threshold;
+    }
+    products.forEach(function (p) {
+      if (!p) return;
+      var label = String(p.label || p.product || 'Unnamed offer');
+      if (p.sourceIdOnly) result.unlabelled.push(label);
+      if (p.unpricedOfficial) result.sourceOnly.push(label);
+      if (p.ambiguousSku || p.regionalUnmatched) result.unpaired.push(label);
+      if (p.aud > 0) {
+        result.auVerified++;
+        if (due(p.observed)) result.reviewDue.push('Australia · ' + label);
+      } else result.missingAu.push(label);
+      [['indonesia', 'idVerified', 'missingId', 'unverifiedId', 'Indonesia'],
+       ['india', 'inVerified', 'missingIn', 'unverifiedIn', 'India']].forEach(function (rule) {
+        var price = p[rule[0]];
+        if (price && price.basis === 'verified') result[rule[1]]++;
+        else if (!price) result[rule[2]].push(label);
+        else result[rule[3]].push(label);
+        if (price && price.basis !== 'estimate' && due(price.observed))
+          result.reviewDue.push(rule[4] + ' · ' + label);
+      });
+    });
+    return result;
+  }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
-  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
+  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, coverage: coverage, channels: channels, confidence: confidence, sourceOffer: sourceOffer, sourceArt: sourceArt, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
 });

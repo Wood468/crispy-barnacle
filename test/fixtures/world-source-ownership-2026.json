@@ -1,0 +1,116 @@
+{
+  "provenance": {
+    "catalogueCommit": "55a89763691c0ceb919072cc44822fd5d671dd09",
+    "worldUpdated": "2026-11-13T18:08:31.495Z",
+    "note": "Minimal source-ownership records retained from verified generated public catalogues; historical test input, not a live event schedule."
+  },
+  "curated": [
+    {
+      "id": "sendai",
+      "sourceUrl": "https://pokemongo.com/en/gowildarea/sendai",
+      "detailIds": [
+        "leekduck:pokemon-go-wild-area-2026-sendai-japan"
+      ]
+    },
+    {
+      "id": "wag",
+      "sourceUrl": "https://pokemongo.com/en/gowildarea/global",
+      "detailIds": [
+        "leekduck:pokemon-go-wild-area-2026-global"
+      ]
+    }
+  ],
+  "world": [
+    {
+      "id": "w-pokemon-go-x-esa-london",
+      "name": "Pokémon GO x ESA: London",
+      "place": "London, England (Science Museum)",
+      "start": "2026-10-04",
+      "end": "2027-04-30",
+      "sources": [
+        {
+          "id": "official",
+          "name": "Pokémon GO (official)",
+          "url": "https://pokemongo.com/news/european-space-agency-event/"
+        },
+        {
+          "id": "serebii",
+          "name": "Serebii",
+          "url": "https://serebii.net/pokemongo/reallifeevents/pokemongoxesa.shtml"
+        },
+        {
+          "id": "serebii",
+          "name": "Serebii",
+          "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+        }
+      ]
+    },
+    {
+      "id": "w-mexico-city-go-wild-area-2026",
+      "name": "Mexico City – GO Wild Area 2026",
+      "place": "Mexico City, Mexico",
+      "start": "2026-11-06",
+      "end": "2026-11-08",
+      "sources": [
+        {
+          "id": "official",
+          "name": "Pokémon GO (official)",
+          "url": "https://pokemongo.com/en/gowildarea/mexico-city/"
+        },
+        {
+          "id": "leekduck",
+          "name": "Leek Duck",
+          "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+        },
+        {
+          "id": "official",
+          "name": "Pokémon GO (official)",
+          "url": "https://pokemongo.com/news/gowildarea-mexicocity-friday-update/"
+        },
+        {
+          "id": "serebii",
+          "name": "Serebii",
+          "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+        }
+      ]
+    },
+    {
+      "id": "w-go-wild-area-2026-sendai-tohoku",
+      "name": "GO Wild Area 2026 Sendai Tohoku",
+      "place": "Sendai and Tohoku, Japan",
+      "start": "2026-11-06",
+      "end": "2026-11-08",
+      "sources": [
+        {
+          "id": "official",
+          "name": "Pokémon GO (official)",
+          "url": "https://pokemongo.com/en/gowildarea/sendai"
+        },
+        {
+          "id": "leekduck",
+          "name": "Leek Duck",
+          "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+        },
+        {
+          "id": "serebii",
+          "name": "Serebii",
+          "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+        }
+      ]
+    },
+    {
+      "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon--2026-11-10",
+      "name": "Pokémon Night Out events in Pokémon GO!: London",
+      "place": "London, UK",
+      "start": "2026-11-10",
+      "end": "2026-11-10",
+      "sources": [
+        {
+          "id": "official",
+          "name": "Pokémon GO (official)",
+          "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/"
+        }
+      ]
+    }
+  ]
+}

@@ -10,7 +10,8 @@ import { readFile, writeFile } from "node:fs/promises";
 export const SOURCE_URL = "https://pokemongohub.net/post/guide/current-go-raids/";
 const PAGE = SOURCE_URL;
 const DATA = process.env.DATA_FILE || "public/data.json";
-const SOURCE = "Pokémon GO Hub current raids";
+export const SOURCE = "Pokémon GO Hub current raids";
+export const LEEKDUCK_SOURCE = "leekduck"; // provenance written by scripts/low-raids-leekduck.mjs
 
 const ENT = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", rsquo: "’", lsquo: "‘", ndash: "–", mdash: "—" };
 const decode = s => String(s).replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16))).replace(/&([a-z]+);/gi, (m, n) => ENT[n.toLowerCase()] ?? m);
@@ -37,7 +38,7 @@ export function cleanName(s) {
 }
 const NAME = /^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9'’.:\- ()♀♂]{1,38}$/;
 const NOT_A_NAME = /\b(current|bosses|boss|raids?|guide|guides|related|counters?|stars?|tier|wearing|event|part|bonuses?|see our|go wild area)\b|:$/i;
-const isBossName = s => NAME.test(s) && !NOT_A_NAME.test(s) && !/^(none|n\/a|tba|soon|shadow)$/i.test(s) && !/^and\b/i.test(s); // a heading or label, not a Pokémon
+export const isBossName = s => NAME.test(s) && !NOT_A_NAME.test(s) && !/^(none|n\/a|tba|soon|shadow)$/i.test(s) && !/^and\b/i.test(s); // a heading or label, not a Pokémon
 const isHeading = l => /\bBosses\b/i.test(l) || /^Current\b/i.test(l) || /\bRaids?\b\s*:?$/i.test(l) || /^Shadow\b.*Raids?/i.test(l) || /\bShadow Raids?\s*:?$/i.test(l) || /^(Last update|Updated|Related|Read more|See also|Share)\b/i.test(l) || /^Raid (Hour|Boss)/i.test(l);
 
 // { one: [...], three: [...], five: [...], mega: [...] } from the headings "1-Star Raids", "3-Star Raids", "5-Star Raids", "Mega Raids".
@@ -61,10 +62,10 @@ export function parseTiers(html) {
   return out;
 }
 
-const saneList = (list, min = 0, max = 8) => Array.isArray(list) && list.length >= min && list.length <= max && list.every(isBossName) && new Set(list).size === list.length;
+export const saneList = (list, min = 0, max = 8) => Array.isArray(list) && list.length >= min && list.length <= max && list.every(isBossName) && new Set(list).size === list.length;
 export const sane = t => saneList(t.one, 1) && saneList(t.three, 1) && saneList(t.five, 1, 4) && saneList(t.shadowOne || []) && saneList(t.shadowThree || []);
 
-const norm = s => String(s || "").toLowerCase().replace(/\(.*?\)/g, "").replace(/\b(forme?|form|mega|primal|shadow)\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+export const norm = s => String(s || "").toLowerCase().replace(/\(.*?\)/g, "").replace(/\b(forme?|form|mega|primal|shadow)\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 // The rotation (current or upcoming) whose 5-star boss is one of the page's 5-star bosses.
 export function pickRotation(rotation, five, nowMs = Date.now()) {
   const want = five.map(norm).filter(Boolean), today = new Date(nowMs).toISOString().slice(0, 10); // compared as dates, so the machine's time zone does not matter
@@ -112,7 +113,7 @@ export async function tell(text, env = process.env) {
   } catch { return false; }
 }
 
-async function main() {
+async function hubStage() {
   const dry = process.env.DRY_RUN === "true";
   const html = process.env.HUB_HTML ? await readFile(process.env.HUB_HTML, "utf8") : await (async () => {
     const r = await fetch(PAGE, { headers: { "user-agent": "GO-Field-Notes/1.0 (+https://pogo.michaelpuff.com)" }, signal: AbortSignal.timeout(30000) });
@@ -130,7 +131,7 @@ async function main() {
   if (!sane(t)) { console.log("::warning::1-3 star raids: the page did not parse into sensible lists (" + JSON.stringify(t) + "). Nothing changed."); await tell("⚠️ The weekly 1–3★ raid job could not read Pokémon GO Hub's raid page (its layout may have changed). This week's 1–3★ and Shadow raid bosses were not updated.\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); process.exitCode = 1; return; }
   const r = pickRotation(data.rotation, t.five);
   if (!r) { console.log("::notice::1-3 star raids: the page's 5-star boss (" + t.five.join(", ") + ") matches no current or upcoming rotation. Nothing changed."); return; }
-  if (!mayReplace(r)) { console.log("::notice::1-3 star raids: the " + r.five + " rotation already has hand-entered data from " + r.low.source + ". Left alone."); return; }
+  if (!mayReplace(r)) { console.log("::notice::1-3 star raids: the " + r.five + " rotation already has " + (r.low.source === LEEKDUCK_SOURCE ? "data from Leek Duck (the first writer is kept; the Leek Duck step reports any disagreement with this page)" : "hand-entered data from " + r.low.source) + ". Left alone."); return; }
   if (sameLow(r.low, { one: t.one, three: t.three, shadowOne: t.shadowOne, shadowThree: t.shadowThree })) { console.log("::notice::1-3 star raids for " + r.five + " are already up to date."); return; }
   const low = { one: t.one, three: t.three, ...(t.shadowOne.length ? { shadowOne: t.shadowOne } : {}), ...(t.shadowThree.length ? { shadowThree: t.shadowThree } : {}), observed: new Date().toISOString().slice(0, 10), source: SOURCE, sourceUrl: SOURCE_URL };
   const out = applyLow(raw, r.s, low);
@@ -142,4 +143,17 @@ async function main() {
   await writeFile(DATA, out);
   console.log("::notice::1-3 star raids set for " + r.five + ": 1★ " + t.one.join(", ") + "; 3★ " + t.three.join(", ") + (t.shadowOne.length || t.shadowThree.length ? "; Shadow 1★ " + t.shadowOne.join(", ") + "; Shadow 3★ " + t.shadowThree.join(", ") : "") + ".");
 }
-if (import.meta.url === "file://" + process.argv[1]) main().catch(async e => { console.error("::error::" + e.message); await tell("⚠️ The weekly 1–3★ raid job failed: " + String(e.message).slice(0, 200) + "\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); process.exit(1); });
+// Hub first; then Leek Duck as a second source that only fills what is still empty (see low-raids-leekduck.mjs).
+async function main() {
+  let hubError = null;
+  try { await hubStage(); } catch (e) { hubError = e; console.error("::error::" + e.message); await tell("⚠️ The weekly 1–3★ raid job failed: " + String(e.message).slice(0, 200) + "\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); }
+  const hubFailed = !!hubError || process.exitCode === 1;
+  let ld = { wrote: false };
+  try { ld = await (await import("./low-raids-leekduck.mjs")).leekDuckStage({ dry: process.env.DRY_RUN === "true", dataFile: DATA }); }
+  catch (e) { console.log("::warning::Leek Duck raid step failed: " + e.message + ". Nothing changed by it."); }
+  if (hubFailed) {
+    if (ld.wrote) { process.exitCode = 0; console.log("::warning::Pokémon GO Hub could not be used, but Leek Duck filled the rotation."); }
+    else process.exitCode = 1;
+  }
+}
+if (import.meta.url === "file://" + process.argv[1]) main();

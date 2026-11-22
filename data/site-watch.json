@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T17:08:20.630Z",
+ "updated": "2026-11-21T19:16:14.733Z",
  "recorded": [
   "pokemon-us",
   "pokemon-uk",
@@ -10,7 +10,7 @@
   {
    "id": "pokemon-us",
    "state": "ok",
-   "links": 2
+   "links": 1
   },
   {
    "id": "pokemon-uk",
@@ -35,6 +35,11 @@
   "https://www.pokemon.com/uk/news/burning-battles-await-during-pokemon-gos-chandelure-super-mega-raid-day/": "2026-10-28",
   "https://www.pokemon.com/us/news/battle-with-mimikyu-in-the-play-pokemon-pokemon-go-championship-series/": "2026-11-02",
   "https://www.pokemon.com/uk/news/battle-with-mimikyu-in-the-play-pokemon-pokemon-go-championship-series/": "2026-11-02",
-  "https://www.pokemon.com/us/news/dynamax-regidrago-and-dynamax-meltan-debut-in-pokemon-go-into-the-wild-event/": "2026-11-10"
+  "https://www.pokemon.com/us/news/dynamax-regidrago-and-dynamax-meltan-debut-in-pokemon-go-into-the-wild-event/": "2026-11-10",
+  "https://www.pokemon.com/uk/news/dynamax-regidrago-and-dynamax-meltan-debut-in-pokemon-go-into-the-wild-event/": "2026-11-12",
+  "https://www.pokemon.com/us/news/gigantamax-duraludon-debuts-in-pokemon-go-wild-area-global-event/": "2026-11-13",
+  "https://www.pokemon.com/uk/news/gigantamax-duraludon-debuts-in-pokemon-go-wild-area-global-event/": "2026-11-13",
+  "https://www.pokemon.com/us/news/steel-yourself-for-pawniard-for-the-pokemon-go-november-community-day/": "2026-11-18",
+  "https://www.pokemon.com/uk/news/steel-yourself-for-pawniard-for-the-pokemon-go-november-community-day/": "2026-11-18"
  }
 }
