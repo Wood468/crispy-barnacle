@@ -1,4 +1,4 @@
-"""Schedule / Research polish: live order on Schedule, reward pictures, unclipped form-art note, banner crop.
+"""Schedule / Research polish: live order on Schedule, reward pictures, unclipped Grookey tile (no art, no note), banner crop.
 
 Fixed 17 Nov 2026 Melbourne clock (Dynamax Trails, Cresselia/Darkrai, Mega Banette and Minior Showers are all live).
 Run against a static server of /public on 127.0.0.1:8791. 320/375/390 px.
@@ -86,9 +86,11 @@ with sync_playwright() as p:
             return {tileW: t.width, textScrollW: text.scrollWidth, textClientW: text.clientWidth, afterContent: after.content, afterDisplay: after.display, afterWS: after.whiteSpace,
                     chipText: chip && chip.textContent, chipW: c && c.width, chipH: c && c.height};
         }""")
-        assert m["afterContent"] == '"Form art unavailable"' and m["afterWS"] == "normal", (width, m)
-        assert m["textScrollW"] <= m["textClientW"] + 1, (width, "note overflows its column", m)
-        assert m["chipText"] == "Form art unavailable" and m["chipW"] <= 2 and m["chipH"] <= 2, (width, "full text kept, no clipped visible chip", m)
+        # Grookey now renders no art and no "Form art unavailable" note or chip: nothing is faked, nothing clips.
+        assert m["afterContent"] == "none" and m["chipText"] is None, (width, "no unavailable note or chip", m)
+        assert tile.locator("img, .form-chip").count() == 0, (width, "no art or chip", tile.inner_html())
+        assert "Form art unavailable" not in tile.inner_text(), (width, tile.inner_text())
+        assert m["textScrollW"] <= m["textClientW"] + 1, (width, "name overflows its column", m)
         doc = page.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
         assert doc <= 2, (width, doc)
 
@@ -107,6 +109,6 @@ with sync_playwright() as p:
         }""")
         assert abs(res["ratio"] - 2) < 0.02, (width, res)
         assert res["clippedTopPct"] < 2, (width, "top edge cropped", res)
-        print(f"PASS schedule polish {width}px: order, candy/berry pictures, Grookey note unclipped, banner top kept ({res['clippedTopPct']:.1f}% top crop on 16:9)")
+        print(f"PASS schedule polish {width}px: order, candy/berry pictures, Grookey tile unclipped, no unavailable note, banner top kept ({res['clippedTopPct']:.1f}% top crop on 16:9)")
         ctx.close()
     browser.close()
