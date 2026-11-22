@@ -7,14 +7,70 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1573963842298581045",
+      "source": "discord",
+      "creator": "",
+      "title": "g47ix Twillight",
+      "publishedAt": "2026-11-22T07:30:22.838000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1566875384606105821/g47ix_Twillight.png?ex=6b03d72a&is=6b0285aa&hm=6164f868766fae2296c30b818a20608f2b0374168d218a79115c7d24b6e603ea&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "TWILIGHT a 24 30 wad <a Nov | Nov | =a WSIS 10:00 =~ BOOSTED SHINY OODS A > wat -s b oF «© @ vey! During this event, stars will light up the skies. ‘eh ++ WR oFW ef © My < {BEY sae io and more! Boosted Lucky 2x Catch Stardust Y Pokémon and YW New Posed GO Pass Deluxe 3d Lucky Friends | $4.99 Follow for more G47|X £) () ax | ao www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "twilightwishes",
+        "eventTitle": "Twilight Wishes",
+        "score": 0.455,
+        "confidence": "low",
+        "matchedTerms": [
+          "twilight",
+          "shiny",
+          "lucky",
+          "pass",
+          "poke",
+          "mon",
+          "friends",
+          "catch",
+          "stardust",
+          "deluxe"
+        ],
+        "alternatives": [
+          {
+            "eventId": "twilightwishes",
+            "eventTitle": "Twilight Wishes",
+            "score": 0.455
+          },
+          {
+            "eventId": "gopassnov",
+            "eventTitle": "GO Pass: November",
+            "score": 0.442
+          },
+          {
+            "eventId": "leekduck:go-pass-november-2026",
+            "eventTitle": "GO Pass: November",
+            "score": 0.409
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1573963842298581045.webp"
+    },
+    {
       "id": "discord:1573601515619487835",
       "source": "discord",
       "creator": "",
       "title": "CD NOV 26",
       "publishedAt": "2026-11-21T07:30:37.426000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1562512076704981042/CD_NOV_26.png?ex=6b027805&is=6b012685&hm=f88328ad4394470337bfd24a5d445db56ba8124479c7c7e0ecadb985c3e1b125&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "\\f Sf re) \\s jeoe 2:00 pm 5:00 pm ‘ir a6 | eco alasic aT epee BG He + Shiny Chance #624 Pawniard mr: Chance +* ~1/35 a ESsee Incense (ex. Daily Adv Distance Hatch Candy Chance Photobomb Lure Incense) for eerthinc for Candy XL Surprise Modules Kowtow fe 2 Cleave 4+ sek % = te Evolve Ts | +1 Special Additional Research ield ce ©° © a between Trade lure spawns Mega Evolve Spacial Freeze Ice for Extra Bonuses Use Adventure & Ri Rend %) Shock Burn Siac Wr i EJee or other Effects BD Roar of Time 2 Future Sight+ ow for more g G47IX \\EENE Check in Paid Try Rewards Community for Additional y Research Special Fuse Oaxe Wi",
       "eventMatch": {
@@ -50,7 +106,9 @@
         "picture text names the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1573601515619487835.png"
+      "stagedPath": "/infographics/g47ix/discord-1573601515619487835.png",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1573405995139600404",
