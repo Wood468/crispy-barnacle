@@ -1,6 +1,6 @@
 {
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-11-21T11:03:16.016Z",
+ "updated": "2026-11-22T15:18:19.842Z",
  "items": [
   {
    "name": "GO Pass Deluxe: November Ultra Box",
@@ -12,7 +12,7 @@
    "href": "/purchase/item/web-event-pass-plusrank-november-26-ultra",
    "endsAt": null,
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "lastSeen": "2026-11-22T15:18:19.842Z",
    "goneAt": null
   },
   {
@@ -25,7 +25,7 @@
    "href": "/purchase/item/web-event-pass-gowa-leadout-26",
    "endsAt": "2026-11-24T21:47:40.917Z",
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "lastSeen": "2026-11-22T15:18:19.842Z",
    "goneAt": null
   },
   {
@@ -38,7 +38,72 @@
    "href": "/purchase/item/web-event-pass-plusrank-november-26",
    "endsAt": null,
    "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-21T11:03:16.016Z",
+   "lastSeen": "2026-11-22T15:18:19.842Z",
+   "goneAt": null
+  },
+  {
+   "name": "GO Pass Deluxe: Twilight Wishes",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.small.2(1)-279ef530430f/w256.webp",
+   "imageStatus": "unverified-remote",
+   "price": "A$7.99",
+   "section": "LIMITED_TIME",
+   "slug": "web-event-pass-base-twilight-finale-26",
+   "href": "/purchase/item/web-event-pass-base-twilight-finale-26",
+   "endsAt": null,
+   "firstSeen": "2026-11-20T21:05:36.513Z",
+   "lastSeen": "2026-11-22T15:18:19.842Z",
+   "goneAt": null
+  },
+  {
+   "name": "GO Pass Deluxe: November",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle1.sprite.a-2d087dfb6a85/w256.webp",
+   "imageStatus": "unverified-remote",
+   "price": "A$12.99",
+   "section": "LIMITED_TIME",
+   "slug": "web-event-pass-base-november-26",
+   "href": "/purchase/item/web-event-pass-base-november-26",
+   "endsAt": null,
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-22T15:18:19.842Z",
+   "goneAt": null
+  },
+  {
+   "name": "GO Pass Deluxe: Twilight Wishes Ultra Box",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.large.2-301d7aa12b46/w256.webp",
+   "imageStatus": "unverified-remote",
+   "price": "A$13.99",
+   "section": "LIMITED_TIME",
+   "slug": "web-event-pass-plusrank-twilight-finale-26-ultra",
+   "href": "/purchase/item/web-event-pass-plusrank-twilight-finale-26-ultra",
+   "endsAt": null,
+   "firstSeen": "2026-11-20T21:05:36.513Z",
+   "lastSeen": "2026-11-22T15:18:19.842Z",
+   "goneAt": null
+  },
+  {
+   "name": "GO Pass Deluxe: Twilight Wishes + 6 Ranks",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.medium.2-96c0427111f5/w256.webp",
+   "imageStatus": "unverified-remote",
+   "price": "A$10.99",
+   "section": "LIMITED_TIME",
+   "slug": "web-event-pass-plusrank-twilight-finale-26",
+   "href": "/purchase/item/web-event-pass-plusrank-twilight-finale-26",
+   "endsAt": null,
+   "firstSeen": "2026-11-20T21:05:36.513Z",
+   "lastSeen": "2026-11-22T15:18:19.842Z",
+   "goneAt": null
+  },
+  {
+   "name": "Seasonal Delights Box",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle1.sprite.d-a7a801673287/w256.webp",
+   "imageStatus": "unverified-remote",
+   "price": "6,095",
+   "section": "BUNDLE",
+   "slug": "web-seasonal-delights-2024-box",
+   "href": "/purchase/item/web-seasonal-delights-2024-box",
+   "endsAt": null,
+   "firstSeen": "2026-11-17T21:47:40.917Z",
+   "lastSeen": "2026-11-22T15:18:19.842Z",
    "goneAt": null
   },
   {
@@ -52,72 +117,7 @@
    "endsAt": "2026-11-22T07:03:16.016Z",
    "firstSeen": "2026-11-17T21:47:40.917Z",
    "lastSeen": "2026-11-21T11:03:16.016Z",
-   "goneAt": null
-  },
-  {
-   "name": "GO Pass Deluxe: Twilight Wishes",
-   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.small.2(1)-279ef530430f/w256.webp",
-   "imageStatus": "unverified-remote",
-   "price": "A$7.99",
-   "section": "LIMITED_TIME",
-   "slug": "web-event-pass-base-twilight-finale-26",
-   "href": "/purchase/item/web-event-pass-base-twilight-finale-26",
-   "endsAt": null,
-   "firstSeen": "2026-11-20T21:05:36.513Z",
-   "lastSeen": "2026-11-21T11:03:16.016Z",
-   "goneAt": null
-  },
-  {
-   "name": "GO Pass Deluxe: November",
-   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle1.sprite.a-2d087dfb6a85/w256.webp",
-   "imageStatus": "unverified-remote",
-   "price": "A$12.99",
-   "section": "LIMITED_TIME",
-   "slug": "web-event-pass-base-november-26",
-   "href": "/purchase/item/web-event-pass-base-november-26",
-   "endsAt": null,
-   "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-21T11:03:16.016Z",
-   "goneAt": null
-  },
-  {
-   "name": "GO Pass Deluxe: Twilight Wishes Ultra Box",
-   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.large.2-301d7aa12b46/w256.webp",
-   "imageStatus": "unverified-remote",
-   "price": "A$13.99",
-   "section": "LIMITED_TIME",
-   "slug": "web-event-pass-plusrank-twilight-finale-26-ultra",
-   "href": "/purchase/item/web-event-pass-plusrank-twilight-finale-26-ultra",
-   "endsAt": null,
-   "firstSeen": "2026-11-20T21:05:36.513Z",
-   "lastSeen": "2026-11-21T11:03:16.016Z",
-   "goneAt": null
-  },
-  {
-   "name": "GO Pass Deluxe: Twilight Wishes + 6 Ranks",
-   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle.general1.medium.2-96c0427111f5/w256.webp",
-   "imageStatus": "unverified-remote",
-   "price": "A$10.99",
-   "section": "LIMITED_TIME",
-   "slug": "web-event-pass-plusrank-twilight-finale-26",
-   "href": "/purchase/item/web-event-pass-plusrank-twilight-finale-26",
-   "endsAt": null,
-   "firstSeen": "2026-11-20T21:05:36.513Z",
-   "lastSeen": "2026-11-21T11:03:16.016Z",
-   "goneAt": null
-  },
-  {
-   "name": "Seasonal Delights Box",
-   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/bundle1.sprite.d-a7a801673287/w256.webp",
-   "imageStatus": "unverified-remote",
-   "price": "6,095",
-   "section": "BUNDLE",
-   "slug": "web-seasonal-delights-2024-box",
-   "href": "/purchase/item/web-seasonal-delights-2024-box",
-   "endsAt": null,
-   "firstSeen": "2026-11-17T21:47:40.917Z",
-   "lastSeen": "2026-11-21T11:03:16.016Z",
-   "goneAt": null
+   "goneAt": "2026-11-22T15:18:19.842Z"
   },
   {
    "name": "GO Pass Deluxe: Halloween + 10 Ranks",
