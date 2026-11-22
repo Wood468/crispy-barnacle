@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Weekly: fills the 1-3 star raid bosses for the current and next raid rotation in public/data.json ("low": { one, three, observed, source }).
+// Weekly: fills the 1-3 star raid bosses for the active raid rotation in public/data.json ("low": { one, three, observed, source }).
 // Source: Pokémon GO Hub's "Current GO raids" page. Its date line can be out of date, so the page is matched to a rotation by its 5-star boss
 // (this week's Palkia page belongs to the rotation whose five is Palkia), never by the dates it prints.
 // Safe by design: it only writes when the page parses into sensible lists AND the 5-star boss matches a rotation, it only replaces a "low" block
@@ -66,10 +66,26 @@ export const saneList = (list, min = 0, max = 8) => Array.isArray(list) && list.
 export const sane = t => saneList(t.one, 1) && saneList(t.three, 1) && saneList(t.five, 1, 4) && saneList(t.shadowOne || []) && saneList(t.shadowThree || []);
 
 export const norm = s => String(s || "").toLowerCase().replace(/\(.*?\)/g, "").replace(/\b(forme?|form|mega|primal|shadow)\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
-// The rotation (current or upcoming) whose 5-star boss is one of the page's 5-star bosses.
+// A current boss page cannot establish future 1-3-star / Shadow rosters.
+// Use the existing UTC calendar-day granularity for unsuffixed rotation times.
+export function isActiveRaidDay(rotation, nowMs = Date.now()) {
+  function calendarDay(value) {
+    const day = typeof value === "string" && /^\d{4}-\d{2}-\d{2}(?:T|$)/.test(value)
+      ? value.slice(0, 10) : "";
+    const stamp = Date.parse(day);
+    return Number.isFinite(stamp) && new Date(stamp).toISOString().slice(0, 10) === day ? day : "";
+  }
+  const current = new Date(nowMs);
+  if (!Number.isFinite(nowMs) || !Number.isFinite(current.getTime())) return false;
+  const first = calendarDay(rotation?.s), last = calendarDay(rotation?.e);
+  const today = current.toISOString().slice(0, 10);
+  return Boolean(first && last && first <= today && today <= last);
+}
+
+// Only an active rotation whose 5-star boss is present on the current page.
 export function pickRotation(rotation, five, nowMs = Date.now()) {
-  const want = five.map(norm).filter(Boolean), today = new Date(nowMs).toISOString().slice(0, 10); // compared as dates, so the machine's time zone does not matter
-  const hits = (rotation || []).filter(r => String(r.e || "").slice(0, 10) >= today).filter(r => { const f = norm(r.five); return f && want.some(w => w === f || w.includes(f) || f.includes(w)); });
+  const want = five.map(norm).filter(Boolean);
+  const hits = (rotation || []).filter(r => isActiveRaidDay(r, nowMs)).filter(r => { const f = norm(r.five); return f && want.some(w => w === f || w.includes(f) || f.includes(w)); });
   return hits.length === 1 ? hits[0] : null; // none, or ambiguous: do nothing
 }
 
@@ -130,7 +146,7 @@ async function hubStage() {
   }
   if (!sane(t)) { console.log("::warning::1-3 star raids: the page did not parse into sensible lists (" + JSON.stringify(t) + "). Nothing changed."); await tell("⚠️ The weekly 1–3★ raid job could not read Pokémon GO Hub's raid page (its layout may have changed). This week's 1–3★ and Shadow raid bosses were not updated.\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); process.exitCode = 1; return; }
   const r = pickRotation(data.rotation, t.five);
-  if (!r) { console.log("::notice::1-3 star raids: the page's 5-star boss (" + t.five.join(", ") + ") matches no current or upcoming rotation. Nothing changed."); return; }
+  if (!r) { console.log("::notice::1-3 star raids: the page's 5-star boss (" + t.five.join(", ") + ") matches no uniquely active rotation. Nothing changed."); return; }
   if (!mayReplace(r)) { console.log("::notice::1-3 star raids: the " + r.five + " rotation already has " + (r.low.source === LEEKDUCK_SOURCE ? "data from Leek Duck (the first writer is kept; the Leek Duck step reports any disagreement with this page)" : "hand-entered data from " + r.low.source) + ". Left alone."); return; }
   if (sameLow(r.low, { one: t.one, three: t.three, shadowOne: t.shadowOne, shadowThree: t.shadowThree })) { console.log("::notice::1-3 star raids for " + r.five + " are already up to date."); return; }
   const low = { one: t.one, three: t.three, ...(t.shadowOne.length ? { shadowOne: t.shadowOne } : {}), ...(t.shadowThree.length ? { shadowThree: t.shadowThree } : {}), observed: new Date().toISOString().slice(0, 10), source: SOURCE, sourceUrl: SOURCE_URL };

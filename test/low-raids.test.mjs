@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { parseTiers, sane, pickRotation, mayReplace, coveredCuratedSpecialEvent, applyLow, cleanName, sameLow, tell, SOURCE_URL } from "../scripts/low-raids.mjs";
+import { parseTiers, sane, pickRotation, isActiveRaidDay, mayReplace, coveredCuratedSpecialEvent, applyLow, cleanName, sameLow, tell, SOURCE_URL } from "../scripts/low-raids.mjs";
 
 const LISTS = `<h2>1-Star Raids</h2><ul><li>Axew</li><li>Goomy</li><li>Jangmo-o</li><li>Frigibax</li></ul>
 <h2>3-Star Raids</h2><ul><li>Alola Ninetales</li><li>Alola Raichu</li><li>Alola Muk</li></ul>
@@ -57,11 +57,11 @@ test("a page that does not parse is not trusted", () => {
   assert.equal(sane(parseTiers("<h2>1-Star Raids</h2><h2>3-Star Raids</h2><h2>5-Star Raids</h2>")), false);
   assert.equal(cleanName("Alola Muk"), "Alolan Muk");
 });
-test("the page is matched to a rotation by its 5-star boss, never by dates", () => {
+test("the page is matched by 5-star boss within the active source-day window", () => {
   const rot = [{ s: "2026-10-14T10:00", e: "2026-10-21T10:00", five: "Dialga" }, { s: "2026-10-21T10:00", e: "2026-10-28T10:00", five: "Palkia" }, { s: "2026-10-28T10:00", e: "2026-11-04T10:00", five: "Origin Forme Giratina" }];
   const now = Date.parse("2026-10-22T00:00:00Z");
   assert.equal(pickRotation(rot, ["Palkia"], now).five, "Palkia");
-  assert.equal(pickRotation(rot, ["Giratina (Origin Forme)"], now).five, "Origin Forme Giratina");
+  assert.equal(pickRotation(rot, ["Giratina (Origin Forme)"], now), null, "upcoming bosses cannot prove future low-tier roster");
   assert.equal(pickRotation(rot, ["Dialga"], now), null, "an ended rotation is left alone");
   assert.equal(pickRotation(rot, ["Mewtwo"], now), null);
 });
@@ -183,4 +183,36 @@ test("special-event missing 1★ lineup is safe to skip only for matching existi
 test("the weekly job runs every day, so a rotation that starts on a Monday is filled as soon as the source lists it", () => {
   const wf = readFileSync(new URL("../.github/workflows/low-raids.yml", import.meta.url), "utf8");
   assert.match(wf, /cron:\s*"30 2 \* \* \*"/);
+});
+
+test("current low-raid page cannot match future repeated species or invalid date windows", () => {
+  const at = Date.parse("2026-11-17T02:30:00Z");
+  const active = { s: "2026-11-16T10:00", e: "2026-11-20T20:00", five: "Palkia" };
+  const future = { ...active, s: "2026-11-24T10:00", e: "2026-12-01T20:00" };
+  assert.equal(pickRotation([future], ["Palkia"], at), null, "future-only match must fail closed");
+  assert.equal(pickRotation([active, future], ["Palkia"], at), active, "future duplicates cannot create false ambiguity");
+  assert.equal(pickRotation([active], ["Palkia"], Date.parse("2026-11-20T23:59:59Z")), active);
+  assert.equal(pickRotation([active], ["Palkia"], Date.parse("2026-11-21T00:00:00Z")), null);
+  assert.equal(pickRotation([{ ...active, s: "" }], ["Palkia"], at), null);
+  assert.equal(pickRotation([{ ...active, e: "broken" }], ["Palkia"], at), null);
+  assert.equal(isActiveRaidDay({ ...active, s: "2026-11-22T10:00" }, at), false);
+  assert.equal(isActiveRaidDay(active, Number.NaN), false);
+  assert.equal(pickRotation([active, { ...active, s: "2026-11-17T10:00" }], ["Palkia"], at), null, "ambiguous active source windows");
+  assert.equal(coveredCuratedSpecialEvent([future], { one: [], three: ["Druddigon"], five: ["Palkia"] }, at), null,
+    "future official/curated exception cannot be triggered from a current source");
+});
+
+test("active raid days reject impossible Gregorian dates and accept real leap days", () => {
+  const at = Date.parse("2028-02-29T12:00:00Z");
+  assert.equal(isActiveRaidDay({ s: "2028-02-29", e: "2028-02-29" }, at), true);
+  for (const [s, e] of [
+    ["2028-00-01", "2028-03-01"],
+    ["2028-02-01", "2028-99-01"],
+    ["2028-02-01", "2028-02-30"],
+    ["2027-02-29", "2028-03-01"],
+    ["2028-02-01", "2028-04-31"],
+  ]) {
+    assert.equal(isActiveRaidDay({ s, e }, at), false, s + " to " + e);
+  }
+  assert.equal(isActiveRaidDay({ s: "2028-02-29", e: "2028-02-29" }, 9e15), false);
 });
