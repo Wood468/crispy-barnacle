@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import { IMAGE_CSP_HOSTS } from "../src/image-policy.js";
 
 const source = fs.readFileSync(new URL("../public/_headers", import.meta.url), "utf8");
 
@@ -104,6 +105,9 @@ test("static HTML receives narrow security headers without changing asset cache 
   assert.equal(headers.size, expectedSecurityHeaders.size + 1, "only the expected HTML security headers");
   const csp = headers.get("content-security-policy");
   assert.ok(csp, "static homepage must receive CSP");
+  const imageSources = csp.split(";").map(value => value.trim())
+    .find(value => value.startsWith("img-src "))?.split(/\s+/).slice(1);
+  assert.deepEqual(imageSources, ["'self'", "data:", "blob:", ...IMAGE_CSP_HOSTS]);
   assert.match(csp, /script-src 'self'/);
   assert.match(csp, /object-src 'none'/);
   assert.match(csp, /frame-ancestors 'none'/);
