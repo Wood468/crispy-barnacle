@@ -92,6 +92,16 @@
        the official source uses composed or decomposed accented letters. */
     return String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   }
+  /* Known end time of a Store offer (snapshot endsAt), in the viewer's zone (Melbourne by default), e.g. "Ends Tue 25 Nov, 10:00 pm". Empty when unknown. */
+  function endLabel(iso, now) {
+    var ms = Date.parse(iso || ''); if (!iso || isNaN(ms)) return '';
+    var C = window.GOEventClock, zone = 'Australia/Melbourne';
+    try { zone = (C && C.viewerZone && C.viewerZone()) || zone; } catch (_) {}
+    var f = function (o) { return new Intl.DateTimeFormat('en-AU', Object.assign({ timeZone: zone }, o)).format(new Date(ms)); };
+    var day = f({ weekday: 'short', day: 'numeric', month: 'short' }).replace(',', '');
+    var clock = f({ hour: 'numeric', minute: '2-digit' }).replace(/\s?([ap])m/i, function (_, a) { return ' ' + a.toLowerCase() + 'm'; });
+    return (ms < (now == null ? Date.now() : now) ? 'Ended ' : 'Ends ') + day + ', ' + clock;
+  }
   function when(iso) { var d = new Date(iso + 'T00:00:00Z'); return isNaN(d) ? String(iso) : d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); }
   /* The approximate A$ reference goes ABOVE the native amount. It is an empty node until a fresh
      reference rate is available (hidden by CSS while empty); exchange-rate provenance lives in its title only.
@@ -299,6 +309,7 @@
         + '<div class="sp-line">' + (icon(p.label) || remoteIcon(p)) + '<b class="sp-name">' + esc(p.label) + '</b>'
         + (p.tag ? '<small class="sp-tag">' + esc(p.tag) + '</small>' : '')
         + (unconfirmed ? '<span class="sp-unconf" data-sp-unconfirmed><span aria-hidden="true">?</span><span class="sr-only">Availability not confirmed</span></span>' : '') + '</div>'
+        + (evidence && evidence.endAt && endLabel(evidence.endAt) ? '<p class="sp-ends" data-sp-ends>' + esc(endLabel(evidence.endAt)) + '</p>' : '')
         + '<div class="sp-prices">'
         + priceCell('AU', p.aud > 0 ? { basis: 'verified', currency: 'AUD', amount: p.aud } : null, data.audQuotes)
         + priceCell('ID', p.indonesia, data.audQuotes)
