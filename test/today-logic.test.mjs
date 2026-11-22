@@ -183,7 +183,13 @@ test('card types: majors, raids and minor rows', () => {
   const t = (kind, name, span = 36e5, featuredCount = 0) => L.cardType({ kind, name, span, featuredCount });
   assert.equal(t('cd', 'Pawniard Community Day', 3 * 36e5), 'major');
   assert.equal(t('person', 'GO Wild Area: Sendai', 2 * 864e5), 'major');
+  assert.equal(t('global', 'GO Wild Area: Global', 2 * 864e5, 1), 'major');
+  assert.equal(t('global', 'GO Tour: Global', 2 * 864e5, 0), 'major');
   assert.equal(t('event', 'Into the Wild', 4 * 864e5, 3), 'major');
+  assert.equal(t('event', 'Two-feature celebration', 2 * 36e5, 2), 'major');
+  assert.equal(t('event', 'Minior Showers: Leonids', 5 * 864e5, 1), 'minor');
+  assert.equal(t('event', 'Long-running single reward', 8 * 864e5, 0), 'minor');
+  assert.equal(t('debut', 'One-Pokémon debut', 4 * 864e5, 1), 'minor');
   assert.equal(t('raid', 'Giratina (Altered Forme) in 5-star Raid Battles', 4 * 864e5), 'raid');
   assert.equal(t('raid', 'Cresselia Raid Hour'), 'raid');
   assert.equal(t('max', 'Max Monday: Pokémon to be announced', 15 * 36e5), 'raid');
@@ -328,4 +334,25 @@ test('Crowned Sword and Shield are exact artwork forms, not base-species picture
   assert.equal(L.artFallback(form).chip,'Form art unavailable');
  }
  assert.equal(L.classifyArt('Crowned Shield Zacian').exact,false,'invalid species/form pairing must not be accepted');
+});
+
+test('Marked done Restore names distinguish occurrences and escape supplied text', () => {
+  const today = createRequire(import.meta.url)('../public/today.js');
+  const html = today.render({
+    live: [], soon: [], week: [], regLive: [], regSoon: [], regWeek: [],
+    boosts: { live: [], upcoming: [] }, seasons: [],
+    done: [
+      { key: 'raid@first', name: 'Raid Hour', when: 'Wed 18 Nov, 6 pm' },
+      { key: 'raid@second', name: 'Raid Hour', when: 'Wed 25 Nov, 6 pm' },
+      { key: 'legacy', name: 'Raid Hour', when: '  ' },
+      { key: 'special', name: 'Research "A&B"', when: "<Fri> '6 pm'" },
+    ],
+  });
+  const buttons = [...html.matchAll(/data-t1-undo="([^"]+)" aria-label="([^"]+)">([^<]+)<\/button>/g)];
+  assert.deepEqual(buttons.map(match => match.slice(1)), [
+    ['raid@first', 'Restore Raid Hour to Today, Wed 18 Nov, 6 pm', 'Restore'],
+    ['raid@second', 'Restore Raid Hour to Today, Wed 25 Nov, 6 pm', 'Restore'],
+    ['legacy', 'Restore Raid Hour to Today', 'Restore'],
+    ['special', 'Restore Research &quot;A&amp;B&quot; to Today, &lt;Fri&gt; &#39;6 pm&#39;', 'Restore'],
+  ]);
 });

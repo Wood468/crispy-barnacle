@@ -397,7 +397,8 @@ test('official descriptions preserve exact historic pass variants and original A
 
 test('official current November pass listings remain unpriced and preserve exact published variants', () => {
   const official = require('../public/store-offer-identities.js');
-  const prices = require('../public/prices.json').prices;
+  // Evaluated at NOW (2026-11-12): owner-read AU prices dated after that did not exist yet, so later data entries cannot change this scenario.
+  const prices = require('../public/prices.json').prices.filter(p=>!p.observed||Date.parse(p.observed)<=NOW);
   assert.equal(official.length,3,'three independently announced November product variants');
   const rows = R.catalogue(prices, OBS, NOW, official);
   const sourceOnly=rows.filter(p=>p.unpricedOfficial);
@@ -411,8 +412,14 @@ test('official current November pass listings remain unpriced and preserve exact
     const item=sourceOnly.find(p=>p.label===label);
     assert.ok(item,'missing official listing: '+label);
     assert.equal(item.aud,null,'US public product descriptions are not an AU checkout price');
-    assert.equal(item.indonesia,null);
-    assert.equal(item.india,null);
+    if (label === 'GO Pass Deluxe: November + 10 Ranks') {
+      assert.equal(item.indonesia,null,'unobserved rank tier must stay unknown');
+    } else {
+      assert.equal(item.indonesia?.basis,'estimate','matching tier can show low-confidence model');
+      assert.equal(item.indonesia?.confidence,'low');
+      assert.ok(item.indonesia.min < item.indonesia.max);
+    }
+    assert.equal(item.india,null,'unrelated in-app event pass cannot price the monthly tier');
     assert.equal(item.contentsSource,'https://pokemongo.com/news/go-pass-november-2026');
     assert.equal(item.contents.find(x=>x.item==='Bonus Ranks')?.quantity||0,ranks);
     assert.equal(item.contents.find(x=>x.item==='Premium Battle Pass').quantity,passes);
@@ -420,7 +427,8 @@ test('official current November pass listings remain unpriced and preserve exact
   const aggregate=R.coverage(rows,NOW);
   assert.equal(aggregate.sourceOnly.length,3);
   assert.ok(aggregate.missingAu.includes('GO Pass Deluxe: November Ultra Box'));
-  assert.ok(aggregate.missingId.includes('GO Pass Deluxe: November Ultra Box'));
+  assert.ok(aggregate.unverifiedId.includes('GO Pass Deluxe: November Ultra Box'),
+    'only a labelled estimate exists, not a checkout quote');
   assert.ok(aggregate.missingIn.includes('GO Pass Deluxe: November Ultra Box'));
 
   const regional=[id('GO Pass Deluxe: November','monthly-pass',41000,{sourceSku:'regional-unmatched',id:'regional-november'})];

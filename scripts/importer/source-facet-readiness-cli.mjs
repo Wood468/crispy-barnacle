@@ -26,13 +26,17 @@ try{
   if(bytes.length>2*1024*1024)throw new TypeError('Importer audit exceeds size limit');
   const input=JSON.parse(bytes.toString('utf8'));
   const report=auditSourceIdentityCoverage(input);
+  // An audit of old or future-dated evidence must never appear release-ready.
+  const runAt=typeof input.runAt==='string'&&Number.isFinite(Date.parse(input.runAt))&&
+    new Date(input.runAt).toISOString()===input.runAt?input.runAt:null;
+  const ageMs=runAt?Date.now()-Date.parse(runAt):NaN;
+  const fresh=Number.isFinite(ageMs)&&ageMs>=-5*60*1000&&ageMs<=24*60*60*1000;
   const result={
     schemaVersion:1,publication:'audit-only',
-    reviewStatus:report.sourceLinkReviewRequired?'HOLD':'SOURCE_IDENTITY_CHECK_PASSED',
-    importerRunAt:typeof input.runAt==='string'&&Number.isFinite(Date.parse(input.runAt))&&
-      new Date(input.runAt).toISOString()===input.runAt?input.runAt:null,
+    reviewStatus:report.sourceLinkReviewRequired||!fresh?'HOLD':'SOURCE_IDENTITY_CHECK_PASSED',
+    importerRunAt:runAt,
     coverage:report.coverage,
-    blockers:report.reviewBlockers,
+    blockers:[...report.reviewBlockers,...(fresh?[]:['stale-or-invalid-importer-report'])],
     requiresIndependentClaimReview:true,
     requiresSignedPromotion:true,
     productionPublicationAuthorized:false
@@ -62,7 +66,7 @@ try{
     ];
     await appendFile(process.env.GITHUB_STEP_SUMMARY,lines.join('\n'));
   }
-  if(strict&&report.sourceLinkReviewRequired)process.exitCode=2;
+  if(strict&&result.reviewStatus==='HOLD')process.exitCode=2;
 }catch(error){
   // Never echo malformed report contents, URLs or ticket source prose.
   console.error('Sprint 4 source identity audit failed closed: '+

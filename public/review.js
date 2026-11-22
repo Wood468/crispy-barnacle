@@ -296,6 +296,9 @@
     if (count) { count.hidden = n < 1; count.textContent = n > 99 ? '99+' : String(n); }
     var b = $('igbanner');
     if (!n) { if (b) b.hidden = true; return; }
+    /* The counted, keyboard-accessible header Review action is the sole primary
+       entry point. Keep the older Today banner only for shells lacking it. */
+    if (action) { if (b) b.remove(); return; }
     if (!b) { var tab = document.getElementById('tab-now'); if (!tab) return; b = document.createElement('button'); b.type = 'button'; b.id = 'igbanner'; b.className = 'igbanner'; tab.insertBefore(b, tab.firstChild); }
     b.hidden = false; b.textContent = '🖼 ' + n + ' infographic' + (n === 1 ? '' : 's') + ' waiting for your review · Review now →';
   }

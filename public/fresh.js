@@ -113,7 +113,10 @@
     box.innerHTML = h;
     var sum = $('srcsum'); if (sum) { var L = STATE[worst] || STATE.unknown; sum.textContent = worst === 'fresh' || worst === 'healthy' ? 'all current' : L[0].toLowerCase(); sum.className = 'cnt fr-sum fr-sum-' + (L[1]); }
   }
-  function renderAll() { renderLine(); renderCard(); }
+  /* Footer "Events as of <date>": the day of the same recorded feed refresh the line under the title reports. No recorded refresh: the whole phrase stays hidden, never a stale or hard-coded date. */
+  function asOfText() { var A = S.api, f = A && A.enabled && A.feed; return f && ok(f.lastSuccess) ? day(Number(f.lastSuccess)) : ''; }
+  function renderAsOf() { var w = $('asof-wrap'), el = $('asof'); if (!w || !el) return; var t = asOfText(); el.textContent = t; w.hidden = !t; }
+  function renderAll() { renderLine(); renderCard(); renderAsOf(); }
 
   /* The empty line reserves its 44px so nothing jumps when the text arrives. If the answers never come, give the space back 8 s after the page started (this script loads after the feed wait, so time already spent counts); a late answer still fills the line. */
   setTimeout(function () { var el = $('fresh-line'); if (!S.done && el && el.hidden) el.setAttribute('data-released', ''); }, Math.max(0, 8000 - Math.round(window.performance && performance.now ? performance.now() : 0)));
@@ -125,5 +128,5 @@
   document.addEventListener('gomoves', renderAll);
   document.addEventListener('gofn-netbar', renderLine);
   document.addEventListener('click', function (e) { if (e.target.closest('#fresh-go')) { G.showTab('saved', 'menu'); var d = $('srcdd'); if (d) { d.open = true; setTimeout(function () { d.scrollIntoView({ block: 'start' }); }, 50); } } });
-  window.GOFRESH = { state: function () { return S; }, lineModel: lineModel, render: renderAll };
+  window.GOFRESH = { state: function () { return S; }, lineModel: lineModel, asOfText: asOfText, render: renderAll };
 })();

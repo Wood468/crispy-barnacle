@@ -1,0 +1,30 @@
+{
+ "_note": "Frozen fixture: three distinct Into the Wild SKUs share one image. Independent of the live Store.",
+ "items": [
+  {
+   "name": "Into the Wild Box Small",
+   "href": "/purchase/item/web-into-the-wild-small",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/safari-box/w256.webp"
+  },
+  {
+   "name": "Into the Wild Box Medium",
+   "href": "/purchase/item/web-into-the-wild-medium",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/safari-box/w256.webp"
+  },
+  {
+   "name": "Into the Wild Box Large",
+   "href": "/purchase/item/web-into-the-wild-large",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/safari-box/w256.webp"
+  },
+  {
+   "name": "GO Pass Deluxe: November",
+   "href": "/purchase/item/web-go-pass-deluxe-november",
+   "image": "https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/pass-november/w256.webp"
+  },
+  {
+   "name": "Item without a captured image",
+   "href": "/purchase/item/web-no-image",
+   "image": null
+  }
+ ]
+}

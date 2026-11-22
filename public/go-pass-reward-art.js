@@ -16,7 +16,28 @@
     [/^elite charged tm$/i, '/ico/g/elite-charged-tm.webp'],
     [/^incense$/i, '/ico/incense.webp'],
     [/^stardust$/i, '/ico/dust.webp'],
-    [/^raid pass$/i, '/ico/g/raidpass.webp']
+    [/^raid pass$/i, '/ico/g/raidpass.webp'],
+    /* Owner-supplied pictures (docs/asset-inventory/item-icons.json); exact names only. */
+    [/^star piece$/i, '/ico/i/star-piece.webp'],
+    [/^poke ball$/i, '/ico/i/poke-ball.webp'],
+    [/^great ball$/i, '/ico/i/great-ball.webp'],
+    [/^ultra ball$/i, '/ico/i/ultra-ball.webp'],
+    [/^rare candy$/i, '/ico/i/rare-candy.webp'],
+    [/^rare candy xl$/i, '/ico/i/rare-candy-xl.webp'],
+    [/^lucky egg$/i, '/ico/i/lucky-egg.webp'],
+    [/^egg incubator$/i, '/ico/i/egg-incubator.webp'],
+    [/^super incubator$/i, '/ico/i/super-incubator.webp'],
+    [/^nanab berry$/i, '/ico/i/nanab-berry.webp'],
+    [/^max mushroom$/i, '/ico/i/max-mushroom.webp'],
+    [/^revive$/i, '/ico/i/revive.webp'],
+    [/^potion$/i, '/ico/i/potion.webp'],
+    [/^hyper potion$/i, '/ico/i/hyper-potion.webp'],
+    [/^super potion$/i, '/ico/i/super-potion.webp'],
+    [/^remote raid pass$/i, '/ico/i/remote-raid-pass.webp'],
+    [/^max particle(?: pack|s)$/i, '/ico/i/max-particle-pack.webp'],
+    [/^lure module$/i, '/ico/i/lure-module.webp'],
+    [/^link charges?$/i, '/ico/i/link-charge.webp'],
+    [/^premium battle pass$/i, '/ico/i/premium-battle-pass.webp']
   ];
   function normalize(name) {
     return String(name || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();

@@ -226,6 +226,14 @@
         || !Array.isArray(offer.contents)) return;
       var key = 'source-only:' + offer.id;
       if (all[key]) return;
+      /* A verified AU Web price whose label is this offer's exact title IS the priced card for it:
+         adopt the publisher contents and do not add a second, unpriced duplicate. */
+      var priced = auByLabel[norm(offer.label)] || [];
+      if (priced.length === 1) {
+        var card = all[priced[0]];
+        if (!card.contents.length) { card.contents = offer.contents; card.contentsSource = offer.sourceUrl; }
+        return;
+      }
       all[key] = {product:offer.id,label:offer.label,group:offer.group || 'Passes & tickets',
         aud:null,observed:null,unpricedOfficial:true,contents:offer.contents,
         contentsSource:offer.sourceUrl};
@@ -250,9 +258,60 @@
         regionalUnmatched: !!p.regionalUnmatched, unpricedOfficial: !!p.unpricedOfficial,
         aud: p.aud, observed: p.observed,
         contents: p.contents || [], contentsSource: p.contentsSource || null,
-        india: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
-        indonesia: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
+        india: ambiguous ? null : p.unpricedOfficial
+          ? estimate({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now)
+          : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
+        indonesia: ambiguous ? null : p.unpricedOfficial
+          ? estimate({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now)
+          : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
     });
+  }
+  /* Source-only listing state. Store price observations are historical receipts:
+     they are NEVER evidence that a product remains on sale. Match the exact
+     official display name, not a similar event, tier, quantity or bonus. */
+  function sourceOffer(label, snapshot, now, options) {
+    var empty = {status:'unconfirmed', image:null, lastSeen:null, goneAt:null, endAt:null, note:'Not confirmed in recent Store snapshot'};
+    if (options && options.ambiguousSku)
+      return Object.assign({}, empty, {note:'Source SKU/contents are ambiguous; exact storefront identity not proven'});
+    if (!snapshot || !Array.isArray(snapshot.items) || !Array.isArray(snapshot.gone)) return empty;
+    var key = norm(label), checkTime = now == null ? Date.now() : now;
+    var sourceFresh = typeof snapshot.updated === 'string' &&
+      Number.isFinite(Date.parse(snapshot.updated)) &&
+      checkTime >= Date.parse(snapshot.updated) && checkTime - Date.parse(snapshot.updated) <= 7 * DAY;
+    function matching(row) { return row && norm(row.name) === key; }
+    var current = snapshot.items.filter(matching);
+    var past = snapshot.gone.filter(matching);
+    var row = current.length === 1 ? current[0] : past.length === 1 ? past[0] : null;
+    /* Owner-approved (15 Nov 2026): the Store card may show the snapshot image of the ONE current
+       offer whose official display name matches exactly, and only if the URL passes sourceArt().
+       Archived/removed or ambiguous matches never carry an image. */
+    var artwork = current.length === 1 && sourceArt(current[0].image) ? current[0].image : null;
+    if (current.length !== 1) {
+      /* An old removal record is not proof of today's availability. Only a
+         fresh source snapshot may classify a missing offer as removed. */
+      artwork = null;
+      if (past.length === 1 && sourceFresh) {
+        var goneTime = Date.parse(row.goneAt || '');
+        if (Number.isFinite(goneTime) && goneTime <= checkTime)
+          return {status:'archived',image:artwork,lastSeen:row.lastSeen||null,goneAt:row.goneAt,endAt:row.endsAt||null,note:'Removed from the observed Store listing'};
+      }
+      return {status:'unconfirmed',image:artwork,lastSeen:row&&row.lastSeen||null,goneAt:row&&row.goneAt||null,endAt:row&&row.endsAt||null,note:'Current Store availability not confirmed'};
+    }
+    var end = Date.parse(row.endsAt || '');
+    if (Number.isFinite(end) && end <= checkTime)
+      return {status:'archived',image:artwork,lastSeen:row.lastSeen||null,goneAt:null,endAt:row.endsAt,note:'Published purchase window ended'};
+    if (!sourceFresh) return {status:'unconfirmed',image:artwork,lastSeen:row.lastSeen||null,goneAt:null,endAt:row.endsAt||null,note:'Store snapshot needs refreshing'};
+    var last = Date.parse(row.lastSeen || '');
+    if (!Number.isFinite(last) || last > checkTime || checkTime-last > 7*DAY)
+      return {status:'unconfirmed',image:artwork,lastSeen:row.lastSeen||null,goneAt:null,endAt:row.endsAt||null,note:'Store observation is stale'};
+    return {status:'listed',image:artwork,lastSeen:row.lastSeen,goneAt:null,endAt:row.endsAt||null,note:'Seen in the latest Store snapshot; checkout availability may differ'};
+  }
+  /* Strict allow-list for Niantic Store item images: https, exact host, no port/userinfo/query/fragment,
+     the sku_assets path, a plain slug (no dot-only or traversal segment) and a length cap. */
+  function sourceArt(url) {
+    return typeof url === 'string' && url.length <= 300 &&
+      /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/(?!\.+\/)[a-z0-9_.%()\-]+\/w(?:64|128|256|512)\.webp$/i.test(url) &&
+      !/%2e|%2f|%5c/i.test(url);
   }
   /* Owner-only audit of source coverage, not a live checkout or a price
      prediction. Keep absent, modelled and recorded prices distinguishable. */
@@ -289,5 +348,5 @@
     return result;
   }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
-  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, coverage: coverage, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
+  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, coverage: coverage, channels: channels, confidence: confidence, sourceOffer: sourceOffer, sourceArt: sourceArt, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
 });

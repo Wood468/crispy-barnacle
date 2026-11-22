@@ -1,13 +1,25 @@
 {
- "updated": "2026-11-13T01:50:01.799Z",
+ "updated": "2026-11-21T19:16:14.074Z",
  "state": "ok",
- "scrapedDuckEvents": 48,
+ "scrapedDuckEvents": 41,
  "missingHere": [
+  {
+   "name": "Twitch Drops for 2027 Pokémon Latin America International Championships",
+   "type": "twitch-drops",
+   "start": "2026-11-20T12:00:00.000Z",
+   "link": "https://leekduck.com/events/pokemon-latin-america-international-championships-2027-timed-research-twitch-drops/"
+  },
   {
    "name": "Raid Day",
    "type": "raid-day",
    "start": "2026-12-19T14:00:00.000",
    "link": "https://leekduck.com/events/raid-day-december-2026/"
+  },
+  {
+   "name": "Pokémon GO and Duolingo Timed Research",
+   "type": "timed-research",
+   "start": "2026-11-17T10:00:00.000",
+   "link": "https://leekduck.com/events/duolingo-timed-research-2026/"
   }
  ],
  "missingThere": [
@@ -72,19 +84,9 @@
    "start": "2026-10-04"
   },
   {
-   "id": "w-mexicraneo-exhibit-paseo-de-la-reforma",
-   "name": "Mexicráneo Exhibit: Mexico City",
-   "start": "2026-10-17"
-  },
-  {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
    "name": "Pokémon 30th Anniversary Mall Exploration: Jewel",
    "start": "2026-11-07"
-  },
-  {
-   "id": "w-pok-mon-run-30-new-taipei",
-   "name": "Pokémon RUN 30: New Taipei",
-   "start": "2026-11-14"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-south",
@@ -112,5 +114,49 @@
    "start": "2026-12-19"
   }
  ],
- "shinyDisagree": []
+ "shinyDisagree": [
+  {
+   "event": "w-december-communityday2026",
+   "name": "December Communityday2026",
+   "scrapedDuckShinies": [
+    "Vulpix",
+    "Ninetales",
+    "Alolan Vulpix",
+    "Alolan Ninetales",
+    "Grookey",
+    "Thwackey",
+    "Rillaboom",
+    "Scorbunny",
+    "Raboot",
+    "Cinderace",
+    "Lechonk",
+    "Oinkologne",
+    "Tinkatink",
+    "Tinkatuff",
+    "Tinkaton",
+    "Piplup",
+    "Prinplup",
+    "Empoleon",
+    "Zorua",
+    "Zoroark",
+    "Pawniard",
+    "Bisharp",
+    "Kingambit",
+    "Sobble",
+    "Drizzile",
+    "Inteleon",
+    "Nickit",
+    "Thievul",
+    "Frigibax",
+    "Arctibax",
+    "Baxcalibur",
+    "Gible",
+    "Gabite",
+    "Garchomp",
+    "Deino",
+    "Zweilous",
+    "Hydreigon"
+   ]
+  }
+ ]
 }

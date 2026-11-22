@@ -33,7 +33,8 @@ test('wired renderer uses only exact approved item art and honest category token
  // Remote Raid Pass is a separate item with a category glyph.
  assert.equal((html.match(/src="\/ico\/g\/raidpass\.webp"/g)||[]).length,1);
  assert.match(html,/ue-reward-icon">XP<\/span>/);
- assert.match(html,/ue-reward-icon">RXL<\/span>/);
+ assert.match(html,/src="\/ico\/i\/rare-candy-xl\.webp"/);
+ assert.doesNotMatch(html,/ue-reward-icon">RXL<\/span>/);
  assert.doesNotMatch(html,/\/ico\/xp\.webp/);
  assert.match(html,/<b>Remote Raid Pass<\/b>/);
  assert.match(html,/<b>Rare Candy XL<\/b>/);
@@ -118,20 +119,57 @@ test('dense and single-rank groups avoid cross-boundary gaps and do not fabricat
  assert.equal((html.match(/class="ue-pass-rank" data-rank="/g)||[]).length,6);
 }));
 
+test('GO Pass encounter art stays species-specific with a separate source-labelled Dynamax badge', () => withSemantic(() => {
+ const seen=[];
+ const art = item => {
+  seen.push(item.name);
+  return '<img class="art ea" src="/api/art?n='+encodeURIComponent(item.name)
+   +(/^Dynamax /i.test(item.name)?'&dynamax=1':'')+'" alt="'+item.name+'">';
+ };
+ const html=UI.render(model([
+  {rank:45,free:[{type:'encounter',name:'Dynamax Meltan',quantity:1,level:15}],
+    deluxe:[{type:'encounter',name:'Dynamax Meltan'}]},
+  {rank:46,free:[{type:'encounter',name:'Dynamax Rookidee'},
+    {type:'encounter',name:'Groudon'},
+    {type:'item',name:'Dynamax Candy'}]},
+  {rank:47,deluxe:[{type:'encounter',name:'Gigantamax Charizard'},
+    {type:'encounter',name:'Shadow Mewtwo'}]}
+ ]),{rewardArt:art});
+ assert.ok(seen.includes('Dynamax Meltan'),'species art resolver is called for the published encounter');
+ const reward=html.match(/<div class="ue-pass-reward" data-cat="Pokémon" data-battle-mode="dynamax">[\s\S]*?<b>Dynamax Meltan<\/b>[\s\S]*?<\/div>/);
+ assert.ok(reward,'Rank 45 includes a real encounter image and a distinct Dynamax mode');
+ assert.match(reward[0],/src="\/api\/art\?n=Dynamax%20Meltan&dynamax=1"/);
+ assert.match(reward[0],/ue-pass-mode-dynamax">Dynamax<\/span>/);
+ assert.match(reward[0],/Level 15/);
+ assert.doesNotMatch(reward[0],/ue-reward-icon">(?:PKM|MAX)<\/span>/,'generic MAX symbol cannot replace actual species art');
+ assert.match(html,/data-battle-mode="gigantamax"/);
+ assert.match(html,/data-battle-mode="shadow"/);
+ const ordinary=html.match(/<div class="ue-pass-reward" data-cat="Pokémon">[\s\S]*?<b>Groudon<\/b>/);
+ assert.ok(ordinary,'ordinary Pokémon encounter has no invented battle mode');
+ assert.doesNotMatch(ordinary[0],/data-battle-mode|ue-pass-mode/);
+ const item=html.match(/<div class="ue-pass-reward" data-cat="[^"]+"[^>]*>[\s\S]*?<b>Dynamax Candy<\/b>/);
+ assert.ok(item,'published item remains an item');
+ assert.doesNotMatch(item[0].slice(item[0].lastIndexOf('<div class="ue-pass-reward"')),/data-battle-mode/,'mode is never guessed for items');
+ const css=file('event-redesign.css');
+ assert.match(css,/\.ue-pass-mode-line\{/);
+ assert.match(css,/\.ue-pass-reward\[data-battle-mode="dynamax"\]/);
+}));
 test('load order, offline references and post-render mount form a complete PWA integration', () => {
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
+ const dashPreload=index.match(/<link rel="preload" href="(\/dash\.js\?v=[^"]+)" as="script">/);
+ assert.ok(dashPreload,'dashboard preload must be a versioned script');
  const assets=[
   '/go-pass-navigation.css?v=20261118h',
   '/go-pass-navigation.js?v=20261118i',
-  '/go-pass-reward-art.js?v=20261118d',
-  '/event-components.js?v=20261118g',
-  '/dash.js?v=20261118c'
+  '/go-pass-reward-art.js?v=20261118e',
+  '/event-components.js?v=20261123c-shiny',
+  dashPreload[1]
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
  assert.ok(index.indexOf('/go-pass-reward-art.js?v=')<index.indexOf('/event-components.js?v='),'semantic registry must load before renderer');
  assert.ok(index.indexOf('/go-pass-navigation.js?v=')<index.indexOf('/app.js?v='),'navigator must load before app navigation');
- assert.match(dash,/\/detail\.js\?v=20261118b/);
- assert.match(sw,/\/detail\.js\?v=20261118b/);
+ assert.match(dash,/\/detail\.js\?v=20261122c/);
+ assert.match(sw,/\/detail\.js\?v=20261122c/);
  const renderAt=detail.indexOf("o.innerHTML = '<div class=\"evd-in\">'");
  const mountAt=detail.indexOf('GOGoPassNavigation.mount(o)',renderAt);
  assert.ok(renderAt>=0&&mountAt>renderAt&&mountAt<renderAt+300,'mount after actual event render');

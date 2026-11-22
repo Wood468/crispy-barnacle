@@ -4,6 +4,7 @@
 // Needs GITHUB_TOKEN and GITHUB_REPOSITORY (set by the workflow). Telegram is optional: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID.
 import { readFile, writeFile } from "node:fs/promises";
 import { routed } from "../src/tgroute.js";
+import { lastCompleteAt } from "../src/store-validate.js";
 import { recoverStaleImporter } from "./importer-recovery.mjs";
 
 const HOUR = 36e5;
@@ -57,6 +58,11 @@ export function judgeWorker(hb, now = Date.now()) {
   if (!Number.isFinite(at)) return { ...row, lastSuccess: null, state: "never" };
   const failed = (hb.failed || []).length > 0, old = now - at > 3 * HOUR;
   return { ...row, lastSuccess: new Date(at).toISOString(), state: old ? "stale" : failed ? "failing" : "fresh", detail: failed ? "failing: " + hb.failed.join(", ") : (hb.discord ? "Discord forwarding: " + hb.discord : "") };
+}
+// The Store snapshot is now uploaded by the Melbourne reader, so a quiet reader leaves store-watch "green" but the data old:
+// judge the age of the last complete, non-held observation (falls back to the published snapshot's `updated`; stale after 3 days).
+export function judgeStoreSnapshot(updated, now = Date.now()) {
+  return judge({ id: "store-snapshot-age", name: "Store snapshot age", everyH: 24, staleAfterH: 72 }, { lastSuccess: updated || null, lastConclusion: null }, now);
 }
 async function workerRow() {
   try { const r = await fetch("https://pogo.michaelpuff.com/api/worker-health"); return judgeWorker(r.ok ? (await r.json()).heartbeat : null); } catch { return null; }
@@ -117,6 +123,7 @@ async function main() {
   const rows = [];
   for (const job of JOBS) { try { rows.push(judge(job, await runsFor(job))); } catch (e) { console.log(job.id + ": " + e.message); } }
   const wr = await workerRow(); if (wr) rows.push(wr);
+  rows.push(judgeStoreSnapshot(lastCompleteAt(await readJson("data/store-state.json", null)) || (await readJson("public/store-current-snapshot.json", {})).updated));
   for (const t of AI_TASKS) rows.push(await tagRow(t));
   await tidyStrays();
   if (!rows.length) throw new Error("Could not read any job");

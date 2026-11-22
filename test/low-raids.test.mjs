@@ -179,3 +179,8 @@ test("special-event missing 1★ lineup is safe to skip only for matching existi
   assert.equal(coveredCuratedSpecialEvent(editable,parsed,observed), null,
     "only independently curated official records can use this no-op");
 });
+
+test("the weekly job runs every day, so a rotation that starts on a Monday is filled as soon as the source lists it", () => {
+  const wf = readFileSync(new URL("../.github/workflows/low-raids.yml", import.meta.url), "utf8");
+  assert.match(wf, /cron:\s*"30 2 \* \* \*"/);
+});

@@ -889,6 +889,55 @@
       "source": "Pokémon GO web store (Australia), store screenshot",
       "url": "https://store.pokemongo.com",
       "observed": "2026-10-12"
+    },
+    {
+      "product": "store-go-pass-deluxe-november-ultra-box",
+      "label": "GO Pass Deluxe: November Ultra Box",
+      "group": "Tickets",
+      "currency": "AUD",
+      "amount": 22.99,
+      "region": "AU",
+      "verified": true,
+      "source": "Pokémon GO Web Store (Australian storefront, read by the owner)",
+      "url": "https://store.pokemongo.com/",
+      "observed": "2026-11-17"
+    },
+    {
+      "product": "store-go-pass-deluxe-november-10-ranks",
+      "label": "GO Pass Deluxe: November + 10 Ranks",
+      "group": "Tickets",
+      "currency": "AUD",
+      "amount": 14.99,
+      "region": "AU",
+      "verified": true,
+      "source": "Pokémon GO Web Store (Australian storefront, read by the owner)",
+      "url": "https://store.pokemongo.com/",
+      "observed": "2026-11-17"
+    },
+    {
+      "product": "store-go-pass-deluxe-dynamax-trails",
+      "label": "GO Pass Deluxe: Dynamax Trails",
+      "group": "Tickets",
+      "currency": "AUD",
+      "amount": 7.99,
+      "region": "AU",
+      "verified": true,
+      "source": "Pokémon GO Web Store (Australian storefront, read by the owner)",
+      "url": "https://store.pokemongo.com/",
+      "observed": "2026-11-17",
+      "note": "owner-observed in AU store; not yet in snapshot"
+    },
+    {
+      "product": "store-pawniard-community-day-ultra-ticket-box",
+      "label": "Pawniard Community Day Ultra Ticket Box",
+      "group": "Tickets",
+      "currency": "AUD",
+      "amount": 2.99,
+      "region": "AU",
+      "verified": true,
+      "source": "Pokémon GO Web Store (Australian storefront, read by the owner)",
+      "url": "https://store.pokemongo.com/",
+      "observed": "2026-11-17"
     }
   ],
   "tiers_au": {

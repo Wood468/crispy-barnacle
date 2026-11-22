@@ -21,6 +21,7 @@ import * as tgm from "./telegram.js";
 import * as auth from "./auth.js";
 import * as jobs from "./jobs.js";
 import { ogImage, OG_HOSTS } from "./og.js";
+import { validateAuIngest, deriveCompleteness } from "./store-validate.js";
 import { IMAGE_CSP_HOSTS } from "./image-policy.js";
 import { encodeInfographicTargets, decodeInfographicTargets } from "./infographic-decision-wire.mjs";
 import { OBSERVATIONS as REGIONAL_OBSERVATIONS } from "./regional-observations.js";
@@ -141,6 +142,7 @@ const handler = {
       if (url.pathname === "/api/pipeline/run") return pipelineRun(request, env);
       if (url.pathname === "/api/ig-decisions") return igDecisions(request, env);
       if (url.pathname === "/api/tg-inbox") return tgInbox(request, env);
+      if (url.pathname === "/api/store-ingest") return storeIngest(request, env);
       if (url.pathname === "/api/worker-health") return env.DB ? json({ heartbeat: await jobs.heartbeat(env) }) : json({ heartbeat: null });
       if (url.pathname === "/api/discord-sent") return discordSentRoute(request, env);
       if (url.pathname === "/api/prices-private" && request.method === "GET") return pricesPrivate(request, env);
@@ -211,9 +213,9 @@ function json(body, status = 200) {
 // Sync write endpoints accept at most 2 MiB of JSON. Check Content-Length when present,
 // then enforce the same bound while streaming so chunked requests cannot bypass it.
 export const MAX_SYNC_JSON_BYTES = 2 * 1024 * 1024;
-async function readSyncJson(request) {
+async function readSyncJson(request, max = MAX_SYNC_JSON_BYTES) {
   const declared = request.headers.get("content-length");
-  if (declared && /^\d+$/.test(declared) && Number(declared) > MAX_SYNC_JSON_BYTES) return { error: "too_large" };
+  if (declared && /^\d+$/.test(declared) && Number(declared) > max) return { error: "too_large" };
   if (!request.body) return { error: "bad_json" };
   const reader = request.body.getReader();
   const chunks = [];
@@ -223,7 +225,7 @@ async function readSyncJson(request) {
       const { done, value } = await reader.read();
       if (done) break;
       total += value.byteLength;
-      if (total > MAX_SYNC_JSON_BYTES) {
+      if (total > max) {
         try { await reader.cancel(); } catch { /* cancellation is best-effort */ }
         return { error: "too_large" };
       }
@@ -542,6 +544,12 @@ async function gate(request, env) {
   const given = String(request.headers.get("x-pin") || "");
   if (given && await same(given, env.SYNC_PIN)) return null;
 
+  return authFailure(request, env, "PIN");
+}
+
+// Records one failed credential attempt (shared throttle table) and answers 401, or 429 once a ceiling is reached.
+// `noun` is "PIN" or "key" and only changes the wording.
+async function authFailure(request, env, noun) {
   const now = Date.now(), cutoff = now - PIN_FAILURE_WINDOW_MS;
   const ip = request.headers.get("cf-connecting-ip") || "unknown";
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(ip));
@@ -560,13 +568,13 @@ async function gate(request, env) {
       env.DB.prepare("SELECT COUNT(*) AS n FROM pin_fails_ip WHERE ip_hash = ? AND at > ?").bind(ipHash, cutoff).first(),
       env.DB.prepare("SELECT COUNT(*) AS n FROM pin_fails_ip WHERE at > ?").bind(cutoff).first()
     ]);
-    if (perIp.n >= PIN_FAILURES_PER_IP) return json({ error: "Too many wrong PINs from this address. Try again in 10 minutes." }, 429);
-    if (global.n >= PIN_FAILURES_GLOBAL) return json({ error: "Too many wrong PIN attempts across all addresses. Wait for the rolling 10-minute window to clear." }, 429);
-    return json({ error: "Too many wrong PIN attempts. Try again shortly." }, 429);
+    if (perIp.n >= PIN_FAILURES_PER_IP) return json({ error: `Too many wrong ${noun}s from this address. Try again in 10 minutes.` }, 429);
+    if (global.n >= PIN_FAILURES_GLOBAL) return json({ error: `Too many wrong ${noun} attempts across all addresses. Wait for the rolling 10-minute window to clear.` }, 429);
+    return json({ error: `Too many wrong ${noun} attempts. Try again shortly.` }, 429);
   }
 
   await env.DB.prepare("DELETE FROM pin_fails_ip WHERE at < ?").bind(now - 24 * 3600 * 1000).run();
-  return json({ error: "Wrong PIN." }, 401);
+  return json({ error: `Wrong ${noun}.` }, 401);
 }
 
 // Who is asking? The owner (sync PIN in x-pin, exactly as before) or an invited person with a session cookie.
@@ -1152,6 +1160,94 @@ async function tgInbox(request, env) {
   let body; try { body = await request.json(); } catch { return json({ error: "Bad request." }, 400); }
   for (const id of (Array.isArray(body.ids) ? body.ids : []).slice(0, 20)) if (/^[a-z0-9_-]{1,64}$/i.test(String(id))) await env.DB.prepare("DELETE FROM tg_inbox WHERE id = ?").bind(String(id)).run();
   return json({ ok: true });
+}
+// ---------------------------------------------------------------- AU store snapshot ingest
+// A Home Assistant add-on in Melbourne POSTs the Australian store snapshot (the GitHub runner's US address sees the US store).
+// Inert (404) unless the write-only secret STORE_INGEST_KEY (>= 32 chars) and the DB are present. GET and POST both need the x-ingest-key header (the only credential).
+// Auth is checked first; a failed request runs no DDL and writes nothing except the shared failure-throttle row.
+const INGEST_MAX_BYTES = 256 * 1024, INGEST_MAX_ITEMS = 400, INGEST_MIN_GAP_MS = 5 * 60 * 1000;
+const INGEST_PAST_MS = 15 * 60 * 1000, INGEST_FUTURE_MS = 5 * 60 * 1000;
+// The table is created only by migrations/0004_store_ingest.sql (explicit, idempotent), never by a request.
+const INGEST_IMG_ORIGIN = "https://assets.pgo.webstore.nianticlabs.com"; // the only Store image host already in IMAGE_CSP_HOSTS
+const ingestImg = u => { if (!ingestStr(u, 600)) return false; try { const x = new URL(u); return x.origin === INGEST_IMG_ORIGIN && !x.username && !x.password; } catch { return false; } };
+const ingestStr = (v, max) => typeof v === "string" && v.length <= max;
+// Keep only the known snapshot fields, bounded; anything else is dropped. Returns { snap } or { bad: <fixed reason code> }.
+// Every reason is a constant chosen here (INGEST_REASONS below), never derived from, and never echoing, the submitted value.
+const strBad = (v, max) => typeof v !== "string" ? "shape" : v.length > max ? "string_len" : null;
+function cleanIngest(v) {
+  if (!v || typeof v !== "object" || Array.isArray(v) || !Array.isArray(v.items)) return { bad: "shape" };
+  if (v.items.length > INGEST_MAX_ITEMS) return { bad: "too_many_items" };
+  { const f = strBad(v.fetched, 40); if (f) return { bad: f === "string_len" ? "fetched_format" : "shape" }; }
+  const items = [];
+  for (const i of v.items) {
+    if (!i || typeof i !== "object" || Array.isArray(i)) return { bad: "shape" };
+    for (const [val, max, optional] of [[i.name, 200], [i.section, 200], [i.price, 200, true]]) { if (optional && val == null) continue; const b = strBad(val, max); if (b) return { bad: b }; }
+    const o = { name: i.name, section: i.section };
+    if (i.price != null) o.price = i.price;
+    for (const k of ["tag", "limit", "left", "href"]) { if (i[k] == null) continue; const b = strBad(i[k], 300); if (b) return { bad: b }; o[k] = i[k]; }
+    if (o.href && !/^\/purchase\/[\w\-/?=&%.]*$/.test(o.href)) return { bad: "href" }; // a relative store path only: no host, scheme or "//"
+    if (i.imgs != null) { if (!Array.isArray(i.imgs) || i.imgs.length > 6) return { bad: "shape" }; if (!i.imgs.every(ingestImg)) return { bad: "img_host" }; o.imgs = i.imgs; }
+    items.push(o);
+  }
+  const e = v.completeness; let completeness;
+  if (e != null) {
+    if (typeof e !== "object" || Array.isArray(e) || !Array.isArray(e.sections) || e.sections.length > 100) return { bad: "completeness" };
+    const sections = [];
+    for (const x of e.sections) { if (!x || typeof x !== "object" || !ingestStr(x.name, 200)) return { bad: "completeness" }; sections.push({ name: x.name, count: x.count }); }
+    completeness = { schema: e.schema, producer: ingestStr(e.producer, 80) ? e.producer : undefined, loadComplete: e.loadComplete, passes: e.passes, stablePasses: e.stablePasses, maxPasses: e.maxPasses, cards: e.cards, sections };
+  }
+  return { snap: { fetched: v.fetched, items, completeness } };
+}
+// Fixed vocabulary: validateAuIngest / deriveCompleteness codes -> the public `reason` of a 400. Unknown codes fall back to "shape".
+const INGEST_REASONS = {
+  "empty-or-short-snapshot": "items_min", "invalid-sku": "sku", "duplicate-sku": "duplicate_sku", "mixed-currency": "currency", "not-aud": "currency",
+  "bad-fetched": "fetched_format", "bad-image": "img_host", "too-few-prices": "priced_min",
+  "no-evidence": "evidence", "unsupported-evidence": "evidence", "load-not-stable": "load_unstable", "no-sections": "completeness",
+  "card-count-mismatch": "cards_mismatch", "garbled-sections": "completeness", "section-count-mismatch": "section_mismatch"
+};
+const ingestReason = (code, snap) => INGEST_REASONS[code === "incomplete" ? deriveCompleteness(snap).reason : code] || (code === "incomplete" ? "completeness" : "shape");
+const ingestBad = reason => json({ error: "Bad request.", reason }, 400);
+const noTable = e => /no such table/i.test(String(e && e.message));
+const ingestUnavailable = () => json({ error: "Unavailable.", reason: "schema" }, 503);
+async function storeIngest(request, env) {
+  if (!env.DB || typeof env.STORE_INGEST_KEY !== "string" || env.STORE_INGEST_KEY.length < 32) return json({ error: "Not switched on." }, 404);
+  const method = request.method;
+  if (method !== "GET" && method !== "POST") return json({ error: "Method not allowed." }, 405);
+  const given = String(request.headers.get("x-ingest-key") || "");
+  if (!given || !(await same(given, env.STORE_INGEST_KEY))) {
+    // Shared throttle only (no ensure(): never create tables here). If its table is missing, still refuse without recording.
+    try { return await authFailure(request, env, "key"); } catch (e) { if (!noTable(e)) throw e; return json({ error: "Wrong key." }, 401); }
+  }
+  if (method === "GET") { // the raw snapshot (includes standalone SKUs the filtered public file omits): private, for the watcher only
+    let row;
+    try { row = await env.DB.prepare("SELECT received, body FROM store_ingest WHERE id = 1").first(); } catch (e) { if (!noTable(e)) throw e; return ingestUnavailable(); }
+    if (!row) return json({ error: "Not found." }, 404);
+    // x-store-received lets the watcher tell "the reader stopped uploading" from "the store did not change".
+    return new Response(row.body, { headers: { "content-type": "application/json", "cache-control": "private, no-store", "x-store-received": new Date(row.received).toISOString() } });
+  }
+  if (!/^application\/json\b/i.test(request.headers.get("content-type") || "")) return json({ error: "Bad request." }, 415);
+  const now = Date.now();
+  let prev;
+  try { prev = await env.DB.prepare("SELECT received, fetched FROM store_ingest WHERE id = 1").first(); } catch (e) { if (!noTable(e)) throw e; return ingestUnavailable(); }
+  if (prev && prev.received > now - INGEST_MIN_GAP_MS) return json({ error: "Too soon." }, 429);
+  const parsed = await readSyncJson(request, INGEST_MAX_BYTES);
+  if (parsed.error === "too_large") return json({ error: "Payload too large." }, 413);
+  if (parsed.error) return ingestBad("json");
+  const cleaned = cleanIngest(parsed.value);
+  if (cleaned.bad) return ingestBad(cleaned.bad);
+  const snap = cleaned.snap, invalid = validateAuIngest(snap, now);
+  if (invalid) return ingestBad(ingestReason(invalid, snap));
+  const at = Date.parse(snap.fetched);
+  if (at < now - INGEST_PAST_MS || at > now + INGEST_FUTURE_MS) return ingestBad("fetched_window");
+  const fetched = new Date(at).toISOString();
+  if (prev && prev.fetched && fetched <= prev.fetched) return json({ error: "Stale snapshot." }, 409);
+  // The WHERE guards the same two rules atomically if two uploads race.
+  const w = await env.DB.prepare(
+    "INSERT INTO store_ingest (id, received, fetched, body) VALUES (1, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET received = excluded.received, fetched = excluded.fetched, body = excluded.body " +
+    "WHERE store_ingest.received <= ? AND store_ingest.fetched < excluded.fetched"
+  ).bind(now, fetched, JSON.stringify(snap), now - INGEST_MIN_GAP_MS).run();
+  if (!w.meta || w.meta.changes !== 1) return json({ error: "Conflict." }, 409);
+  return json({ ok: true, items: snap.items.length });
 }
 async function telegramHook(request, env) {
   if (!env.DB) return json({ error: "Not switched on." }, 404);

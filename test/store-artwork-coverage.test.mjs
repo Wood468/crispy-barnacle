@@ -8,11 +8,11 @@ import {auditStoreArtwork,remoteAsset,iconPaths,validateIcon,snapshotArtworkRows
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const store=readFileSync(resolve(root,'public/store.js'),'utf8');
-const log=JSON.parse(readFileSync(resolve(root,'public/store-log.json'),'utf8'));
+const log=JSON.parse(readFileSync(resolve(root,'test/fixtures/store-artwork-reused.json'),'utf8'));
 
 test('only exact existing WebP icons are accepted, not misleading item substitutions',()=>{
   const paths=iconPaths(store);
-  assert.equal(paths.length,8,'new mappings require an independently validated exact icon');
+  assert.equal(paths.length,30,'new mappings require an independently validated exact icon');
   for(const path of paths){
     const r=validateIcon(path);
     assert.equal(r.valid,true,path+' must be nonempty and contain real WebP bytes');
@@ -45,7 +45,7 @@ test('Store publisher URLs are treated as unapproved evidence, never verified pr
 test('current Store snapshot reports uncaptured and reused SKU art without falsely approving it',()=>{
   const audit=auditStoreArtwork({source:store,items:log.items});
   assert.equal(audit.counts.listings,log.items.length);
-  assert.equal(audit.counts.localExactIcons,8);
+  assert.equal(audit.counts.localExactIcons,30);
   assert.equal(audit.counts.invalidLocalIcons,0);
   assert.ok(audit.counts.remoteCandidates>0);
   assert.ok(audit.counts.missingOrRejected>0);

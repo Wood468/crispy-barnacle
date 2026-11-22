@@ -342,13 +342,41 @@
   function cardType(ev) {
     var kind = ev && ev.kind || '', name = String(ev && ev.name || ''), span = +ev.span || 0, feat = +ev.featuredCount || 0;
     if (kind === 'raid' || kind === 'max') return span >= 3 * 864e5 && /\b(day|weekend|trails|fest|tour)\b/i.test(name) ? 'major' : 'raid';
-    if (kind === 'cd' || kind === 'person') return 'major';
+    /* The importer normalizes worldwide GO Fest/Tour/Wild Area formats to 'global'.
+       They are flagships, not minor bonus rows. */
+    if (kind === 'cd' || kind === 'person' || kind === 'global') return 'major';
     if (kind === 'spot' || kind === 'pvp' || kind === 'twitch') return 'minor';
-    if (kind === 'event' || kind === 'debut') return span >= 20 * 36e5 || feat >= 2 ? 'major' : 'minor';
+    /* Several featured encounters warrant a major card; elapsed duration alone
+       must not turn a one-Pokémon activity into a giant generic illustration. */
+    if (kind === 'event' || kind === 'debut') return feat >= 2 ? 'major' : 'minor';
     return 'minor';
   }
 
+  /* Order of the "Happening now" list on Today. Lower tier shows first; inside a tier the event that ends soonest shows first (see happeningNowSort).
+     Tier 1: whole-game events. Community Days and Spotlight Hours (short, time-critical), plus an officially announced, global event that runs
+             3+ days and carries several feature tags at once (Dynamax Trails: Dynamax, Max Particles, Power Spots). The generic "Event" tag does not count.
+     Tier 2: raid and Max Battle rotations (5-star raids, Mega Raids, Raid Hours, Max Mondays).
+     Tier 3: everything smaller or community-reported (Minior Showers, in-person and overseas items such as a Stamp Rally).
+     Uses only stored fields: kind, name, tags, status ('official_confirmed' is the OFFICIAL badge), region, start, end. */
+  function happeningNowTier(ev) {
+    var kind = ev && ev.kind || '', name = String(ev && ev.name || ''), region = String(ev && ev.region || '');
+    if (kind === 'cd' || kind === 'spot') return 1;
+    var raidLike = kind === 'raid' || /\b(raids?|raid battles?|max battles?|max mondays?)\b/i.test(name);
+    var features = (ev && ev.tags || []).filter(function (t) { return t !== 'Event'; }).length;
+    var wholeGame = ev && ev.status === 'official_confirmed' && kind !== 'person' && (!region || /^global$/i.test(region)) && !raidLike && features >= 2 && (+ev.end - +ev.start) >= 3 * 864e5;
+    if (wholeGame) return 1;
+    if (raidLike || kind === 'max') return 2;
+    return 3;
+  }
+  /* A sorted copy: by tier, then ends soonest. Equal keys keep their incoming order. */
+  function happeningNowSort(list) {
+    return list.map(function (ev, i) { return { ev: ev, i: i, t: happeningNowTier(ev) }; })
+      .sort(function (a, b) { return a.t - b.t || +a.ev.end - +b.ev.end || a.i - b.i; })
+      .map(function (x) { return x.ev; });
+  }
+
   return {
+    happeningNowTier: happeningNowTier, happeningNowSort: happeningNowSort,
     DONE_KEY: DONE_KEY, doneKey: doneKey, readDone: readDone, readDoneState: readDoneState, tryMarkDone: tryMarkDone, tryUndoDone: tryUndoDone, isDone: isDone, markDone: markDone, undoDone: undoDone, pruneDone: pruneDone, doneList: doneList,
     HIDE_KEY: HIDE_KEY, readHideState: readHideState, readHidden: readHidden, isHiddenToday: isHiddenToday, tryHideToday: tryHideToday, tryRestoreHidden: tryRestoreHidden,
     shinyKind: shinyKind, splitNames: splitNames, classifyArt: classifyArt, artFallback: artFallback,

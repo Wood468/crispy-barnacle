@@ -519,7 +519,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
       +'<h3 style="font-size:2rem">'+esc(x.name)+'</h3>'+artRow(x.art)+'<p class="mono muted">'+esc(x.when)+'</p><p>'+esc(x.note)+'</p></article>';
   }).join(''):'<p class="empty">No confirmed Pokémon debuts are listed yet.</p>';
   var STC={'Released':'r','Announced':'a','Datamined':'d','Not announced':'n'};
-  var OVER={};
+  var OVER=window.GOLIB.releasedByDebut(U.dd,D.events,Date.now()); // curated list, then the live /api/unreleased answer on top
   function tile(x,leak){
     var arts=x.art===undefined?[x.n]:x.art;
     var im=arts.length?art(arts[0]):'';
@@ -585,7 +585,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
     if(!R.items||!R.items.length)return;
     var open={};Array.prototype.forEach.call(document.querySelectorAll('#up-dd details'),function(d){open[d.dataset.id]=d.open});
     R.items.forEach(function(x){OVER[x.s+'|'+x.n]=x});
-    renderDD();
+    renderDD();notGoRebuild();if(DEXLIST.length)renderDex();
     Array.prototype.forEach.call(document.querySelectorAll('#up-dd details'),function(d){d.open=!!open[d.dataset.id]});
     var el=$('up-updated');if(el&&R.updated)el.textContent='Statuses last worked out '+fmtTs(R.updated)+'.';
   }).catch(function(){});
@@ -633,7 +633,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
     });
     draw();$('up-watch').appendChild(el);
   }).catch(function(){});
-  $('asof').textContent=D.asOf||'';if($('asof-wrap'))$('asof-wrap').hidden=!D.asOf;
+  /* The footer "Events as of" date comes from the live feed's last successful refresh (fresh.js fills it in); with no recorded refresh it stays hidden. */
 
   /* ---------- best pokemon ---------- */
   var TCOL={Normal:['#9099A1','#0C0F14'],Fighting:['#B8305A','#FFFFFF'],Flying:['#8FA8DD','#0C0F14'],Poison:['#AB6AC8','#0C0F14'],Ground:['#D97746','#0C0F14'],Rock:['#C5B78C','#0C0F14'],Bug:['#91C12F','#0C0F14'],Ghost:['#5269AC','#FFFFFF'],Steel:['#5A8EA2','#0C0F14'],Fire:['#FF9D55','#0C0F14'],Water:['#5090D6','#0C0F14'],Grass:['#63BB5B','#0C0F14'],Electric:['#F4D23C','#0C0F14'],Psychic:['#FA7179','#0C0F14'],Ice:['#73CEC0','#0C0F14'],Dragon:['#0B6DC3','#FFFFFF'],Dark:['#5A5465','#FFFFFF'],Fairy:['#EC8FE6','#0C0F14']};
@@ -821,19 +821,25 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
   /* ---------- pokedex checklist ---------- */
   var DEXCATS=['own','shiny','lucky','shadow','purified','hundo'];
   var DLAB={own:'Own',shiny:'Shiny',lucky:'Lucky',shadow:'Shadow',purified:'Purified',hundo:'100%'};
-  var DEXLIST=[],NOTGO={},dshown=60;
+  var DEXLIST=[],NOTGO={},RSTAT=[],dshown=60;
   function dm(c){return dex.m[c]||(dex.m[c]={})}
   function norm(s){return String(s).toLowerCase().replace(/[^a-z0-9]/g,'')}
   var DUN=[];
-  (U.dd||[]).forEach(function(sec){if(sec.id!=='unreleased')return;(function walk(g){(g.items||[]).forEach(function(i){DUN.push(norm(i.n))});(g.groups||[]).forEach(walk)})({groups:sec.groups})});
+  // "Not in GO yet" = in the curated Unreleased list and not Released (by the live answer or an already-started debut), or still unreleased in release-status.json.
+  function notGoRebuild(){
+    Object.keys(NOTGO).forEach(function(k){delete NOTGO[k]});
+    var left={};DUN.forEach(function(u){var o=OVER['unreleased|'+u.n];if(!(o&&o.status==='Released'))left[u.k]=1});RSTAT.forEach(function(k){left[k]=1});
+    DEXLIST.forEach(function(p){if(left[norm(p[1])])NOTGO[p[0]]=1});
+  }
+  (U.dd||[]).forEach(function(sec){if(sec.id!=='unreleased')return;(function walk(g){(g.items||[]).forEach(function(i){DUN.push({k:norm(i.n),n:i.n})});(g.groups||[]).forEach(walk)})({groups:sec.groups})});
   window.GOLIB.getJson('/dex.json').then(function(L){
     DEXLIST=L;
     document.dispatchEvent(new Event('gofn-dex-ready'));
-    L.forEach(function(p){if(DUN.indexOf(norm(p[1]))>-1)NOTGO[p[0]]=1});
+    notGoRebuild();
     window.GOLIB.jsonOrNull('/release-status.json').then(function(R){
-      if(!R||!R.unreleased)return;var today=new Date().toISOString().slice(0,10),ch=false;
-      R.unreleased.forEach(function(u){if(u.type!=='pokemon'||(u.available&&u.available<=today))return;L.forEach(function(p){if(norm(p[1])===norm(u.name)&&!NOTGO[p[0]]){NOTGO[p[0]]=1;ch=true}})});
-      if(ch)renderDex();
+      if(!R||!R.unreleased)return;var today=new Date().toISOString().slice(0,10);
+      RSTAT=R.unreleased.filter(function(u){return u.type==='pokemon'&&!(u.available&&u.available<=today)}).map(function(u){return norm(u.name)});
+      notGoRebuild();renderDex();
     }).catch(function(){});
     $('dTotal').textContent=L.length;
     var gs={};L.forEach(function(p){gs[p[2]]=1});
@@ -1097,7 +1103,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
     var v=document.getElementById('today-v1');if(v&&v.getAttribute('aria-busy')==='true'){v.removeAttribute('aria-busy');v.innerHTML='<div class="today-status" role="alert"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry-v1">Try again</button></div>';var r2=document.getElementById('today-retry-v1');if(r2)r2.addEventListener('click',function(){window.location.reload()});}
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261118c-ui753';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261125a-overseaslast';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

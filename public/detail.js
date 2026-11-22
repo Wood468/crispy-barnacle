@@ -352,14 +352,24 @@
 
   /* Research reward cell, shared by Event Details and the Research tab. Exact variant art for encounters (forms and costumes), quantities, CP range,
      "Mighty" and a Shiny tag only when the source itself says the reward can be Shiny (never inferred from boosts or event type). */
-  /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol). */
-  function itemIcon(n) { n = String(n || ''); return /stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''; }
+  /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol), Eternatus Candy and Candy XL, Pinap Berry. */
+  /* Exact names only: 'Eternatus Candy' (optionally with a quantity prefix such as '25\u00d7 ') and 'Eternatus Candy XL' / 'Eternatus XL Candy'. Pictures supplied by the owner (see docs/asset-inventory/item-icons.json). Anything looser, any other species candy, Rare Candy and combined reward text fall through unchanged. */
+  function eternatusIcon(n) { n = String(n || '').normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/^[\d,]+ ?[\u00d7x] ?/i, ''); return /^eternatus candy$/i.test(n) ? '/ico/i/eternatus-candy.webp' : /^(?:eternatus candy xl|eternatus xl candy)$/i.test(n) ? '/ico/i/eternatus-candy-xl.webp' : ''; }
+  /* Exact 'Pinap Berry' only (optional quantity prefix such as '3\u00d7 '). Silver Pinap Berry, Golden Razz Berry and every other berry keep their own picture or the generic berry shape. Picture supplied by the owner. */
+  function pinapIcon(n) { n = String(n || '').normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/^[\d,]+ ?[\u00d7x] ?/i, ''); return /^pinap berry$/i.test(n) ? '/ico/i/pinap-berry.webp' : ''; }
+  /* Exact 'Star Piece', 'Poké Ball', 'Great Ball', 'Ultra Ball', 'Rare Candy', 'Rare Candy XL', 'Lucky Egg', 'Egg Incubator', 'Super Incubator', 'Nanab Berry', 'Max Mushroom', 'Revive', 'Potion', 'Hyper Potion', 'Super Potion', 'Remote Raid Pass', 'Max Particle Pack'/'Max Particles', 'Lure Module', 'Link Charge(s)' and 'Premium Battle Pass' only (optional quantity prefix such as '10\u00d7 '). Premier Ball, Master Ball, Star Piece bundles and any other wording fall through unchanged. Pictures supplied by the owner (docs/asset-inventory/item-icons.json). */
+  function ownerIcon(n) { n = String(n || '').normalize('NFKC').replace(/\s+/g, ' ').trim().replace(/^[\d,]+ ?[\u00d7x] ?/i, ''); return /^star piece$/i.test(n) ? '/ico/i/star-piece.webp' : /^pok[e\u00e9] ball$/i.test(n) ? '/ico/i/poke-ball.webp' : /^great ball$/i.test(n) ? '/ico/i/great-ball.webp' : /^ultra ball$/i.test(n) ? '/ico/i/ultra-ball.webp' : /^rare candy$/i.test(n) ? '/ico/i/rare-candy.webp' : /^rare candy xl$/i.test(n) ? '/ico/i/rare-candy-xl.webp' : /^lucky egg$/i.test(n) ? '/ico/i/lucky-egg.webp' : /^egg incubator$/i.test(n) ? '/ico/i/egg-incubator.webp' : /^super incubator$/i.test(n) ? '/ico/i/super-incubator.webp' : /^nanab berry$/i.test(n) ? '/ico/i/nanab-berry.webp' : /^max mushroom$/i.test(n) ? '/ico/i/max-mushroom.webp' : /^revive$/i.test(n) ? '/ico/i/revive.webp' : /^potion$/i.test(n) ? '/ico/i/potion.webp' : /^hyper potion$/i.test(n) ? '/ico/i/hyper-potion.webp' : /^super potion$/i.test(n) ? '/ico/i/super-potion.webp' : /^remote raid pass$/i.test(n) ? '/ico/i/remote-raid-pass.webp' : /^max particle pack$/i.test(n) || /^max particles$/i.test(n) ? '/ico/i/max-particle-pack.webp' : /^lure module$/i.test(n) ? '/ico/i/lure-module.webp' : /^link charges?$/i.test(n) ? '/ico/i/link-charge.webp' : /^premium battle pass$/i.test(n) ? '/ico/i/premium-battle-pass.webp' : ''; }
+  function itemIcon(n) { n = String(n || ''); return eternatusIcon(n) || pinapIcon(n) || ownerIcon(n) || (/stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''); }
   /* A clearly typographic category fallback, never counterfeit item art.
-     Exact Rare Candy and Rare Candy XL images are not in the approved ico set. */
+     Exact Rare Candy and Rare Candy XL images are not in the approved ico set (only Eternatus Candy and Candy XL have pictures, matched by exact name in eternatusIcon). */
   function researchItemGlyph(name) {
     name = String(name || '');
     if (/\brare candy xl\b/i.test(name)) return { kind: 'rare-candy-xl', text: 'XL' };
     if (/\brare candy\b/i.test(name)) return { kind: 'rare-candy', text: 'RC' };
+    /* No approved picture exists for these (the only berries in /ico/i are Silver Pinap and Golden Razz, the only candy is the generic bonus icon),
+       so draw a plainly generic shape instead of guessing a wrong item picture. Species candy (Eternatus Candy) shows the candy shape, not the species. */
+    if (/\bcandy( xl)?\b/i.test(name)) return { kind: 'candy', svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" focusable="false"><ellipse cx="12" cy="12" rx="5" ry="4.2" fill="currentColor" fill-opacity=".25"/><path d="M7 12 2.8 8.6v6.8L7 12zM17 12l4.2-3.4v6.8L17 12z"/></svg>' };
+    if (/\b(berry|pinap|razz|nanab|bluk|wepar|cornn|pomeg)\b/i.test(name)) return { kind: 'berry', svg: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" focusable="false"><circle cx="12" cy="14" r="6.2" fill="currentColor" fill-opacity=".25"/><path d="M12 7.8c0-2 1-3.4 3-4M12 7.8c-.4-1.6-1.8-2.4-3.6-2.4"/></svg>' };
     return null;
   }
   function researchReward(item, ev) {
@@ -372,7 +382,7 @@
     }
     var icon = itemIcon(item.name);
     var glyph = icon ? null : researchItemGlyph(item.name);
-    var fallback = glyph ? '<span class="ue-reward-category" data-item-glyph="' + glyph.kind + '" aria-hidden="true">' + glyph.text + '</span>' : '<i class="ue-reward-dot"></i>';
+    var fallback = glyph ? '<span class="ue-reward-category" data-item-glyph="' + glyph.kind + '" aria-hidden="true">' + (glyph.svg || glyph.text) + '</span>' : '<i class="ue-reward-dot"></i>';
     return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : fallback) + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '\u00d7 ' : '') + esc(item.name) + '</b>' + shiny + '</span></div>';
   }
   /* Seasons and monthly GO Passes: their own layout, in sections with icons. Curated notes come from season.json; rank rows and prices from the compared write-ups. */

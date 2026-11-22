@@ -6,6 +6,7 @@
 import { collectSourceFacetStaging } from './source-facets-stage.mjs';
 import { linkStagedFacetsToCanonicalEvents } from './source-facet-event-links.mjs';
 import { normalizeEventSourceFacets } from './source-facets-contract.mjs';
+import { canonicalLeekDuckEventKey } from './source-facet-event-links.mjs';
 
 /**
  * Link the already-validated generated world-event catalogue back to staged
@@ -13,24 +14,43 @@ import { normalizeEventSourceFacets } from './source-facets-contract.mjs';
  * after the curated/API event list. These are audit candidates only.
  * A source without an exact trusted LeekDuck event URL is never attributed.
  */
-export function worldSourceFacetCandidates(world){
+// Known owners and generated world records must use the SAME strict source
+// URL identity; query/fragment/non-standard-port URLs may never suppress a
+// legitimate world event by normalizing to an unrelated clean article.
+export function worldSourceFacetCandidates(world,knownEvents=[]){
   if(!Array.isArray(world))throw new TypeError('World event records array required');
+  if(!Array.isArray(knownEvents))throw new TypeError('Known canonical events array required');
+  const knownIds=new Set(),knownPages=new Set();
+  for(const item of knownEvents){
+    if(typeof item?.id==='string')knownIds.add(item.id);
+    if(Array.isArray(item?.detailIds)){
+      for(const id of item.detailIds)if(typeof id==='string')knownIds.add(id);
+    }
+    for(const url of [item?.link,item?.sourceUrl,
+      ...(Array.isArray(item?.sources)?item.sources.filter(s=>s?.id==='leekduck').map(s=>s.url):[])]){
+      const key=canonicalLeekDuckEventKey(url);
+      if(key)knownPages.add(key);
+    }
+  }
   const out=[],seen=new Set();
   for(const event of world){
-    if(!event||typeof event.id!=='string'||!/^[a-z0-9][a-z0-9:._-]{0,159}$/i.test(event.id)||
+    if(!event||typeof event.id!=='string'||
+       !/^[a-z0-9][a-z0-9:._-]{0,159}$/i.test(event.id)||
        !Array.isArray(event.sources))continue;
     for(const source of event.sources){
-      if(source?.id!=='leekduck'||typeof source.url!=='string')continue;
-      try{
-        const u=new URL(source.url);
-        if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||
-           !['leekduck.com','www.leekduck.com'].includes(u.hostname.toLowerCase())||
-           !/^\/events\/[^/]+\/?$/.test(u.pathname))continue;
-        const key=event.id+'|'+u.hostname.toLowerCase()+u.pathname.replace(/\/$/,'');
-        if(seen.has(key))continue;
-        seen.add(key);
-        out.push({id:event.id,sourceUrl:source.url});
-      }catch{/* malformed source URL is ineligible */}
+      if(source?.id!=='leekduck')continue;
+      const pageKey=canonicalLeekDuckEventKey(source.url);
+      if(!pageKey)continue;
+      const alias='leekduck:'+pageKey.slice('leekduck.com/events/'.length);
+      // Exact canonical ownership only. Names, nearby dates and geographic
+      // similarities never authorize a source association.
+      if(knownIds.has(alias)||knownPages.has(pageKey))continue;
+      const key=event.id+'|'+pageKey;
+      // Keep distinct world event IDs that claim the same source; the
+      // downstream link audit must see their ambiguity, not suppress it.
+      if(seen.has(key))continue;
+      seen.add(key);
+      out.push({id:event.id,sourceUrl:source.url});
     }
   }
   return out;

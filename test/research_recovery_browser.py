@@ -53,6 +53,16 @@ with sync_playwright() as p:
         assert 'source check may be out of date' in page.locator('#research-list').inner_text()
         assert 'Checked 2026-11-06' not in page.locator('#research-list').inner_text()
         assert page.locator('.research-task-source a').get_attribute('href') == 'https://leekduck.com/events/fixture/'
+        # No matching tasks should announce a zero result instead of leaving stale summary text.
+        search = page.locator('#research-search')
+        search.fill('unpublished-encounter-never-listed')
+        assert 'No task or reward matches' in page.locator('#research-list').inner_text()
+        assert page.locator('#research-status').inner_text() == 'Search: 0 of 2 tasks match.'
+        assert page.locator('#research-status').get_attribute('aria-live') == 'polite'
+        search.fill('Potion')
+        assert page.locator('#research-status').inner_text() == 'Search: 1 of 2 tasks match.'
+        search.fill('')
+        assert page.locator('#research-status').inner_text().startswith('Saved source snapshot.')
         refresh = page.locator('[data-research-refresh]')
         state['fail'] = True
         refresh.focus()
