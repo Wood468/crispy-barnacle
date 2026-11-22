@@ -39,5 +39,5 @@ test('both live store labels are covered', () => {
 test('store.js version token and shell cache are current', () => {
   assert.match(html, /store\.js\?v=20261124a-bagart/);
   assert.match(sw, /store\.js\?v=20261124a-bagart/);
-  assert.match(sw, /gofn-shell-v385/);
+  assert.match(sw, /gofn-shell-v386/);
 });
