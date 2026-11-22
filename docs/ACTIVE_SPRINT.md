@@ -114,6 +114,13 @@ Source: `scripts/importer/run.mjs` (retention contract above `RETENTION_CONFIRM_
 
 **P2 deferred:** decorative animations, optional filters, secondary polish, expanded historical details, nonessential badges and further speed optimisations. Do not delay release for P2.
 
+### Solo-maintainer release policy
+
+- For routine changes, the repository owner may authorize a release after reviewing the exact PR head and confirming that CI, security checks, and applicable GitHub requirements are satisfied. Record the reviewed commit SHA and the release decision on the PR. If the head changes, review and authorize the new head.
+- Owner sign-off is a release authorization. Any approvals and checks required by GitHub still apply.
+- Changes to authentication, private-data access, or database migrations require separate owner authorization, staging evidence, and a tested rollback.
+- After deployment, verify the deployed SHA and run production smoke tests.
+
 ## Delegation
 - **CI/QA lane:** unit tests, browser shards, WebKit, image audit and failure triage.
 - **Data lane:** source reconciliation, research extraction, raid schedule, shiny boosts and coverage reports.
