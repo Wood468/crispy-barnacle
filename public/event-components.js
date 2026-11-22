@@ -425,13 +425,13 @@ function shinyBoostOverview(model,ctx){
  }
  function explicitIncrease(text){
   if(!/\bshiny\b/i.test(text))return false;
-  if(/\b(?:no|not|without)\b.{0,35}\b(?:boost|increase|higher|enhanced)\b/i.test(text))return false;
+  if(/\b(?:no|not|without)\b.{0,35}\b(?:boost\w*|increas\w*|higher|enhanc\w*)\b/i.test(text))return false;
   return /\b(?:increased|boosted|higher|enhanced)\b.{0,65}\b(?:chance|chances|odds|rates?|likelihood)\b.{0,100}\bshiny\b/i.test(text)||
     /\bshiny\b.{0,60}\b(?:chance|chances|odds|rates?|likelihood)\b.{0,45}\b(?:increased|boosted|higher|enhanced)\b/i.test(text)||
     /\b(?:increased|boosted)\s+shiny\s+(?:chance|chances|odds|rates?)\b/i.test(text);
  }
  var boosted=(model.pokemon||[]).filter(function(p){
-  return p.boostedShiny===true&&!conflicts.some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
+  return p.boostedShiny===true&&p.shiny!=='no'&&!conflicts.some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
  });
  var claims=[],seen=new Set();
  function addClaim(row){

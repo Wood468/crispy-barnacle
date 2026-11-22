@@ -63,6 +63,7 @@ test('weak, negated, conflicting or unsourced boost signals fail closed',()=>{
  const pokemon={speciesId:'25',name:'Pikachu',boostedShiny:true},key=C.identity(pokemon);
  const official={text:'Increased chance of encountering Shiny Pokémon.',status:'official'};
  const unconfirmed={text:'Increased chance of encountering Shiny Pokémon.',status:'community'};
+ assert.equal(preview(event({pokemon:[{...pokemon,shiny:'no'}]})),'');
  assert.equal(preview(event({pokemon:[pokemon],sources:[]})),'');
  assert.equal(preview(event({pokemon:[pokemon],sources:[{url:'http://example.test/event'}]})),'');
  assert.equal(preview(event({internalValidation:{fields:{shiny:[unconfirmed]}}})),'');
