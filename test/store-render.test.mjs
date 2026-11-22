@@ -346,14 +346,17 @@ test('Store product search accepts unaccented and composed/decomposed Pokémon n
 test('Store counters separate fresh listings from visible unconfirmed and archived historical offers', async () => {
   const R = createRequire(import.meta.url)('../public/regional-prices.js');
   const source = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
-  const now = new Date().toISOString();
+  const clock = Date.now(); // same clock regional-prices.js reads, so fixture ages hold at any wall time
+  const now = new Date(clock).toISOString();
+  const day = d => new Date(clock - d * 864e5).toISOString().slice(0, 10);
+  const fresh = day(0), older = day(32);
   const prices = [
-    {product:'store-current-pass',label:'Current Fixture Pass',group:'Tickets',currency:'AUD',amount:8.99,region:'AU',verified:true,observed:'2026-11-13'},
-    {product:'store-storage-upgrade',label:'Item Bag Upgrade',group:'Storage',currency:'AUD',amount:3.99,region:'AU',verified:true,observed:'2026-11-13'},
-    {product:'store-old-pass',label:'Previous Fixture Pass',group:'Tickets',currency:'AUD',amount:6.99,region:'AU',verified:true,observed:'2026-10-12'}
+    {product:'store-current-pass',label:'Current Fixture Pass',group:'Tickets',currency:'AUD',amount:8.99,region:'AU',verified:true,observed:fresh},
+    {product:'store-storage-upgrade',label:'Item Bag Upgrade',group:'Storage',currency:'AUD',amount:3.99,region:'AU',verified:true,observed:fresh},
+    {product:'store-old-pass',label:'Previous Fixture Pass',group:'Tickets',currency:'AUD',amount:6.99,region:'AU',verified:true,observed:older}
   ];
   const snapshot = {version:1,updated:now,items:[{name:'Current Fixture Pass',lastSeen:now}],
-    gone:[{name:'Previous Fixture Pass',lastSeen:'2026-10-12',goneAt:now}]};
+    gone:[{name:'Previous Fixture Pass',lastSeen:older,goneAt:now}]};
   assert.equal(R.catalogue(prices, [], undefined, []).length, 3, 'synthetic AU Store rows must satisfy the real source-identity gate');
   const data = {owner:true,prices,regional:[],storeSnapshot:snapshot};
   const root = {innerHTML:'',addEventListener(){},querySelector:()=>null};

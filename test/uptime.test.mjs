@@ -46,7 +46,7 @@ function mockFetch(options = {}) {
     if (path === "/data.json") return ok({ events: [{ id: "event-1" }] });
     if (path === "/world-events.json") return ok({ events: [] });
     if (path === "/prices.json") return ok({});
-    if (path === "/store-current-snapshot.json") return ok({ updated: options.staleStore ? "2020-01-01T00:00:00.000Z" : new Date().toISOString(), items: [] });
+    if (path === "/store-current-snapshot.json") return ok({ updated: options.staleStore ? "2020-01-01T00:00:00.000Z" : new Date(Date.now()).toISOString(), items: [] });
     if (path === "/event-details.json") {
       const catalogue = options.mismatchedDetails ? structuredClone(EXPECTED_EVENT_DETAILS) : EXPECTED_EVENT_DETAILS;
       if (options.mismatchedDetails) {

@@ -205,7 +205,9 @@ test("preview writes nothing; the PIN-protected run creates tables and stores ev
   // Dates relative to now so this does not start failing once the sample Community Day is in the past.
   const soon = (h) => new Date(Date.now() + h * 3600000).toISOString().slice(0, 19) + ".000";
   const f = feed([raid({ start: soon(-24), end: soon(24 * 5) }), cd({ start: soon(24), end: soon(27) })], 60);
-  remote = { "ScrapedDuck/data/events.json": JSON.stringify(f), "api.github.com": JSON.stringify({ commit: { committer: { date: new Date().toISOString() } } }) };
+  // helpers.feed() fillers are dated from a fixed fixture time; re-date them from the same clock as the worker.
+  f.forEach((e, i) => { if (/^filler/.test(e.eventID)) { e.start = soon(24 * (i + 1)); e.end = soon(24 * (i + 1) + 3); } });
+  remote = { "ScrapedDuck/data/events.json": JSON.stringify(f), "api.github.com": JSON.stringify({ commit: { committer: { date: new Date(Date.now()).toISOString() } } }) };
   const pv = await (await call(env, "/api/pipeline/preview")).json();
   assert.equal(pv.leekduck.ok, true);
   const live = await (await call(env, "/api/events")).json();
