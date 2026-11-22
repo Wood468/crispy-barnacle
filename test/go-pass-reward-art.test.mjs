@@ -5,7 +5,7 @@ import { createRequire } from 'node:module';
 const R = createRequire(import.meta.url)('../public/go-pass-reward-art.js');
 
 test('the approved exact reward icon table points only to tracked on-disk assets', () => {
-  assert.equal(R.knownAssets.length,29);
+  assert.equal(R.knownAssets.length,32);
   assert.equal(new Set(R.knownAssets).size,R.knownAssets.length);
   for (const path of R.knownAssets) {
     assert.match(path,/^\/ico\/(?:i\/|g\/)?[a-z0-9-]+\.webp$/);
@@ -45,7 +45,7 @@ test('verified assets are used only for their actual item names', () => {
 });
 
 test('similar items do not borrow incorrect images', () => {
-  for(const name of ['Regular Potion','Super Potion Pack','Hyper Potion Box','Revive Pack','Remote Raid Pass Bundle','Premium Battle Pass Bundle','Razz Berry','Pinap Berry','Max Potion XL','Silver Bottle Cap','Lucky Egg Pack','Star Piece Pack','Great Ball Bundle','Premier Ball','Master Ball','Poffin','Rare Candy Pack','Machop Candy','Incubator']) {
+  for(const name of ['Regular Potion','Super Potion Pack','Hyper Potion Box','Revive Pack','Remote Raid Pass Bundle','Premium Battle Pass Bundle','Razz Berry','Pinap Berry Pack','Max Potion XL','Silver Bottle Cap','Lucky Egg Pack','Star Piece Pack','Great Ball Bundle','Premier Ball','Master Ball','Poffin','Rare Candy Pack','Machop Candy','Incubator']) {
     const result=R.resolve({name,type:'item'});
     assert.equal(result.kind,'symbol',name);
     assert.equal(result.src,null,name);
@@ -78,4 +78,12 @@ test('missing and placeholder rewards never produce invented icons or HTML', () 
   assert.equal(malicious.src,null);
   assert.equal(malicious.symbol,'◇');
   assert.equal('name' in malicious,false);
+});
+
+test('owner-supplied Pinap Berry and Eternatus Candy pictures resolve by exact name only', () => {
+  assert.equal(R.resolve('Pinap Berry').src, '/ico/i/pinap-berry.webp');
+  assert.equal(R.resolve('Eternatus Candy').src, '/ico/i/eternatus-candy.webp');
+  assert.equal(R.resolve('Eternatus Candy XL').src, '/ico/i/eternatus-candy-xl.webp');
+  assert.equal(R.resolve('Razz Berry').kind, 'symbol');
+  assert.equal(R.resolve('Machop Candy').kind, 'symbol');
 });

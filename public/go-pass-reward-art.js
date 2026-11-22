@@ -37,6 +37,9 @@
     [/^max particle(?: pack|s)$/i, '/ico/i/max-particle-pack.webp'],
     [/^lure module$/i, '/ico/i/lure-module.webp'],
     [/^link charges?$/i, '/ico/i/link-charge.webp'],
+    [/^pinap berry$/i, '/ico/i/pinap-berry.webp'],
+    [/^eternatus candy$/i, '/ico/i/eternatus-candy.webp'],
+    [/^eternatus candy xl$/i, '/ico/i/eternatus-candy-xl.webp'],
     [/^premium battle pass$/i, '/ico/i/premium-battle-pass.webp']
   ];
   function normalize(name) {
