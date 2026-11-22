@@ -335,3 +335,24 @@ test('Crowned Sword and Shield are exact artwork forms, not base-species picture
  }
  assert.equal(L.classifyArt('Crowned Shield Zacian').exact,false,'invalid species/form pairing must not be accepted');
 });
+
+test('Marked done Restore names distinguish occurrences and escape supplied text', () => {
+  const today = createRequire(import.meta.url)('../public/today.js');
+  const html = today.render({
+    live: [], soon: [], week: [], regLive: [], regSoon: [], regWeek: [],
+    boosts: { live: [], upcoming: [] }, seasons: [],
+    done: [
+      { key: 'raid@first', name: 'Raid Hour', when: 'Wed 18 Nov, 6 pm' },
+      { key: 'raid@second', name: 'Raid Hour', when: 'Wed 25 Nov, 6 pm' },
+      { key: 'legacy', name: 'Raid Hour', when: '  ' },
+      { key: 'special', name: 'Research "A&B"', when: "<Fri> '6 pm'" },
+    ],
+  });
+  const buttons = [...html.matchAll(/data-t1-undo="([^"]+)" aria-label="([^"]+)">([^<]+)<\/button>/g)];
+  assert.deepEqual(buttons.map(match => match.slice(1)), [
+    ['raid@first', 'Restore Raid Hour to Today, Wed 18 Nov, 6 pm', 'Restore'],
+    ['raid@second', 'Restore Raid Hour to Today, Wed 25 Nov, 6 pm', 'Restore'],
+    ['legacy', 'Restore Raid Hour to Today', 'Restore'],
+    ['special', 'Restore Research &quot;A&amp;B&quot; to Today, &lt;Fri&gt; &#39;6 pm&#39;', 'Restore'],
+  ]);
+});
