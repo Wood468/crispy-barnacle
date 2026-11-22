@@ -91,5 +91,7 @@ test('an explicit boost display escapes untrusted names, access and source prose
  assert.match(html,/Pikachu &lt;script&gt;/);
  assert.match(html,/Ticket &lt;img&gt;/);
  assert.match(html,/&lt;img src=x&gt;/);
- assert.doesNotMatch(html,/<script>|<img src=x>/);
+ assert.equal(html.includes('<script>'),false,'raw script element must never be emitted');
+ assert.equal(html.includes('<img src=x>'),false,'raw image element must never be emitted');
+ assert.equal(html.includes('<SCRIPT>'),false,'uppercase raw script element must never be emitted');
 });
