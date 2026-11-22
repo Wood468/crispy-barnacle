@@ -45,7 +45,7 @@ test('verified assets are used only for their actual item names', () => {
 });
 
 test('similar items do not borrow incorrect images', () => {
-  for(const name of ['Regular Potion','Super Potion Pack','Hyper Potion Box','Revive Pack','Remote Raid Pass Bundle','Premium Battle Pass Bundle','Razz Berry','Pinap Berry Pack','Max Potion XL','Silver Bottle Cap','Lucky Egg Pack','Star Piece Pack','Great Ball Bundle','Premier Ball','Master Ball','Poffin','Rare Candy Pack','Machop Candy','Incubator']) {
+  for(const name of ['Regular Potion','Super Potion Pack','Hyper Potion Box','Revive Pack','Remote Raid Pass Bundle','Premium Battle Pass Bundle','Razz Berry','Pinap Berry Pack','Max Potion XL','Silver Bottle Cap','Lucky Egg Pack','Star Piece Pack','Great Ball Bundle','Premier Ball','Master Ball','Poffin','Rare Candy Pack','Zzz Candy','Incubator']) {
     const result=R.resolve({name,type:'item'});
     assert.equal(result.kind,'symbol',name);
     assert.equal(result.src,null,name);
@@ -59,7 +59,7 @@ test('XP, Candy XL and Rare Candy distinguish source items with honest category 
   assert.equal(R.resolve({name:'Rare Candy XL'}).src,'/ico/i/rare-candy-xl.webp');
   assert.equal(R.resolve({name:'Rare Candy'}).src,'/ico/i/rare-candy.webp');
   assert.equal(R.resolve({name:'Rare Candy Pack'}).symbol,'RC');
-  assert.equal(R.resolve({name:'Machop Candy'}).symbol,'C');
+  assert.equal(R.resolve({name:'Zzz Candy'}).symbol,'C');
   assert.equal(R.resolve({name:'Silver Bottle Cap'}).symbol,'CAP');
   assert.equal(R.resolve({name:'Premier Ball'}).symbol,'PR');
 });
@@ -85,5 +85,5 @@ test('owner-supplied Pinap Berry and Eternatus Candy pictures resolve by exact n
   assert.equal(R.resolve('Eternatus Candy').src, '/ico/i/eternatus-candy.webp');
   assert.equal(R.resolve('Eternatus Candy XL').src, '/ico/i/eternatus-candy-xl.webp');
   assert.equal(R.resolve('Razz Berry').kind, 'symbol');
-  assert.equal(R.resolve('Machop Candy').kind, 'symbol');
+  assert.equal(R.resolve('Zzz Candy').kind, 'symbol');
 });
