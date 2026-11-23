@@ -1,14 +1,8 @@
 {
- "updated": "2026-11-22T11:25:14.073Z",
+ "updated": "2026-11-23T01:43:29.053Z",
  "state": "ok",
  "scrapedDuckEvents": 39,
  "missingHere": [
-  {
-   "name": "Twitch Drops for 2027 Pokémon Latin America International Championships",
-   "type": "twitch-drops",
-   "start": "2026-11-20T12:00:00.000Z",
-   "link": "https://leekduck.com/events/pokemon-latin-america-international-championships-2027-timed-research-twitch-drops/"
-  },
   {
    "name": "Raid Day",
    "type": "raid-day",
@@ -92,11 +86,6 @@
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-south",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM Southmall",
    "start": "2026-11-20"
-  },
-  {
-   "id": "w-pok-mon-run-30-malaysia",
-   "name": "Pokémon RUN 30: Kuala Lumpur",
-   "start": "2026-11-21"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
