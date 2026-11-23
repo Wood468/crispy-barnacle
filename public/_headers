@@ -1,3 +1,32 @@
+# Security headers for static assets. Static files are served by Cloudflare Workers Static Assets and never pass through
+# withSecurityHeaders() in src/worker.js (run_worker_first is only /api/*), so they are declared here. These rules add headers
+# only; Cache-Control stays with the rules below and the platform defaults.
+# The enforced set is the low-risk one. The full CSP is Report-Only on the HTML pages (the Worker already enforces it on API
+# responses) until it has been checked against the real pages; frame protection is X-Frame-Options (frame-ancestors is ignored in Report-Only).
+# Keep the Report-Only value identical to SECURITY_HEADERS in src/worker.js (test/security-headers.test.mjs checks this).
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Strict-Transport-Security: max-age=31536000
+
+/
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://play.pokemonshowdown.com https://archives.bulbagarden.net https://static.pokebattler.com https://leekduck.com https://cdn.leekduck.com https://lh3.googleusercontent.com https://storage.googleapis.com https://assets.pgo.webstore.nianticlabs.com; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
+/index.html
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://play.pokemonshowdown.com https://archives.bulbagarden.net https://static.pokebattler.com https://leekduck.com https://cdn.leekduck.com https://lh3.googleusercontent.com https://storage.googleapis.com https://assets.pgo.webstore.nianticlabs.com; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
+/sources.html
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://play.pokemonshowdown.com https://archives.bulbagarden.net https://static.pokebattler.com https://leekduck.com https://cdn.leekduck.com https://lh3.googleusercontent.com https://storage.googleapis.com https://assets.pgo.webstore.nianticlabs.com; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
+/event-methodology.html
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://play.pokemonshowdown.com https://archives.bulbagarden.net https://static.pokebattler.com https://leekduck.com https://cdn.leekduck.com https://lh3.googleusercontent.com https://storage.googleapis.com https://assets.pgo.webstore.nianticlabs.com; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
+/offline.html
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://play.pokemonshowdown.com https://archives.bulbagarden.net https://static.pokebattler.com https://leekduck.com https://cdn.leekduck.com https://lh3.googleusercontent.com https://storage.googleapis.com https://assets.pgo.webstore.nianticlabs.com; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
 # These image paths are stable identifiers, not content-hashed filenames.
 # Use a short browser TTL for repeat visits; do not mark them immutable because a
 # replacement image may be published at the same path in a later release.
