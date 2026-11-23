@@ -6,10 +6,6 @@
       "note": "Ongoing multi-city GO Stamp Rallies in Sendai, Japan and Mexico City, Mexico; no published end date"
     },
     {
-      "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween",
-      "note": "AEON MALL Halloween, Japan, Oct 19 to Nov 1 2026 (remove after Nov 15)"
-    },
-    {
       "url": "https://pokemongo.com/news/pokemon-run-30-2026",
       "note": "Pokémon RUN 30, Asia-Pacific series, Oct 2026 to Jan 2027"
     },
@@ -26,12 +22,16 @@
       "note": "30th Anniversary Mall Exploration, Malaysia/Philippines/Singapore/Hong Kong, to Mar 28 2027 (remove after Apr 10 2027)"
     },
     {
-      "url": "https://pokemongo.com/news/gowa-global-europe-2026",
-      "note": "GO Wild Area Global Europe meetups Karlsruhe/Stockholm, Nov 14-15 2026 (remove after Nov 20)"
+      "url": "https://leekduck.com/events/go-pass-november-2026/",
+      "note": "GO Pass: November 2026 Basic and Deluxe rank table; remove after 10 Dec 2026"
     },
     {
-      "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026",
-      "note": "Dia de Muertos Mexico + Paseo de la Reforma stops, to Nov 16 2026 (remove after Nov 20)"
+      "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/",
+      "note": "Leonids Nov 14–19 source-backed Timed Research table; remove after Nov 25 2026"
+    },
+    {
+      "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/",
+      "note": "Historical Orionids research table for canonical Minior event; remove after research snapshot refreshed"
     },
     {
       "url": "https://pokemongo.com/en/gowildarea/mexico-city",
@@ -52,26 +52,6 @@
     {
       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
       "note": "GO Wild Area 2026: Sendai • Tohoku, Nov 6–8 2026"
-    },
-    {
-      "url": "https://pokemongo.com/news/festival-of-lights-2026/",
-      "note": "Festival of Lights, India-only in-game event, Nov 6–8 2026 (remove after Nov 12)"
-    },
-    {
-      "url": "https://leekduck.com/events/go-pass-november-2026/",
-      "note": "GO Pass: November 2026 Basic and Deluxe rank table; remove after 10 Dec 2026"
-    },
-    {
-      "url": "https://pokemongo.com/news/into-the-wild-2026",
-      "note": "Into the Wild 2026 official source for Coin Bag, Mystery Box, exact raids and daily Max Battle hours; retain through Nov 18 2026"
-    },
-    {
-      "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/",
-      "note": "Leonids Nov 14–19 source-backed Timed Research table; remove after Nov 25 2026"
-    },
-    {
-      "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/",
-      "note": "Historical Orionids research table for canonical Minior event; remove after research snapshot refreshed"
     }
   ]
 }

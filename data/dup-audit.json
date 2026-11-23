@@ -1,74 +1,8 @@
 {
- "updated": "2026-11-19T19:11:55.898Z",
- "joinedThisRun": [
-  {
-   "kept": "w-pokemon-fossil-museum-2026",
-   "dropped": "w-pok-mon-fossil-museum-2026",
-   "why": "same event"
-  },
-  {
-   "kept": "w-pok-mon-30th-anniversary-mall-exploration-ombak-kl",
-   "dropped": "w-pok-mon-30th-anniversary-mall-exploration-sm-mall-",
-   "why": "same event"
-  },
-  {
-   "kept": "w-celebrate-the-festival-of-lights-with-the-return-o",
-   "dropped": "w-celebrate-the-festival-of-lights-with-the-return-o-2026-11-06",
-   "why": "same event"
-  },
-  {
-   "kept": "w-go-wild-area-2026-sendai-tohoku",
-   "dropped": "w-go-wild-area-2026-sendai-and-tohoku",
-   "why": "same event"
-  },
-  {
-   "kept": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
-   "dropped": "w-pok-mon-30th-anniversary-mall-exploration-changi-a",
-   "why": "same event"
-  }
- ],
+ "updated": "2026-11-23T05:55:07.068Z",
+ "joinedThisRun": [],
  "same": [],
- "crossList": [
-  {
-   "keep": {
-    "id": "eternamax",
-    "name": "Eternamax Eternatus Returns",
-    "place": "",
-    "start": "2026-11-21",
-    "end": "2026-11-21",
-    "list": "curated"
-   },
-   "dupe": {
-    "id": "w-eternamax-eternatus-max-battles",
-    "name": "Eternamax Eternatus Max Battles",
-    "place": "",
-    "start": "2026-11-21",
-    "end": "2026-11-21",
-    "list": "world"
-   },
-   "why": "same dates, 2 shared words (100%)"
-  }
- ],
- "maybe": [
-  {
-   "a": {
-    "id": "gopassnov",
-    "name": "GO Pass: November",
-    "place": "",
-    "start": "2026-11-03",
-    "end": "2026-12-01",
-    "list": "curated"
-   },
-   "b": {
-    "id": "novcd",
-    "name": "November Community Day",
-    "place": "",
-    "start": "2026-11-21",
-    "end": "2026-11-21",
-    "list": "curated"
-   },
-   "why": "dates fit and 1 shared word"
-  }
- ],
+ "crossList": [],
+ "maybe": [],
  "odd": []
 }
