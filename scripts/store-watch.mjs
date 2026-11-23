@@ -15,7 +15,22 @@ const STORE = "https://store.pokemongo.com";
 const readJson = async (p, d) => { try { return JSON.parse(await readFile(p, "utf8")); } catch { return d; } };
 const key = i => i.href || i.name;
 // Image URLs are evidence only when supplied by the matching product snapshot.
-export const imageUrls = i => (Array.isArray(i.imgs) ? i.imgs : []).filter(u => { try { const x=new URL(u); return x.protocol === "https:" && !x.username && !x.password; } catch { return false; } }).slice(0,4);
+// The product feed is public and Telegram can fetch a chosen image. Do not
+// redistribute arbitrary HTTPS images scraped from untrusted page markup.
+// Match the same exact Niantic SKU asset contract used by the Store UI.
+// Availability/price and archived listings are independent of image validity.
+export function officialSkuImage(value) {
+  if (typeof value !== "string" || value.length > 500) return null;
+  try {
+    const u = new URL(value);
+    if (u.protocol !== "https:" || u.hostname !== "assets.pgo.webstore.nianticlabs.com" ||
+        u.username || u.password || u.port || u.search || u.hash) return null;
+    if (!/^\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()\-]+\/w(?:64|128|256|512)\.webp$/i.test(u.pathname)) return null;
+    return u.href;
+  } catch { return null; }
+}
+export const imageUrls = i => (Array.isArray(i?.imgs) ? i.imgs : [])
+  .map(officialSkuImage).filter(Boolean).slice(0, 4);
 export const slugOf = i => String(i.href || i.name || "").split("/").filter(Boolean).pop().toLowerCase().replace(/[^a-z0-9_.-]/g, "-").slice(-60);
 export const isTicketOrPass = n => /ticket|go pass|pass deluxe|go fest|tour|safari|city|hatch day/i.test(n);
 
@@ -180,7 +195,8 @@ export function buildMessages(d) {
     const lines = [k.emoji + " " + head + " · " + k.label, "", "✨ " + i.name, "💰 " + (i.price || "price not shown") + (i.was ? "  (was " + i.was + ")" : "")];
     if (limited(i)) lines.push("⏳ Limited time only");
     if (i.limit) lines.push("🔒 " + i.limit.replace(/^Can only be purchased /, "Limit: ").replace(/\.$/, ""));
-    return { text: lines.join("\n"), photo: (i.imgs && (i.imgs[1] || i.imgs[0])) || "", slug, url: STORE + (i.href || "/") };
+    const approvedImages = imageUrls(i);
+    return { text: lines.join("\n"), photo: approvedImages[1] || approvedImages[0] || "", slug, url: STORE + (i.href || "/") };
   };
   for (const i of want) out.push(card(i, d.first ? "ON SALE NOW" : "NEW IN STORE"));
   for (const i of d.changed) out.push(card(i, "PRICE CHANGE"));
@@ -189,7 +205,12 @@ export function buildMessages(d) {
 
 // The public log the Purchase planner reads: only tickets, passes and boxes, with when each was first and last seen.
 export function storeLog(state) {
-  const row = (k, o) => ({ name: o.name, image: (o.images || [])[0] || null, imageStatus: (o.images || []).length ? "unverified-remote" : "missing", price: o.price, section: o.section || "", slug: slugOf({ href: k.startsWith("/") ? k : "", name: o.name }), href: k.startsWith("/") ? k : "", endsAt: o.endsAt || null, firstSeen: o.firstSeen, lastSeen: o.lastSeen, goneAt: o.goneAt || null });
+  const row = (k, o) => {
+    // Revalidate legacy private state at PUBLIC output: historical watcher
+    // snapshots may contain host-spoofed or third-party image URLs.
+    const image = (Array.isArray(o.images) ? o.images : []).map(officialSkuImage).find(Boolean) || null;
+    return { name: o.name, image, imageStatus: image ? "unverified-remote" : "missing", price: o.price, section: o.section || "", slug: slugOf({ href: k.startsWith("/") ? k : "", name: o.name }), href: k.startsWith("/") ? k : "", endsAt: o.endsAt || null, firstSeen: o.firstSeen, lastSeen: o.lastSeen, goneAt: o.goneAt || null };
+  };
   const items = [...Object.entries(state.items || {}).map(([k, o]) => row(k, o)), ...Object.entries(state.gone || {}).map(([k, o]) => row(k, o))];
   return { watchStart: state.watchStart || null, updated: state.updated, items: items.filter(i => isTicketOrPass(i.name) || /box|bundle/i.test(i.name)) };
 }
@@ -198,13 +219,11 @@ export function storeLog(state) {
    distinguish the current snapshot from retired listings; no owner checkout
    prices, tokens, receipts or personalised account details may enter here. */
 export function storeCurrentSnapshot(state) {
-  const safeImage = url => typeof url === "string" &&
-    /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()\-]+\/w(?:64|128|256|512)\.webp$/i.test(url)
-    ? url : null;
+  const safeImage = officialSkuImage;
   const clean = (key, entry, retired) => ({
     name: String(entry.name || "").slice(0, 160),
     href: /^\/purchase\/item\/[a-z0-9_.-]+$/i.test(key) ? key : null,
-    image: safeImage((entry.images || [])[0]),
+    image: (Array.isArray(entry.images) ? entry.images : []).map(safeImage).find(Boolean) || null,
     lastSeen: entry.lastSeen || null,
     endsAt: entry.endsAt || null,
     goneAt: retired ? entry.goneAt || null : null
