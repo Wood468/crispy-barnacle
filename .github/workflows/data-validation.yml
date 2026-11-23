@@ -42,4 +42,6 @@ jobs:
         with:
           node-version: 22
       - name: Validate JSON, event records and published infographic paths
-        run: node scripts/validate-public-data.mjs
+        run: |
+          node scripts/validate-public-data.mjs
+          node scripts/derive-highlights.mjs --check

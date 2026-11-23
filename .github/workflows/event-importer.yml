@@ -60,6 +60,8 @@ jobs:
         run: node scripts/importer/run.mjs
       - name: Join events listed twice and write the duplicate report
         run: node scripts/dup-audit.mjs --apply
+      - name: Add shiny and debut chips from trusted event bonus data
+        run: node scripts/derive-highlights.mjs
       - name: Verify generated event data and downstream event contracts
         # Run after importing and deduplicating, before any generated files are committed.
         # Catch correct-looking raw source data that loses research rewards or Pokémon forms
