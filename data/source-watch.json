@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-23T01:43:28.865Z",
+ "updated": "2026-11-23T12:41:29.097Z",
  "status": [
   {
    "id": "hub",
@@ -24,7 +24,7 @@
   {
    "id": "youtube-pogo",
    "state": "ok",
-   "items": 2
+   "items": 0
   }
  ],
  "gaps": 2,
@@ -91,30 +91,6 @@
    "summary": "Dynamax Latias is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Latias successfully. Dynamax Latias can",
    "pokemon": [
     "Latias"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
-   "date": "2026-11-09T11:12:47.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
-   "date": "2026-11-09T10:48:45.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
    ],
    "notInOurData": []
   }
