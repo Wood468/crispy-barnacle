@@ -39,3 +39,20 @@ test("health covers source freshness jobs and gives the twice-weekly raid job a 
   assert.equal(judge(byId["low-raids.yml"], { lastSuccess: last(155), lastConclusion: "success" }, now).state, "fresh");
   assert.equal(judge(byId["low-raids.yml"], { lastSuccess: last(157), lastConclusion: "success" }, now).state, "stale");
 });
+
+import { aiSilent } from "../scripts/health.mjs";
+test("silent AI checks are reported with their age, at most once a day, and not when fresh", () => {
+  const now = Date.UTC(2026, 10, 23, 0, 0), row = (id, name, lastSuccess, state) => ({ id, name, lastSuccess, state });
+  const rows = [row("ai-heartbeat-event-check", "AI event check", "2026-10-27T02:42:00.000Z", "stale"), row("ai-heartbeat-shiny", "AI shiny", "2026-11-22T00:00:00.000Z", "fresh"), row("ai-heartbeat-pipeline", "AI pic", null, "stale")];
+  const a = aiSilent(rows, {}, now);
+  assert.match(a.text, /AI event check has been silent for 26 days/);
+  assert.doesNotMatch(a.text, /shiny|pic/);
+  assert.equal(aiSilent(rows, a.sent, now + 23 * 36e5).text, null);
+  assert.match(aiSilent(rows, a.sent, now + 25 * 36e5).text, /event check/);
+  assert.equal(aiSilent(rows.slice(1, 2), {}, now).text, null);
+});
+import { AI_TASKS } from "../scripts/health.mjs";
+test("AI check stale limits are 9 days (event check) and 5 days (shiny)", () => {
+  assert.equal(AI_TASKS.find(x => x.id === "ai-heartbeat-event-check").staleAfterH, 216);
+  assert.equal(AI_TASKS.find(x => x.id === "ai-heartbeat-shiny").staleAfterH, 120);
+});

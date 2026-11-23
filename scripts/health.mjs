@@ -69,9 +69,9 @@ async function workerRow() {
 }
 // The scheduled AI checks end by leaving a dated marker (ai-hb-<name>-<time>); its date is when they last finished.
 export const AI_TASKS = [
-  { id: "ai-heartbeat-event-check", name: "AI event check", everyH: 168 },
+  { id: "ai-heartbeat-event-check", name: "AI event check", everyH: 168, staleAfterH: 216 },
   { id: "ai-heartbeat-pipeline", name: "AI picture matching", everyH: 24 },
-  { id: "ai-heartbeat-shiny", name: "AI shiny and costume check", everyH: 96 },
+  { id: "ai-heartbeat-shiny", name: "AI shiny and costume check", everyH: 96, staleAfterH: 120 },
 ];
 // Newest heartbeat for a task. The AI tasks leave a marker named ai-hb-<name>-<YYYYMMDDHHMM> (UTC) each run, never moving or force-pushing anything.
 // Scheduled sessions can push branches but not tags, so the marker is a branch (refs/heads/ai-hb-...); a tag with the same name still counts, and
@@ -81,6 +81,18 @@ export const hbTime = ref => { const m = /-(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)$/.exe
 export function pickHeartbeat(name, refs, now = Date.now()) {
   const stamps = refs.map(ref => ({ ref, ms: hbTime(ref) })).filter(x => x.ms && x.ref.replace(/^refs\/(heads|tags)\//, "").startsWith("ai-hb-" + name + "-")).sort((a, b) => b.ms - a.ms);
   return { newest: stamps[0] ? stamps[0].ms : null, stale: stamps.slice(1).filter(x => x.ms < now - 2 * 864e5).map(x => x.ref) };
+}
+// Silent scheduled checks (event check: 9 days, shiny: 5 days) are repeated on Telegram at most once every 24 hours until they run again.
+export const AI_WATCH = ["ai-heartbeat-event-check", "ai-heartbeat-shiny"];
+export function aiSilent(rows, sent, now = Date.now(), gapH = 24) {
+  const out = [], next = {};
+  for (const r of rows) {
+    if (!AI_WATCH.includes(r.id) || (r.state !== "stale" && r.state !== "never")) continue;
+    const last = Date.parse((sent || {})[r.id]), due = !Number.isFinite(last) || now - last >= gapH * HOUR;
+    next[r.id] = due ? new Date(now).toISOString() : sent[r.id];
+    if (due) out.push(r.name + " has been silent for " + (r.lastSuccess ? Math.floor((now - Date.parse(r.lastSuccess)) / 864e5) + " days (last heartbeat " + r.lastSuccess.slice(0, 16).replace("T", " ") + " UTC)" : "as long as I can see (no heartbeat on record)"));
+  }
+  return { text: out.length ? "⚠️ Scheduled AI check silent:\n" + out.map(x => "• " + x).join("\n") + "\nCheck the Claude scheduled tasks. I repeat this at most once a day.\n\nhttps://pogo.michaelpuff.com" : null, sent: next };
 }
 async function dropRef(ref) {
   try { await fetch("https://api.github.com/repos/" + process.env.GITHUB_REPOSITORY + "/git/" + ref, { method: "DELETE", headers: { authorization: "Bearer " + process.env.GITHUB_TOKEN, accept: "application/vnd.github+json", "user-agent": "go-field-notes-health" } }); } catch {}
@@ -141,11 +153,13 @@ async function main() {
 
   const prev = await readJson("data/health-state.json", { alerted: [] });
   const a = alerts(rows, prev);
-  for (const r of a.warn) await tg(warnText(r) + "\n\nhttps://pogo.michaelpuff.com");
+  for (const r of a.warn.filter(r => !AI_WATCH.includes(r.id))) await tg(warnText(r) + "\n\nhttps://pogo.michaelpuff.com");
   for (const r of a.recovered) await tg("✅ " + r.name + " is running again.");
   const reg = await readJson("data/g47ix-infographics-review.json", {}), un = newUnmatched(reg.candidates, prev.unmatched);
   if (un.fresh.length) await tg("📌 " + un.fresh.length + " infographic" + (un.fresh.length > 1 ? "s match" : " matches") + " no event in the app: " + un.fresh.slice(0, 5).map(c => (c.title || c.id).slice(0, 60)).join("; ") + ".\nThe event may be missing from the app data.\n\nhttps://pogo.michaelpuff.com");
-  await writeFile("data/health-state.json", JSON.stringify({ alerted: a.alerted, unmatched: un.all }, null, 1) + "\n");
+  const ai = aiSilent(rows, prev.aiAlertAt);
+  if (ai.text) { if (process.env.DRY_RUN === "true") console.log("DRY_RUN would send:\n" + ai.text); else await tg(ai.text); }
+  await writeFile("data/health-state.json", JSON.stringify({ alerted: a.alerted, unmatched: un.all, aiAlertAt: ai.sent }, null, 1) + "\n");
   const old = await readJson("public/health.json", {});
   const same = JSON.stringify((old.jobs || []).map(j => [j.id, j.state])) === JSON.stringify(rows.map(j => [j.id, j.state]));
   const ageH = old.updated ? (Date.now() - Date.parse(old.updated)) / HOUR : 99;
