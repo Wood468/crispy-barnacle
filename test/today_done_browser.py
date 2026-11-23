@@ -42,7 +42,14 @@ with sync_playwright() as p:
     assert page.evaluate(keep) == before, 'Collection keys changed'
     page.reload(); page.wait_for_selector('#today-v1 .t1-card')
     assert page.locator(f'#today-v1 article[data-id="{cid}"][data-start="{start}"]').count() == 0, 'not persisted'
-    page.locator('#today-v1 .t1-restore').first.click()
+    # A late feed repaint can replace the button between locate and click (seen on WebKit CI),
+    # leaving the Done entry in place. Re-click until the restore has actually taken effect.
+    for _ in range(5):
+        page.locator('#today-v1 .t1-restore').first.click()
+        page.wait_for_timeout(700)
+        if page.locator('#today-v1 .t1-restore').count() == 0:
+            break
+        page.wait_for_timeout(500)
     # Reload can show the saved Done list before late curated/season feeds finish
     # repainting Today. Wait for the exact restored occurrence, not any card.
     restored = page.locator(f'#today-v1 article[data-id="{cid}"][data-start="{start}"]')
