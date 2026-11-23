@@ -697,16 +697,30 @@
     },
     {
       "id": "smr2",
-      "t": "Super Mega Raid Day",
+      "t": "Clefable Super Mega Raid Day",
       "s": "2026-11-28T14:00",
       "e": "2026-11-28T17:00",
       "tags": [
         "Raids"
       ],
+      "highlights": [
+        {
+          "type": "debut",
+          "label": "DEBUT · Mega Clefable"
+        },
+        {
+          "type": "boosted-shiny",
+          "label": "BOOSTED SHINY · Clefable"
+        }
+      ],
       "p": [
         "Clefable Super Mega Raid Day: Mega Clefable debuts in Super Mega Raids; defeating it lets you encounter Clefable with Mega Level 1 unlocked, with an increased chance of Shiny Clefable.",
         "Remote Raid limit 20 from Fri Nov 27, 5 pm to Sat Nov 28, 8 pm PST. Up to six free Raid Passes from Gym Photo Discs. Optional US$4.99 ticket: up to 14 Raid Passes, more Rare Candy XL, plus 5,000 XP and 5,000 Stardust from Super Mega Raids.",
         "Mega Clefable can reach the new Super Max Mega Level and learns Moonblast+. Expected event Timed Research includes a Premium Battle Pass and a Metagross encounter, to be confirmed when the event begins."
+      ],
+      "art": [
+        "Clefable",
+        "Mega Clefable"
       ],
       "sourceUrl": "https://pokemongo.com/en/news/clefable-super-mega-raid-day-2026/",
       "detailIds": [
