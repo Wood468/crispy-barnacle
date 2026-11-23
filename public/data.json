@@ -651,6 +651,7 @@
       "tags": [
         "Event"
       ],
+      "highlights": [{ "type": "boosted-shiny", "label": "BOOSTED SHINY · Staryu" }, { "type": "boosted-shiny", "label": "BOOSTED SHINY · Elgyem" }],
       "p": [
         "Official event: November 24, 10 am to November 30, 8 pm local time. Increased chance to encounter Shiny Staryu and Shiny Elgyem; no numerical shiny odds were announced.",
         "Wild encounters include shiny-eligible Clefairy, Staryu and Elgyem, with Rockruff appearing if lucky.",
