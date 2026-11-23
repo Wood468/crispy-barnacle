@@ -15,9 +15,10 @@ on:
       - "**/*.md"
   pull_request:
     branches: [main]
+    # public/data.json and public/events-v1.json are NOT ignored on PRs: data-only PRs shipped an untested CSS regression (#919, #921).
+    # Bots push straight to main (push trigger above, still ignored), so this only costs CI on human/PR data changes.
     paths-ignore:
       - "data/**"
-      - "public/*.json"
       - "infographics.json"
       - "**/*.md"
   workflow_dispatch:
