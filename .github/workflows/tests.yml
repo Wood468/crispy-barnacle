@@ -194,6 +194,9 @@ jobs:
       - name: Verify variant artwork (costumes, Shiny, Shadow, Dynamax, Gigantamax, fallbacks)
         if: matrix.shard == 'e'
         run: python test/variant_art_browser.py
+      - name: Verify Today boost rail does not overflow
+        if: matrix.shard == 'e'
+        run: python test/today_boost_rail_browser.py
 
       - name: Verify Today slow-feed fallback and late recovery
         if: matrix.shard == 'c'
@@ -291,6 +294,8 @@ jobs:
 
       - name: Verify variant artwork in WebKit
         run: python test/variant_art_browser.py
+      - name: Verify Today boost rail does not overflow in WebKit
+        run: python test/today_boost_rail_browser.py
       - name: Retain mobile WebKit screenshots
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
