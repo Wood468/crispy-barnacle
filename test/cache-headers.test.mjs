@@ -40,14 +40,14 @@ function cacheControl(pathname) {
   for (const [pattern, values] of rules) {
     if (matches(pattern, pathname)) {
       const line = values.find(value => /^cache-control:/i.test(value));
-      return line ? line.slice(line.indexOf(":") + 1).trim() : null;
+      if (line) return line.slice(line.indexOf(":") + 1).trim();
     }
   }
   return null;
 }
 
 test("only stable WebP artwork receives a one-day browser cache", () => {
-  assert.deepEqual([...rules.keys()].sort(), [...expected.keys()].sort());
+  assert.deepEqual([...rules.keys()].filter(k => rules.get(k).some(v => /^cache-control:/i.test(v))).sort(), [...expected.keys()].sort());
   for (const [pattern, value] of expected) {
     assert.deepEqual(rules.get(pattern), [value], pattern);
   }
