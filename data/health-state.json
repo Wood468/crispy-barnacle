@@ -1,9 +1,10 @@
 {
  "alerted": [
   "event-importer.yml",
-  "ai-heartbeat-event-check",
-  "ai-heartbeat-pipeline",
-  "ai-heartbeat-shiny"
+  "g47ix-infographics.yml",
+  "discord_sync.yml",
+  "ai-heartbeat-pipeline"
  ],
- "unmatched": []
+ "unmatched": [],
+ "aiAlertAt": {}
 }
