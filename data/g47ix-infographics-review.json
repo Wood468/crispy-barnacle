@@ -7,6 +7,64 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1574326331745767548",
+      "source": "discord",
+      "creator": "",
+      "title": "GO Weekly T23",
+      "publishedAt": "2026-11-23T07:30:47.057000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1574181447127011511/GO_Weekly_T23.png?ex=6b055ef7&is=6b040d77&hm=67c75878730d3176e744940c2274906f26fd0649f35276a8a0ad68f98311dd25&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Poke ay ow GOM-L/, | 23-29 NOVEMBER MONDAY eo a es URSDAY en (aaNGey RDAY 35Ne A —— Max = eee =—_ —_ uu a) Monday = = “ov al qa (a ff ff =f _____, Qu One Rare Candy XL One Rare Candy XL 50 battles/day Up to 3 Special Trades More wild Pokémon for completing Enter up to for completing 2 guaranteed Candy XL and boosted Incense in-person 5 Showcases in-person 4x Stardust on Routes Max Battles. Raid Battles. from win rewards Increased chance Encounter Mateo of Lucky Trades up to 3x wed PD og a ae @ 1:00 pm PST > i ak “7m (oy Spotlight Hour (iS MONDAY @ ROTATION © 6:00 pm - 7:00 pm m = ( © 8:00pm | Dynamax | iL ru = lis | Trails W ad ©) INESO) FHANRRENING / Local and exclusive events =— APAC Cross-Region Pokémon Mall Explo Six museums Can, Stamp Rally Observatory adidas collab <=> | @esa across Europe ) = ° Until 2029 Eh until Dec 6 x y Until January 2027) Until Dec 2026 Until 30 APR 2027 Pokémon Center UK NATIONAL until Aug 2027 Jet until Aug 2027 Red/Blue/Green y TRUST SITES KANTO AES Le] Until Dec 31 ao | ILGTEt G4A7IX 90 ®Xoa Follow for more g47ix.pro",
+      "eventMatch": {
+        "eventId": "novcd",
+        "eventTitle": "November Community Day",
+        "score": 0.818,
+        "confidence": "high",
+        "matchedTerms": [
+          "november",
+          "day",
+          "2026",
+          "more",
+          "wild",
+          "local",
+          "can",
+          "special",
+          "candy",
+          "chance",
+          "hour",
+          "incense"
+        ],
+        "alternatives": [
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.818
+          },
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.811
+          },
+          {
+            "eventId": "dyntrails",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.809
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1574326331745767548.webp"
+    },
+    {
       "id": "discord:1574187484244475925",
       "source": "discord",
       "creator": "",
