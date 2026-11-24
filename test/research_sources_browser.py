@@ -197,6 +197,7 @@ with sync_playwright() as p:
     context = context_for(browser, 390, None, offline_ok=True)
     context.unroute('**/api/**')
     page = context.new_page()
+    page.clock.install(time='2026-11-09T12:00:00+11:00')  # shipped snapshot events end; keep the clock fixed
     page.goto(BASE + '/')
     page.wait_for_function('!!window.GODASH && GOEventRegistry.settled()')
     page.evaluate("navigator.serviceWorker.ready.then(() => 0)")
