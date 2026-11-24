@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-24T13:43:19.328Z",
+ "updated": "2026-11-24T23:53:49.438Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 5
+   "items": 4
   },
   {
    "id": "miners-assets",
@@ -81,18 +81,6 @@
    "summary": "The November 2026 Community Day features Pawniard, the Sharp Blade Pokémon! Join the event on Saturday, November 21, 2026, from 2:00 p.m. to 5:00 p.m. local time to enjoy 1/4 Egg Hatch Distance, incre",
    "pokemon": [
     "Pawniard"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "How to Beat Dynamax Latios: Best Counters &#038; Guide",
-   "link": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-latios-best-counters-guide/",
-   "date": "2026-11-13T05:00:51.000Z",
-   "summary": "Dynamax Latios is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Latios successfully. Dynamax Latios can",
-   "pokemon": [
-    "Latios"
    ],
    "notInOurData": []
   }

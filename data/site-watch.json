@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T13:43:20.334Z",
+ "updated": "2026-11-24T23:53:51.490Z",
  "recorded": [
   "pokemon-us",
   "pokemon-uk",
@@ -10,12 +10,12 @@
   {
    "id": "pokemon-us",
    "state": "ok",
-   "links": 1
+   "links": 2
   },
   {
    "id": "pokemon-uk",
    "state": "ok",
-   "links": 1
+   "links": 2
   },
   {
    "id": "pokemon-jp",
@@ -40,6 +40,8 @@
   "https://www.pokemon.com/us/news/gigantamax-duraludon-debuts-in-pokemon-go-wild-area-global-event/": "2026-11-13",
   "https://www.pokemon.com/uk/news/gigantamax-duraludon-debuts-in-pokemon-go-wild-area-global-event/": "2026-11-13",
   "https://www.pokemon.com/us/news/steel-yourself-for-pawniard-for-the-pokemon-go-november-community-day/": "2026-11-18",
-  "https://www.pokemon.com/uk/news/steel-yourself-for-pawniard-for-the-pokemon-go-november-community-day/": "2026-11-18"
+  "https://www.pokemon.com/uk/news/steel-yourself-for-pawniard-for-the-pokemon-go-november-community-day/": "2026-11-18",
+  "https://www.pokemon.com/us/news/shiny-staryu-and-shiny-elgyem-starring-in-pokemon-gos-twilight-wishes/": "2026-11-24",
+  "https://www.pokemon.com/uk/news/shiny-staryu-and-shiny-elgyem-starring-in-pokemon-gos-twilight-wishes/": "2026-11-24"
  }
 }
