@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T02:12:37.803Z",
+ "updated": "2026-11-24T13:43:19.328Z",
  "status": [
   {
    "id": "hub",
@@ -61,6 +61,20 @@
   {
    "source": "hub",
    "trust": "community",
+   "title": "Pokémon GO Twilight Wishes (2026)",
+   "link": "https://pokemongohub.net/post/event/twilight-wishes-2026/",
+   "date": "2026-11-24T08:55:29.000Z",
+   "summary": "Pokémon GO&#8217;s Twilight Wishes event runs from November 24 at 10:00 a.m. to November 30, 2026, at 8:00 p.m. local time, bringing back Sun Scarf Espeon and Moon Scarf Umbreon alongside Sun Crown an",
+   "pokemon": [
+    "Pikachu",
+    "Umbreon",
+    "Espeon"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "hub",
+   "trust": "community",
    "title": "Pawniard Community Day (November 2026)",
    "link": "https://pokemongohub.net/post/event/pawniard-community-day-november-2026/",
    "date": "2026-11-21T07:00:07.000Z",
@@ -79,18 +93,6 @@
    "summary": "Dynamax Latios is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Latios successfully. Dynamax Latios can",
    "pokemon": [
     "Latios"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "How to Beat Dynamax Latias: Best Counters &#038; Guide",
-   "link": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-latias-best-counters-guide/",
-   "date": "2026-11-13T05:00:37.000Z",
-   "summary": "Dynamax Latias is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Latias successfully. Dynamax Latias can",
-   "pokemon": [
-    "Latias"
    ],
    "notInOurData": []
   }
