@@ -1,0 +1,48 @@
+name: Shiny gap check
+
+on:
+  schedule:
+    - cron: "41 20 * * *"   # about 7:41 am in Melbourne (AEDT)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Print only: no Telegram, no state change"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shiny-gap
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Look for shiny boosts without a chip
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+          DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '--dry-run' || '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/shiny-gap.mjs $DRY
+          git add -- data/shiny-gap-state.json
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Shiny gap check: update state [skip ci]"
+            git pull -q --rebase origin main
+            git push origin HEAD:main
+          fi

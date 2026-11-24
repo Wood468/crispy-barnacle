@@ -382,6 +382,7 @@ All GitHub cron times are UTC and "may be delayed" (workflow comments). Melbourn
 | `event-importer.yml` | hourly `:52` | manual; push to `main` touching importer / event-contract code, `data/watch-pages.json` | event data commit (section 1) |
 | `store-watch.yml` | hourly `:15` | manual (default dry run) | store log, snapshot, prices, private state |
 | `health.yml` | hourly `:23` | manual | job health (`public/health.json`); dispatches the importer if it has gone stale |
+| `shiny-gap.yml` | daily `20:41` | manual (default dry run) | Telegram (system topic) for upcoming/live events that mention boosted Shiny odds but have no boosted-shiny chip; `data/shiny-gap-state.json` |
 | `uptime.yml` (Site check) | every 15 min | manual; push to `main` touching `public/`, `src/`, `migrations/`, `wrangler.toml` | live-site check, Telegram on state change |
 | `source-watch.yml` | every 3 h `:17` | manual | `data/source-watch.json` |
 | `discord_sync.yml` | every 2 h `:00` | manual | latest infographic |
