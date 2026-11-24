@@ -250,6 +250,7 @@
         var modelPage=(model.internalValidation&&model.internalValidation.artSourceUrl)||srcs.filter(function(u){return /^https:\/\/(?:www\.)?pokemongo\.com\//i.test(u);})[0]||srcs[0]||'';
         if(!GOTODAY.verifiedBanner(imgHost,imgHost.img,curPage)&&GOTODAY.verifiedBanner(imgHost,model.image,modelPage)){imgHost.img=model.image;imgHost.artPageUrl=modelPage;}
       }
+      if(matching&&model.internalValidation&&(model.internalValidation.highlights||[]).length)matching.highlights=mergeHighlights(matching.highlights,model.internalValidation.highlights);
       if(matching&&!matching.img&&model.image){matching.img=model.image;if(!matching.artPageUrl)matching.artPageUrl=(model.internalValidation&&model.internalValidation.artSourceUrl)||((model.sources||[]).map(function(s){return s&&s.url;}).filter(Boolean)[0])||'';}
       if(matching&&model.schedule){
         var published=GOEventRegistry.display(model);
