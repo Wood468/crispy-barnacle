@@ -13014,7 +13014,13 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "highlights": [
+    {
+     "type": "boosted-shiny",
+     "label": "BOOSTED SHINY · Pawniard"
+    }
+   ]
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
@@ -26444,6 +26450,12 @@
       "hub"
      ]
     }
+   ],
+   "highlights": [
+    {
+     "type": "boosted-shiny",
+     "label": "BOOSTED SHINY · Chandelure"
+    }
    ]
   },
   "zorua": {
@@ -28131,7 +28143,17 @@
     ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [],
+   "highlights": [
+    {
+     "type": "boosted-shiny",
+     "label": "BOOSTED SHINY · Electrike"
+    },
+    {
+     "type": "boosted-shiny",
+     "label": "BOOSTED SHINY · Hisuian Growlithe"
+    }
+   ]
   },
   "space": {
    "name": "World Space Week",
@@ -28470,6 +28492,12 @@
      "missingFrom": [
       "hub"
      ]
+    }
+   ],
+   "highlights": [
+    {
+     "type": "boosted-shiny",
+     "label": "BOOSTED SHINY · Sandile"
     }
    ]
   },
@@ -28912,6 +28940,16 @@
      "missingFrom": [
       "leekduck"
      ]
+    }
+   ],
+   "highlights": [
+    {
+     "type": "debut",
+     "label": "DEBUT · Mega Chandelure"
+    },
+    {
+     "type": "boosted-shiny",
+     "label": "BOOSTED SHINY · Chandelure"
     }
    ]
   },

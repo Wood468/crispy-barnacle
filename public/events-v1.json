@@ -5300,6 +5300,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -11586,6 +11587,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -11660,7 +11662,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 234,
+    "revision": 235,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -11802,6 +11804,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -13846,6 +13849,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -14486,6 +14490,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -15306,6 +15311,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -15481,6 +15487,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -15645,6 +15652,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -19436,6 +19444,12 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [
+     {
+      "type": "boosted-shiny",
+      "label": "BOOSTED SHINY · Chandelure"
+     }
+    ],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -19708,6 +19722,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -19877,6 +19892,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -19952,6 +19968,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -20192,6 +20209,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -20296,6 +20314,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -20843,6 +20862,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -21243,6 +21263,16 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [
+     {
+      "type": "boosted-shiny",
+      "label": "BOOSTED SHINY · Electrike"
+     },
+     {
+      "type": "boosted-shiny",
+      "label": "BOOSTED SHINY · Hisuian Growlithe"
+     }
+    ],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -21601,6 +21631,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -21671,6 +21702,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -21741,6 +21773,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -21811,6 +21844,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -21881,6 +21915,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -21951,6 +21986,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -22085,6 +22121,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -22189,6 +22226,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -22848,6 +22886,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -22926,6 +22965,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -22996,6 +23036,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -23066,6 +23107,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -23144,6 +23186,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -23222,6 +23265,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -23334,6 +23378,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -23446,6 +23491,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -23790,6 +23836,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -24214,6 +24261,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -24327,6 +24375,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -24440,6 +24489,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -24570,6 +24620,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -24669,6 +24720,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -24773,6 +24825,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -24877,6 +24930,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -25014,6 +25068,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -25138,6 +25193,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -25789,6 +25845,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -25916,6 +25973,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -26050,6 +26108,12 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [
+     {
+      "type": "boosted-shiny",
+      "label": "BOOSTED SHINY · Pawniard"
+     }
+    ],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -26857,6 +26921,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -26956,6 +27021,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -27207,6 +27273,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -27277,6 +27344,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -27347,6 +27415,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -29497,6 +29566,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -32261,6 +32331,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -32372,6 +32443,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -32517,7 +32589,7 @@
     },
     "imageReviewed": true,
     "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
-    "revision": 249,
+    "revision": 250,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -33081,6 +33153,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -33451,6 +33524,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -33613,6 +33687,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -33687,6 +33762,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -33761,6 +33837,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -33910,6 +33987,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -34315,6 +34393,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -34415,6 +34494,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -34493,6 +34573,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -34571,6 +34652,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -34648,6 +34730,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -34725,6 +34808,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -34802,6 +34886,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -34945,6 +35030,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -35023,6 +35109,12 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [
+     {
+      "type": "boosted-shiny",
+      "label": "BOOSTED SHINY · Sandile"
+     }
+    ],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -35340,6 +35432,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -36298,6 +36391,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -36389,6 +36483,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -36569,6 +36664,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -36647,6 +36743,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -36725,6 +36822,16 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [
+     {
+      "type": "debut",
+      "label": "DEBUT · Mega Chandelure"
+     },
+     {
+      "type": "boosted-shiny",
+      "label": "BOOSTED SHINY · Chandelure"
+     }
+    ],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -37239,6 +37346,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -37338,6 +37446,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -37557,6 +37666,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -37640,6 +37750,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -37723,6 +37834,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -37806,6 +37918,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -37889,6 +38002,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -37972,6 +38086,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -38055,6 +38170,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -38138,6 +38254,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -38225,6 +38342,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -38885,6 +39003,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -39151,6 +39270,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -39326,6 +39446,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -39802,6 +39923,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -39865,6 +39987,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -39927,6 +40050,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -40050,6 +40174,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -40238,6 +40363,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -40381,6 +40507,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -40452,6 +40579,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -40530,6 +40658,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -40844,6 +40973,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -40969,6 +41099,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41010,6 +41141,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41051,6 +41183,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41100,6 +41233,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41141,6 +41275,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41182,6 +41317,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41223,6 +41359,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41264,6 +41401,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41305,6 +41443,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41346,6 +41485,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41387,6 +41527,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41428,6 +41569,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41469,6 +41611,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41510,6 +41653,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41551,6 +41695,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41592,6 +41737,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41633,6 +41779,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -41930,6 +42077,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42017,6 +42165,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42104,6 +42253,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42204,6 +42354,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42304,6 +42455,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42404,6 +42556,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42504,6 +42657,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42628,6 +42782,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42673,6 +42828,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42797,6 +42953,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -42921,6 +43078,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -43045,6 +43203,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -43266,6 +43425,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -43463,6 +43623,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -43690,6 +43851,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -46919,6 +47081,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -47155,6 +47318,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -47441,6 +47605,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -47795,6 +47960,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -48754,6 +48920,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -51008,6 +51175,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -54369,6 +54537,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -54905,6 +55074,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -57847,6 +58017,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -58249,6 +58420,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -58476,7 +58648,7 @@
     "imageReviewed": true,
     "contentHash": "a28b9e916307b9548cf29d1957626059e1d5c1a2e5be7497c8141eb7102a0d94",
     "revision": 7,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "events"
    },
@@ -58698,6 +58870,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -58787,6 +58960,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -58876,6 +59050,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -58965,6 +59140,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -59054,6 +59230,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -59143,6 +59320,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -59306,6 +59484,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -59398,6 +59577,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -59588,6 +59768,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -60131,6 +60312,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -60305,6 +60487,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -60917,6 +61100,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -61894,6 +62078,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -62289,6 +62474,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [
@@ -62390,6 +62576,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -62446,6 +62633,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -62497,6 +62685,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -68862,6 +69051,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -68936,7 +69126,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 234,
+    "revision": 235,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -69117,6 +69307,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -69447,6 +69638,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -70671,6 +70863,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -70727,6 +70920,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -70783,6 +70977,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -70843,6 +71038,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -70899,6 +71095,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -71037,6 +71234,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -71123,6 +71321,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -71201,6 +71400,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -71279,6 +71479,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -71502,6 +71703,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -71588,6 +71790,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -71805,6 +72008,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -71871,6 +72075,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72336,6 +72541,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72444,6 +72650,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72498,6 +72705,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72552,6 +72760,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72606,6 +72815,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72660,6 +72870,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72768,6 +72979,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72822,6 +73034,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72876,6 +73089,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -72930,6 +73144,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -73122,6 +73337,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -73183,6 +73399,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -73276,6 +73493,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -73327,6 +73545,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -76199,6 +76418,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -76250,6 +76470,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -76406,6 +76627,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -76562,6 +76784,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -76713,6 +76936,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -76869,6 +77093,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77030,6 +77255,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77181,6 +77407,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77234,6 +77461,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77285,6 +77513,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77343,6 +77572,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77406,6 +77636,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77504,6 +77735,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77592,6 +77824,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77680,6 +77913,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77768,6 +78002,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77856,6 +78091,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77944,6 +78180,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -77995,6 +78232,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -78051,6 +78289,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -78137,6 +78376,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -78223,6 +78463,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -78286,6 +78527,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -78372,6 +78614,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -78458,6 +78701,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -78843,6 +79087,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -82619,6 +82864,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -82660,6 +82906,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -82732,6 +82979,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -82804,6 +83052,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -82876,6 +83125,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -86221,6 +86471,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {},
     "info": [],
@@ -86267,6 +86518,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [],
@@ -86397,6 +86649,7 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
+    "highlights": [],
     "conflicts": [],
     "fields": {
      "bonuses": [

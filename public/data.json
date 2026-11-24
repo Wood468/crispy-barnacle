@@ -155,7 +155,8 @@
         "Boosted shiny odds"
       ],
       "sourceUrl": "https://pokemongo.com/news/sandile-hatch-day-2026",
-      "source": "Official Pokémon GO announcement"
+      "source": "Official Pokémon GO announcement",
+      "highlights": [{ "type": "boosted-shiny", "label": "BOOSTED SHINY · Sandile" }]
     },
     {
       "id": "tcg30",
