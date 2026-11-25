@@ -7,6 +7,230 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1574898950983647282",
+      "source": "discord",
+      "creator": "",
+      "title": "Incubator GOPass",
+      "publishedAt": "2026-11-24T21:26:10.122000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1574894125650673825/Incubator_GOPass.png?ex=6b074df3&is=6b05fc73&hm=b417f6062a03f2f8129465e8fec293327452b5510cf044c0b72fa9c5072b3bab&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Starting @ GO Pass: = So December > FREE DELUXE Timed Incubator Kyurem aor Additional ee encounters Nn — Gas —_ AND MORE AND MORE pos Tier 1 - Rank 1 | Increased XP from Friendship level-ups and 2* Friendship bonus dmg in raids. Tier 2 - Rank 25 Tier 2 - Rank 25 Open up to 40 Gifts per day Open up to 50 Gifts per day Receive up to 125 Gifts per day Receive up to 150 Gifts per day Hold 10 more Gifts Hold 20 more Gifts Tier 4 - Rank 75 | Increased Stardust and XP from hatching Eggs * > From January 2-3, there’s no daily limit on the number of GO Points you can earn! Follow formore G47|X £) Ox i [> www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "leekduck:december-communityday2026",
+        "eventTitle": "December Community Day",
+        "score": 0.789,
+        "confidence": "high",
+        "matchedTerms": [
+          "december",
+          "day"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:december-communityday2026",
+            "eventTitle": "December Community Day",
+            "score": 0.789
+          },
+          {
+            "eventId": "leekduck:january-communityday2027",
+            "eventTitle": "January Community Day",
+            "score": 0.789
+          },
+          {
+            "eventId": "leekduck:january-communitydayclassic2027",
+            "eventTitle": "January Community Day Classic",
+            "score": 0.529
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1574898950983647282.png"
+    },
+    {
+      "id": "discord:1574891933707411527",
+      "source": "discord",
+      "creator": "",
+      "title": "Deoxys",
+      "publishedAt": "2026-11-24T20:58:17.073000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1574887218160336936/Counter_Deoxys_A.png?ex=6b074784&is=6b05f604&hm=206d9166bfa8e2744b6b22dfdbec533e713c0a3ffc3e39fe1faab6de1916cb2d&",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "@ 25 NOV- 1 DEC ATTACK FORME #386 DEOXYS iN C) 4s C4 41036 CP uM A from a space virus mutated and became mon. It appears where auroras are seen i* eakness @ co ® ficulty trainers needed A cy we 1474 cP we 1842 CP Boost x] Windy A Snarl Hex a Wy Nan fy {y\\ © Bite Psycho Cut Ominous Wind+ © Brutal Swing [5 Owe Shadow Ball a, , ——_ Bite A Snarl y @ Shadow Claw Snarl eX oe Aim Brutal Swing Cr Foul Play @ Moongeist Boon XA Kowtow Cleave Ee ao ° ° o By, Shadow Claw wag @ Hex e Snarl - ty.” e),, i Leg Darkest Lariat Shadow Ball ~. Shadow Force [2 ( 4 iS @ Shadow Ball ~ sees Be Remember to use LD Follow for more: if needed \\Suy) G471IX @ © @ X @ | g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1574891933707411527.png"
+    },
+    {
+      "id": "discord:1574882419184508950",
+      "source": "discord",
+      "creator": "",
+      "title": "CC DECEMBER",
+      "publishedAt": "2026-11-24T20:20:28.634000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1574877132201394216/CC_DECEMBER_.png?ex=6b073e20&is=6b05eca0&hm=4dbab6c9f25e4340857968187528afce20d25ac9e27aae078810ff49b39fd769&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "12.2026 A ff 9 d Research Breakthrough ©) DECEMBER ae with Season-themed Pokémon each week. Complete Field Research and unlock encounters in Pokémon GO! D i mar | Vf . 4 » 4 ©. Showcase Wednesday GO Battle #S Friendship Scenic 4% Monday Tuesday @ Raid Hour Thursday SW Friday ct, Sunday E> CD 44> GFA Gz Gri One Rare Candy XL Featuring up to 20 One Rare Candy XL Complete a total of up to 3 Special Trades More Pokémon in the wild and Boosted for completing in-person different Categories in-person Raid Battles. for completing 50 GBL Battles 2 Candy XL from trade incense on Routes Max Battles. Enter up to 5 Showcases 4x Win Stardust Incr. chance of Lucky Trade Encounter Mateo 3x ++ Mud) ++ ye We ye ae ne iV pA vert NDO REGIDRAGO HO-OH LUGI TORNADUS/THUNDURUS, al 69739 ©9359 (5255 525 ESozE9 , 4 er ++ . 9 A ++ OF. “Ve 24 aS te <> SLOWBRO | SKARMORY GLALIE FALINKS ee mp IBEE > 22 v:c) ems eoz ACY eS ++ ae * es ips ai oa @ es OGO = ~ ALOLAN ® Sy in ae SANDSH MAGIKARP | 30 NOV | 7DEC 14 DEC 21 DEC 28 DEC pas) a Ss These Dynamax Pokémon appear in Max Battles throughout the Daydream Destinations Season. 31 ‘8 ++ 24] ++ DEC ABA Paarl 18g S SPOTLIGHT WIMPOD STARLY BERGMI DELIBI MINU &P HOUR 2x Catch XP mroniorcnty B neon @ @ mewnconty “a “ ¢ 6 PS KE 406 x Tropical Max 2999 Meteo iower ww, ty Paradise Battle Day Geminids kin 2x3 b SibEC > 14 vec BRL bee ) 16 otc er WW Ves G COMM T DAY o” fa @) ] 2026 Recap Raid Day Holiday Hatch Day Gai «> ° Epes ED ee ‘“ HAD 6 Follow for more New Year’s D",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.801,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "2026",
+          "raid",
+          "hour",
+          "nov",
+          "dynamax",
+          "regidrago",
+          "max",
+          "battles",
+          "poke",
+          "mon",
+          "battle"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.801
+          },
+          {
+            "eventId": "leekduck:max-battle-day-december-2026",
+            "eventTitle": "Max Battle Day",
+            "score": 0.788
+          },
+          {
+            "eventId": "leekduck:raid-day-december-2026",
+            "eventTitle": "Raid Day",
+            "score": 0.786
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1574882419184508950.webp"
+    },
+    {
+      "id": "discord:1574795132379857090",
+      "source": "discord",
+      "creator": "",
+      "title": "SEASON DD",
+      "publishedAt": "2026-11-24T14:33:37.838000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1574789289944948909/SEASON_DD.png?ex=6b06ec50&is=6b059ad0&hm=b9c621ccfa34dfc10c7bf70fc139bf0fe5e3673cd608657bedc91b2e26c7680c&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "2026 2027 WELCOME iKe) VPokSMoy ee 10:00 AM 10:00 AM Woke Noy, LA/KAOHSIUNG GLOBAL New Research Breakthrough Complete Field Research and unlock encounters AX ett with season-themed Pokémon each week. A He way ss —_ | Pokémon 4. New Mega od ¥ Pokémon Debuts ° 4) Debut tke Pyukumuku Wishiwashi Frosslass Drampa ‘ As ‘Cee: +. + ++ ++ + . oe + mS aN — New Max Battle Dynamax Day ne > Max Scenic | YT. oe | Wednesday ) GO Battle y re RR ¢ 7 2 ON Monday Tuesday 3 Raid Hour Thursday Sw Friday cs Sunday One Rare Candy XL Featuring up to 20 One Rare Candy XL Complete a total of up to 3 Special Trades More Pokémon in the for completing different Categories for completing 50 GBL Battles 2 Candy XL from trade wild and Boosted Max Battles. in-person Enter up to 5 Showcases in-person Raid Battles. 4* Win Stardust incense on Routes Incr. chance of Lucky Trade Encounter Mateo 3x V7 Pe fo ME ee Rank 1 Rank 25 Rank 50 Rank 75 GO PASS Increased XP from Friendship level-ups Increased Gift 2 Daily Adventure Increased XP and i BONUSES 2x Friendship bonus damage in raids limits Incense duration Stardust from aay hatching Eggs ++ ++ ++ t+ 0 is + 3 - a + me +. ++ ++ ++ + Ae, a + B 6 * Adventure é Hn. Adventure | $= — *\\ % p Syne Sync Follow for more Route Mateo > Ps 7km Rewards GA7IXOO axl eggs 5 Mat x www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.814,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "2026",
+          "raids",
+          "debut",
+          "raid",
+          "hour",
+          "dynamax",
+          "debuts",
+          "max",
+          "battles",
+          "pass",
+          "daily"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.814
+          },
+          {
+            "eventId": "leekduck:max-battle-day-december-2026",
+            "eventTitle": "Max Battle Day",
+            "score": 0.788
+          },
+          {
+            "eventId": "leekduck:max-battle-day-january-2027",
+            "eventTitle": "Max Battle Day",
+            "score": 0.788
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1574795132379857090.webp"
+    },
+    {
+      "id": "discord:1574795131868020780",
+      "source": "discord",
+      "creator": "",
+      "title": "GBL psd",
+      "publishedAt": "2026-11-24T14:33:37.716000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1574788971488346242/GBL_psd.png?ex=6b06ec04&is=6b059a84&hm=8a61e57a5d28baca5ba98232ecef371a180fcd7d8d6cdce2ebc48ea53374cdfd&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "KEN GBL UPDATE AX) I 2 * End-of-Season rewards will be available on the battle screen DEC MAR (Mea * Your GO Battle League rank will be reset. 1:00 p.m. PST. 1:00 p.m. PST aN b>: he + of <a SEASON REWARDS tog GUARANTEED Ww TD ZF AT RANK-UP Ber ¥ aK &; Elite Charged TM, Winona and an Elite Fast TM avatar items Vem Ye as an end-of-season Hat Topand gloves Leggins and shoes Pose Qe Ai, reward Every GO Battle Thursday > Ap Thursday 4« Stardust You can play \"ee ss | AEE JE 12:00 am - 11:59 pm i from wins 10 sets/day Attack Changes Psystrike Sandsear Storm Synchronoise Triple Axel Energy cost increased Power: 60 > 70 Power: 80 > 65 3 Energy cost decreased - Energy cost decreased Rock Slide Wildbolt Storm Brutal Swing Cross Chop Power: 75 > 70 Power: 60 > 70 Power: 55 > 60 Power: 55 > 60 Energy cost decreased Mud Bomb Heat Rock Throw Power: 65 > 75 Bleakwind Storm Dig Wave Energy cost increased Power: 60 > 70 - decreased Energy cost Power: 75 > 85 e decreased Energy generation Attack Availability OG ey, | mn fi Volt Karate VA Water Switch 26 fall Oe) (e= Ble Chop ry § OOF ry, Lunge Dynami Punch ae od (hy) Mystica Rs g mo Dig o= Jo=dje 7) YA wD 3 Axel vp ee va Beam > Z iW ’ 6 Sed Aa Rock aS Fangs Psychic m& sl Ws a LO if mm Check the full GBL schedule: pokemongo.com/news/ go-battle-league-daydream-destinations Follow for more G47|X £) @xX ae www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "leekduck:max-battle-day-december-2026",
+        "eventTitle": "Max Battle Day",
+        "score": 0.526,
+        "confidence": "medium",
+        "matchedTerms": [
+          "battle",
+          "day",
+          "com"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:max-battle-day-december-2026",
+            "eventTitle": "Max Battle Day",
+            "score": 0.526
+          },
+          {
+            "eventId": "leekduck:max-battle-day-january-2027",
+            "eventTitle": "Max Battle Day",
+            "score": 0.526
+          },
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.409
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (medium).",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1574795131868020780.webp"
+    },
+    {
       "id": "discord:1574326331745767548",
       "source": "discord",
       "creator": "",
