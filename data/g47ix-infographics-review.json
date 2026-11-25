@@ -7,6 +7,58 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1575216597411303568",
+      "source": "discord",
+      "creator": "",
+      "title": "g47ix TROPICAL",
+      "publishedAt": "2026-11-25T18:28:22.932000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1575210561572966491/g47ix_TROPICAL_.png?ex=6b0874a7&is=6b072327&hm=8493d72fb1bde96547a227e1d607ea5dd4c8703924554a13ad673b25960eb22e&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "local time AY P ICAL \"3 aT 7 ADISE 64) oe DEC DEC 10:00 am _ 8:00 pm \\“<, New New Fast Move NEW Shiny & POKEMON PYUKUMUKU AC) ww Ze @ SOAK Additional ++ ++ ++ ++ Ame Spawns ++ ++ oe Ne ea ie DEC DEC 4 7 ee 0~x® ee ++ il & .— Bw / t+ ++ SUPER ~ Slowbro MAX DEBUT Mega Energy ws ( <M [CHILLING WATER¢ ] ++ 2 Earn 5x Mega Energy by exploring GO Pass Deluxe GO Pass - | MP 2 Raid xP fj with Slowpoke family as your buddy $4.99 Follow for more G47|X £) () ax @ www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "smr1",
+        "eventTitle": "Super Mega Raid Day",
+        "score": 0.627,
+        "confidence": "medium",
+        "matchedTerms": [
+          "super",
+          "mega",
+          "raid",
+          "debut",
+          "shiny",
+          "time",
+          "local"
+        ],
+        "alternatives": [
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.627
+          },
+          {
+            "eventId": "leekduck:super-mega-raid-day-january-2027",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.603
+          },
+          {
+            "eventId": "leekduck:super-mega-raid-day-january-30-2027",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.603
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (medium).",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1575216597411303568.png"
+    },
+    {
       "id": "discord:1574898950983647282",
       "source": "discord",
       "creator": "",

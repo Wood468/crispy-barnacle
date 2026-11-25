@@ -1,6 +1,39 @@
 {
- "updated": "2026-11-25T10:44:28.417Z",
+ "updated": "2026-11-25T20:54:27.517Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1575216597411303568",
+   "title": "g47ix TROPICAL",
+   "image": "/infographics/g47ix/discord-1575216597411303568.png",
+   "post": "",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-25T18:28:22.932000+00:00",
+   "note": "Match is not strong enough (medium).",
+   "history": false,
+   "signals": [
+    "picture text names the event"
+   ],
+   "text": "local time AY P ICAL \"3 aT 7 ADISE 64) oe DEC DEC 10:00 am _ 8:00 pm \\“<, New New Fast Move NEW Shiny & POKEMON PYUKUMUKU AC) ww Ze @ SOAK Additional ++ ++ ++ ++ Ame Spawns ++ ++ oe Ne ea ie DEC DEC 4 7 ee 0~x® ee ++ il & .— Bw / t+ ++ SUPER ~ Slowbro MAX DEBUT Mega Energy ws ( <M [CHILLING WATER¢ ] ++ 2 Earn 5x Mega Energy by exploring GO Pass Deluxe GO Pass - | MP 2 Raid xP fj with Slowpoke family as your buddy $4.99 Follow for more G47|X £) () ax @ www.g47ix.pro",
+   "guesses": [
+    {
+     "eventId": "smr1",
+     "eventTitle": "Super Mega Raid Day",
+     "score": 0.627
+    },
+    {
+     "eventId": "leekduck:super-mega-raid-day-january-2027",
+     "eventTitle": "Super Mega Raid Day",
+     "score": 0.603
+    },
+    {
+     "eventId": "leekduck:super-mega-raid-day-january-30-2027",
+     "eventTitle": "Super Mega Raid Day",
+     "score": 0.603
+    }
+   ]
+  },
   {
    "linked": false,
    "id": "discord:1574898950983647282",
