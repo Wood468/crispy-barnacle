@@ -1,11 +1,11 @@
 {
  "alerted": [
   "event-importer.yml",
-  "source-watch.yml",
   "g47ix-infographics.yml",
-  "discord_sync.yml",
   "ai-heartbeat-pipeline"
  ],
- "unmatched": [],
+ "unmatched": [
+  "discord:1574891933707411527"
+ ],
  "aiAlertAt": {}
 }
