@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-24T23:53:49.648Z",
+ "updated": "2026-11-25T08:34:51.710Z",
  "state": "ok",
- "scrapedDuckEvents": 78,
+ "scrapedDuckEvents": 82,
  "missingHere": [
   {
    "name": "Tropical Paradise",
@@ -20,6 +20,12 @@
    "type": "raid-day",
    "start": "2026-12-19T14:00:00.000",
    "link": "https://leekduck.com/events/raid-day-december-2026/"
+  },
+  {
+   "name": "Choose Your Path: Daydream Destinations (December 15, 2026)",
+   "type": "choose-your-path",
+   "start": "2026-12-15T10:00:00.000",
+   "link": "https://leekduck.com/events/choose-your-path-daydream-destinations-2026-12-15/"
   },
   {
    "name": "Winter Holiday 2026",
@@ -125,6 +131,11 @@
    "id": "w-raid-day-december",
    "name": "Raid Day December",
    "start": "2026-12-19"
+  },
+  {
+   "id": "w-pok-mon-run-30-thailand",
+   "name": "Pokémon RUN 30: Bangkok",
+   "start": "2027-01-09"
   }
  ],
  "shinyDisagree": [
