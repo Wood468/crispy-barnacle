@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T19:16:09.185Z",
+ "updated": "2026-11-26T03:34:32.325Z",
  "recorded": [
   "pokemon-us",
   "pokemon-uk",
@@ -15,7 +15,7 @@
   {
    "id": "pokemon-uk",
    "state": "ok",
-   "links": 2
+   "links": 3
   },
   {
    "id": "pokemon-jp",
@@ -42,6 +42,8 @@
   "https://www.pokemon.com/us/news/steel-yourself-for-pawniard-for-the-pokemon-go-november-community-day/": "2026-11-18",
   "https://www.pokemon.com/uk/news/steel-yourself-for-pawniard-for-the-pokemon-go-november-community-day/": "2026-11-18",
   "https://www.pokemon.com/us/news/shiny-staryu-and-shiny-elgyem-starring-in-pokemon-gos-twilight-wishes/": "2026-11-24",
-  "https://www.pokemon.com/uk/news/shiny-staryu-and-shiny-elgyem-starring-in-pokemon-gos-twilight-wishes/": "2026-11-24"
+  "https://www.pokemon.com/uk/news/shiny-staryu-and-shiny-elgyem-starring-in-pokemon-gos-twilight-wishes/": "2026-11-24",
+  "https://www.pokemon.com/us/news/assemble-a-powerful-team-during-pokemon-gos-pokemon-champions-celebration-event/": "2026-11-26",
+  "https://www.pokemon.com/uk/news/assemble-a-powerful-team-during-pokemon-gos-pokemon-champions-celebration-event/": "2026-11-26"
  }
 }

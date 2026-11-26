@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-25T19:16:08.448Z",
+ "updated": "2026-11-26T03:34:30.318Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 5
+   "items": 6
   },
   {
    "id": "miners-assets",
@@ -27,7 +27,7 @@
    "items": 0
   }
  ],
- "gaps": 3,
+ "gaps": 4,
  "items": [
   {
    "source": "hub",
@@ -43,6 +43,20 @@
    "notInOurData": [
     "Pyukumuku",
     "Slowbro"
+   ]
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Gigantamax Inteleon Max Battle Day: Shiny Debut &#038; Bonuses",
+   "link": "https://pokemongohub.net/post/event/gigantamax-inteleon-max-battle-day-december-2026/",
+   "date": "2026-11-25T23:54:42.000Z",
+   "summary": "Gigantamax Inteleon returns to Pokémon GO for a Max Battle Day on Saturday, December 5, 2026, from 2:00 p.m. to 5:00 p.m. local time. For the first time, you could encounter a Shiny Gigantamax Inteleo",
+   "pokemon": [
+    "Inteleon"
+   ],
+   "notInOurData": [
+    "Inteleon"
    ]
   },
   {
