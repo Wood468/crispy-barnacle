@@ -7,6 +7,50 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1575522629195014205",
+      "source": "discord",
+      "creator": "",
+      "title": "Clefable",
+      "publishedAt": "2026-11-26T14:44:26.595000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1575518009986908261/Counter_SM_Clefable.png?ex=6b0992fd&is=6b08417d&hm=7305b32345f5538dd00307ca6a253aa80ce3c191ac00798457c7d7d9855f3818&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "ay ee 28 NOV #036 rLErAMn EO \"Some scientists believe that it gazes + intently at the sky on nights with a full moon because it’s homesick.\" a Weaknesses Qa ome (9 le aa ga Pokémon to break shields heal them after every raid! % 1392 CP %ws 1741 CP_ Boost qs Windy Cloudy iA Ad, © Metal Claw @ Me We 4 ade © Metal Claw & % © Bullet P; © Behemoth Bash (= © Behemoth Blade fa © Sunsteel Strike co} Meteog Mash (5 77 jaz 4 »~ @ Thunder Shock © Bullet Punch U7 <S @ Thunder Fang ® Ice Fang >. @ Zap Cannon+ © Meteor a @ Discharge+ @ Ice Burn (2 v; A Wu aXe \\ y’ | if © Metal Claw ® Charge Beam @ Thunder Shoc sae © Iron Head @ Fusion Bolt 5 @ Sludge Bomb ®@ Discharge tw Cy _S Remember to use proper counters, Party Play Follow for more: and Zacian’s or Mewtwo X Adventure Effect if needed ‘aa Sy) G47Ix Q@0@X@B | g47ix.pro",
+      "eventMatch": {
+        "eventId": "leekduck:raid-day-december-2026",
+        "eventTitle": "Raid Day",
+        "score": 0.393,
+        "confidence": "low",
+        "matchedTerms": [
+          "raid"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:raid-day-december-2026",
+            "eventTitle": "Raid Day",
+            "score": 0.393
+          },
+          {
+            "eventId": "leekduck:raid-day-february-2027",
+            "eventTitle": "Raid Day",
+            "score": 0.393
+          },
+          {
+            "eventId": "smr2",
+            "eventTitle": "Clefable Super Mega Raid Day",
+            "score": 0.329
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1575522629195014205.webp"
+    },
+    {
       "id": "discord:1575308493492060292",
       "source": "discord",
       "creator": "",
