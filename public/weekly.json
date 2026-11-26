@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T20:54:27.518Z",
+ "updated": "2026-11-26T03:52:29.939Z",
  "items": [
   {
    "id": "discord:1574326331745767548",
@@ -10,12 +10,12 @@
    "publishedAt": "2026-11-23T07:30:47.057000+00:00"
   },
   {
-   "id": "discord:1565629054319591515",
+   "id": "discord:1574882419184508950",
    "kind": "month",
-   "title": "Month overview: Nov",
-   "image": "/infographics/g47ix/discord-1565629054319591515.webp",
+   "title": "Month overview",
+   "image": "/infographics/g47ix/discord-1574882419184508950.webp",
    "post": "",
-   "publishedAt": "2026-10-30T07:30:54.531000+00:00"
+   "publishedAt": "2026-11-24T20:20:28.634000+00:00"
   }
  ]
 }
