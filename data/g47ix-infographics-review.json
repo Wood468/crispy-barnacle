@@ -65,8 +65,8 @@
       "title": "Incubator GOPass",
       "publishedAt": "2026-11-24T21:26:10.122000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1574894125650673825/Incubator_GOPass.png?ex=6b074df3&is=6b05fc73&hm=b417f6062a03f2f8129465e8fec293327452b5510cf044c0b72fa9c5072b3bab&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "Starting @ GO Pass: = So December > FREE DELUXE Timed Incubator Kyurem aor Additional ee encounters Nn — Gas —_ AND MORE AND MORE pos Tier 1 - Rank 1 | Increased XP from Friendship level-ups and 2* Friendship bonus dmg in raids. Tier 2 - Rank 25 Tier 2 - Rank 25 Open up to 40 Gifts per day Open up to 50 Gifts per day Receive up to 125 Gifts per day Receive up to 150 Gifts per day Hold 10 more Gifts Hold 20 more Gifts Tier 4 - Rank 75 | Increased Stardust and XP from hatching Eggs * > From January 2-3, there’s no daily limit on the number of GO Points you can earn! Follow formore G47|X £) Ox i [> www.g47ix.pro",
       "eventMatch": {
@@ -103,7 +103,9 @@
         "picture text names the event"
       ],
       "matchScore": 2,
-      "stagedPath": "/infographics/g47ix/discord-1574898950983647282.png"
+      "stagedPath": "/infographics/g47ix/discord-1574898950983647282.png",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1574891933707411527",
@@ -129,8 +131,8 @@
       "title": "CC DECEMBER",
       "publishedAt": "2026-11-24T20:20:28.634000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1574877132201394216/CC_DECEMBER_.png?ex=6b073e20&is=6b05eca0&hm=4dbab6c9f25e4340857968187528afce20d25ac9e27aae078810ff49b39fd769&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "weekly",
+      "decision": "",
       "ocrChecked": true,
       "ocrText": "12.2026 A ff 9 d Research Breakthrough ©) DECEMBER ae with Season-themed Pokémon each week. Complete Field Research and unlock encounters in Pokémon GO! D i mar | Vf . 4 » 4 ©. Showcase Wednesday GO Battle #S Friendship Scenic 4% Monday Tuesday @ Raid Hour Thursday SW Friday ct, Sunday E> CD 44> GFA Gz Gri One Rare Candy XL Featuring up to 20 One Rare Candy XL Complete a total of up to 3 Special Trades More Pokémon in the wild and Boosted for completing in-person different Categories in-person Raid Battles. for completing 50 GBL Battles 2 Candy XL from trade incense on Routes Max Battles. Enter up to 5 Showcases 4x Win Stardust Incr. chance of Lucky Trade Encounter Mateo 3x ++ Mud) ++ ye We ye ae ne iV pA vert NDO REGIDRAGO HO-OH LUGI TORNADUS/THUNDURUS, al 69739 ©9359 (5255 525 ESozE9 , 4 er ++ . 9 A ++ OF. “Ve 24 aS te <> SLOWBRO | SKARMORY GLALIE FALINKS ee mp IBEE > 22 v:c) ems eoz ACY eS ++ ae * es ips ai oa @ es OGO = ~ ALOLAN ® Sy in ae SANDSH MAGIKARP | 30 NOV | 7DEC 14 DEC 21 DEC 28 DEC pas) a Ss These Dynamax Pokémon appear in Max Battles throughout the Daydream Destinations Season. 31 ‘8 ++ 24] ++ DEC ABA Paarl 18g S SPOTLIGHT WIMPOD STARLY BERGMI DELIBI MINU &P HOUR 2x Catch XP mroniorcnty B neon @ @ mewnconty “a “ ¢ 6 PS KE 406 x Tropical Max 2999 Meteo iower ww, ty Paradise Battle Day Geminids kin 2x3 b SibEC > 14 vec BRL bee ) 16 otc er WW Ves G COMM T DAY o” fa @) ] 2026 Recap Raid Day Holiday Hatch Day Gai «> ° Epes ED ee ‘“ HAD 6 Follow for more New Year’s D",
       "eventMatch": {
@@ -177,7 +179,10 @@
         "picture text names the event"
       ],
       "matchScore": 2,
-      "stagedPath": "/infographics/g47ix/discord-1574882419184508950.webp"
+      "stagedPath": "/infographics/g47ix/discord-1574882419184508950.webp",
+      "overview": "month",
+      "publishedEvents": [],
+      "publishedTargets": []
     },
     {
       "id": "discord:1574795132379857090",
