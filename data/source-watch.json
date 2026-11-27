@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-27T01:44:17.523Z",
+ "updated": "2026-11-27T12:20:49.896Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 6
+   "items": 5
   },
   {
    "id": "miners-assets",
@@ -27,7 +27,7 @@
    "items": 0
   }
  ],
- "gaps": 4,
+ "gaps": 2,
  "items": [
   {
    "source": "hub",
@@ -62,31 +62,14 @@
   {
    "source": "hub",
    "trust": "community",
-   "title": "Pokémon News This Week: Pokémon Happy Meals, Shiny Xerneas, Play! Prizes and More",
-   "link": "https://pokemongohub.net/post/news/pokemon-news-this-week-pokemon-happy-meals-shiny-xerneas-play-prizes-and-more/",
-   "date": "2026-11-19T08:23:07.000Z",
-   "summary": "Pokémon Happy Meals are back, Pokopia and Pokémon Legends: Z-A both have free gifts to claim, Play! Pokémon has Mega Rayquaza themed prizes and more! Pokémon Happy Meals are back at McDonalds, in eith",
+   "title": "Super Mega Clefable Raid Day",
+   "link": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/",
+   "date": "2026-11-27T09:14:11.000Z",
+   "summary": "Mega Clefable debuts during Clefable Super Mega Raid Day on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time. Mega Clefable appears in Super Mega Raids with an increased chance to b",
    "pokemon": [
-    "Xerneas"
+    "Clefable"
    ],
-   "notInOurData": [
-    "Xerneas"
-   ]
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Hisuian Goodra and Magnet Bomb Magnezone&#8230; Any Use in PvP?",
-   "link": "https://pokemongohub.net/post/pvp/hisuian-goodra-and-magnet-bomb-magnezone-any-use-in-pvp/",
-   "date": "2026-11-18T14:56:47.000Z",
-   "summary": "With this year&#8217;s GO Wild Area events wrapped up, you may find yourself with some shiny, Steely new toys that you&#8217;re itching to try out in PvP battles. But SHOULD you look to deploy the new",
-   "pokemon": [
-    "Magnezone",
-    "Goodra"
-   ],
-   "notInOurData": [
-    "Magnezone"
-   ]
+   "notInOurData": []
   },
   {
    "source": "hub",
