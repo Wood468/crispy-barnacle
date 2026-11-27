@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T16:54:32.526Z",
+ "updated": "2026-11-27T01:44:17.719Z",
  "state": "ok",
  "scrapedDuckEvents": 78,
  "missingHere": [
@@ -136,6 +136,11 @@
    "id": "w-pok-mon-run-30-thailand",
    "name": "Pokémon RUN 30: Bangkok",
    "start": "2027-01-09"
+  },
+  {
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-centralw",
+   "name": "Pokémon 30th Anniversary Mall Exploration: centralwOrld, Bangkok",
+   "start": "2027-01-11"
   }
  ],
  "shinyDisagree": [
