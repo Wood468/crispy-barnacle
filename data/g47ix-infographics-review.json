@@ -7,6 +7,65 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1576138189884629014",
+      "source": "discord",
+      "creator": "",
+      "title": "M Clefable RD",
+      "publishedAt": "2026-11-28T07:30:27.700000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1568018401279086592/M_Clefable_RD.png?ex=6b0b4b6f&is=6b09f9ef&hm=1c9be5da1e68a10ae3b19be23249828bf132fdb3ea0949d4295775ef23385c0e&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "i. Ss ofS 7) 28 a x NOV re CD) 2:00 - 5:00 pm pm Cle » ° Use Mega Pokémon to break shields ei Weakness as vee @ :940® Ss) 1392 CP/1741 CP t+ S&S OA. x Pv Bs \"ee Up to 5 additional Remote Raid limit Increased chance Clefable will GS daily Raid Passes will be increased to encounter have one Mega from Gyms to 20 Shiny Level unlocked OPTIONAL An additional An additional Increased Event ticket Up to 8 additional 5,000 XP from 5,000 stardust chance to daily Raid Passes 5 USD from Gyms Super Mega from Super get Rare 2:00 pm - 5:00 pm (daily total of 14) Raids Mega Raids Candy XL ee ® Super Mega Raids may New 8 Level: Use Dynamic Punch+ a only appear at certain — Max Adventure Effect Gyms, check them at: to break = pokemongo.com/map two shields Gs GLOBAL Complete Raids to unlock Based on the Global Challenge results, Mega Clefable will receive (CHALLENGE Global Challenge rewards a damage boost for Moonblast+ and a CP boost from Nov 30 - Dec 13 noo www.g47ix.pro Follow formore GA7|X £) CO) ax i L > |",
+      "eventMatch": {
+        "eventId": "smr2",
+        "eventTitle": "Clefable Super Mega Raid Day",
+        "score": 0.704,
+        "confidence": "medium",
+        "matchedTerms": [
+          "clefable",
+          "super",
+          "mega",
+          "raid",
+          "raids",
+          "shiny",
+          "encounter",
+          "level",
+          "unlocked",
+          "increased",
+          "chance",
+          "remote"
+        ],
+        "alternatives": [
+          {
+            "eventId": "smr2",
+            "eventTitle": "Clefable Super Mega Raid Day",
+            "score": 0.704
+          },
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.645
+          },
+          {
+            "eventId": "leekduck:super-mega-raid-day-october-2026",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.605
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (medium).",
+      "signals": [
+        "caption names the event",
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 5,
+      "stagedPath": "/infographics/g47ix/discord-1576138189884629014.webp"
+    },
+    {
       "id": "discord:1575522629195014205",
       "source": "discord",
       "creator": "",

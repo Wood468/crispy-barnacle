@@ -1,6 +1,41 @@
 {
- "updated": "2026-11-28T00:55:36.707Z",
+ "updated": "2026-11-28T09:39:50.806Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1576138189884629014",
+   "title": "M Clefable RD",
+   "image": "/infographics/g47ix/discord-1576138189884629014.webp",
+   "post": "",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-28T07:30:27.700000+00:00",
+   "note": "Match is not strong enough (medium).",
+   "history": false,
+   "signals": [
+    "caption names the event",
+    "picture text names the event",
+    "posted around the event"
+   ],
+   "text": "i. Ss ofS 7) 28 a x NOV re CD) 2:00 - 5:00 pm pm Cle » ° Use Mega Pokémon to break shields ei Weakness as vee @ :940® Ss) 1392 CP/1741 CP t+ S&S OA. x Pv Bs \"ee Up to 5 additional Remote Raid limit Increased chance Clefable will GS daily Raid Passes will be increased to encounter have one Mega from Gyms to 20 Shiny Level unlocked OPTIONAL An additional An additional Increased Event ticket Up to 8 additional 5,000 XP from 5,000 stardust chance to daily Raid Passes 5 USD from Gyms Super Mega from Super get Rare 2:00 pm - 5:00 pm (daily total of 14) Raids Mega Raids Candy XL ee ® Super Mega Raids may New 8 Level: Use Dynamic Punch+ a only appear at certain — Max Adventure Effect Gyms, check the",
+   "guesses": [
+    {
+     "eventId": "smr2",
+     "eventTitle": "Clefable Super Mega Raid Day",
+     "score": 0.704
+    },
+    {
+     "eventId": "smr1",
+     "eventTitle": "Super Mega Raid Day",
+     "score": 0.645
+    },
+    {
+     "eventId": "leekduck:super-mega-raid-day-october-2026",
+     "eventTitle": "Super Mega Raid Day",
+     "score": 0.605
+    }
+   ]
+  },
   {
    "linked": false,
    "id": "discord:1575522629195014205",
