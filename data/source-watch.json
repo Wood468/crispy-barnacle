@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T12:20:49.896Z",
+ "updated": "2026-11-28T07:49:41.835Z",
  "status": [
   {
    "id": "hub",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 0
+   "state": "error",
+   "note": "HTTP 503"
   }
  ],
  "gaps": 2,
@@ -64,7 +64,7 @@
    "trust": "community",
    "title": "Super Mega Clefable Raid Day",
    "link": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/",
-   "date": "2026-11-27T09:14:11.000Z",
+   "date": "2026-11-28T05:00:11.000Z",
    "summary": "Mega Clefable debuts during Clefable Super Mega Raid Day on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time. Mega Clefable appears in Super Mega Raids with an increased chance to b",
    "pokemon": [
     "Clefable"
