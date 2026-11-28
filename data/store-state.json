@@ -719,12 +719,18 @@
   }
  },
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-11-28T02:41:46.670Z",
+ "updated": "2026-11-28T11:46:23.150Z",
  "currency": "A$",
  "lastPublishedAt": "2026-11-28T02:41:46.670Z",
  "lastCompleteAt": "2026-11-28T02:41:46.670Z",
  "lastObservation": {
-  "at": "2026-11-28T02:41:46.670Z",
-  "status": "complete"
+  "at": "2026-11-28T11:46:23.150Z",
+  "status": "held",
+  "reason": "awaiting-corroboration"
+ },
+ "pendingGone": {
+  "/purchase/item/web-seasonal-delights-2024-box": {
+   "firstAbsentAt": "2026-11-28T11:46:23.150Z"
+  }
  }
 }
